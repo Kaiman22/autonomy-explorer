@@ -461,6 +461,11 @@ export default function App() {
           >
             <div className="map-tooltip-name">
               {hovered.feature.properties.name}
+              {hovered.feature.properties.plz && (
+                <span style={{ opacity: 0.6, marginLeft: 4, fontSize: '0.85em' }}>
+                  {hovered.feature.properties.plz}
+                </span>
+              )}
             </div>
             <div className="map-tooltip-score">
               {tooltipValue}

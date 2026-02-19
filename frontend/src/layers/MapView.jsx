@@ -61,15 +61,16 @@ function getColorExpression(property) {
 }
 
 // Fixed radius that only scales with zoom — no data-driven sizing
+// Scaled down for PLZ-level density (~3,181 points vs old 2,128 municipalities)
 function getRadiusExpression() {
   return [
     'interpolate',
     ['linear'],
     ['zoom'],
-    6, 4,
-    8, 6,
-    10, 9,
-    12, 14,
+    6, 2.5,
+    8, 4.5,
+    10, 7,
+    12, 11,
   ]
 }
 

@@ -2,6 +2,11 @@
 """
 Step 5: Compute autonomy upside scores and export final GeoJSON for frontend.
 
+Now outputs PLZ-level points (3,181) instead of municipality centroids (2,128).
+Each PLZ point has its own travel times but inherits municipality-level
+prices and taxes. This gives a finer-grained visualization where points
+sit closer to where people actually live.
+
 Scoring model (2 components):
   1. Accessibility Gain: how much AV improves connectivity vs status quo
      (PT comfort time - AV comfort time, averaged across enabled cities)
@@ -28,6 +33,25 @@ def load_data():
     with open(PROCESSED_DIR / "municipalities.json") as f:
         municipalities = {m["id"]: m for m in json.load(f)}
 
+    with open(PROCESSED_DIR / "plz_points.json") as f:
+        plz_points = json.load(f)
+
+    with open(PROCESSED_DIR / "plz_municipality_map.json") as f:
+        mapping = json.load(f)
+
+    plz_drive = {}
+    plz_drive_path = PROCESSED_DIR / "plz_travel_times_driving.json"
+    if plz_drive_path.exists():
+        with open(plz_drive_path) as f:
+            plz_drive = json.load(f)
+
+    plz_pt = {}
+    plz_pt_path = PROCESSED_DIR / "plz_travel_times_pt.json"
+    if plz_pt_path.exists():
+        with open(plz_pt_path) as f:
+            plz_pt = json.load(f)
+
+    # Also load municipality-level travel times as fallback
     travel_times = {"driving": {}, "public_transport": {}}
     tt_path = PROCESSED_DIR / "travel_times.json"
     if tt_path.exists():
@@ -46,7 +70,7 @@ def load_data():
         with open(tax_path) as f:
             taxes = json.load(f)
 
-    return municipalities, travel_times, prices, taxes
+    return municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes
 
 
 def compute_comfort_time(raw_seconds, mode, comfort=None):
@@ -71,10 +95,6 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     """
     Compute accessibility gain per city.
     Gain = best_today - AV_comfort
-    best_today = min(manual_driving, PT_comfort)
-    AV_comfort = drive_time × av_factor
-
-    High gain = today's best option is much worse than AV would be.
     """
     if comfort is None:
         comfort = COMFORT
@@ -101,7 +121,6 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
     """
     Compute status-quo accessibility (without AV).
     = average of best(manual_drive, PT_comfort) across all cities.
-    Lower value = better current accessibility.
     """
     if comfort is None:
         comfort = COMFORT
@@ -112,7 +131,7 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
         pt_s = pt_times.get(city_id)
 
         if drive_s is not None:
-            drive_min = drive_s / 60.0  # manual driving = full burden
+            drive_min = drive_s / 60.0
         else:
             drive_min = None
 
@@ -121,7 +140,6 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
         else:
             pt_min = None
 
-        # Best of the two modes today
         valid = [t for t in [drive_min, pt_min] if t is not None]
         if valid:
             times.append(min(valid))
@@ -148,18 +166,56 @@ def normalize_values(values, invert=False):
     return result
 
 
-def compute_scores(municipalities, travel_times, prices, taxes):
-    """Compute the autonomy upside score for each municipality."""
-    muni_ids = sorted(municipalities.keys())
-    driving = travel_times.get("driving", {})
-    pt = travel_times.get("public_transport", {})
+def compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes):
+    """Compute the autonomy upside score for each PLZ point."""
+    plz_to_munis = mapping["plz_to_municipalities"]
+    muni_driving = travel_times.get("driving", {})
+    muni_pt = travel_times.get("public_transport", {})
+
+    # Build list of PLZ features: each PLZ gets its own travel times
+    # but inherits municipality-level prices/taxes from its PRIMARY municipality
+    plz_features = []
+    for p in plz_points:
+        plz_code = p["plz"]
+
+        # Travel times: use PLZ-level if available, else fall back to municipality
+        d = plz_drive.get(plz_code, {})
+        pt = plz_pt.get(plz_code, {})
+
+        # Primary municipality for this PLZ (first in the mapping)
+        muni_ids = plz_to_munis.get(plz_code, [])
+        primary_muni = muni_ids[0] if muni_ids else None
+
+        # If PLZ-level times are missing, fall back to municipality-level
+        if not d and primary_muni:
+            d = muni_driving.get(primary_muni, {})
+        if not pt and primary_muni:
+            pt = muni_pt.get(primary_muni, {})
+
+        # Municipality data (prices, taxes, name, canton)
+        muni = municipalities.get(primary_muni, {}) if primary_muni else {}
+        price_data = prices.get(primary_muni) if primary_muni else None
+        tax_data = taxes.get(primary_muni) if primary_muni else None
+
+        plz_features.append({
+            "plz": plz_code,
+            "municipality_id": primary_muni,
+            "all_municipality_ids": muni_ids,
+            "name": muni.get("name", p.get("name", "")),
+            "canton": muni.get("canton", p.get("canton", "")),
+            "canton_code": muni.get("canton_code", p.get("canton_code", "")),
+            "lat": p["lat"],
+            "lon": p["lon"],
+            "driving": d,
+            "pt": pt,
+            "price_data": price_data,
+            "tax_data": tax_data,
+        })
 
     # --- Sub-score 1: Accessibility Gain ---
     raw_gains = []
-    for mid in muni_ids:
-        d = driving.get(mid, {})
-        p = pt.get(mid, {})
-        gains = compute_accessibility_gain(d, p)
+    for pf in plz_features:
+        gains = compute_accessibility_gain(pf["driving"], pf["pt"])
         valid_gains = [g for g in gains.values() if g is not None]
         if valid_gains:
             raw_gains.append(statistics.mean(valid_gains))
@@ -169,19 +225,15 @@ def compute_scores(municipalities, travel_times, prices, taxes):
     norm_gains = normalize_values(raw_gains)
 
     # --- Sub-score 2: Inherent Attractiveness ---
-    # = price_per_m2 / status_quo_accessibility
-    # High value = expensive despite poor transport = inherently desirable
     raw_attractiveness = []
     raw_status_quo = []
-    for mid in muni_ids:
-        d = driving.get(mid, {})
-        p = pt.get(mid, {})
-        sq = compute_status_quo_access(d, p)
+    for pf in plz_features:
+        sq = compute_status_quo_access(pf["driving"], pf["pt"])
         raw_status_quo.append(sq)
 
-        price_data = prices.get(mid)
-        if price_data and price_data.get("chf_per_m2") and sq and sq > 0:
-            raw_attractiveness.append(price_data["chf_per_m2"] / sq)
+        pd = pf["price_data"]
+        if pd and pd.get("chf_per_m2") and sq and sq > 0:
+            raw_attractiveness.append(pd["chf_per_m2"] / sq)
         else:
             raw_attractiveness.append(None)
 
@@ -190,11 +242,10 @@ def compute_scores(municipalities, travel_times, prices, taxes):
     # --- Combined Score ---
     w = SCORING_WEIGHTS
     scored = []
-    for i, mid in enumerate(muni_ids):
-        m = municipalities[mid]
-        d = driving.get(mid, {})
-        p = pt.get(mid, {})
-        gains = compute_accessibility_gain(d, p)
+    for i, pf in enumerate(plz_features):
+        d = pf["driving"]
+        pt = pf["pt"]
+        gains = compute_accessibility_gain(d, pt)
 
         components = {
             "accessibility_gain": norm_gains[i],
@@ -226,34 +277,36 @@ def compute_scores(municipalities, travel_times, prices, taxes):
                 best_city = city_id
 
         drive_times_list = [d.get(c) for c in CITIES if d.get(c) is not None]
-        pt_times_list = [p.get(c) for c in CITIES if p.get(c) is not None]
+        pt_times_list = [pt.get(c) for c in CITIES if pt.get(c) is not None]
 
-        price_data = prices.get(mid)
-        tax_data = taxes.get(mid)
+        price_data = pf["price_data"]
+        tax_data = pf["tax_data"]
 
         scored.append({
-            "id": mid,
-            "name": m["name"],
-            "canton": m["canton"],
-            "canton_code": m.get("canton_code", ""),
-            "lat": m["lat"],
-            "lon": m["lon"],
+            "id": f"plz_{pf['plz']}",
+            "plz": pf["plz"],
+            "municipality_id": pf["municipality_id"],
+            "name": pf["name"],
+            "canton": pf["canton"],
+            "canton_code": pf["canton_code"],
+            "lat": pf["lat"],
+            "lon": pf["lon"],
             # Travel times (seconds)
             "drive_times": {c: d.get(c) for c in CITIES},
-            "pt_times": {c: p.get(c) for c in CITIES},
+            "pt_times": {c: pt.get(c) for c in CITIES},
             # Min times
             "min_drive_s": min(drive_times_list) if drive_times_list else None,
             "min_pt_s": min(pt_times_list) if pt_times_list else None,
             # Accessibility gain per city (comfort-weighted minutes)
             "gain_per_city": {k: round(v, 1) if v else None for k, v in gains.items()},
             "best_city": best_city,
-            # Price
+            # Price (from municipality)
             "chf_per_m2": price_data.get("chf_per_m2") if price_data else None,
-            # Tax
+            # Tax (from municipality)
             "tax_multiplier": tax_data.get("multiplier") if tax_data else None,
-            # Status-quo accessibility (avg best travel time in minutes)
+            # Status-quo accessibility
             "status_quo_access": round(raw_status_quo[i], 1) if raw_status_quo[i] else None,
-            # Raw inherent attractiveness (CHF/m² per minute of accessibility)
+            # Raw inherent attractiveness
             "inherent_attractiveness_raw": round(raw_attractiveness[i], 1) if raw_attractiveness[i] else None,
             # Sub-scores (0-100)
             "score_accessibility": components["accessibility_gain"],
@@ -292,7 +345,7 @@ def export_geojson(scored):
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(geojson, f, ensure_ascii=False)
     print(f"Saved scored GeoJSON to {out_path}")
-    print(f"  {len(features)} features")
+    print(f"  {len(features)} features (PLZ-level points)")
 
     scores = [s["autonomy_score"] for s in scored if s["autonomy_score"] is not None]
     if scores:
@@ -300,18 +353,25 @@ def export_geojson(scored):
         print(f"  Score median: {statistics.median(scores):.1f}")
         print(f"  Score mean: {statistics.mean(scores):.1f}")
 
+    # Print municipality coverage
+    munis = set(s["municipality_id"] for s in scored if s["municipality_id"])
+    print(f"  Covering {len(munis)} municipalities")
+
     return geojson
 
 
 def main():
-    municipalities, travel_times, prices, taxes = load_data()
+    municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes = load_data()
     print(f"Municipalities: {len(municipalities)}")
-    print(f"Driving times: {len(travel_times.get('driving', {}))}")
-    print(f"PT times: {len(travel_times.get('public_transport', {}))}")
+    print(f"PLZ points: {len(plz_points)}")
+    print(f"PLZ driving times: {len(plz_drive)}")
+    print(f"PLZ PT times: {len(plz_pt)}")
+    print(f"Municipality driving (fallback): {len(travel_times.get('driving', {}))}")
+    print(f"Municipality PT (fallback): {len(travel_times.get('public_transport', {}))}")
     print(f"Prices: {len(prices)}")
     print(f"Taxes: {len(taxes)}")
 
-    scored = compute_scores(municipalities, travel_times, prices, taxes)
+    scored = compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes)
     export_geojson(scored)
 
 

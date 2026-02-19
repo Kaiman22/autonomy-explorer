@@ -116,8 +116,24 @@ function SearchBox({ data, onSelect }) {
   const results = useMemo(() => {
     if (!data || query.length < 2) return []
     const q = normalize(query)
-    return data.features
-      .filter((f) => normalize(f.properties.name).includes(q))
+    const isNumeric = /^\d+$/.test(query.trim())
+
+    // Search by name or PLZ code
+    const matches = data.features.filter((f) => {
+      if (isNumeric) return f.properties.plz?.startsWith(query.trim())
+      return normalize(f.properties.name).includes(q)
+    })
+
+    // Deduplicate: for same municipality, pick best-scoring PLZ
+    const byMuni = {}
+    for (const f of matches) {
+      const key = f.properties.municipality_id || f.properties.id
+      if (!byMuni[key] || (f.properties.autonomy_score || 0) > (byMuni[key].properties.autonomy_score || 0)) {
+        byMuni[key] = f
+      }
+    }
+
+    return Object.values(byMuni)
       .sort((a, b) => {
         const aName = normalize(a.properties.name)
         const bName = normalize(b.properties.name)
@@ -133,7 +149,7 @@ function SearchBox({ data, onSelect }) {
     <div className="search-box">
       <input
         type="text"
-        placeholder="Search municipality..."
+        placeholder="Search municipality or PLZ..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setFocused(true)}
@@ -154,6 +170,7 @@ function SearchBox({ data, onSelect }) {
             >
               <span className="search-result-name">{f.properties.name}</span>
               <span className="search-result-meta">
+                {f.properties.plz && <>{f.properties.plz} · </>}
                 {f.properties.canton_code}
                 {f.properties.autonomy_score != null && (
                   <> · {f.properties.autonomy_score.toFixed(1)}</>
@@ -171,8 +188,18 @@ function TopList({ data, onSelect, colorBy }) {
   const top = useMemo(() => {
     if (!data) return []
     const prop = colorBy || 'autonomy_score'
-    return [...data.features]
-      .filter((f) => f.properties[prop] != null && !f.properties.excluded)
+
+    // Deduplicate by municipality: pick the best PLZ per municipality
+    const byMuni = {}
+    for (const f of data.features) {
+      if (f.properties[prop] == null || f.properties.excluded) continue
+      const key = f.properties.municipality_id || f.properties.id
+      if (!byMuni[key] || f.properties[prop] > byMuni[key].properties[prop]) {
+        byMuni[key] = f
+      }
+    }
+
+    return Object.values(byMuni)
       .sort((a, b) => b.properties[prop] - a.properties[prop])
       .slice(0, 10)
   }, [data, colorBy])
@@ -416,7 +443,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <div>
           <div className="detail-name">{p.name}</div>
           <div className="detail-canton">
-            {p.canton} ({p.canton_code})
+            {p.plz && <>{p.plz} · </>}{p.canton} ({p.canton_code})
           </div>
         </div>
         <button
@@ -569,7 +596,7 @@ export default function SidePanel({
       <div className="panel-section">
         <SearchBox data={data} onSelect={onSelectFeature} />
         <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 8 }}>
-          {totalFeatures} municipalities | {withScore} scored{excludedCount > 0 ? ` | ${excludedCount} filtered out` : ''}
+          {totalFeatures} locations | {withScore} scored{excludedCount > 0 ? ` | ${excludedCount} filtered out` : ''}
         </div>
       </div>
 
