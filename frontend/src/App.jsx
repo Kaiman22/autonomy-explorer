@@ -56,16 +56,18 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const ptTimes = parseTimes(p.pt_times)
 
     // --- Check max-time constraints ---
+    // Uses RAW travel times (no comfort weighting) — the user's question is
+    // "can I physically reach this city within X hours?" not "does it feel like X hours?"
     let isExcluded = false
     for (const ref of allRefs) {
       if (ref.maxMinutes == null) continue // no limit set
       const driveS = driveTimes[ref.id]
       const ptS = ptTimes[ref.id]
 
-      // Status quo time to this ref (best of driving or PT comfort-weighted)
+      // Raw time to this ref (best of driving or PT, no comfort factor)
       const candidates = []
       if (driveS != null) candidates.push(driveS / 60)
-      if (ptS != null) candidates.push((ptS / 60) * ptFactor)
+      if (ptS != null) candidates.push(ptS / 60)
       const bestTime = candidates.length > 0 ? Math.min(...candidates) : Infinity
 
       if (bestTime > ref.maxMinutes) {
@@ -461,9 +463,9 @@ export default function App() {
           >
             <div className="map-tooltip-name">
               {hovered.feature.properties.name}
-              {hovered.feature.properties.plz && (
+              {hovered.feature.properties.settlement_name && hovered.feature.properties.settlement_name !== hovered.feature.properties.name && (
                 <span style={{ opacity: 0.6, marginLeft: 4, fontSize: '0.85em' }}>
-                  {hovered.feature.properties.plz}
+                  {hovered.feature.properties.settlement_name}
                 </span>
               )}
             </div>

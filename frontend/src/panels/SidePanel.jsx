@@ -118,10 +118,11 @@ function SearchBox({ data, onSelect }) {
     const q = normalize(query)
     const isNumeric = /^\d+$/.test(query.trim())
 
-    // Search by name or PLZ code
+    // Search by name or settlement name
     const matches = data.features.filter((f) => {
-      if (isNumeric) return f.properties.plz?.startsWith(query.trim())
-      return normalize(f.properties.name).includes(q)
+      const nameMatch = normalize(f.properties.name).includes(q)
+      const settlementMatch = normalize(f.properties.settlement_name || '').includes(q)
+      return nameMatch || settlementMatch
     })
 
     // Deduplicate: for same municipality, pick best-scoring PLZ
@@ -149,7 +150,7 @@ function SearchBox({ data, onSelect }) {
     <div className="search-box">
       <input
         type="text"
-        placeholder="Search municipality or PLZ..."
+        placeholder="Search municipality or settlement..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setFocused(true)}
@@ -170,7 +171,7 @@ function SearchBox({ data, onSelect }) {
             >
               <span className="search-result-name">{f.properties.name}</span>
               <span className="search-result-meta">
-                {f.properties.plz && <>{f.properties.plz} · </>}
+                {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.settlement_name} · </>}
                 {f.properties.canton_code}
                 {f.properties.autonomy_score != null && (
                   <> · {f.properties.autonomy_score.toFixed(1)}</>
@@ -443,7 +444,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <div>
           <div className="detail-name">{p.name}</div>
           <div className="detail-canton">
-            {p.plz && <>{p.plz} · </>}{p.canton} ({p.canton_code})
+            {p.settlement_name && p.settlement_name !== p.name && <>{p.settlement_name} · </>}{p.canton} ({p.canton_code})
           </div>
         </div>
         <button

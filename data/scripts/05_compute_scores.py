@@ -2,10 +2,10 @@
 """
 Step 5: Compute autonomy upside scores and export final GeoJSON for frontend.
 
-Now outputs PLZ-level points (3,181) instead of municipality centroids (2,128).
-Each PLZ point has its own travel times but inherits municipality-level
-prices and taxes. This gives a finer-grained visualization where points
-sit closer to where people actually live.
+Outputs settlement-level points (~3,966) using swissNAMES3D settlement locations.
+These are actual village/town center points — much better than PLZ polygon centroids.
+Each settlement has its own travel times but inherits municipality-level
+prices and taxes.
 
 Scoring model (2 components):
   1. Accessibility Gain: how much AV improves connectivity vs status quo
@@ -33,25 +33,33 @@ def load_data():
     with open(PROCESSED_DIR / "municipalities.json") as f:
         municipalities = {m["id"]: m for m in json.load(f)}
 
-    with open(PROCESSED_DIR / "plz_points.json") as f:
-        plz_points = json.load(f)
+    # Settlement points (swissNAMES3D, ~3,966 with >=100 inhabitants)
+    settlements = []
+    settlement_path = PROCESSED_DIR / "settlement_points.json"
+    if settlement_path.exists():
+        with open(settlement_path) as f:
+            settlements = json.load(f)
 
-    with open(PROCESSED_DIR / "plz_municipality_map.json") as f:
-        mapping = json.load(f)
+    settlement_mapping = {}
+    settlement_map_path = PROCESSED_DIR / "settlement_municipality_map.json"
+    if settlement_map_path.exists():
+        with open(settlement_map_path) as f:
+            settlement_mapping = json.load(f)
 
-    plz_drive = {}
-    plz_drive_path = PROCESSED_DIR / "plz_travel_times_driving.json"
-    if plz_drive_path.exists():
-        with open(plz_drive_path) as f:
-            plz_drive = json.load(f)
+    # Settlement-level travel times (UUID-keyed)
+    settlement_drive = {}
+    drive_path = PROCESSED_DIR / "settlement_travel_times_driving.json"
+    if drive_path.exists():
+        with open(drive_path) as f:
+            settlement_drive = json.load(f)
 
-    plz_pt = {}
-    plz_pt_path = PROCESSED_DIR / "plz_travel_times_pt.json"
-    if plz_pt_path.exists():
-        with open(plz_pt_path) as f:
-            plz_pt = json.load(f)
+    settlement_pt = {}
+    pt_path = PROCESSED_DIR / "settlement_travel_times_pt.json"
+    if pt_path.exists():
+        with open(pt_path) as f:
+            settlement_pt = json.load(f)
 
-    # Also load municipality-level travel times as fallback
+    # Municipality-level travel times as fallback
     travel_times = {"driving": {}, "public_transport": {}}
     tt_path = PROCESSED_DIR / "travel_times.json"
     if tt_path.exists():
@@ -70,7 +78,7 @@ def load_data():
         with open(tax_path) as f:
             taxes = json.load(f)
 
-    return municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes
+    return municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes
 
 
 def compute_comfort_time(raw_seconds, mode, comfort=None):
@@ -166,46 +174,43 @@ def normalize_values(values, invert=False):
     return result
 
 
-def compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes):
-    """Compute the autonomy upside score for each PLZ point."""
-    plz_to_munis = mapping["plz_to_municipalities"]
+def compute_scores(municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes):
+    """Compute the autonomy upside score for each settlement point."""
     muni_driving = travel_times.get("driving", {})
     muni_pt = travel_times.get("public_transport", {})
 
-    # Build list of PLZ features: each PLZ gets its own travel times
-    # but inherits municipality-level prices/taxes from its PRIMARY municipality
-    plz_features = []
-    for p in plz_points:
-        plz_code = p["plz"]
+    # Build settlement features: each settlement gets its own travel times
+    # but inherits municipality-level prices/taxes
+    features = []
+    for s in settlements:
+        uuid = s["uuid"]
+        muni_id = s.get("municipality_id")
 
-        # Travel times: use PLZ-level if available, else fall back to municipality
-        d = plz_drive.get(plz_code, {})
-        pt = plz_pt.get(plz_code, {})
+        # Travel times: use settlement-level if available, else fall back to municipality
+        d = settlement_drive.get(uuid, {})
+        pt = settlement_pt.get(uuid, {})
 
-        # Primary municipality for this PLZ (first in the mapping)
-        muni_ids = plz_to_munis.get(plz_code, [])
-        primary_muni = muni_ids[0] if muni_ids else None
-
-        # If PLZ-level times are missing, fall back to municipality-level
-        if not d and primary_muni:
-            d = muni_driving.get(primary_muni, {})
-        if not pt and primary_muni:
-            pt = muni_pt.get(primary_muni, {})
+        # If settlement-level times are missing, fall back to municipality-level
+        if not d and muni_id:
+            d = muni_driving.get(muni_id, {})
+        if not pt and muni_id:
+            pt = muni_pt.get(muni_id, {})
 
         # Municipality data (prices, taxes, name, canton)
-        muni = municipalities.get(primary_muni, {}) if primary_muni else {}
-        price_data = prices.get(primary_muni) if primary_muni else None
-        tax_data = taxes.get(primary_muni) if primary_muni else None
+        muni = municipalities.get(muni_id, {}) if muni_id else {}
+        price_data = prices.get(muni_id) if muni_id else None
+        tax_data = taxes.get(muni_id) if muni_id else None
 
-        plz_features.append({
-            "plz": plz_code,
-            "municipality_id": primary_muni,
-            "all_municipality_ids": muni_ids,
-            "name": muni.get("name", p.get("name", "")),
-            "canton": muni.get("canton", p.get("canton", "")),
-            "canton_code": muni.get("canton_code", p.get("canton_code", "")),
-            "lat": p["lat"],
-            "lon": p["lon"],
+        features.append({
+            "uuid": uuid,
+            "settlement_name": s["name"],
+            "pop_category": s.get("pop_category", ""),
+            "municipality_id": muni_id,
+            "name": muni.get("name", s.get("municipality_name", s["name"])),
+            "canton": muni.get("canton", s.get("canton", "")),
+            "canton_code": muni.get("canton_code", ""),
+            "lat": s["lat"],
+            "lon": s["lon"],
             "driving": d,
             "pt": pt,
             "price_data": price_data,
@@ -214,8 +219,8 @@ def compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, trave
 
     # --- Sub-score 1: Accessibility Gain ---
     raw_gains = []
-    for pf in plz_features:
-        gains = compute_accessibility_gain(pf["driving"], pf["pt"])
+    for sf in features:
+        gains = compute_accessibility_gain(sf["driving"], sf["pt"])
         valid_gains = [g for g in gains.values() if g is not None]
         if valid_gains:
             raw_gains.append(statistics.mean(valid_gains))
@@ -227,11 +232,11 @@ def compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, trave
     # --- Sub-score 2: Inherent Attractiveness ---
     raw_attractiveness = []
     raw_status_quo = []
-    for pf in plz_features:
-        sq = compute_status_quo_access(pf["driving"], pf["pt"])
+    for sf in features:
+        sq = compute_status_quo_access(sf["driving"], sf["pt"])
         raw_status_quo.append(sq)
 
-        pd = pf["price_data"]
+        pd = sf["price_data"]
         if pd and pd.get("chf_per_m2") and sq and sq > 0:
             raw_attractiveness.append(pd["chf_per_m2"] / sq)
         else:
@@ -242,9 +247,9 @@ def compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, trave
     # --- Combined Score ---
     w = SCORING_WEIGHTS
     scored = []
-    for i, pf in enumerate(plz_features):
-        d = pf["driving"]
-        pt = pf["pt"]
+    for i, sf in enumerate(features):
+        d = sf["driving"]
+        pt = sf["pt"]
         gains = compute_accessibility_gain(d, pt)
 
         components = {
@@ -279,18 +284,19 @@ def compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, trave
         drive_times_list = [d.get(c) for c in CITIES if d.get(c) is not None]
         pt_times_list = [pt.get(c) for c in CITIES if pt.get(c) is not None]
 
-        price_data = pf["price_data"]
-        tax_data = pf["tax_data"]
+        price_data = sf["price_data"]
+        tax_data = sf["tax_data"]
 
         scored.append({
-            "id": f"plz_{pf['plz']}",
-            "plz": pf["plz"],
-            "municipality_id": pf["municipality_id"],
-            "name": pf["name"],
-            "canton": pf["canton"],
-            "canton_code": pf["canton_code"],
-            "lat": pf["lat"],
-            "lon": pf["lon"],
+            "id": f"s_{i}",
+            "settlement_name": sf["settlement_name"],
+            "municipality_id": sf["municipality_id"],
+            "name": sf["name"],
+            "canton": sf["canton"],
+            "canton_code": sf["canton_code"],
+            "pop_category": sf["pop_category"],
+            "lat": sf["lat"],
+            "lon": sf["lon"],
             # Travel times (seconds)
             "drive_times": {c: d.get(c) for c in CITIES},
             "pt_times": {c: pt.get(c) for c in CITIES},
@@ -345,7 +351,7 @@ def export_geojson(scored):
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(geojson, f, ensure_ascii=False)
     print(f"Saved scored GeoJSON to {out_path}")
-    print(f"  {len(features)} features (PLZ-level points)")
+    print(f"  {len(features)} features (settlement-level points)")
 
     scores = [s["autonomy_score"] for s in scored if s["autonomy_score"] is not None]
     if scores:
@@ -361,17 +367,17 @@ def export_geojson(scored):
 
 
 def main():
-    municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes = load_data()
+    municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes = load_data()
     print(f"Municipalities: {len(municipalities)}")
-    print(f"PLZ points: {len(plz_points)}")
-    print(f"PLZ driving times: {len(plz_drive)}")
-    print(f"PLZ PT times: {len(plz_pt)}")
+    print(f"Settlement points: {len(settlements)}")
+    print(f"Settlement driving times: {len(settlement_drive)}")
+    print(f"Settlement PT times: {len(settlement_pt)}")
     print(f"Municipality driving (fallback): {len(travel_times.get('driving', {}))}")
     print(f"Municipality PT (fallback): {len(travel_times.get('public_transport', {}))}")
     print(f"Prices: {len(prices)}")
     print(f"Taxes: {len(taxes)}")
 
-    scored = compute_scores(municipalities, plz_points, mapping, plz_drive, plz_pt, travel_times, prices, taxes)
+    scored = compute_scores(municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes)
     export_geojson(scored)
 
 

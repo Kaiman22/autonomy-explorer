@@ -26,3 +26,9 @@ venv/
 
 # Logs
 *.log
+
+# Large raw data files (download via scripts)
+data/raw/csv_LV95_LN02/
+data/raw/swissnames3d_csv.zip
+data/raw/swissnames3d.zip
+data/raw/readme.txt
