@@ -102,7 +102,12 @@ def compute_comfort_time(raw_seconds, mode, comfort=None):
 def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     """
     Compute accessibility gain per city.
-    Gain = best_today - AV_comfort
+    Gain = best_today - best_with_AV
+
+    best_today  = min(manual_drive, PT×comfort)
+    best_with_AV = min(AV_drive, PT×comfort)  — PT remains an option post-AV
+
+    This matches the frontend recomputeScores logic exactly.
     """
     if comfort is None:
         comfort = COMFORT
@@ -112,15 +117,25 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
         drive_s = driving_times.get(city_id)
         pt_s = pt_times.get(city_id)
 
-        if drive_s is None or pt_s is None:
+        # Need at least one mode for each scenario
+        today_candidates = []
+        av_candidates = []
+
+        if drive_s is not None:
+            today_candidates.append(compute_comfort_time(drive_s, "driving_manual", comfort))
+            av_candidates.append(compute_comfort_time(drive_s, "driving_av", comfort))
+        if pt_s is not None:
+            pt_comfort = compute_comfort_time(pt_s, "public_transport", comfort)
+            today_candidates.append(pt_comfort)
+            av_candidates.append(pt_comfort)
+
+        if not today_candidates or not av_candidates:
             gains[city_id] = None
             continue
 
-        human_drive = compute_comfort_time(drive_s, "driving_manual", comfort)
-        pt_comfort = compute_comfort_time(pt_s, "public_transport", comfort)
-        best_today = min(human_drive, pt_comfort)
-        av_comfort = compute_comfort_time(drive_s, "driving_av", comfort)
-        gains[city_id] = best_today - av_comfort
+        best_today = min(today_candidates)
+        best_with_av = min(av_candidates)
+        gains[city_id] = best_today - best_with_av
 
     return gains
 
@@ -128,7 +143,9 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
 def compute_status_quo_access(driving_times, pt_times, comfort=None):
     """
     Compute status-quo accessibility (without AV).
-    = average of best(manual_drive, PT_comfort) across all cities.
+    = average of best(manual_drive, PT×comfort) across all cities.
+
+    Matches frontend recomputeScores logic: manual drive factor = 1.0.
     """
     if comfort is None:
         comfort = COMFORT
@@ -138,19 +155,14 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
         drive_s = driving_times.get(city_id)
         pt_s = pt_times.get(city_id)
 
+        candidates = []
         if drive_s is not None:
-            drive_min = drive_s / 60.0
-        else:
-            drive_min = None
-
+            candidates.append(drive_s / 60.0)  # manual drive: factor 1.0
         if pt_s is not None:
-            pt_min = (pt_s / 60.0) * comfort["oev_sitting_factor"]
-        else:
-            pt_min = None
+            candidates.append((pt_s / 60.0) * comfort["oev_sitting_factor"])
 
-        valid = [t for t in [drive_min, pt_min] if t is not None]
-        if valid:
-            times.append(min(valid))
+        if candidates:
+            times.append(min(candidates))
 
     return statistics.mean(times) if times else None
 
@@ -304,7 +316,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             "min_drive_s": min(drive_times_list) if drive_times_list else None,
             "min_pt_s": min(pt_times_list) if pt_times_list else None,
             # Accessibility gain per city (comfort-weighted minutes)
-            "gain_per_city": {k: round(v, 1) if v else None for k, v in gains.items()},
+            "gain_per_city": {k: round(v, 1) if v is not None else None for k, v in gains.items()},
             "best_city": best_city,
             # Price (from municipality)
             "chf_per_m2": price_data.get("chf_per_m2") if price_data else None,

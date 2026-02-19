@@ -52,13 +52,10 @@ SCORING_WEIGHTS = {
     "inherent_attractiveness": 0.50,
 }
 
-# Comfort factors
+# Comfort factors — must match DEFAULT_MODEL_PARAMS in frontend/src/App.jsx
 COMFORT = {
     "av_factor": 0.70,          # AV makes drive time 70% as burdensome
     "oev_sitting_factor": 0.70, # Sitting on train is 70% as burdensome
-    "wait_penalty_factor": 2.0, # Waiting feels 2x as long
-    "transfer_penalty_min": 10, # Each transfer adds 10 min perceived
-    "walk_factor": 1.75,        # Walking feels 1.75x as long
 }
 
 # Arrival time for commuter scenario

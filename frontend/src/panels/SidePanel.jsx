@@ -524,10 +524,9 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <thead>
           <tr>
             <th>City</th>
-            <th title="Raw driving time">Drive</th>
-            <th title="Raw public transport time (incl. walking to station)">PT</th>
-            <th title="Autonomous vehicle: drive time × AV comfort factor" style={{ color: 'var(--accent)' }}>AV</th>
-            <th title="Time saved: best today (min of drive, PT×comfort) minus AV time">Saved</th>
+            <th title="Felt time today: best of manual driving (1:1) or PT (×comfort factor)">Today</th>
+            <th title="Felt time with AV: best of AV driving (×AV factor) or PT (×comfort factor)">With AV</th>
+            <th title="Minutes saved: today minus with-AV (same formula used for scoring)">Saved</th>
           </tr>
         </thead>
         <tbody>
@@ -536,30 +535,38 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
             const ptS = ptTimes[id]
             const isEnabled = enabledSet.has(id)
 
-            // Compute comfort-weighted times live from current sliders
-            const driveMin = driveS != null ? driveS / 60 : null
-            const ptComfortMin = ptS != null ? (ptS / 60) * ptFactor : null
-            const avMin = driveS != null ? (driveS / 60) * avFactor : null
+            // Comfort-weighted times — same formula as recomputeScores in App.jsx
+            const driveMin = driveS != null ? driveS / 60 : null          // manual drive: factor 1.0
+            const ptComfortMin = ptS != null ? (ptS / 60) * ptFactor : null  // PT × comfort
+            const avDriveMin = driveS != null ? (driveS / 60) * avFactor : null  // AV drive × factor
 
             // Best option today = min(manual drive, PT×comfort)
-            const bestToday = driveMin != null && ptComfortMin != null
-              ? Math.min(driveMin, ptComfortMin)
-              : driveMin != null ? driveMin
-              : ptComfortMin
+            const todayCandidates = [driveMin, ptComfortMin].filter((v) => v != null)
+            const bestToday = todayCandidates.length > 0 ? Math.min(...todayCandidates) : null
 
-            // Gain = time saved by switching to AV
-            const gain = bestToday != null && avMin != null ? bestToday - avMin : null
+            // Best option with AV = min(AV drive, PT×comfort) — you still have PT as an option
+            const avCandidates = [avDriveMin, ptComfortMin].filter((v) => v != null)
+            const bestWithAV = avCandidates.length > 0 ? Math.min(...avCandidates) : null
+
+            // Saved = today - withAV (positive = AV saves time)
+            const saved = bestToday != null && bestWithAV != null ? bestToday - bestWithAV : null
 
             return (
               <tr key={id} className={isEnabled ? '' : 'row-disabled'}>
                 <th>{typeof name === 'string' ? name : name}</th>
-                <td>{formatTime(driveS)}</td>
-                <td>{formatTime(ptS)}</td>
-                <td style={{ color: 'var(--accent)' }}>
-                  {avMin != null ? `${Math.round(avMin)}m` : '—'}
+                <td title={driveMin != null && ptComfortMin != null
+                  ? `Drive ${Math.round(driveMin)}m vs PT ${Math.round(ptComfortMin)}m (felt)`
+                  : undefined}>
+                  {bestToday != null ? `${Math.round(bestToday)}m` : '—'}
                 </td>
-                <td className={gain > 0 ? 'positive' : gain < 0 ? 'negative' : ''}>
-                  {gain != null ? `${gain > 0 ? '+' : ''}${Math.round(gain)}m` : '—'}
+                <td title={avDriveMin != null && ptComfortMin != null
+                  ? `AV ${Math.round(avDriveMin)}m vs PT ${Math.round(ptComfortMin)}m (felt)`
+                  : undefined}
+                  style={{ color: 'var(--accent)' }}>
+                  {bestWithAV != null ? `${Math.round(bestWithAV)}m` : '—'}
+                </td>
+                <td className={saved > 0 ? 'positive' : saved < 0 ? 'negative' : ''}>
+                  {saved != null ? `${saved > 0 ? '+' : ''}${Math.round(saved)}m` : '—'}
                 </td>
               </tr>
             )
