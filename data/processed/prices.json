@@ -1,0 +1,8514 @@
+{
+  "0001": {
+    "chf_per_m2": 13531,
+    "type": "calibrated_estimate"
+  },
+  "0002": {
+    "chf_per_m2": 11074,
+    "type": "calibrated_estimate"
+  },
+  "0003": {
+    "chf_per_m2": 12532,
+    "type": "calibrated_estimate"
+  },
+  "0004": {
+    "chf_per_m2": 11602,
+    "type": "calibrated_estimate"
+  },
+  "0005": {
+    "chf_per_m2": 14089,
+    "type": "calibrated_estimate"
+  },
+  "0006": {
+    "chf_per_m2": 13067,
+    "type": "calibrated_estimate"
+  },
+  "0007": {
+    "chf_per_m2": 13744,
+    "type": "calibrated_estimate"
+  },
+  "0008": {
+    "chf_per_m2": 10779,
+    "type": "calibrated_estimate"
+  },
+  "0009": {
+    "chf_per_m2": 12268,
+    "type": "calibrated_estimate"
+  },
+  "0010": {
+    "chf_per_m2": 10787,
+    "type": "calibrated_estimate"
+  },
+  "0011": {
+    "chf_per_m2": 11631,
+    "type": "calibrated_estimate"
+  },
+  "0012": {
+    "chf_per_m2": 12638,
+    "type": "calibrated_estimate"
+  },
+  "0013": {
+    "chf_per_m2": 11690,
+    "type": "calibrated_estimate"
+  },
+  "0014": {
+    "chf_per_m2": 12475,
+    "type": "calibrated_estimate"
+  },
+  "0022": {
+    "chf_per_m2": 11759,
+    "type": "calibrated_estimate"
+  },
+  "0023": {
+    "chf_per_m2": 11505,
+    "type": "calibrated_estimate"
+  },
+  "0024": {
+    "chf_per_m2": 10184,
+    "type": "calibrated_estimate"
+  },
+  "0025": {
+    "chf_per_m2": 11558,
+    "type": "calibrated_estimate"
+  },
+  "0026": {
+    "chf_per_m2": 12052,
+    "type": "calibrated_estimate"
+  },
+  "0027": {
+    "chf_per_m2": 9620,
+    "type": "calibrated_estimate"
+  },
+  "0028": {
+    "chf_per_m2": 12313,
+    "type": "calibrated_estimate"
+  },
+  "0029": {
+    "chf_per_m2": 11909,
+    "type": "calibrated_estimate"
+  },
+  "0031": {
+    "chf_per_m2": 10323,
+    "type": "calibrated_estimate"
+  },
+  "0033": {
+    "chf_per_m2": 9957,
+    "type": "calibrated_estimate"
+  },
+  "0034": {
+    "chf_per_m2": 12843,
+    "type": "calibrated_estimate"
+  },
+  "0035": {
+    "chf_per_m2": 10638,
+    "type": "calibrated_estimate"
+  },
+  "0037": {
+    "chf_per_m2": 9662,
+    "type": "calibrated_estimate"
+  },
+  "0038": {
+    "chf_per_m2": 9904,
+    "type": "calibrated_estimate"
+  },
+  "0039": {
+    "chf_per_m2": 11967,
+    "type": "calibrated_estimate"
+  },
+  "0040": {
+    "chf_per_m2": 11511,
+    "type": "calibrated_estimate"
+  },
+  "0041": {
+    "chf_per_m2": 12080,
+    "type": "calibrated_estimate"
+  },
+  "0043": {
+    "chf_per_m2": 11913,
+    "type": "calibrated_estimate"
+  },
+  "0051": {
+    "chf_per_m2": 12223,
+    "type": "calibrated_estimate"
+  },
+  "0052": {
+    "chf_per_m2": 13975,
+    "type": "calibrated_estimate"
+  },
+  "0053": {
+    "chf_per_m2": 11420,
+    "type": "calibrated_estimate"
+  },
+  "0054": {
+    "chf_per_m2": 13110,
+    "type": "calibrated_estimate"
+  },
+  "0055": {
+    "chf_per_m2": 12813,
+    "type": "calibrated_estimate"
+  },
+  "0056": {
+    "chf_per_m2": 11937,
+    "type": "calibrated_estimate"
+  },
+  "0057": {
+    "chf_per_m2": 12695,
+    "type": "calibrated_estimate"
+  },
+  "0058": {
+    "chf_per_m2": 12103,
+    "type": "calibrated_estimate"
+  },
+  "0059": {
+    "chf_per_m2": 12749,
+    "type": "calibrated_estimate"
+  },
+  "0060": {
+    "chf_per_m2": 10582,
+    "type": "calibrated_estimate"
+  },
+  "0061": {
+    "chf_per_m2": 10724,
+    "type": "calibrated_estimate"
+  },
+  "0062": {
+    "chf_per_m2": 11707,
+    "type": "calibrated_estimate"
+  },
+  "0063": {
+    "chf_per_m2": 10384,
+    "type": "calibrated_estimate"
+  },
+  "0064": {
+    "chf_per_m2": 10630,
+    "type": "calibrated_estimate"
+  },
+  "0065": {
+    "chf_per_m2": 9901,
+    "type": "calibrated_estimate"
+  },
+  "0066": {
+    "chf_per_m2": 12489,
+    "type": "calibrated_estimate"
+  },
+  "0067": {
+    "chf_per_m2": 11956,
+    "type": "calibrated_estimate"
+  },
+  "0068": {
+    "chf_per_m2": 11147,
+    "type": "calibrated_estimate"
+  },
+  "0069": {
+    "chf_per_m2": 12892,
+    "type": "calibrated_estimate"
+  },
+  "0070": {
+    "chf_per_m2": 10701,
+    "type": "calibrated_estimate"
+  },
+  "0071": {
+    "chf_per_m2": 10781,
+    "type": "calibrated_estimate"
+  },
+  "0072": {
+    "chf_per_m2": 13819,
+    "type": "calibrated_estimate"
+  },
+  "0081": {
+    "chf_per_m2": 12717,
+    "type": "calibrated_estimate"
+  },
+  "0082": {
+    "chf_per_m2": 13059,
+    "type": "calibrated_estimate"
+  },
+  "0083": {
+    "chf_per_m2": 11613,
+    "type": "calibrated_estimate"
+  },
+  "0084": {
+    "chf_per_m2": 13986,
+    "type": "calibrated_estimate"
+  },
+  "0085": {
+    "chf_per_m2": 11588,
+    "type": "calibrated_estimate"
+  },
+  "0086": {
+    "chf_per_m2": 12246,
+    "type": "calibrated_estimate"
+  },
+  "0087": {
+    "chf_per_m2": 14711,
+    "type": "calibrated_estimate"
+  },
+  "0088": {
+    "chf_per_m2": 12815,
+    "type": "calibrated_estimate"
+  },
+  "0089": {
+    "chf_per_m2": 12660,
+    "type": "calibrated_estimate"
+  },
+  "0090": {
+    "chf_per_m2": 13544,
+    "type": "calibrated_estimate"
+  },
+  "0091": {
+    "chf_per_m2": 13585,
+    "type": "calibrated_estimate"
+  },
+  "0092": {
+    "chf_per_m2": 13624,
+    "type": "calibrated_estimate"
+  },
+  "0093": {
+    "chf_per_m2": 11321,
+    "type": "calibrated_estimate"
+  },
+  "0094": {
+    "chf_per_m2": 10875,
+    "type": "calibrated_estimate"
+  },
+  "0095": {
+    "chf_per_m2": 11942,
+    "type": "calibrated_estimate"
+  },
+  "0096": {
+    "chf_per_m2": 12356,
+    "type": "calibrated_estimate"
+  },
+  "0097": {
+    "chf_per_m2": 12064,
+    "type": "calibrated_estimate"
+  },
+  "0098": {
+    "chf_per_m2": 14032,
+    "type": "calibrated_estimate"
+  },
+  "0099": {
+    "chf_per_m2": 13777,
+    "type": "calibrated_estimate"
+  },
+  "0100": {
+    "chf_per_m2": 11383,
+    "type": "calibrated_estimate"
+  },
+  "0101": {
+    "chf_per_m2": 13033,
+    "type": "calibrated_estimate"
+  },
+  "0102": {
+    "chf_per_m2": 11602,
+    "type": "calibrated_estimate"
+  },
+  "0111": {
+    "chf_per_m2": 12939,
+    "type": "calibrated_estimate"
+  },
+  "0112": {
+    "chf_per_m2": 11737,
+    "type": "calibrated_estimate"
+  },
+  "0113": {
+    "chf_per_m2": 10857,
+    "type": "calibrated_estimate"
+  },
+  "0114": {
+    "chf_per_m2": 10384,
+    "type": "calibrated_estimate"
+  },
+  "0115": {
+    "chf_per_m2": 12320,
+    "type": "calibrated_estimate"
+  },
+  "0116": {
+    "chf_per_m2": 11263,
+    "type": "calibrated_estimate"
+  },
+  "0117": {
+    "chf_per_m2": 11961,
+    "type": "calibrated_estimate"
+  },
+  "0118": {
+    "chf_per_m2": 13025,
+    "type": "calibrated_estimate"
+  },
+  "0119": {
+    "chf_per_m2": 11658,
+    "type": "calibrated_estimate"
+  },
+  "0120": {
+    "chf_per_m2": 10435,
+    "type": "calibrated_estimate"
+  },
+  "0121": {
+    "chf_per_m2": 13627,
+    "type": "calibrated_estimate"
+  },
+  "0131": {
+    "chf_per_m2": 13620,
+    "type": "calibrated_estimate"
+  },
+  "0135": {
+    "chf_per_m2": 12117,
+    "type": "calibrated_estimate"
+  },
+  "0136": {
+    "chf_per_m2": 11338,
+    "type": "calibrated_estimate"
+  },
+  "0137": {
+    "chf_per_m2": 11546,
+    "type": "calibrated_estimate"
+  },
+  "0138": {
+    "chf_per_m2": 12613,
+    "type": "calibrated_estimate"
+  },
+  "0139": {
+    "chf_per_m2": 14685,
+    "type": "calibrated_estimate"
+  },
+  "0141": {
+    "chf_per_m2": 12906,
+    "type": "calibrated_estimate"
+  },
+  "0151": {
+    "chf_per_m2": 11577,
+    "type": "calibrated_estimate"
+  },
+  "0152": {
+    "chf_per_m2": 12615,
+    "type": "calibrated_estimate"
+  },
+  "0153": {
+    "chf_per_m2": 13840,
+    "type": "calibrated_estimate"
+  },
+  "0154": {
+    "chf_per_m2": 13569,
+    "type": "calibrated_estimate"
+  },
+  "0155": {
+    "chf_per_m2": 14156,
+    "type": "calibrated_estimate"
+  },
+  "0156": {
+    "chf_per_m2": 14177,
+    "type": "calibrated_estimate"
+  },
+  "0157": {
+    "chf_per_m2": 10523,
+    "type": "calibrated_estimate"
+  },
+  "0158": {
+    "chf_per_m2": 12995,
+    "type": "calibrated_estimate"
+  },
+  "0159": {
+    "chf_per_m2": 13239,
+    "type": "calibrated_estimate"
+  },
+  "0160": {
+    "chf_per_m2": 13588,
+    "type": "calibrated_estimate"
+  },
+  "0161": {
+    "chf_per_m2": 12872,
+    "type": "calibrated_estimate"
+  },
+  "0172": {
+    "chf_per_m2": 12310,
+    "type": "calibrated_estimate"
+  },
+  "0173": {
+    "chf_per_m2": 10224,
+    "type": "calibrated_estimate"
+  },
+  "0176": {
+    "chf_per_m2": 11164,
+    "type": "calibrated_estimate"
+  },
+  "0177": {
+    "chf_per_m2": 11569,
+    "type": "calibrated_estimate"
+  },
+  "0178": {
+    "chf_per_m2": 13031,
+    "type": "calibrated_estimate"
+  },
+  "0180": {
+    "chf_per_m2": 12415,
+    "type": "calibrated_estimate"
+  },
+  "0181": {
+    "chf_per_m2": 10448,
+    "type": "calibrated_estimate"
+  },
+  "0182": {
+    "chf_per_m2": 11240,
+    "type": "calibrated_estimate"
+  },
+  "0191": {
+    "chf_per_m2": 12221,
+    "type": "calibrated_estimate"
+  },
+  "0192": {
+    "chf_per_m2": 14158,
+    "type": "calibrated_estimate"
+  },
+  "0193": {
+    "chf_per_m2": 14889,
+    "type": "calibrated_estimate"
+  },
+  "0194": {
+    "chf_per_m2": 11958,
+    "type": "calibrated_estimate"
+  },
+  "0195": {
+    "chf_per_m2": 13590,
+    "type": "calibrated_estimate"
+  },
+  "0196": {
+    "chf_per_m2": 12812,
+    "type": "calibrated_estimate"
+  },
+  "0197": {
+    "chf_per_m2": 11622,
+    "type": "calibrated_estimate"
+  },
+  "0198": {
+    "chf_per_m2": 13308,
+    "type": "calibrated_estimate"
+  },
+  "0199": {
+    "chf_per_m2": 12481,
+    "type": "calibrated_estimate"
+  },
+  "0200": {
+    "chf_per_m2": 13712,
+    "type": "calibrated_estimate"
+  },
+  "0211": {
+    "chf_per_m2": 10916,
+    "type": "calibrated_estimate"
+  },
+  "0213": {
+    "chf_per_m2": 9249,
+    "type": "calibrated_estimate"
+  },
+  "0214": {
+    "chf_per_m2": 10163,
+    "type": "calibrated_estimate"
+  },
+  "0215": {
+    "chf_per_m2": 9557,
+    "type": "calibrated_estimate"
+  },
+  "0216": {
+    "chf_per_m2": 12073,
+    "type": "calibrated_estimate"
+  },
+  "0218": {
+    "chf_per_m2": 12043,
+    "type": "calibrated_estimate"
+  },
+  "0219": {
+    "chf_per_m2": 11729,
+    "type": "calibrated_estimate"
+  },
+  "0220": {
+    "chf_per_m2": 10233,
+    "type": "calibrated_estimate"
+  },
+  "0221": {
+    "chf_per_m2": 9250,
+    "type": "calibrated_estimate"
+  },
+  "0223": {
+    "chf_per_m2": 12014,
+    "type": "calibrated_estimate"
+  },
+  "0224": {
+    "chf_per_m2": 12445,
+    "type": "calibrated_estimate"
+  },
+  "0225": {
+    "chf_per_m2": 9384,
+    "type": "calibrated_estimate"
+  },
+  "0226": {
+    "chf_per_m2": 10812,
+    "type": "calibrated_estimate"
+  },
+  "0227": {
+    "chf_per_m2": 9135,
+    "type": "calibrated_estimate"
+  },
+  "0228": {
+    "chf_per_m2": 11976,
+    "type": "calibrated_estimate"
+  },
+  "0230": {
+    "chf_per_m2": 11087,
+    "type": "calibrated_estimate"
+  },
+  "0231": {
+    "chf_per_m2": 9730,
+    "type": "calibrated_estimate"
+  },
+  "0241": {
+    "chf_per_m2": 13269,
+    "type": "calibrated_estimate"
+  },
+  "0242": {
+    "chf_per_m2": 13702,
+    "type": "calibrated_estimate"
+  },
+  "0243": {
+    "chf_per_m2": 12206,
+    "type": "calibrated_estimate"
+  },
+  "0244": {
+    "chf_per_m2": 14594,
+    "type": "calibrated_estimate"
+  },
+  "0245": {
+    "chf_per_m2": 13359,
+    "type": "calibrated_estimate"
+  },
+  "0246": {
+    "chf_per_m2": 11835,
+    "type": "calibrated_estimate"
+  },
+  "0247": {
+    "chf_per_m2": 13801,
+    "type": "calibrated_estimate"
+  },
+  "0248": {
+    "chf_per_m2": 14765,
+    "type": "calibrated_estimate"
+  },
+  "0249": {
+    "chf_per_m2": 12215,
+    "type": "calibrated_estimate"
+  },
+  "0250": {
+    "chf_per_m2": 12661,
+    "type": "calibrated_estimate"
+  },
+  "0251": {
+    "chf_per_m2": 15242,
+    "type": "calibrated_estimate"
+  },
+  "0261": {
+    "chf_per_m2": 15294,
+    "type": "calibrated_estimate"
+  },
+  "0291": {
+    "chf_per_m2": 10758,
+    "type": "calibrated_estimate"
+  },
+  "0292": {
+    "chf_per_m2": 11064,
+    "type": "calibrated_estimate"
+  },
+  "0293": {
+    "chf_per_m2": 10859,
+    "type": "calibrated_estimate"
+  },
+  "0294": {
+    "chf_per_m2": 9988,
+    "type": "calibrated_estimate"
+  },
+  "0295": {
+    "chf_per_m2": 12047,
+    "type": "calibrated_estimate"
+  },
+  "0296": {
+    "chf_per_m2": 11630,
+    "type": "calibrated_estimate"
+  },
+  "0297": {
+    "chf_per_m2": 10391,
+    "type": "calibrated_estimate"
+  },
+  "0298": {
+    "chf_per_m2": 9811,
+    "type": "calibrated_estimate"
+  },
+  "0301": {
+    "chf_per_m2": 5760,
+    "type": "calibrated_estimate"
+  },
+  "0302": {
+    "chf_per_m2": 6826,
+    "type": "calibrated_estimate"
+  },
+  "0303": {
+    "chf_per_m2": 6075,
+    "type": "calibrated_estimate"
+  },
+  "0304": {
+    "chf_per_m2": 7524,
+    "type": "calibrated_estimate"
+  },
+  "0305": {
+    "chf_per_m2": 7092,
+    "type": "calibrated_estimate"
+  },
+  "0306": {
+    "chf_per_m2": 5581,
+    "type": "calibrated_estimate"
+  },
+  "0307": {
+    "chf_per_m2": 6476,
+    "type": "calibrated_estimate"
+  },
+  "0309": {
+    "chf_per_m2": 7200,
+    "type": "calibrated_estimate"
+  },
+  "0310": {
+    "chf_per_m2": 6253,
+    "type": "calibrated_estimate"
+  },
+  "0311": {
+    "chf_per_m2": 6095,
+    "type": "calibrated_estimate"
+  },
+  "0312": {
+    "chf_per_m2": 7693,
+    "type": "calibrated_estimate"
+  },
+  "0321": {
+    "chf_per_m2": 8101,
+    "type": "calibrated_estimate"
+  },
+  "0322": {
+    "chf_per_m2": 7947,
+    "type": "calibrated_estimate"
+  },
+  "0323": {
+    "chf_per_m2": 8532,
+    "type": "calibrated_estimate"
+  },
+  "0324": {
+    "chf_per_m2": 8587,
+    "type": "calibrated_estimate"
+  },
+  "0325": {
+    "chf_per_m2": 7299,
+    "type": "calibrated_estimate"
+  },
+  "0326": {
+    "chf_per_m2": 7123,
+    "type": "calibrated_estimate"
+  },
+  "0329": {
+    "chf_per_m2": 7848,
+    "type": "calibrated_estimate"
+  },
+  "0331": {
+    "chf_per_m2": 7773,
+    "type": "calibrated_estimate"
+  },
+  "0332": {
+    "chf_per_m2": 7864,
+    "type": "calibrated_estimate"
+  },
+  "0333": {
+    "chf_per_m2": 8660,
+    "type": "calibrated_estimate"
+  },
+  "0335": {
+    "chf_per_m2": 8158,
+    "type": "calibrated_estimate"
+  },
+  "0336": {
+    "chf_per_m2": 9224,
+    "type": "calibrated_estimate"
+  },
+  "0337": {
+    "chf_per_m2": 7092,
+    "type": "calibrated_estimate"
+  },
+  "0338": {
+    "chf_per_m2": 7724,
+    "type": "calibrated_estimate"
+  },
+  "0339": {
+    "chf_per_m2": 7534,
+    "type": "calibrated_estimate"
+  },
+  "0340": {
+    "chf_per_m2": 8744,
+    "type": "calibrated_estimate"
+  },
+  "0341": {
+    "chf_per_m2": 7360,
+    "type": "calibrated_estimate"
+  },
+  "0342": {
+    "chf_per_m2": 7131,
+    "type": "calibrated_estimate"
+  },
+  "0344": {
+    "chf_per_m2": 7705,
+    "type": "calibrated_estimate"
+  },
+  "0345": {
+    "chf_per_m2": 7862,
+    "type": "calibrated_estimate"
+  },
+  "0351": {
+    "chf_per_m2": 6726,
+    "type": "calibrated_estimate"
+  },
+  "0352": {
+    "chf_per_m2": 6607,
+    "type": "calibrated_estimate"
+  },
+  "0353": {
+    "chf_per_m2": 8088,
+    "type": "calibrated_estimate"
+  },
+  "0354": {
+    "chf_per_m2": 6979,
+    "type": "calibrated_estimate"
+  },
+  "0355": {
+    "chf_per_m2": 7978,
+    "type": "calibrated_estimate"
+  },
+  "0356": {
+    "chf_per_m2": 7288,
+    "type": "calibrated_estimate"
+  },
+  "0357": {
+    "chf_per_m2": 6243,
+    "type": "calibrated_estimate"
+  },
+  "0358": {
+    "chf_per_m2": 8236,
+    "type": "calibrated_estimate"
+  },
+  "0359": {
+    "chf_per_m2": 7867,
+    "type": "calibrated_estimate"
+  },
+  "0360": {
+    "chf_per_m2": 8063,
+    "type": "calibrated_estimate"
+  },
+  "0361": {
+    "chf_per_m2": 8050,
+    "type": "calibrated_estimate"
+  },
+  "0362": {
+    "chf_per_m2": 7915,
+    "type": "calibrated_estimate"
+  },
+  "0363": {
+    "chf_per_m2": 6461,
+    "type": "calibrated_estimate"
+  },
+  "0371": {
+    "chf_per_m2": 6036,
+    "type": "calibrated_estimate"
+  },
+  "0372": {
+    "chf_per_m2": 5548,
+    "type": "calibrated_estimate"
+  },
+  "0381": {
+    "chf_per_m2": 6475,
+    "type": "calibrated_estimate"
+  },
+  "0382": {
+    "chf_per_m2": 5527,
+    "type": "calibrated_estimate"
+  },
+  "0383": {
+    "chf_per_m2": 6212,
+    "type": "calibrated_estimate"
+  },
+  "0385": {
+    "chf_per_m2": 7428,
+    "type": "calibrated_estimate"
+  },
+  "0386": {
+    "chf_per_m2": 5920,
+    "type": "calibrated_estimate"
+  },
+  "0387": {
+    "chf_per_m2": 7023,
+    "type": "calibrated_estimate"
+  },
+  "0388": {
+    "chf_per_m2": 6676,
+    "type": "calibrated_estimate"
+  },
+  "0389": {
+    "chf_per_m2": 6182,
+    "type": "calibrated_estimate"
+  },
+  "0390": {
+    "chf_per_m2": 7264,
+    "type": "calibrated_estimate"
+  },
+  "0391": {
+    "chf_per_m2": 7591,
+    "type": "calibrated_estimate"
+  },
+  "0392": {
+    "chf_per_m2": 6433,
+    "type": "calibrated_estimate"
+  },
+  "0393": {
+    "chf_per_m2": 7028,
+    "type": "calibrated_estimate"
+  },
+  "0394": {
+    "chf_per_m2": 5977,
+    "type": "calibrated_estimate"
+  },
+  "0401": {
+    "chf_per_m2": 6557,
+    "type": "calibrated_estimate"
+  },
+  "0402": {
+    "chf_per_m2": 8550,
+    "type": "calibrated_estimate"
+  },
+  "0403": {
+    "chf_per_m2": 7257,
+    "type": "calibrated_estimate"
+  },
+  "0404": {
+    "chf_per_m2": 7487,
+    "type": "calibrated_estimate"
+  },
+  "0405": {
+    "chf_per_m2": 7941,
+    "type": "calibrated_estimate"
+  },
+  "0406": {
+    "chf_per_m2": 6441,
+    "type": "calibrated_estimate"
+  },
+  "0407": {
+    "chf_per_m2": 7710,
+    "type": "calibrated_estimate"
+  },
+  "0408": {
+    "chf_per_m2": 7533,
+    "type": "calibrated_estimate"
+  },
+  "0409": {
+    "chf_per_m2": 7803,
+    "type": "calibrated_estimate"
+  },
+  "0410": {
+    "chf_per_m2": 6718,
+    "type": "calibrated_estimate"
+  },
+  "0411": {
+    "chf_per_m2": 7992,
+    "type": "calibrated_estimate"
+  },
+  "0412": {
+    "chf_per_m2": 6443,
+    "type": "calibrated_estimate"
+  },
+  "0413": {
+    "chf_per_m2": 6700,
+    "type": "calibrated_estimate"
+  },
+  "0414": {
+    "chf_per_m2": 7309,
+    "type": "calibrated_estimate"
+  },
+  "0415": {
+    "chf_per_m2": 7422,
+    "type": "calibrated_estimate"
+  },
+  "0418": {
+    "chf_per_m2": 6549,
+    "type": "calibrated_estimate"
+  },
+  "0420": {
+    "chf_per_m2": 6221,
+    "type": "calibrated_estimate"
+  },
+  "0421": {
+    "chf_per_m2": 8358,
+    "type": "calibrated_estimate"
+  },
+  "0422": {
+    "chf_per_m2": 6530,
+    "type": "calibrated_estimate"
+  },
+  "0423": {
+    "chf_per_m2": 7652,
+    "type": "calibrated_estimate"
+  },
+  "0424": {
+    "chf_per_m2": 7877,
+    "type": "calibrated_estimate"
+  },
+  "0431": {
+    "chf_per_m2": 6152,
+    "type": "calibrated_estimate"
+  },
+  "0432": {
+    "chf_per_m2": 6756,
+    "type": "calibrated_estimate"
+  },
+  "0433": {
+    "chf_per_m2": 6367,
+    "type": "calibrated_estimate"
+  },
+  "0434": {
+    "chf_per_m2": 7221,
+    "type": "calibrated_estimate"
+  },
+  "0435": {
+    "chf_per_m2": 6289,
+    "type": "calibrated_estimate"
+  },
+  "0437": {
+    "chf_per_m2": 6860,
+    "type": "calibrated_estimate"
+  },
+  "0438": {
+    "chf_per_m2": 5658,
+    "type": "calibrated_estimate"
+  },
+  "0441": {
+    "chf_per_m2": 6700,
+    "type": "calibrated_estimate"
+  },
+  "0442": {
+    "chf_per_m2": 6742,
+    "type": "calibrated_estimate"
+  },
+  "0443": {
+    "chf_per_m2": 6317,
+    "type": "calibrated_estimate"
+  },
+  "0444": {
+    "chf_per_m2": 5904,
+    "type": "calibrated_estimate"
+  },
+  "0445": {
+    "chf_per_m2": 7314,
+    "type": "calibrated_estimate"
+  },
+  "0446": {
+    "chf_per_m2": 5610,
+    "type": "calibrated_estimate"
+  },
+  "0448": {
+    "chf_per_m2": 6567,
+    "type": "calibrated_estimate"
+  },
+  "0449": {
+    "chf_per_m2": 7208,
+    "type": "calibrated_estimate"
+  },
+  "0450": {
+    "chf_per_m2": 7146,
+    "type": "calibrated_estimate"
+  },
+  "0491": {
+    "chf_per_m2": 5797,
+    "type": "calibrated_estimate"
+  },
+  "0492": {
+    "chf_per_m2": 6104,
+    "type": "calibrated_estimate"
+  },
+  "0493": {
+    "chf_per_m2": 6176,
+    "type": "calibrated_estimate"
+  },
+  "0494": {
+    "chf_per_m2": 7616,
+    "type": "calibrated_estimate"
+  },
+  "0495": {
+    "chf_per_m2": 7613,
+    "type": "calibrated_estimate"
+  },
+  "0496": {
+    "chf_per_m2": 7573,
+    "type": "calibrated_estimate"
+  },
+  "0497": {
+    "chf_per_m2": 6290,
+    "type": "calibrated_estimate"
+  },
+  "0498": {
+    "chf_per_m2": 6077,
+    "type": "calibrated_estimate"
+  },
+  "0499": {
+    "chf_per_m2": 7235,
+    "type": "calibrated_estimate"
+  },
+  "0500": {
+    "chf_per_m2": 7125,
+    "type": "calibrated_estimate"
+  },
+  "0501": {
+    "chf_per_m2": 6970,
+    "type": "calibrated_estimate"
+  },
+  "0502": {
+    "chf_per_m2": 7623,
+    "type": "calibrated_estimate"
+  },
+  "0533": {
+    "chf_per_m2": 7237,
+    "type": "calibrated_estimate"
+  },
+  "0535": {
+    "chf_per_m2": 5962,
+    "type": "calibrated_estimate"
+  },
+  "0538": {
+    "chf_per_m2": 7588,
+    "type": "calibrated_estimate"
+  },
+  "0540": {
+    "chf_per_m2": 6570,
+    "type": "calibrated_estimate"
+  },
+  "0541": {
+    "chf_per_m2": 7275,
+    "type": "calibrated_estimate"
+  },
+  "0543": {
+    "chf_per_m2": 8006,
+    "type": "calibrated_estimate"
+  },
+  "0544": {
+    "chf_per_m2": 6318,
+    "type": "calibrated_estimate"
+  },
+  "0546": {
+    "chf_per_m2": 6238,
+    "type": "calibrated_estimate"
+  },
+  "0551": {
+    "chf_per_m2": 6237,
+    "type": "calibrated_estimate"
+  },
+  "0552": {
+    "chf_per_m2": 7402,
+    "type": "calibrated_estimate"
+  },
+  "0553": {
+    "chf_per_m2": 6551,
+    "type": "calibrated_estimate"
+  },
+  "0554": {
+    "chf_per_m2": 7519,
+    "type": "calibrated_estimate"
+  },
+  "0556": {
+    "chf_per_m2": 7815,
+    "type": "calibrated_estimate"
+  },
+  "0557": {
+    "chf_per_m2": 6348,
+    "type": "calibrated_estimate"
+  },
+  "0561": {
+    "chf_per_m2": 7827,
+    "type": "calibrated_estimate"
+  },
+  "0562": {
+    "chf_per_m2": 6738,
+    "type": "calibrated_estimate"
+  },
+  "0563": {
+    "chf_per_m2": 7562,
+    "type": "calibrated_estimate"
+  },
+  "0564": {
+    "chf_per_m2": 8092,
+    "type": "calibrated_estimate"
+  },
+  "0565": {
+    "chf_per_m2": 8473,
+    "type": "calibrated_estimate"
+  },
+  "0566": {
+    "chf_per_m2": 6358,
+    "type": "calibrated_estimate"
+  },
+  "0567": {
+    "chf_per_m2": 7080,
+    "type": "calibrated_estimate"
+  },
+  "0571": {
+    "chf_per_m2": 6806,
+    "type": "calibrated_estimate"
+  },
+  "0572": {
+    "chf_per_m2": 6301,
+    "type": "calibrated_estimate"
+  },
+  "0573": {
+    "chf_per_m2": 8172,
+    "type": "calibrated_estimate"
+  },
+  "0574": {
+    "chf_per_m2": 8670,
+    "type": "calibrated_estimate"
+  },
+  "0575": {
+    "chf_per_m2": 6778,
+    "type": "calibrated_estimate"
+  },
+  "0576": {
+    "chf_per_m2": 8451,
+    "type": "calibrated_estimate"
+  },
+  "0577": {
+    "chf_per_m2": 7477,
+    "type": "calibrated_estimate"
+  },
+  "0578": {
+    "chf_per_m2": 7242,
+    "type": "calibrated_estimate"
+  },
+  "0579": {
+    "chf_per_m2": 6305,
+    "type": "calibrated_estimate"
+  },
+  "0580": {
+    "chf_per_m2": 7265,
+    "type": "calibrated_estimate"
+  },
+  "0581": {
+    "chf_per_m2": 8193,
+    "type": "calibrated_estimate"
+  },
+  "0582": {
+    "chf_per_m2": 8389,
+    "type": "calibrated_estimate"
+  },
+  "0584": {
+    "chf_per_m2": 7868,
+    "type": "calibrated_estimate"
+  },
+  "0585": {
+    "chf_per_m2": 8003,
+    "type": "calibrated_estimate"
+  },
+  "0586": {
+    "chf_per_m2": 7600,
+    "type": "calibrated_estimate"
+  },
+  "0587": {
+    "chf_per_m2": 6578,
+    "type": "calibrated_estimate"
+  },
+  "0588": {
+    "chf_per_m2": 6594,
+    "type": "calibrated_estimate"
+  },
+  "0589": {
+    "chf_per_m2": 7047,
+    "type": "calibrated_estimate"
+  },
+  "0590": {
+    "chf_per_m2": 8262,
+    "type": "calibrated_estimate"
+  },
+  "0591": {
+    "chf_per_m2": 7958,
+    "type": "calibrated_estimate"
+  },
+  "0592": {
+    "chf_per_m2": 9189,
+    "type": "calibrated_estimate"
+  },
+  "0593": {
+    "chf_per_m2": 8204,
+    "type": "calibrated_estimate"
+  },
+  "0594": {
+    "chf_per_m2": 6703,
+    "type": "calibrated_estimate"
+  },
+  "0602": {
+    "chf_per_m2": 6648,
+    "type": "calibrated_estimate"
+  },
+  "0603": {
+    "chf_per_m2": 6318,
+    "type": "calibrated_estimate"
+  },
+  "0605": {
+    "chf_per_m2": 7842,
+    "type": "calibrated_estimate"
+  },
+  "0606": {
+    "chf_per_m2": 7965,
+    "type": "calibrated_estimate"
+  },
+  "0607": {
+    "chf_per_m2": 6989,
+    "type": "calibrated_estimate"
+  },
+  "0608": {
+    "chf_per_m2": 7436,
+    "type": "calibrated_estimate"
+  },
+  "0609": {
+    "chf_per_m2": 6434,
+    "type": "calibrated_estimate"
+  },
+  "0610": {
+    "chf_per_m2": 8059,
+    "type": "calibrated_estimate"
+  },
+  "0611": {
+    "chf_per_m2": 8083,
+    "type": "calibrated_estimate"
+  },
+  "0612": {
+    "chf_per_m2": 8199,
+    "type": "calibrated_estimate"
+  },
+  "0613": {
+    "chf_per_m2": 7870,
+    "type": "calibrated_estimate"
+  },
+  "0614": {
+    "chf_per_m2": 8058,
+    "type": "calibrated_estimate"
+  },
+  "0615": {
+    "chf_per_m2": 6169,
+    "type": "calibrated_estimate"
+  },
+  "0616": {
+    "chf_per_m2": 7673,
+    "type": "calibrated_estimate"
+  },
+  "0617": {
+    "chf_per_m2": 6835,
+    "type": "calibrated_estimate"
+  },
+  "0619": {
+    "chf_per_m2": 8131,
+    "type": "calibrated_estimate"
+  },
+  "0620": {
+    "chf_per_m2": 7861,
+    "type": "calibrated_estimate"
+  },
+  "0622": {
+    "chf_per_m2": 7913,
+    "type": "calibrated_estimate"
+  },
+  "0623": {
+    "chf_per_m2": 7830,
+    "type": "calibrated_estimate"
+  },
+  "0626": {
+    "chf_per_m2": 6661,
+    "type": "calibrated_estimate"
+  },
+  "0627": {
+    "chf_per_m2": 7777,
+    "type": "calibrated_estimate"
+  },
+  "0628": {
+    "chf_per_m2": 6358,
+    "type": "calibrated_estimate"
+  },
+  "0629": {
+    "chf_per_m2": 8018,
+    "type": "calibrated_estimate"
+  },
+  "0630": {
+    "chf_per_m2": 7939,
+    "type": "calibrated_estimate"
+  },
+  "0632": {
+    "chf_per_m2": 6573,
+    "type": "calibrated_estimate"
+  },
+  "0662": {
+    "chf_per_m2": 7625,
+    "type": "calibrated_estimate"
+  },
+  "0663": {
+    "chf_per_m2": 7027,
+    "type": "calibrated_estimate"
+  },
+  "0665": {
+    "chf_per_m2": 6485,
+    "type": "calibrated_estimate"
+  },
+  "0666": {
+    "chf_per_m2": 7661,
+    "type": "calibrated_estimate"
+  },
+  "0667": {
+    "chf_per_m2": 6474,
+    "type": "calibrated_estimate"
+  },
+  "0668": {
+    "chf_per_m2": 6045,
+    "type": "calibrated_estimate"
+  },
+  "0669": {
+    "chf_per_m2": 6403,
+    "type": "calibrated_estimate"
+  },
+  "0670": {
+    "chf_per_m2": 6775,
+    "type": "calibrated_estimate"
+  },
+  "0671": {
+    "chf_per_m2": 7636,
+    "type": "calibrated_estimate"
+  },
+  "0681": {
+    "chf_per_m2": 7860,
+    "type": "calibrated_estimate"
+  },
+  "0683": {
+    "chf_per_m2": 6183,
+    "type": "calibrated_estimate"
+  },
+  "0687": {
+    "chf_per_m2": 7316,
+    "type": "calibrated_estimate"
+  },
+  "0690": {
+    "chf_per_m2": 6430,
+    "type": "calibrated_estimate"
+  },
+  "0691": {
+    "chf_per_m2": 7970,
+    "type": "calibrated_estimate"
+  },
+  "0692": {
+    "chf_per_m2": 6891,
+    "type": "calibrated_estimate"
+  },
+  "0694": {
+    "chf_per_m2": 7826,
+    "type": "calibrated_estimate"
+  },
+  "0696": {
+    "chf_per_m2": 5655,
+    "type": "calibrated_estimate"
+  },
+  "0700": {
+    "chf_per_m2": 7728,
+    "type": "calibrated_estimate"
+  },
+  "0701": {
+    "chf_per_m2": 6061,
+    "type": "calibrated_estimate"
+  },
+  "0703": {
+    "chf_per_m2": 7217,
+    "type": "calibrated_estimate"
+  },
+  "0704": {
+    "chf_per_m2": 6417,
+    "type": "calibrated_estimate"
+  },
+  "0706": {
+    "chf_per_m2": 5684,
+    "type": "calibrated_estimate"
+  },
+  "0707": {
+    "chf_per_m2": 6310,
+    "type": "calibrated_estimate"
+  },
+  "0708": {
+    "chf_per_m2": 8148,
+    "type": "calibrated_estimate"
+  },
+  "0709": {
+    "chf_per_m2": 7078,
+    "type": "calibrated_estimate"
+  },
+  "0711": {
+    "chf_per_m2": 6704,
+    "type": "calibrated_estimate"
+  },
+  "0713": {
+    "chf_per_m2": 6357,
+    "type": "calibrated_estimate"
+  },
+  "0715": {
+    "chf_per_m2": 6336,
+    "type": "calibrated_estimate"
+  },
+  "0716": {
+    "chf_per_m2": 6663,
+    "type": "calibrated_estimate"
+  },
+  "0717": {
+    "chf_per_m2": 5926,
+    "type": "calibrated_estimate"
+  },
+  "0723": {
+    "chf_per_m2": 6948,
+    "type": "calibrated_estimate"
+  },
+  "0724": {
+    "chf_per_m2": 5526,
+    "type": "calibrated_estimate"
+  },
+  "0726": {
+    "chf_per_m2": 7180,
+    "type": "calibrated_estimate"
+  },
+  "0731": {
+    "chf_per_m2": 6201,
+    "type": "calibrated_estimate"
+  },
+  "0732": {
+    "chf_per_m2": 6509,
+    "type": "calibrated_estimate"
+  },
+  "0733": {
+    "chf_per_m2": 6527,
+    "type": "calibrated_estimate"
+  },
+  "0734": {
+    "chf_per_m2": 6689,
+    "type": "calibrated_estimate"
+  },
+  "0735": {
+    "chf_per_m2": 6082,
+    "type": "calibrated_estimate"
+  },
+  "0736": {
+    "chf_per_m2": 5637,
+    "type": "calibrated_estimate"
+  },
+  "0737": {
+    "chf_per_m2": 6572,
+    "type": "calibrated_estimate"
+  },
+  "0738": {
+    "chf_per_m2": 5859,
+    "type": "calibrated_estimate"
+  },
+  "0739": {
+    "chf_per_m2": 5729,
+    "type": "calibrated_estimate"
+  },
+  "0740": {
+    "chf_per_m2": 7060,
+    "type": "calibrated_estimate"
+  },
+  "0741": {
+    "chf_per_m2": 6641,
+    "type": "calibrated_estimate"
+  },
+  "0742": {
+    "chf_per_m2": 5890,
+    "type": "calibrated_estimate"
+  },
+  "0743": {
+    "chf_per_m2": 5690,
+    "type": "calibrated_estimate"
+  },
+  "0744": {
+    "chf_per_m2": 6004,
+    "type": "calibrated_estimate"
+  },
+  "0745": {
+    "chf_per_m2": 5902,
+    "type": "calibrated_estimate"
+  },
+  "0746": {
+    "chf_per_m2": 5874,
+    "type": "calibrated_estimate"
+  },
+  "0747": {
+    "chf_per_m2": 5568,
+    "type": "calibrated_estimate"
+  },
+  "0748": {
+    "chf_per_m2": 6089,
+    "type": "calibrated_estimate"
+  },
+  "0749": {
+    "chf_per_m2": 7027,
+    "type": "calibrated_estimate"
+  },
+  "0750": {
+    "chf_per_m2": 6506,
+    "type": "calibrated_estimate"
+  },
+  "0751": {
+    "chf_per_m2": 7164,
+    "type": "calibrated_estimate"
+  },
+  "0754": {
+    "chf_per_m2": 6679,
+    "type": "calibrated_estimate"
+  },
+  "0755": {
+    "chf_per_m2": 5860,
+    "type": "calibrated_estimate"
+  },
+  "0756": {
+    "chf_per_m2": 6353,
+    "type": "calibrated_estimate"
+  },
+  "0761": {
+    "chf_per_m2": 6329,
+    "type": "calibrated_estimate"
+  },
+  "0762": {
+    "chf_per_m2": 7073,
+    "type": "calibrated_estimate"
+  },
+  "0763": {
+    "chf_per_m2": 7304,
+    "type": "calibrated_estimate"
+  },
+  "0766": {
+    "chf_per_m2": 7658,
+    "type": "calibrated_estimate"
+  },
+  "0767": {
+    "chf_per_m2": 7775,
+    "type": "calibrated_estimate"
+  },
+  "0768": {
+    "chf_per_m2": 7117,
+    "type": "calibrated_estimate"
+  },
+  "0769": {
+    "chf_per_m2": 7350,
+    "type": "calibrated_estimate"
+  },
+  "0770": {
+    "chf_per_m2": 6764,
+    "type": "calibrated_estimate"
+  },
+  "0782": {
+    "chf_per_m2": 7920,
+    "type": "calibrated_estimate"
+  },
+  "0783": {
+    "chf_per_m2": 9933,
+    "type": "calibrated_estimate"
+  },
+  "0784": {
+    "chf_per_m2": 9733,
+    "type": "calibrated_estimate"
+  },
+  "0785": {
+    "chf_per_m2": 7918,
+    "type": "calibrated_estimate"
+  },
+  "0786": {
+    "chf_per_m2": 7006,
+    "type": "calibrated_estimate"
+  },
+  "0791": {
+    "chf_per_m2": 7522,
+    "type": "calibrated_estimate"
+  },
+  "0792": {
+    "chf_per_m2": 8521,
+    "type": "calibrated_estimate"
+  },
+  "0793": {
+    "chf_per_m2": 7209,
+    "type": "calibrated_estimate"
+  },
+  "0794": {
+    "chf_per_m2": 8282,
+    "type": "calibrated_estimate"
+  },
+  "0841": {
+    "chf_per_m2": 9105,
+    "type": "calibrated_estimate"
+  },
+  "0842": {
+    "chf_per_m2": 8781,
+    "type": "calibrated_estimate"
+  },
+  "0843": {
+    "chf_per_m2": 7135,
+    "type": "calibrated_estimate"
+  },
+  "0852": {
+    "chf_per_m2": 6600,
+    "type": "calibrated_estimate"
+  },
+  "0853": {
+    "chf_per_m2": 6288,
+    "type": "calibrated_estimate"
+  },
+  "0855": {
+    "chf_per_m2": 6672,
+    "type": "calibrated_estimate"
+  },
+  "0861": {
+    "chf_per_m2": 7171,
+    "type": "calibrated_estimate"
+  },
+  "0863": {
+    "chf_per_m2": 8043,
+    "type": "calibrated_estimate"
+  },
+  "0866": {
+    "chf_per_m2": 6336,
+    "type": "calibrated_estimate"
+  },
+  "0867": {
+    "chf_per_m2": 7121,
+    "type": "calibrated_estimate"
+  },
+  "0868": {
+    "chf_per_m2": 7556,
+    "type": "calibrated_estimate"
+  },
+  "0869": {
+    "chf_per_m2": 6591,
+    "type": "calibrated_estimate"
+  },
+  "0870": {
+    "chf_per_m2": 7635,
+    "type": "calibrated_estimate"
+  },
+  "0872": {
+    "chf_per_m2": 7245,
+    "type": "calibrated_estimate"
+  },
+  "0877": {
+    "chf_per_m2": 6676,
+    "type": "calibrated_estimate"
+  },
+  "0879": {
+    "chf_per_m2": 7615,
+    "type": "calibrated_estimate"
+  },
+  "0880": {
+    "chf_per_m2": 6165,
+    "type": "calibrated_estimate"
+  },
+  "0883": {
+    "chf_per_m2": 7841,
+    "type": "calibrated_estimate"
+  },
+  "0884": {
+    "chf_per_m2": 7824,
+    "type": "calibrated_estimate"
+  },
+  "0885": {
+    "chf_per_m2": 6439,
+    "type": "calibrated_estimate"
+  },
+  "0886": {
+    "chf_per_m2": 7154,
+    "type": "calibrated_estimate"
+  },
+  "0888": {
+    "chf_per_m2": 6514,
+    "type": "calibrated_estimate"
+  },
+  "0889": {
+    "chf_per_m2": 8253,
+    "type": "calibrated_estimate"
+  },
+  "0901": {
+    "chf_per_m2": 7858,
+    "type": "calibrated_estimate"
+  },
+  "0902": {
+    "chf_per_m2": 6770,
+    "type": "calibrated_estimate"
+  },
+  "0903": {
+    "chf_per_m2": 7093,
+    "type": "calibrated_estimate"
+  },
+  "0904": {
+    "chf_per_m2": 8059,
+    "type": "calibrated_estimate"
+  },
+  "0905": {
+    "chf_per_m2": 7511,
+    "type": "calibrated_estimate"
+  },
+  "0906": {
+    "chf_per_m2": 8069,
+    "type": "calibrated_estimate"
+  },
+  "0907": {
+    "chf_per_m2": 8032,
+    "type": "calibrated_estimate"
+  },
+  "0908": {
+    "chf_per_m2": 9213,
+    "type": "calibrated_estimate"
+  },
+  "0909": {
+    "chf_per_m2": 8106,
+    "type": "calibrated_estimate"
+  },
+  "0921": {
+    "chf_per_m2": 8385,
+    "type": "calibrated_estimate"
+  },
+  "0922": {
+    "chf_per_m2": 8226,
+    "type": "calibrated_estimate"
+  },
+  "0923": {
+    "chf_per_m2": 7427,
+    "type": "calibrated_estimate"
+  },
+  "0924": {
+    "chf_per_m2": 7785,
+    "type": "calibrated_estimate"
+  },
+  "0925": {
+    "chf_per_m2": 7174,
+    "type": "calibrated_estimate"
+  },
+  "0927": {
+    "chf_per_m2": 7903,
+    "type": "calibrated_estimate"
+  },
+  "0928": {
+    "chf_per_m2": 7241,
+    "type": "calibrated_estimate"
+  },
+  "0929": {
+    "chf_per_m2": 8031,
+    "type": "calibrated_estimate"
+  },
+  "0931": {
+    "chf_per_m2": 7712,
+    "type": "calibrated_estimate"
+  },
+  "0932": {
+    "chf_per_m2": 7217,
+    "type": "calibrated_estimate"
+  },
+  "0934": {
+    "chf_per_m2": 6671,
+    "type": "calibrated_estimate"
+  },
+  "0935": {
+    "chf_per_m2": 6682,
+    "type": "calibrated_estimate"
+  },
+  "0936": {
+    "chf_per_m2": 7688,
+    "type": "calibrated_estimate"
+  },
+  "0938": {
+    "chf_per_m2": 7821,
+    "type": "calibrated_estimate"
+  },
+  "0939": {
+    "chf_per_m2": 7202,
+    "type": "calibrated_estimate"
+  },
+  "0940": {
+    "chf_per_m2": 7485,
+    "type": "calibrated_estimate"
+  },
+  "0941": {
+    "chf_per_m2": 6854,
+    "type": "calibrated_estimate"
+  },
+  "0942": {
+    "chf_per_m2": 6443,
+    "type": "calibrated_estimate"
+  },
+  "0943": {
+    "chf_per_m2": 6884,
+    "type": "calibrated_estimate"
+  },
+  "0944": {
+    "chf_per_m2": 6822,
+    "type": "calibrated_estimate"
+  },
+  "0945": {
+    "chf_per_m2": 6807,
+    "type": "calibrated_estimate"
+  },
+  "0946": {
+    "chf_per_m2": 7311,
+    "type": "calibrated_estimate"
+  },
+  "0948": {
+    "chf_per_m2": 6531,
+    "type": "calibrated_estimate"
+  },
+  "0951": {
+    "chf_per_m2": 7068,
+    "type": "calibrated_estimate"
+  },
+  "0952": {
+    "chf_per_m2": 8275,
+    "type": "calibrated_estimate"
+  },
+  "0953": {
+    "chf_per_m2": 8526,
+    "type": "calibrated_estimate"
+  },
+  "0954": {
+    "chf_per_m2": 6968,
+    "type": "calibrated_estimate"
+  },
+  "0955": {
+    "chf_per_m2": 7348,
+    "type": "calibrated_estimate"
+  },
+  "0956": {
+    "chf_per_m2": 7652,
+    "type": "calibrated_estimate"
+  },
+  "0957": {
+    "chf_per_m2": 7680,
+    "type": "calibrated_estimate"
+  },
+  "0958": {
+    "chf_per_m2": 7091,
+    "type": "calibrated_estimate"
+  },
+  "0959": {
+    "chf_per_m2": 7629,
+    "type": "calibrated_estimate"
+  },
+  "0960": {
+    "chf_per_m2": 8895,
+    "type": "calibrated_estimate"
+  },
+  "0971": {
+    "chf_per_m2": 7779,
+    "type": "calibrated_estimate"
+  },
+  "0972": {
+    "chf_per_m2": 8237,
+    "type": "calibrated_estimate"
+  },
+  "0973": {
+    "chf_per_m2": 8545,
+    "type": "calibrated_estimate"
+  },
+  "0975": {
+    "chf_per_m2": 8227,
+    "type": "calibrated_estimate"
+  },
+  "0976": {
+    "chf_per_m2": 7529,
+    "type": "calibrated_estimate"
+  },
+  "0977": {
+    "chf_per_m2": 6578,
+    "type": "calibrated_estimate"
+  },
+  "0979": {
+    "chf_per_m2": 7390,
+    "type": "calibrated_estimate"
+  },
+  "0980": {
+    "chf_per_m2": 8231,
+    "type": "calibrated_estimate"
+  },
+  "0981": {
+    "chf_per_m2": 8648,
+    "type": "calibrated_estimate"
+  },
+  "0982": {
+    "chf_per_m2": 8715,
+    "type": "calibrated_estimate"
+  },
+  "0983": {
+    "chf_per_m2": 7562,
+    "type": "calibrated_estimate"
+  },
+  "0985": {
+    "chf_per_m2": 8329,
+    "type": "calibrated_estimate"
+  },
+  "0987": {
+    "chf_per_m2": 7784,
+    "type": "calibrated_estimate"
+  },
+  "0988": {
+    "chf_per_m2": 7858,
+    "type": "calibrated_estimate"
+  },
+  "0989": {
+    "chf_per_m2": 7128,
+    "type": "calibrated_estimate"
+  },
+  "0990": {
+    "chf_per_m2": 7115,
+    "type": "calibrated_estimate"
+  },
+  "0991": {
+    "chf_per_m2": 7578,
+    "type": "calibrated_estimate"
+  },
+  "0992": {
+    "chf_per_m2": 6568,
+    "type": "calibrated_estimate"
+  },
+  "0995": {
+    "chf_per_m2": 7298,
+    "type": "calibrated_estimate"
+  },
+  "1001": {
+    "chf_per_m2": 7954,
+    "type": "calibrated_estimate"
+  },
+  "1002": {
+    "chf_per_m2": 7369,
+    "type": "calibrated_estimate"
+  },
+  "1004": {
+    "chf_per_m2": 6704,
+    "type": "calibrated_estimate"
+  },
+  "1005": {
+    "chf_per_m2": 7464,
+    "type": "calibrated_estimate"
+  },
+  "1007": {
+    "chf_per_m2": 6628,
+    "type": "calibrated_estimate"
+  },
+  "1008": {
+    "chf_per_m2": 7754,
+    "type": "calibrated_estimate"
+  },
+  "1009": {
+    "chf_per_m2": 6543,
+    "type": "calibrated_estimate"
+  },
+  "1010": {
+    "chf_per_m2": 7069,
+    "type": "calibrated_estimate"
+  },
+  "1021": {
+    "chf_per_m2": 8415,
+    "type": "calibrated_estimate"
+  },
+  "1023": {
+    "chf_per_m2": 6854,
+    "type": "calibrated_estimate"
+  },
+  "1024": {
+    "chf_per_m2": 7977,
+    "type": "calibrated_estimate"
+  },
+  "1025": {
+    "chf_per_m2": 7233,
+    "type": "calibrated_estimate"
+  },
+  "1026": {
+    "chf_per_m2": 7752,
+    "type": "calibrated_estimate"
+  },
+  "1030": {
+    "chf_per_m2": 7093,
+    "type": "calibrated_estimate"
+  },
+  "1031": {
+    "chf_per_m2": 7653,
+    "type": "calibrated_estimate"
+  },
+  "1032": {
+    "chf_per_m2": 7499,
+    "type": "calibrated_estimate"
+  },
+  "1033": {
+    "chf_per_m2": 7525,
+    "type": "calibrated_estimate"
+  },
+  "1037": {
+    "chf_per_m2": 8398,
+    "type": "calibrated_estimate"
+  },
+  "1039": {
+    "chf_per_m2": 7649,
+    "type": "calibrated_estimate"
+  },
+  "1040": {
+    "chf_per_m2": 8286,
+    "type": "calibrated_estimate"
+  },
+  "1041": {
+    "chf_per_m2": 9231,
+    "type": "calibrated_estimate"
+  },
+  "1051": {
+    "chf_per_m2": 7132,
+    "type": "calibrated_estimate"
+  },
+  "1052": {
+    "chf_per_m2": 6791,
+    "type": "calibrated_estimate"
+  },
+  "1053": {
+    "chf_per_m2": 6659,
+    "type": "calibrated_estimate"
+  },
+  "1054": {
+    "chf_per_m2": 7747,
+    "type": "calibrated_estimate"
+  },
+  "1055": {
+    "chf_per_m2": 9199,
+    "type": "calibrated_estimate"
+  },
+  "1056": {
+    "chf_per_m2": 7508,
+    "type": "calibrated_estimate"
+  },
+  "1058": {
+    "chf_per_m2": 8003,
+    "type": "calibrated_estimate"
+  },
+  "1059": {
+    "chf_per_m2": 8273,
+    "type": "calibrated_estimate"
+  },
+  "1061": {
+    "chf_per_m2": 7942,
+    "type": "calibrated_estimate"
+  },
+  "1062": {
+    "chf_per_m2": 8240,
+    "type": "calibrated_estimate"
+  },
+  "1063": {
+    "chf_per_m2": 8798,
+    "type": "calibrated_estimate"
+  },
+  "1064": {
+    "chf_per_m2": 7308,
+    "type": "calibrated_estimate"
+  },
+  "1065": {
+    "chf_per_m2": 6772,
+    "type": "calibrated_estimate"
+  },
+  "1066": {
+    "chf_per_m2": 6844,
+    "type": "calibrated_estimate"
+  },
+  "1067": {
+    "chf_per_m2": 6956,
+    "type": "calibrated_estimate"
+  },
+  "1068": {
+    "chf_per_m2": 8372,
+    "type": "calibrated_estimate"
+  },
+  "1069": {
+    "chf_per_m2": 7980,
+    "type": "calibrated_estimate"
+  },
+  "1081": {
+    "chf_per_m2": 7271,
+    "type": "calibrated_estimate"
+  },
+  "1082": {
+    "chf_per_m2": 8296,
+    "type": "calibrated_estimate"
+  },
+  "1083": {
+    "chf_per_m2": 8295,
+    "type": "calibrated_estimate"
+  },
+  "1084": {
+    "chf_per_m2": 7035,
+    "type": "calibrated_estimate"
+  },
+  "1085": {
+    "chf_per_m2": 8096,
+    "type": "calibrated_estimate"
+  },
+  "1086": {
+    "chf_per_m2": 8225,
+    "type": "calibrated_estimate"
+  },
+  "1088": {
+    "chf_per_m2": 6925,
+    "type": "calibrated_estimate"
+  },
+  "1089": {
+    "chf_per_m2": 8500,
+    "type": "calibrated_estimate"
+  },
+  "1091": {
+    "chf_per_m2": 8791,
+    "type": "calibrated_estimate"
+  },
+  "1093": {
+    "chf_per_m2": 6811,
+    "type": "calibrated_estimate"
+  },
+  "1094": {
+    "chf_per_m2": 6643,
+    "type": "calibrated_estimate"
+  },
+  "1095": {
+    "chf_per_m2": 7313,
+    "type": "calibrated_estimate"
+  },
+  "1097": {
+    "chf_per_m2": 8394,
+    "type": "calibrated_estimate"
+  },
+  "1098": {
+    "chf_per_m2": 8729,
+    "type": "calibrated_estimate"
+  },
+  "1099": {
+    "chf_per_m2": 7584,
+    "type": "calibrated_estimate"
+  },
+  "1100": {
+    "chf_per_m2": 8406,
+    "type": "calibrated_estimate"
+  },
+  "1102": {
+    "chf_per_m2": 6799,
+    "type": "calibrated_estimate"
+  },
+  "1103": {
+    "chf_per_m2": 8229,
+    "type": "calibrated_estimate"
+  },
+  "1104": {
+    "chf_per_m2": 8106,
+    "type": "calibrated_estimate"
+  },
+  "1107": {
+    "chf_per_m2": 6680,
+    "type": "calibrated_estimate"
+  },
+  "1121": {
+    "chf_per_m2": 8192,
+    "type": "calibrated_estimate"
+  },
+  "1122": {
+    "chf_per_m2": 8167,
+    "type": "calibrated_estimate"
+  },
+  "1123": {
+    "chf_per_m2": 7744,
+    "type": "calibrated_estimate"
+  },
+  "1125": {
+    "chf_per_m2": 6794,
+    "type": "calibrated_estimate"
+  },
+  "1127": {
+    "chf_per_m2": 8729,
+    "type": "calibrated_estimate"
+  },
+  "1128": {
+    "chf_per_m2": 8288,
+    "type": "calibrated_estimate"
+  },
+  "1129": {
+    "chf_per_m2": 7067,
+    "type": "calibrated_estimate"
+  },
+  "1131": {
+    "chf_per_m2": 7253,
+    "type": "calibrated_estimate"
+  },
+  "1132": {
+    "chf_per_m2": 7146,
+    "type": "calibrated_estimate"
+  },
+  "1135": {
+    "chf_per_m2": 7350,
+    "type": "calibrated_estimate"
+  },
+  "1136": {
+    "chf_per_m2": 7202,
+    "type": "calibrated_estimate"
+  },
+  "1137": {
+    "chf_per_m2": 8381,
+    "type": "calibrated_estimate"
+  },
+  "1139": {
+    "chf_per_m2": 8136,
+    "type": "calibrated_estimate"
+  },
+  "1140": {
+    "chf_per_m2": 6688,
+    "type": "calibrated_estimate"
+  },
+  "1142": {
+    "chf_per_m2": 8423,
+    "type": "calibrated_estimate"
+  },
+  "1143": {
+    "chf_per_m2": 7865,
+    "type": "calibrated_estimate"
+  },
+  "1145": {
+    "chf_per_m2": 8070,
+    "type": "calibrated_estimate"
+  },
+  "1146": {
+    "chf_per_m2": 8141,
+    "type": "calibrated_estimate"
+  },
+  "1147": {
+    "chf_per_m2": 7501,
+    "type": "calibrated_estimate"
+  },
+  "1150": {
+    "chf_per_m2": 7955,
+    "type": "calibrated_estimate"
+  },
+  "1151": {
+    "chf_per_m2": 8568,
+    "type": "calibrated_estimate"
+  },
+  "1201": {
+    "chf_per_m2": 7282,
+    "type": "calibrated_estimate"
+  },
+  "1202": {
+    "chf_per_m2": 7086,
+    "type": "calibrated_estimate"
+  },
+  "1203": {
+    "chf_per_m2": 7807,
+    "type": "calibrated_estimate"
+  },
+  "1205": {
+    "chf_per_m2": 7545,
+    "type": "calibrated_estimate"
+  },
+  "1206": {
+    "chf_per_m2": 7560,
+    "type": "calibrated_estimate"
+  },
+  "1207": {
+    "chf_per_m2": 8091,
+    "type": "calibrated_estimate"
+  },
+  "1208": {
+    "chf_per_m2": 7417,
+    "type": "calibrated_estimate"
+  },
+  "1209": {
+    "chf_per_m2": 8824,
+    "type": "calibrated_estimate"
+  },
+  "1210": {
+    "chf_per_m2": 7181,
+    "type": "calibrated_estimate"
+  },
+  "1211": {
+    "chf_per_m2": 6524,
+    "type": "calibrated_estimate"
+  },
+  "1212": {
+    "chf_per_m2": 7307,
+    "type": "calibrated_estimate"
+  },
+  "1213": {
+    "chf_per_m2": 7286,
+    "type": "calibrated_estimate"
+  },
+  "1214": {
+    "chf_per_m2": 7726,
+    "type": "calibrated_estimate"
+  },
+  "1215": {
+    "chf_per_m2": 7624,
+    "type": "calibrated_estimate"
+  },
+  "1216": {
+    "chf_per_m2": 7874,
+    "type": "calibrated_estimate"
+  },
+  "1217": {
+    "chf_per_m2": 6306,
+    "type": "calibrated_estimate"
+  },
+  "1218": {
+    "chf_per_m2": 8127,
+    "type": "calibrated_estimate"
+  },
+  "1219": {
+    "chf_per_m2": 6714,
+    "type": "calibrated_estimate"
+  },
+  "1220": {
+    "chf_per_m2": 7248,
+    "type": "calibrated_estimate"
+  },
+  "1301": {
+    "chf_per_m2": 9773,
+    "type": "calibrated_estimate"
+  },
+  "1311": {
+    "chf_per_m2": 8244,
+    "type": "calibrated_estimate"
+  },
+  "1321": {
+    "chf_per_m2": 11166,
+    "type": "calibrated_estimate"
+  },
+  "1322": {
+    "chf_per_m2": 10748,
+    "type": "calibrated_estimate"
+  },
+  "1323": {
+    "chf_per_m2": 9518,
+    "type": "calibrated_estimate"
+  },
+  "1331": {
+    "chf_per_m2": 7316,
+    "type": "calibrated_estimate"
+  },
+  "1341": {
+    "chf_per_m2": 10407,
+    "type": "calibrated_estimate"
+  },
+  "1342": {
+    "chf_per_m2": 7769,
+    "type": "calibrated_estimate"
+  },
+  "1343": {
+    "chf_per_m2": 9302,
+    "type": "calibrated_estimate"
+  },
+  "1344": {
+    "chf_per_m2": 8967,
+    "type": "calibrated_estimate"
+  },
+  "1345": {
+    "chf_per_m2": 9305,
+    "type": "calibrated_estimate"
+  },
+  "1346": {
+    "chf_per_m2": 9227,
+    "type": "calibrated_estimate"
+  },
+  "1347": {
+    "chf_per_m2": 9102,
+    "type": "calibrated_estimate"
+  },
+  "1348": {
+    "chf_per_m2": 8780,
+    "type": "calibrated_estimate"
+  },
+  "1349": {
+    "chf_per_m2": 9629,
+    "type": "calibrated_estimate"
+  },
+  "1361": {
+    "chf_per_m2": 7813,
+    "type": "calibrated_estimate"
+  },
+  "1362": {
+    "chf_per_m2": 8020,
+    "type": "calibrated_estimate"
+  },
+  "1363": {
+    "chf_per_m2": 9307,
+    "type": "calibrated_estimate"
+  },
+  "1364": {
+    "chf_per_m2": 8249,
+    "type": "calibrated_estimate"
+  },
+  "1365": {
+    "chf_per_m2": 8988,
+    "type": "calibrated_estimate"
+  },
+  "1366": {
+    "chf_per_m2": 8687,
+    "type": "calibrated_estimate"
+  },
+  "1367": {
+    "chf_per_m2": 8808,
+    "type": "calibrated_estimate"
+  },
+  "1368": {
+    "chf_per_m2": 8758,
+    "type": "calibrated_estimate"
+  },
+  "1369": {
+    "chf_per_m2": 9393,
+    "type": "calibrated_estimate"
+  },
+  "1370": {
+    "chf_per_m2": 8545,
+    "type": "calibrated_estimate"
+  },
+  "1371": {
+    "chf_per_m2": 9486,
+    "type": "calibrated_estimate"
+  },
+  "1372": {
+    "chf_per_m2": 8230,
+    "type": "calibrated_estimate"
+  },
+  "1373": {
+    "chf_per_m2": 8194,
+    "type": "calibrated_estimate"
+  },
+  "1374": {
+    "chf_per_m2": 7853,
+    "type": "calibrated_estimate"
+  },
+  "1375": {
+    "chf_per_m2": 7997,
+    "type": "calibrated_estimate"
+  },
+  "1401": {
+    "chf_per_m2": 6322,
+    "type": "calibrated_estimate"
+  },
+  "1402": {
+    "chf_per_m2": 7501,
+    "type": "calibrated_estimate"
+  },
+  "1403": {
+    "chf_per_m2": 7610,
+    "type": "calibrated_estimate"
+  },
+  "1404": {
+    "chf_per_m2": 6726,
+    "type": "calibrated_estimate"
+  },
+  "1405": {
+    "chf_per_m2": 6478,
+    "type": "calibrated_estimate"
+  },
+  "1406": {
+    "chf_per_m2": 7367,
+    "type": "calibrated_estimate"
+  },
+  "1407": {
+    "chf_per_m2": 7575,
+    "type": "calibrated_estimate"
+  },
+  "1501": {
+    "chf_per_m2": 9229,
+    "type": "calibrated_estimate"
+  },
+  "1502": {
+    "chf_per_m2": 8049,
+    "type": "calibrated_estimate"
+  },
+  "1503": {
+    "chf_per_m2": 7465,
+    "type": "calibrated_estimate"
+  },
+  "1504": {
+    "chf_per_m2": 7281,
+    "type": "calibrated_estimate"
+  },
+  "1505": {
+    "chf_per_m2": 7243,
+    "type": "calibrated_estimate"
+  },
+  "1506": {
+    "chf_per_m2": 7276,
+    "type": "calibrated_estimate"
+  },
+  "1507": {
+    "chf_per_m2": 7045,
+    "type": "calibrated_estimate"
+  },
+  "1508": {
+    "chf_per_m2": 6829,
+    "type": "calibrated_estimate"
+  },
+  "1509": {
+    "chf_per_m2": 8010,
+    "type": "calibrated_estimate"
+  },
+  "1510": {
+    "chf_per_m2": 7335,
+    "type": "calibrated_estimate"
+  },
+  "1511": {
+    "chf_per_m2": 9194,
+    "type": "calibrated_estimate"
+  },
+  "1630": {
+    "chf_per_m2": 7966,
+    "type": "calibrated_estimate"
+  },
+  "1631": {
+    "chf_per_m2": 8383,
+    "type": "calibrated_estimate"
+  },
+  "1632": {
+    "chf_per_m2": 7148,
+    "type": "calibrated_estimate"
+  },
+  "1701": {
+    "chf_per_m2": 15125,
+    "type": "calibrated_estimate"
+  },
+  "1702": {
+    "chf_per_m2": 13296,
+    "type": "calibrated_estimate"
+  },
+  "1703": {
+    "chf_per_m2": 14541,
+    "type": "calibrated_estimate"
+  },
+  "1704": {
+    "chf_per_m2": 13605,
+    "type": "calibrated_estimate"
+  },
+  "1705": {
+    "chf_per_m2": 13304,
+    "type": "calibrated_estimate"
+  },
+  "1706": {
+    "chf_per_m2": 12939,
+    "type": "calibrated_estimate"
+  },
+  "1707": {
+    "chf_per_m2": 11573,
+    "type": "calibrated_estimate"
+  },
+  "1708": {
+    "chf_per_m2": 11613,
+    "type": "calibrated_estimate"
+  },
+  "1709": {
+    "chf_per_m2": 14822,
+    "type": "calibrated_estimate"
+  },
+  "1710": {
+    "chf_per_m2": 12867,
+    "type": "calibrated_estimate"
+  },
+  "1711": {
+    "chf_per_m2": 14471,
+    "type": "calibrated_estimate"
+  },
+  "2008": {
+    "chf_per_m2": 6951,
+    "type": "calibrated_estimate"
+  },
+  "2011": {
+    "chf_per_m2": 6060,
+    "type": "calibrated_estimate"
+  },
+  "2016": {
+    "chf_per_m2": 7200,
+    "type": "calibrated_estimate"
+  },
+  "2022": {
+    "chf_per_m2": 5786,
+    "type": "calibrated_estimate"
+  },
+  "2025": {
+    "chf_per_m2": 6288,
+    "type": "calibrated_estimate"
+  },
+  "2027": {
+    "chf_per_m2": 7143,
+    "type": "calibrated_estimate"
+  },
+  "2029": {
+    "chf_per_m2": 6387,
+    "type": "calibrated_estimate"
+  },
+  "2035": {
+    "chf_per_m2": 8177,
+    "type": "calibrated_estimate"
+  },
+  "2038": {
+    "chf_per_m2": 6858,
+    "type": "calibrated_estimate"
+  },
+  "2041": {
+    "chf_per_m2": 7071,
+    "type": "calibrated_estimate"
+  },
+  "2043": {
+    "chf_per_m2": 7413,
+    "type": "calibrated_estimate"
+  },
+  "2044": {
+    "chf_per_m2": 7869,
+    "type": "calibrated_estimate"
+  },
+  "2045": {
+    "chf_per_m2": 6048,
+    "type": "calibrated_estimate"
+  },
+  "2050": {
+    "chf_per_m2": 7128,
+    "type": "calibrated_estimate"
+  },
+  "2051": {
+    "chf_per_m2": 6674,
+    "type": "calibrated_estimate"
+  },
+  "2053": {
+    "chf_per_m2": 6541,
+    "type": "calibrated_estimate"
+  },
+  "2054": {
+    "chf_per_m2": 7649,
+    "type": "calibrated_estimate"
+  },
+  "2055": {
+    "chf_per_m2": 8279,
+    "type": "calibrated_estimate"
+  },
+  "2063": {
+    "chf_per_m2": 7233,
+    "type": "calibrated_estimate"
+  },
+  "2067": {
+    "chf_per_m2": 7408,
+    "type": "calibrated_estimate"
+  },
+  "2068": {
+    "chf_per_m2": 7285,
+    "type": "calibrated_estimate"
+  },
+  "2079": {
+    "chf_per_m2": 7782,
+    "type": "calibrated_estimate"
+  },
+  "2086": {
+    "chf_per_m2": 8066,
+    "type": "calibrated_estimate"
+  },
+  "2087": {
+    "chf_per_m2": 6675,
+    "type": "calibrated_estimate"
+  },
+  "2096": {
+    "chf_per_m2": 6623,
+    "type": "calibrated_estimate"
+  },
+  "2097": {
+    "chf_per_m2": 8649,
+    "type": "calibrated_estimate"
+  },
+  "2099": {
+    "chf_per_m2": 7056,
+    "type": "calibrated_estimate"
+  },
+  "2102": {
+    "chf_per_m2": 7337,
+    "type": "calibrated_estimate"
+  },
+  "2113": {
+    "chf_per_m2": 6779,
+    "type": "calibrated_estimate"
+  },
+  "2114": {
+    "chf_per_m2": 6063,
+    "type": "calibrated_estimate"
+  },
+  "2115": {
+    "chf_per_m2": 6843,
+    "type": "calibrated_estimate"
+  },
+  "2117": {
+    "chf_per_m2": 7311,
+    "type": "calibrated_estimate"
+  },
+  "2121": {
+    "chf_per_m2": 7317,
+    "type": "calibrated_estimate"
+  },
+  "2122": {
+    "chf_per_m2": 6496,
+    "type": "calibrated_estimate"
+  },
+  "2123": {
+    "chf_per_m2": 7509,
+    "type": "calibrated_estimate"
+  },
+  "2124": {
+    "chf_per_m2": 7481,
+    "type": "calibrated_estimate"
+  },
+  "2125": {
+    "chf_per_m2": 7272,
+    "type": "calibrated_estimate"
+  },
+  "2128": {
+    "chf_per_m2": 7513,
+    "type": "calibrated_estimate"
+  },
+  "2129": {
+    "chf_per_m2": 8016,
+    "type": "calibrated_estimate"
+  },
+  "2130": {
+    "chf_per_m2": 7816,
+    "type": "calibrated_estimate"
+  },
+  "2131": {
+    "chf_per_m2": 7507,
+    "type": "calibrated_estimate"
+  },
+  "2134": {
+    "chf_per_m2": 7686,
+    "type": "calibrated_estimate"
+  },
+  "2135": {
+    "chf_per_m2": 8341,
+    "type": "calibrated_estimate"
+  },
+  "2137": {
+    "chf_per_m2": 6836,
+    "type": "calibrated_estimate"
+  },
+  "2138": {
+    "chf_per_m2": 6814,
+    "type": "calibrated_estimate"
+  },
+  "2140": {
+    "chf_per_m2": 7534,
+    "type": "calibrated_estimate"
+  },
+  "2143": {
+    "chf_per_m2": 7999,
+    "type": "calibrated_estimate"
+  },
+  "2145": {
+    "chf_per_m2": 8064,
+    "type": "calibrated_estimate"
+  },
+  "2147": {
+    "chf_per_m2": 6067,
+    "type": "calibrated_estimate"
+  },
+  "2148": {
+    "chf_per_m2": 6569,
+    "type": "calibrated_estimate"
+  },
+  "2149": {
+    "chf_per_m2": 6423,
+    "type": "calibrated_estimate"
+  },
+  "2152": {
+    "chf_per_m2": 8303,
+    "type": "calibrated_estimate"
+  },
+  "2153": {
+    "chf_per_m2": 7361,
+    "type": "calibrated_estimate"
+  },
+  "2155": {
+    "chf_per_m2": 7343,
+    "type": "calibrated_estimate"
+  },
+  "2160": {
+    "chf_per_m2": 6899,
+    "type": "calibrated_estimate"
+  },
+  "2162": {
+    "chf_per_m2": 7659,
+    "type": "calibrated_estimate"
+  },
+  "2163": {
+    "chf_per_m2": 7287,
+    "type": "calibrated_estimate"
+  },
+  "2173": {
+    "chf_per_m2": 7779,
+    "type": "calibrated_estimate"
+  },
+  "2174": {
+    "chf_per_m2": 6852,
+    "type": "calibrated_estimate"
+  },
+  "2175": {
+    "chf_per_m2": 6558,
+    "type": "calibrated_estimate"
+  },
+  "2177": {
+    "chf_per_m2": 6033,
+    "type": "calibrated_estimate"
+  },
+  "2183": {
+    "chf_per_m2": 5783,
+    "type": "calibrated_estimate"
+  },
+  "2186": {
+    "chf_per_m2": 6760,
+    "type": "calibrated_estimate"
+  },
+  "2194": {
+    "chf_per_m2": 6576,
+    "type": "calibrated_estimate"
+  },
+  "2196": {
+    "chf_per_m2": 6096,
+    "type": "calibrated_estimate"
+  },
+  "2197": {
+    "chf_per_m2": 5869,
+    "type": "calibrated_estimate"
+  },
+  "2198": {
+    "chf_per_m2": 7584,
+    "type": "calibrated_estimate"
+  },
+  "2206": {
+    "chf_per_m2": 7250,
+    "type": "calibrated_estimate"
+  },
+  "2208": {
+    "chf_per_m2": 7009,
+    "type": "calibrated_estimate"
+  },
+  "2211": {
+    "chf_per_m2": 7715,
+    "type": "calibrated_estimate"
+  },
+  "2216": {
+    "chf_per_m2": 7637,
+    "type": "calibrated_estimate"
+  },
+  "2220": {
+    "chf_per_m2": 7036,
+    "type": "calibrated_estimate"
+  },
+  "2226": {
+    "chf_per_m2": 6336,
+    "type": "calibrated_estimate"
+  },
+  "2228": {
+    "chf_per_m2": 5855,
+    "type": "calibrated_estimate"
+  },
+  "2230": {
+    "chf_per_m2": 7089,
+    "type": "calibrated_estimate"
+  },
+  "2233": {
+    "chf_per_m2": 6762,
+    "type": "calibrated_estimate"
+  },
+  "2234": {
+    "chf_per_m2": 7154,
+    "type": "calibrated_estimate"
+  },
+  "2235": {
+    "chf_per_m2": 7404,
+    "type": "calibrated_estimate"
+  },
+  "2236": {
+    "chf_per_m2": 6275,
+    "type": "calibrated_estimate"
+  },
+  "2237": {
+    "chf_per_m2": 6988,
+    "type": "calibrated_estimate"
+  },
+  "2238": {
+    "chf_per_m2": 6967,
+    "type": "calibrated_estimate"
+  },
+  "2239": {
+    "chf_per_m2": 6632,
+    "type": "calibrated_estimate"
+  },
+  "2250": {
+    "chf_per_m2": 5628,
+    "type": "calibrated_estimate"
+  },
+  "2254": {
+    "chf_per_m2": 6168,
+    "type": "calibrated_estimate"
+  },
+  "2257": {
+    "chf_per_m2": 6213,
+    "type": "calibrated_estimate"
+  },
+  "2258": {
+    "chf_per_m2": 6488,
+    "type": "calibrated_estimate"
+  },
+  "2261": {
+    "chf_per_m2": 7562,
+    "type": "calibrated_estimate"
+  },
+  "2262": {
+    "chf_per_m2": 6104,
+    "type": "calibrated_estimate"
+  },
+  "2265": {
+    "chf_per_m2": 6564,
+    "type": "calibrated_estimate"
+  },
+  "2266": {
+    "chf_per_m2": 6063,
+    "type": "calibrated_estimate"
+  },
+  "2271": {
+    "chf_per_m2": 7500,
+    "type": "calibrated_estimate"
+  },
+  "2272": {
+    "chf_per_m2": 7060,
+    "type": "calibrated_estimate"
+  },
+  "2274": {
+    "chf_per_m2": 6611,
+    "type": "calibrated_estimate"
+  },
+  "2275": {
+    "chf_per_m2": 6409,
+    "type": "calibrated_estimate"
+  },
+  "2276": {
+    "chf_per_m2": 5964,
+    "type": "calibrated_estimate"
+  },
+  "2278": {
+    "chf_per_m2": 5973,
+    "type": "calibrated_estimate"
+  },
+  "2284": {
+    "chf_per_m2": 7403,
+    "type": "calibrated_estimate"
+  },
+  "2292": {
+    "chf_per_m2": 6334,
+    "type": "calibrated_estimate"
+  },
+  "2293": {
+    "chf_per_m2": 6493,
+    "type": "calibrated_estimate"
+  },
+  "2294": {
+    "chf_per_m2": 7555,
+    "type": "calibrated_estimate"
+  },
+  "2295": {
+    "chf_per_m2": 6792,
+    "type": "calibrated_estimate"
+  },
+  "2296": {
+    "chf_per_m2": 6583,
+    "type": "calibrated_estimate"
+  },
+  "2299": {
+    "chf_per_m2": 6415,
+    "type": "calibrated_estimate"
+  },
+  "2300": {
+    "chf_per_m2": 5965,
+    "type": "calibrated_estimate"
+  },
+  "2301": {
+    "chf_per_m2": 6284,
+    "type": "calibrated_estimate"
+  },
+  "2303": {
+    "chf_per_m2": 7050,
+    "type": "calibrated_estimate"
+  },
+  "2304": {
+    "chf_per_m2": 6872,
+    "type": "calibrated_estimate"
+  },
+  "2305": {
+    "chf_per_m2": 6997,
+    "type": "calibrated_estimate"
+  },
+  "2306": {
+    "chf_per_m2": 5983,
+    "type": "calibrated_estimate"
+  },
+  "2307": {
+    "chf_per_m2": 6680,
+    "type": "calibrated_estimate"
+  },
+  "2308": {
+    "chf_per_m2": 7314,
+    "type": "calibrated_estimate"
+  },
+  "2309": {
+    "chf_per_m2": 6335,
+    "type": "calibrated_estimate"
+  },
+  "2321": {
+    "chf_per_m2": 8818,
+    "type": "calibrated_estimate"
+  },
+  "2323": {
+    "chf_per_m2": 7261,
+    "type": "calibrated_estimate"
+  },
+  "2325": {
+    "chf_per_m2": 9225,
+    "type": "calibrated_estimate"
+  },
+  "2328": {
+    "chf_per_m2": 8570,
+    "type": "calibrated_estimate"
+  },
+  "2333": {
+    "chf_per_m2": 7503,
+    "type": "calibrated_estimate"
+  },
+  "2335": {
+    "chf_per_m2": 7240,
+    "type": "calibrated_estimate"
+  },
+  "2336": {
+    "chf_per_m2": 8102,
+    "type": "calibrated_estimate"
+  },
+  "2337": {
+    "chf_per_m2": 8088,
+    "type": "calibrated_estimate"
+  },
+  "2338": {
+    "chf_per_m2": 7015,
+    "type": "calibrated_estimate"
+  },
+  "2391": {
+    "chf_per_m2": 7871,
+    "type": "calibrated_estimate"
+  },
+  "2401": {
+    "chf_per_m2": 7675,
+    "type": "calibrated_estimate"
+  },
+  "2402": {
+    "chf_per_m2": 7010,
+    "type": "calibrated_estimate"
+  },
+  "2403": {
+    "chf_per_m2": 5901,
+    "type": "calibrated_estimate"
+  },
+  "2404": {
+    "chf_per_m2": 7438,
+    "type": "calibrated_estimate"
+  },
+  "2405": {
+    "chf_per_m2": 6817,
+    "type": "calibrated_estimate"
+  },
+  "2406": {
+    "chf_per_m2": 7243,
+    "type": "calibrated_estimate"
+  },
+  "2407": {
+    "chf_per_m2": 6693,
+    "type": "calibrated_estimate"
+  },
+  "2408": {
+    "chf_per_m2": 6291,
+    "type": "calibrated_estimate"
+  },
+  "2421": {
+    "chf_per_m2": 7011,
+    "type": "calibrated_estimate"
+  },
+  "2422": {
+    "chf_per_m2": 7468,
+    "type": "calibrated_estimate"
+  },
+  "2424": {
+    "chf_per_m2": 5752,
+    "type": "calibrated_estimate"
+  },
+  "2425": {
+    "chf_per_m2": 6661,
+    "type": "calibrated_estimate"
+  },
+  "2426": {
+    "chf_per_m2": 6219,
+    "type": "calibrated_estimate"
+  },
+  "2427": {
+    "chf_per_m2": 7148,
+    "type": "calibrated_estimate"
+  },
+  "2428": {
+    "chf_per_m2": 6541,
+    "type": "calibrated_estimate"
+  },
+  "2430": {
+    "chf_per_m2": 6763,
+    "type": "calibrated_estimate"
+  },
+  "2445": {
+    "chf_per_m2": 6082,
+    "type": "calibrated_estimate"
+  },
+  "2455": {
+    "chf_per_m2": 5381,
+    "type": "calibrated_estimate"
+  },
+  "2457": {
+    "chf_per_m2": 6186,
+    "type": "calibrated_estimate"
+  },
+  "2461": {
+    "chf_per_m2": 5275,
+    "type": "calibrated_estimate"
+  },
+  "2463": {
+    "chf_per_m2": 6536,
+    "type": "calibrated_estimate"
+  },
+  "2464": {
+    "chf_per_m2": 5651,
+    "type": "calibrated_estimate"
+  },
+  "2465": {
+    "chf_per_m2": 6259,
+    "type": "calibrated_estimate"
+  },
+  "2471": {
+    "chf_per_m2": 6082,
+    "type": "calibrated_estimate"
+  },
+  "2472": {
+    "chf_per_m2": 6155,
+    "type": "calibrated_estimate"
+  },
+  "2473": {
+    "chf_per_m2": 7040,
+    "type": "calibrated_estimate"
+  },
+  "2474": {
+    "chf_per_m2": 7598,
+    "type": "calibrated_estimate"
+  },
+  "2475": {
+    "chf_per_m2": 6590,
+    "type": "calibrated_estimate"
+  },
+  "2476": {
+    "chf_per_m2": 5887,
+    "type": "calibrated_estimate"
+  },
+  "2477": {
+    "chf_per_m2": 6343,
+    "type": "calibrated_estimate"
+  },
+  "2478": {
+    "chf_per_m2": 6245,
+    "type": "calibrated_estimate"
+  },
+  "2479": {
+    "chf_per_m2": 6327,
+    "type": "calibrated_estimate"
+  },
+  "2480": {
+    "chf_per_m2": 6614,
+    "type": "calibrated_estimate"
+  },
+  "2481": {
+    "chf_per_m2": 6534,
+    "type": "calibrated_estimate"
+  },
+  "2491": {
+    "chf_per_m2": 6465,
+    "type": "calibrated_estimate"
+  },
+  "2492": {
+    "chf_per_m2": 6381,
+    "type": "calibrated_estimate"
+  },
+  "2493": {
+    "chf_per_m2": 7549,
+    "type": "calibrated_estimate"
+  },
+  "2495": {
+    "chf_per_m2": 7490,
+    "type": "calibrated_estimate"
+  },
+  "2497": {
+    "chf_per_m2": 6514,
+    "type": "calibrated_estimate"
+  },
+  "2499": {
+    "chf_per_m2": 7664,
+    "type": "calibrated_estimate"
+  },
+  "2500": {
+    "chf_per_m2": 5956,
+    "type": "calibrated_estimate"
+  },
+  "2501": {
+    "chf_per_m2": 7536,
+    "type": "calibrated_estimate"
+  },
+  "2502": {
+    "chf_per_m2": 7328,
+    "type": "calibrated_estimate"
+  },
+  "2503": {
+    "chf_per_m2": 8084,
+    "type": "calibrated_estimate"
+  },
+  "2511": {
+    "chf_per_m2": 6128,
+    "type": "calibrated_estimate"
+  },
+  "2513": {
+    "chf_per_m2": 6322,
+    "type": "calibrated_estimate"
+  },
+  "2514": {
+    "chf_per_m2": 6714,
+    "type": "calibrated_estimate"
+  },
+  "2516": {
+    "chf_per_m2": 7178,
+    "type": "calibrated_estimate"
+  },
+  "2517": {
+    "chf_per_m2": 6103,
+    "type": "calibrated_estimate"
+  },
+  "2518": {
+    "chf_per_m2": 5355,
+    "type": "calibrated_estimate"
+  },
+  "2519": {
+    "chf_per_m2": 6074,
+    "type": "calibrated_estimate"
+  },
+  "2520": {
+    "chf_per_m2": 6376,
+    "type": "calibrated_estimate"
+  },
+  "2523": {
+    "chf_per_m2": 6947,
+    "type": "calibrated_estimate"
+  },
+  "2524": {
+    "chf_per_m2": 6936,
+    "type": "calibrated_estimate"
+  },
+  "2525": {
+    "chf_per_m2": 6073,
+    "type": "calibrated_estimate"
+  },
+  "2526": {
+    "chf_per_m2": 6225,
+    "type": "calibrated_estimate"
+  },
+  "2527": {
+    "chf_per_m2": 6103,
+    "type": "calibrated_estimate"
+  },
+  "2528": {
+    "chf_per_m2": 6638,
+    "type": "calibrated_estimate"
+  },
+  "2529": {
+    "chf_per_m2": 6034,
+    "type": "calibrated_estimate"
+  },
+  "2530": {
+    "chf_per_m2": 6462,
+    "type": "calibrated_estimate"
+  },
+  "2532": {
+    "chf_per_m2": 5559,
+    "type": "calibrated_estimate"
+  },
+  "2534": {
+    "chf_per_m2": 6100,
+    "type": "calibrated_estimate"
+  },
+  "2535": {
+    "chf_per_m2": 7120,
+    "type": "calibrated_estimate"
+  },
+  "2541": {
+    "chf_per_m2": 6067,
+    "type": "calibrated_estimate"
+  },
+  "2542": {
+    "chf_per_m2": 5993,
+    "type": "calibrated_estimate"
+  },
+  "2543": {
+    "chf_per_m2": 5962,
+    "type": "calibrated_estimate"
+  },
+  "2544": {
+    "chf_per_m2": 7279,
+    "type": "calibrated_estimate"
+  },
+  "2545": {
+    "chf_per_m2": 6887,
+    "type": "calibrated_estimate"
+  },
+  "2546": {
+    "chf_per_m2": 6070,
+    "type": "calibrated_estimate"
+  },
+  "2547": {
+    "chf_per_m2": 6038,
+    "type": "calibrated_estimate"
+  },
+  "2548": {
+    "chf_per_m2": 5858,
+    "type": "calibrated_estimate"
+  },
+  "2549": {
+    "chf_per_m2": 7232,
+    "type": "calibrated_estimate"
+  },
+  "2550": {
+    "chf_per_m2": 6525,
+    "type": "calibrated_estimate"
+  },
+  "2551": {
+    "chf_per_m2": 6250,
+    "type": "calibrated_estimate"
+  },
+  "2553": {
+    "chf_per_m2": 4948,
+    "type": "calibrated_estimate"
+  },
+  "2554": {
+    "chf_per_m2": 5440,
+    "type": "calibrated_estimate"
+  },
+  "2555": {
+    "chf_per_m2": 6387,
+    "type": "calibrated_estimate"
+  },
+  "2556": {
+    "chf_per_m2": 6438,
+    "type": "calibrated_estimate"
+  },
+  "2571": {
+    "chf_per_m2": 7822,
+    "type": "calibrated_estimate"
+  },
+  "2572": {
+    "chf_per_m2": 8120,
+    "type": "calibrated_estimate"
+  },
+  "2573": {
+    "chf_per_m2": 6946,
+    "type": "calibrated_estimate"
+  },
+  "2574": {
+    "chf_per_m2": 6603,
+    "type": "calibrated_estimate"
+  },
+  "2575": {
+    "chf_per_m2": 7173,
+    "type": "calibrated_estimate"
+  },
+  "2576": {
+    "chf_per_m2": 8034,
+    "type": "calibrated_estimate"
+  },
+  "2578": {
+    "chf_per_m2": 6774,
+    "type": "calibrated_estimate"
+  },
+  "2579": {
+    "chf_per_m2": 7302,
+    "type": "calibrated_estimate"
+  },
+  "2580": {
+    "chf_per_m2": 7680,
+    "type": "calibrated_estimate"
+  },
+  "2581": {
+    "chf_per_m2": 6124,
+    "type": "calibrated_estimate"
+  },
+  "2582": {
+    "chf_per_m2": 7645,
+    "type": "calibrated_estimate"
+  },
+  "2583": {
+    "chf_per_m2": 6844,
+    "type": "calibrated_estimate"
+  },
+  "2584": {
+    "chf_per_m2": 6864,
+    "type": "calibrated_estimate"
+  },
+  "2585": {
+    "chf_per_m2": 6319,
+    "type": "calibrated_estimate"
+  },
+  "2586": {
+    "chf_per_m2": 6982,
+    "type": "calibrated_estimate"
+  },
+  "2601": {
+    "chf_per_m2": 6294,
+    "type": "calibrated_estimate"
+  },
+  "2611": {
+    "chf_per_m2": 6572,
+    "type": "calibrated_estimate"
+  },
+  "2612": {
+    "chf_per_m2": 5779,
+    "type": "calibrated_estimate"
+  },
+  "2613": {
+    "chf_per_m2": 5726,
+    "type": "calibrated_estimate"
+  },
+  "2614": {
+    "chf_per_m2": 7264,
+    "type": "calibrated_estimate"
+  },
+  "2615": {
+    "chf_per_m2": 6579,
+    "type": "calibrated_estimate"
+  },
+  "2616": {
+    "chf_per_m2": 5907,
+    "type": "calibrated_estimate"
+  },
+  "2617": {
+    "chf_per_m2": 7083,
+    "type": "calibrated_estimate"
+  },
+  "2618": {
+    "chf_per_m2": 5799,
+    "type": "calibrated_estimate"
+  },
+  "2619": {
+    "chf_per_m2": 5992,
+    "type": "calibrated_estimate"
+  },
+  "2620": {
+    "chf_per_m2": 5983,
+    "type": "calibrated_estimate"
+  },
+  "2621": {
+    "chf_per_m2": 6021,
+    "type": "calibrated_estimate"
+  },
+  "2622": {
+    "chf_per_m2": 5403,
+    "type": "calibrated_estimate"
+  },
+  "2701": {
+    "chf_per_m2": 10362,
+    "type": "calibrated_estimate"
+  },
+  "2702": {
+    "chf_per_m2": 10863,
+    "type": "calibrated_estimate"
+  },
+  "2703": {
+    "chf_per_m2": 10168,
+    "type": "calibrated_estimate"
+  },
+  "2761": {
+    "chf_per_m2": 7132,
+    "type": "calibrated_estimate"
+  },
+  "2762": {
+    "chf_per_m2": 7771,
+    "type": "calibrated_estimate"
+  },
+  "2763": {
+    "chf_per_m2": 7679,
+    "type": "calibrated_estimate"
+  },
+  "2764": {
+    "chf_per_m2": 8249,
+    "type": "calibrated_estimate"
+  },
+  "2765": {
+    "chf_per_m2": 8337,
+    "type": "calibrated_estimate"
+  },
+  "2766": {
+    "chf_per_m2": 7700,
+    "type": "calibrated_estimate"
+  },
+  "2767": {
+    "chf_per_m2": 7416,
+    "type": "calibrated_estimate"
+  },
+  "2768": {
+    "chf_per_m2": 8697,
+    "type": "calibrated_estimate"
+  },
+  "2769": {
+    "chf_per_m2": 7188,
+    "type": "calibrated_estimate"
+  },
+  "2770": {
+    "chf_per_m2": 7682,
+    "type": "calibrated_estimate"
+  },
+  "2771": {
+    "chf_per_m2": 7958,
+    "type": "calibrated_estimate"
+  },
+  "2772": {
+    "chf_per_m2": 7422,
+    "type": "calibrated_estimate"
+  },
+  "2773": {
+    "chf_per_m2": 8132,
+    "type": "calibrated_estimate"
+  },
+  "2774": {
+    "chf_per_m2": 8145,
+    "type": "calibrated_estimate"
+  },
+  "2775": {
+    "chf_per_m2": 9160,
+    "type": "calibrated_estimate"
+  },
+  "2781": {
+    "chf_per_m2": 7389,
+    "type": "calibrated_estimate"
+  },
+  "2782": {
+    "chf_per_m2": 9021,
+    "type": "calibrated_estimate"
+  },
+  "2783": {
+    "chf_per_m2": 7840,
+    "type": "calibrated_estimate"
+  },
+  "2784": {
+    "chf_per_m2": 7265,
+    "type": "calibrated_estimate"
+  },
+  "2785": {
+    "chf_per_m2": 8137,
+    "type": "calibrated_estimate"
+  },
+  "2786": {
+    "chf_per_m2": 8316,
+    "type": "calibrated_estimate"
+  },
+  "2787": {
+    "chf_per_m2": 8364,
+    "type": "calibrated_estimate"
+  },
+  "2788": {
+    "chf_per_m2": 6388,
+    "type": "calibrated_estimate"
+  },
+  "2789": {
+    "chf_per_m2": 8112,
+    "type": "calibrated_estimate"
+  },
+  "2790": {
+    "chf_per_m2": 7274,
+    "type": "calibrated_estimate"
+  },
+  "2791": {
+    "chf_per_m2": 8489,
+    "type": "calibrated_estimate"
+  },
+  "2792": {
+    "chf_per_m2": 7284,
+    "type": "calibrated_estimate"
+  },
+  "2793": {
+    "chf_per_m2": 8570,
+    "type": "calibrated_estimate"
+  },
+  "2821": {
+    "chf_per_m2": 8338,
+    "type": "calibrated_estimate"
+  },
+  "2822": {
+    "chf_per_m2": 7703,
+    "type": "calibrated_estimate"
+  },
+  "2823": {
+    "chf_per_m2": 8372,
+    "type": "calibrated_estimate"
+  },
+  "2824": {
+    "chf_per_m2": 8291,
+    "type": "calibrated_estimate"
+  },
+  "2825": {
+    "chf_per_m2": 8439,
+    "type": "calibrated_estimate"
+  },
+  "2826": {
+    "chf_per_m2": 8606,
+    "type": "calibrated_estimate"
+  },
+  "2827": {
+    "chf_per_m2": 8500,
+    "type": "calibrated_estimate"
+  },
+  "2828": {
+    "chf_per_m2": 8957,
+    "type": "calibrated_estimate"
+  },
+  "2829": {
+    "chf_per_m2": 8266,
+    "type": "calibrated_estimate"
+  },
+  "2830": {
+    "chf_per_m2": 8980,
+    "type": "calibrated_estimate"
+  },
+  "2831": {
+    "chf_per_m2": 8324,
+    "type": "calibrated_estimate"
+  },
+  "2832": {
+    "chf_per_m2": 7707,
+    "type": "calibrated_estimate"
+  },
+  "2833": {
+    "chf_per_m2": 7876,
+    "type": "calibrated_estimate"
+  },
+  "2834": {
+    "chf_per_m2": 8159,
+    "type": "calibrated_estimate"
+  },
+  "2841": {
+    "chf_per_m2": 9064,
+    "type": "calibrated_estimate"
+  },
+  "2842": {
+    "chf_per_m2": 7211,
+    "type": "calibrated_estimate"
+  },
+  "2843": {
+    "chf_per_m2": 7703,
+    "type": "calibrated_estimate"
+  },
+  "2844": {
+    "chf_per_m2": 8907,
+    "type": "calibrated_estimate"
+  },
+  "2845": {
+    "chf_per_m2": 7381,
+    "type": "calibrated_estimate"
+  },
+  "2846": {
+    "chf_per_m2": 7364,
+    "type": "calibrated_estimate"
+  },
+  "2847": {
+    "chf_per_m2": 8391,
+    "type": "calibrated_estimate"
+  },
+  "2848": {
+    "chf_per_m2": 9424,
+    "type": "calibrated_estimate"
+  },
+  "2849": {
+    "chf_per_m2": 8157,
+    "type": "calibrated_estimate"
+  },
+  "2850": {
+    "chf_per_m2": 9204,
+    "type": "calibrated_estimate"
+  },
+  "2851": {
+    "chf_per_m2": 9146,
+    "type": "calibrated_estimate"
+  },
+  "2852": {
+    "chf_per_m2": 7627,
+    "type": "calibrated_estimate"
+  },
+  "2853": {
+    "chf_per_m2": 9069,
+    "type": "calibrated_estimate"
+  },
+  "2854": {
+    "chf_per_m2": 8065,
+    "type": "calibrated_estimate"
+  },
+  "2855": {
+    "chf_per_m2": 9197,
+    "type": "calibrated_estimate"
+  },
+  "2856": {
+    "chf_per_m2": 8934,
+    "type": "calibrated_estimate"
+  },
+  "2857": {
+    "chf_per_m2": 7818,
+    "type": "calibrated_estimate"
+  },
+  "2858": {
+    "chf_per_m2": 7415,
+    "type": "calibrated_estimate"
+  },
+  "2859": {
+    "chf_per_m2": 9382,
+    "type": "calibrated_estimate"
+  },
+  "2860": {
+    "chf_per_m2": 7407,
+    "type": "calibrated_estimate"
+  },
+  "2861": {
+    "chf_per_m2": 9333,
+    "type": "calibrated_estimate"
+  },
+  "2862": {
+    "chf_per_m2": 9244,
+    "type": "calibrated_estimate"
+  },
+  "2863": {
+    "chf_per_m2": 8731,
+    "type": "calibrated_estimate"
+  },
+  "2864": {
+    "chf_per_m2": 9434,
+    "type": "calibrated_estimate"
+  },
+  "2865": {
+    "chf_per_m2": 9595,
+    "type": "calibrated_estimate"
+  },
+  "2866": {
+    "chf_per_m2": 8982,
+    "type": "calibrated_estimate"
+  },
+  "2867": {
+    "chf_per_m2": 7869,
+    "type": "calibrated_estimate"
+  },
+  "2868": {
+    "chf_per_m2": 9090,
+    "type": "calibrated_estimate"
+  },
+  "2869": {
+    "chf_per_m2": 6995,
+    "type": "calibrated_estimate"
+  },
+  "2881": {
+    "chf_per_m2": 8120,
+    "type": "calibrated_estimate"
+  },
+  "2882": {
+    "chf_per_m2": 7971,
+    "type": "calibrated_estimate"
+  },
+  "2883": {
+    "chf_per_m2": 8367,
+    "type": "calibrated_estimate"
+  },
+  "2884": {
+    "chf_per_m2": 8643,
+    "type": "calibrated_estimate"
+  },
+  "2885": {
+    "chf_per_m2": 8343,
+    "type": "calibrated_estimate"
+  },
+  "2886": {
+    "chf_per_m2": 8857,
+    "type": "calibrated_estimate"
+  },
+  "2887": {
+    "chf_per_m2": 9115,
+    "type": "calibrated_estimate"
+  },
+  "2888": {
+    "chf_per_m2": 7183,
+    "type": "calibrated_estimate"
+  },
+  "2889": {
+    "chf_per_m2": 7312,
+    "type": "calibrated_estimate"
+  },
+  "2890": {
+    "chf_per_m2": 6922,
+    "type": "calibrated_estimate"
+  },
+  "2891": {
+    "chf_per_m2": 8948,
+    "type": "calibrated_estimate"
+  },
+  "2892": {
+    "chf_per_m2": 8165,
+    "type": "calibrated_estimate"
+  },
+  "2893": {
+    "chf_per_m2": 8903,
+    "type": "calibrated_estimate"
+  },
+  "2894": {
+    "chf_per_m2": 7297,
+    "type": "calibrated_estimate"
+  },
+  "2895": {
+    "chf_per_m2": 6882,
+    "type": "calibrated_estimate"
+  },
+  "2901": {
+    "chf_per_m2": 8809,
+    "type": "calibrated_estimate"
+  },
+  "2903": {
+    "chf_per_m2": 9249,
+    "type": "calibrated_estimate"
+  },
+  "2904": {
+    "chf_per_m2": 7749,
+    "type": "calibrated_estimate"
+  },
+  "2914": {
+    "chf_per_m2": 8111,
+    "type": "calibrated_estimate"
+  },
+  "2915": {
+    "chf_per_m2": 7263,
+    "type": "calibrated_estimate"
+  },
+  "2917": {
+    "chf_per_m2": 9255,
+    "type": "calibrated_estimate"
+  },
+  "2919": {
+    "chf_per_m2": 8076,
+    "type": "calibrated_estimate"
+  },
+  "2920": {
+    "chf_per_m2": 8184,
+    "type": "calibrated_estimate"
+  },
+  "2931": {
+    "chf_per_m2": 7103,
+    "type": "calibrated_estimate"
+  },
+  "2932": {
+    "chf_per_m2": 9186,
+    "type": "calibrated_estimate"
+  },
+  "2933": {
+    "chf_per_m2": 7815,
+    "type": "calibrated_estimate"
+  },
+  "2936": {
+    "chf_per_m2": 7890,
+    "type": "calibrated_estimate"
+  },
+  "2937": {
+    "chf_per_m2": 8709,
+    "type": "calibrated_estimate"
+  },
+  "2938": {
+    "chf_per_m2": 9130,
+    "type": "calibrated_estimate"
+  },
+  "2939": {
+    "chf_per_m2": 9307,
+    "type": "calibrated_estimate"
+  },
+  "2951": {
+    "chf_per_m2": 7781,
+    "type": "calibrated_estimate"
+  },
+  "2952": {
+    "chf_per_m2": 8578,
+    "type": "calibrated_estimate"
+  },
+  "2953": {
+    "chf_per_m2": 7270,
+    "type": "calibrated_estimate"
+  },
+  "2961": {
+    "chf_per_m2": 7808,
+    "type": "calibrated_estimate"
+  },
+  "2962": {
+    "chf_per_m2": 7037,
+    "type": "calibrated_estimate"
+  },
+  "2963": {
+    "chf_per_m2": 7954,
+    "type": "calibrated_estimate"
+  },
+  "2964": {
+    "chf_per_m2": 7664,
+    "type": "calibrated_estimate"
+  },
+  "2971": {
+    "chf_per_m2": 9231,
+    "type": "calibrated_estimate"
+  },
+  "2972": {
+    "chf_per_m2": 6906,
+    "type": "calibrated_estimate"
+  },
+  "2973": {
+    "chf_per_m2": 7880,
+    "type": "calibrated_estimate"
+  },
+  "2974": {
+    "chf_per_m2": 8026,
+    "type": "calibrated_estimate"
+  },
+  "3001": {
+    "chf_per_m2": 6056,
+    "type": "calibrated_estimate"
+  },
+  "3002": {
+    "chf_per_m2": 6064,
+    "type": "calibrated_estimate"
+  },
+  "3003": {
+    "chf_per_m2": 5076,
+    "type": "calibrated_estimate"
+  },
+  "3004": {
+    "chf_per_m2": 5954,
+    "type": "calibrated_estimate"
+  },
+  "3005": {
+    "chf_per_m2": 5241,
+    "type": "calibrated_estimate"
+  },
+  "3006": {
+    "chf_per_m2": 6584,
+    "type": "calibrated_estimate"
+  },
+  "3007": {
+    "chf_per_m2": 5162,
+    "type": "calibrated_estimate"
+  },
+  "3021": {
+    "chf_per_m2": 5020,
+    "type": "calibrated_estimate"
+  },
+  "3022": {
+    "chf_per_m2": 4798,
+    "type": "calibrated_estimate"
+  },
+  "3023": {
+    "chf_per_m2": 4566,
+    "type": "calibrated_estimate"
+  },
+  "3024": {
+    "chf_per_m2": 5620,
+    "type": "calibrated_estimate"
+  },
+  "3025": {
+    "chf_per_m2": 5170,
+    "type": "calibrated_estimate"
+  },
+  "3031": {
+    "chf_per_m2": 5555,
+    "type": "calibrated_estimate"
+  },
+  "3032": {
+    "chf_per_m2": 5596,
+    "type": "calibrated_estimate"
+  },
+  "3033": {
+    "chf_per_m2": 5604,
+    "type": "calibrated_estimate"
+  },
+  "3034": {
+    "chf_per_m2": 4486,
+    "type": "calibrated_estimate"
+  },
+  "3035": {
+    "chf_per_m2": 5900,
+    "type": "calibrated_estimate"
+  },
+  "3036": {
+    "chf_per_m2": 4888,
+    "type": "calibrated_estimate"
+  },
+  "3037": {
+    "chf_per_m2": 4889,
+    "type": "calibrated_estimate"
+  },
+  "3038": {
+    "chf_per_m2": 5539,
+    "type": "calibrated_estimate"
+  },
+  "3101": {
+    "chf_per_m2": 5455,
+    "type": "calibrated_estimate"
+  },
+  "3102": {
+    "chf_per_m2": 6685,
+    "type": "calibrated_estimate"
+  },
+  "3104": {
+    "chf_per_m2": 5360,
+    "type": "calibrated_estimate"
+  },
+  "3111": {
+    "chf_per_m2": 5518,
+    "type": "calibrated_estimate"
+  },
+  "3112": {
+    "chf_per_m2": 6987,
+    "type": "calibrated_estimate"
+  },
+  "3201": {
+    "chf_per_m2": 5633,
+    "type": "calibrated_estimate"
+  },
+  "3202": {
+    "chf_per_m2": 5438,
+    "type": "calibrated_estimate"
+  },
+  "3203": {
+    "chf_per_m2": 6138,
+    "type": "calibrated_estimate"
+  },
+  "3204": {
+    "chf_per_m2": 4865,
+    "type": "calibrated_estimate"
+  },
+  "3211": {
+    "chf_per_m2": 6429,
+    "type": "calibrated_estimate"
+  },
+  "3212": {
+    "chf_per_m2": 5241,
+    "type": "calibrated_estimate"
+  },
+  "3213": {
+    "chf_per_m2": 5422,
+    "type": "calibrated_estimate"
+  },
+  "3214": {
+    "chf_per_m2": 5745,
+    "type": "calibrated_estimate"
+  },
+  "3215": {
+    "chf_per_m2": 5296,
+    "type": "calibrated_estimate"
+  },
+  "3216": {
+    "chf_per_m2": 6415,
+    "type": "calibrated_estimate"
+  },
+  "3217": {
+    "chf_per_m2": 5047,
+    "type": "calibrated_estimate"
+  },
+  "3218": {
+    "chf_per_m2": 5328,
+    "type": "calibrated_estimate"
+  },
+  "3219": {
+    "chf_per_m2": 6328,
+    "type": "calibrated_estimate"
+  },
+  "3231": {
+    "chf_per_m2": 5507,
+    "type": "calibrated_estimate"
+  },
+  "3232": {
+    "chf_per_m2": 5898,
+    "type": "calibrated_estimate"
+  },
+  "3233": {
+    "chf_per_m2": 5389,
+    "type": "calibrated_estimate"
+  },
+  "3234": {
+    "chf_per_m2": 5238,
+    "type": "calibrated_estimate"
+  },
+  "3235": {
+    "chf_per_m2": 6632,
+    "type": "calibrated_estimate"
+  },
+  "3236": {
+    "chf_per_m2": 5888,
+    "type": "calibrated_estimate"
+  },
+  "3237": {
+    "chf_per_m2": 6819,
+    "type": "calibrated_estimate"
+  },
+  "3238": {
+    "chf_per_m2": 6075,
+    "type": "calibrated_estimate"
+  },
+  "3251": {
+    "chf_per_m2": 6703,
+    "type": "calibrated_estimate"
+  },
+  "3252": {
+    "chf_per_m2": 6218,
+    "type": "calibrated_estimate"
+  },
+  "3253": {
+    "chf_per_m2": 5529,
+    "type": "calibrated_estimate"
+  },
+  "3254": {
+    "chf_per_m2": 6390,
+    "type": "calibrated_estimate"
+  },
+  "3255": {
+    "chf_per_m2": 7059,
+    "type": "calibrated_estimate"
+  },
+  "3256": {
+    "chf_per_m2": 5456,
+    "type": "calibrated_estimate"
+  },
+  "3271": {
+    "chf_per_m2": 7221,
+    "type": "calibrated_estimate"
+  },
+  "3272": {
+    "chf_per_m2": 7247,
+    "type": "calibrated_estimate"
+  },
+  "3273": {
+    "chf_per_m2": 6893,
+    "type": "calibrated_estimate"
+  },
+  "3274": {
+    "chf_per_m2": 6729,
+    "type": "calibrated_estimate"
+  },
+  "3275": {
+    "chf_per_m2": 7693,
+    "type": "calibrated_estimate"
+  },
+  "3276": {
+    "chf_per_m2": 5718,
+    "type": "calibrated_estimate"
+  },
+  "3291": {
+    "chf_per_m2": 6146,
+    "type": "calibrated_estimate"
+  },
+  "3292": {
+    "chf_per_m2": 6827,
+    "type": "calibrated_estimate"
+  },
+  "3293": {
+    "chf_per_m2": 7483,
+    "type": "calibrated_estimate"
+  },
+  "3294": {
+    "chf_per_m2": 5443,
+    "type": "calibrated_estimate"
+  },
+  "3295": {
+    "chf_per_m2": 8215,
+    "type": "calibrated_estimate"
+  },
+  "3296": {
+    "chf_per_m2": 5959,
+    "type": "calibrated_estimate"
+  },
+  "3297": {
+    "chf_per_m2": 6149,
+    "type": "calibrated_estimate"
+  },
+  "3298": {
+    "chf_per_m2": 7235,
+    "type": "calibrated_estimate"
+  },
+  "3311": {
+    "chf_per_m2": 6337,
+    "type": "calibrated_estimate"
+  },
+  "3312": {
+    "chf_per_m2": 7022,
+    "type": "calibrated_estimate"
+  },
+  "3313": {
+    "chf_per_m2": 7775,
+    "type": "calibrated_estimate"
+  },
+  "3315": {
+    "chf_per_m2": 7378,
+    "type": "calibrated_estimate"
+  },
+  "3316": {
+    "chf_per_m2": 6964,
+    "type": "calibrated_estimate"
+  },
+  "3338": {
+    "chf_per_m2": 8862,
+    "type": "calibrated_estimate"
+  },
+  "3339": {
+    "chf_per_m2": 7696,
+    "type": "calibrated_estimate"
+  },
+  "3340": {
+    "chf_per_m2": 8319,
+    "type": "calibrated_estimate"
+  },
+  "3341": {
+    "chf_per_m2": 7714,
+    "type": "calibrated_estimate"
+  },
+  "3342": {
+    "chf_per_m2": 6649,
+    "type": "calibrated_estimate"
+  },
+  "3352": {
+    "chf_per_m2": 7234,
+    "type": "calibrated_estimate"
+  },
+  "3359": {
+    "chf_per_m2": 7449,
+    "type": "calibrated_estimate"
+  },
+  "3360": {
+    "chf_per_m2": 7171,
+    "type": "calibrated_estimate"
+  },
+  "3374": {
+    "chf_per_m2": 7426,
+    "type": "calibrated_estimate"
+  },
+  "3379": {
+    "chf_per_m2": 7452,
+    "type": "calibrated_estimate"
+  },
+  "3392": {
+    "chf_per_m2": 6531,
+    "type": "calibrated_estimate"
+  },
+  "3393": {
+    "chf_per_m2": 6472,
+    "type": "calibrated_estimate"
+  },
+  "3394": {
+    "chf_per_m2": 6599,
+    "type": "calibrated_estimate"
+  },
+  "3395": {
+    "chf_per_m2": 6650,
+    "type": "calibrated_estimate"
+  },
+  "3396": {
+    "chf_per_m2": 6561,
+    "type": "calibrated_estimate"
+  },
+  "3401": {
+    "chf_per_m2": 6058,
+    "type": "calibrated_estimate"
+  },
+  "3402": {
+    "chf_per_m2": 5519,
+    "type": "calibrated_estimate"
+  },
+  "3405": {
+    "chf_per_m2": 6698,
+    "type": "calibrated_estimate"
+  },
+  "3407": {
+    "chf_per_m2": 6970,
+    "type": "calibrated_estimate"
+  },
+  "3408": {
+    "chf_per_m2": 6459,
+    "type": "calibrated_estimate"
+  },
+  "3422": {
+    "chf_per_m2": 5595,
+    "type": "calibrated_estimate"
+  },
+  "3423": {
+    "chf_per_m2": 7478,
+    "type": "calibrated_estimate"
+  },
+  "3424": {
+    "chf_per_m2": 5731,
+    "type": "calibrated_estimate"
+  },
+  "3426": {
+    "chf_per_m2": 7952,
+    "type": "calibrated_estimate"
+  },
+  "3427": {
+    "chf_per_m2": 6204,
+    "type": "calibrated_estimate"
+  },
+  "3441": {
+    "chf_per_m2": 5210,
+    "type": "calibrated_estimate"
+  },
+  "3442": {
+    "chf_per_m2": 6244,
+    "type": "calibrated_estimate"
+  },
+  "3443": {
+    "chf_per_m2": 6575,
+    "type": "calibrated_estimate"
+  },
+  "3444": {
+    "chf_per_m2": 5930,
+    "type": "calibrated_estimate"
+  },
+  "3506": {
+    "chf_per_m2": 6100,
+    "type": "calibrated_estimate"
+  },
+  "3513": {
+    "chf_per_m2": 5729,
+    "type": "calibrated_estimate"
+  },
+  "3514": {
+    "chf_per_m2": 5160,
+    "type": "calibrated_estimate"
+  },
+  "3542": {
+    "chf_per_m2": 4821,
+    "type": "calibrated_estimate"
+  },
+  "3543": {
+    "chf_per_m2": 5797,
+    "type": "calibrated_estimate"
+  },
+  "3544": {
+    "chf_per_m2": 5707,
+    "type": "calibrated_estimate"
+  },
+  "3551": {
+    "chf_per_m2": 5967,
+    "type": "calibrated_estimate"
+  },
+  "3561": {
+    "chf_per_m2": 6121,
+    "type": "calibrated_estimate"
+  },
+  "3572": {
+    "chf_per_m2": 8681,
+    "type": "calibrated_estimate"
+  },
+  "3575": {
+    "chf_per_m2": 9557,
+    "type": "calibrated_estimate"
+  },
+  "3581": {
+    "chf_per_m2": 6831,
+    "type": "calibrated_estimate"
+  },
+  "3582": {
+    "chf_per_m2": 6632,
+    "type": "calibrated_estimate"
+  },
+  "3603": {
+    "chf_per_m2": 6163,
+    "type": "calibrated_estimate"
+  },
+  "3618": {
+    "chf_per_m2": 6167,
+    "type": "calibrated_estimate"
+  },
+  "3619": {
+    "chf_per_m2": 6826,
+    "type": "calibrated_estimate"
+  },
+  "3633": {
+    "chf_per_m2": 5165,
+    "type": "calibrated_estimate"
+  },
+  "3637": {
+    "chf_per_m2": 5177,
+    "type": "calibrated_estimate"
+  },
+  "3638": {
+    "chf_per_m2": 6388,
+    "type": "calibrated_estimate"
+  },
+  "3640": {
+    "chf_per_m2": 5149,
+    "type": "calibrated_estimate"
+  },
+  "3661": {
+    "chf_per_m2": 6032,
+    "type": "calibrated_estimate"
+  },
+  "3662": {
+    "chf_per_m2": 5405,
+    "type": "calibrated_estimate"
+  },
+  "3663": {
+    "chf_per_m2": 5775,
+    "type": "calibrated_estimate"
+  },
+  "3668": {
+    "chf_per_m2": 5876,
+    "type": "calibrated_estimate"
+  },
+  "3669": {
+    "chf_per_m2": 6212,
+    "type": "calibrated_estimate"
+  },
+  "3670": {
+    "chf_per_m2": 6203,
+    "type": "calibrated_estimate"
+  },
+  "3672": {
+    "chf_per_m2": 5584,
+    "type": "calibrated_estimate"
+  },
+  "3673": {
+    "chf_per_m2": 5872,
+    "type": "calibrated_estimate"
+  },
+  "3681": {
+    "chf_per_m2": 5060,
+    "type": "calibrated_estimate"
+  },
+  "3695": {
+    "chf_per_m2": 6984,
+    "type": "calibrated_estimate"
+  },
+  "3701": {
+    "chf_per_m2": 6663,
+    "type": "calibrated_estimate"
+  },
+  "3711": {
+    "chf_per_m2": 5547,
+    "type": "calibrated_estimate"
+  },
+  "3712": {
+    "chf_per_m2": 5120,
+    "type": "calibrated_estimate"
+  },
+  "3713": {
+    "chf_per_m2": 6608,
+    "type": "calibrated_estimate"
+  },
+  "3714": {
+    "chf_per_m2": 5638,
+    "type": "calibrated_estimate"
+  },
+  "3715": {
+    "chf_per_m2": 5694,
+    "type": "calibrated_estimate"
+  },
+  "3721": {
+    "chf_per_m2": 4971,
+    "type": "calibrated_estimate"
+  },
+  "3722": {
+    "chf_per_m2": 6474,
+    "type": "calibrated_estimate"
+  },
+  "3723": {
+    "chf_per_m2": 5662,
+    "type": "calibrated_estimate"
+  },
+  "3731": {
+    "chf_per_m2": 5539,
+    "type": "calibrated_estimate"
+  },
+  "3732": {
+    "chf_per_m2": 6036,
+    "type": "calibrated_estimate"
+  },
+  "3733": {
+    "chf_per_m2": 5937,
+    "type": "calibrated_estimate"
+  },
+  "3734": {
+    "chf_per_m2": 4939,
+    "type": "calibrated_estimate"
+  },
+  "3746": {
+    "chf_per_m2": 5968,
+    "type": "calibrated_estimate"
+  },
+  "3752": {
+    "chf_per_m2": 4973,
+    "type": "calibrated_estimate"
+  },
+  "3762": {
+    "chf_per_m2": 5307,
+    "type": "calibrated_estimate"
+  },
+  "3764": {
+    "chf_per_m2": 5214,
+    "type": "calibrated_estimate"
+  },
+  "3781": {
+    "chf_per_m2": 5442,
+    "type": "calibrated_estimate"
+  },
+  "3782": {
+    "chf_per_m2": 6199,
+    "type": "calibrated_estimate"
+  },
+  "3783": {
+    "chf_per_m2": 6011,
+    "type": "calibrated_estimate"
+  },
+  "3784": {
+    "chf_per_m2": 5739,
+    "type": "calibrated_estimate"
+  },
+  "3785": {
+    "chf_per_m2": 5095,
+    "type": "calibrated_estimate"
+  },
+  "3786": {
+    "chf_per_m2": 4870,
+    "type": "calibrated_estimate"
+  },
+  "3787": {
+    "chf_per_m2": 5181,
+    "type": "calibrated_estimate"
+  },
+  "3788": {
+    "chf_per_m2": 5902,
+    "type": "calibrated_estimate"
+  },
+  "3789": {
+    "chf_per_m2": 6554,
+    "type": "calibrated_estimate"
+  },
+  "3790": {
+    "chf_per_m2": 5380,
+    "type": "calibrated_estimate"
+  },
+  "3791": {
+    "chf_per_m2": 5977,
+    "type": "calibrated_estimate"
+  },
+  "3792": {
+    "chf_per_m2": 6038,
+    "type": "calibrated_estimate"
+  },
+  "3804": {
+    "chf_per_m2": 5877,
+    "type": "calibrated_estimate"
+  },
+  "3805": {
+    "chf_per_m2": 5651,
+    "type": "calibrated_estimate"
+  },
+  "3808": {
+    "chf_per_m2": 6643,
+    "type": "calibrated_estimate"
+  },
+  "3810": {
+    "chf_per_m2": 5288,
+    "type": "calibrated_estimate"
+  },
+  "3821": {
+    "chf_per_m2": 6017,
+    "type": "calibrated_estimate"
+  },
+  "3822": {
+    "chf_per_m2": 5693,
+    "type": "calibrated_estimate"
+  },
+  "3823": {
+    "chf_per_m2": 6649,
+    "type": "calibrated_estimate"
+  },
+  "3831": {
+    "chf_per_m2": 6179,
+    "type": "calibrated_estimate"
+  },
+  "3832": {
+    "chf_per_m2": 6368,
+    "type": "calibrated_estimate"
+  },
+  "3834": {
+    "chf_per_m2": 5130,
+    "type": "calibrated_estimate"
+  },
+  "3835": {
+    "chf_per_m2": 5993,
+    "type": "calibrated_estimate"
+  },
+  "3837": {
+    "chf_per_m2": 6159,
+    "type": "calibrated_estimate"
+  },
+  "3847": {
+    "chf_per_m2": 4507,
+    "type": "calibrated_estimate"
+  },
+  "3851": {
+    "chf_per_m2": 5149,
+    "type": "calibrated_estimate"
+  },
+  "3861": {
+    "chf_per_m2": 5215,
+    "type": "calibrated_estimate"
+  },
+  "3862": {
+    "chf_per_m2": 4948,
+    "type": "calibrated_estimate"
+  },
+  "3863": {
+    "chf_per_m2": 5327,
+    "type": "calibrated_estimate"
+  },
+  "3871": {
+    "chf_per_m2": 5579,
+    "type": "calibrated_estimate"
+  },
+  "3881": {
+    "chf_per_m2": 5135,
+    "type": "calibrated_estimate"
+  },
+  "3882": {
+    "chf_per_m2": 6048,
+    "type": "calibrated_estimate"
+  },
+  "3891": {
+    "chf_per_m2": 5261,
+    "type": "calibrated_estimate"
+  },
+  "3901": {
+    "chf_per_m2": 5595,
+    "type": "calibrated_estimate"
+  },
+  "3911": {
+    "chf_per_m2": 6142,
+    "type": "calibrated_estimate"
+  },
+  "3921": {
+    "chf_per_m2": 5789,
+    "type": "calibrated_estimate"
+  },
+  "3945": {
+    "chf_per_m2": 6410,
+    "type": "calibrated_estimate"
+  },
+  "3946": {
+    "chf_per_m2": 6363,
+    "type": "calibrated_estimate"
+  },
+  "3947": {
+    "chf_per_m2": 5114,
+    "type": "calibrated_estimate"
+  },
+  "3951": {
+    "chf_per_m2": 6960,
+    "type": "calibrated_estimate"
+  },
+  "3952": {
+    "chf_per_m2": 4973,
+    "type": "calibrated_estimate"
+  },
+  "3953": {
+    "chf_per_m2": 5101,
+    "type": "calibrated_estimate"
+  },
+  "3954": {
+    "chf_per_m2": 6652,
+    "type": "calibrated_estimate"
+  },
+  "3955": {
+    "chf_per_m2": 6373,
+    "type": "calibrated_estimate"
+  },
+  "3961": {
+    "chf_per_m2": 5855,
+    "type": "calibrated_estimate"
+  },
+  "3962": {
+    "chf_per_m2": 5763,
+    "type": "calibrated_estimate"
+  },
+  "3972": {
+    "chf_per_m2": 6026,
+    "type": "calibrated_estimate"
+  },
+  "3981": {
+    "chf_per_m2": 7804,
+    "type": "calibrated_estimate"
+  },
+  "3982": {
+    "chf_per_m2": 7686,
+    "type": "calibrated_estimate"
+  },
+  "3983": {
+    "chf_per_m2": 5982,
+    "type": "calibrated_estimate"
+  },
+  "3985": {
+    "chf_per_m2": 6383,
+    "type": "calibrated_estimate"
+  },
+  "3986": {
+    "chf_per_m2": 7475,
+    "type": "calibrated_estimate"
+  },
+  "3987": {
+    "chf_per_m2": 9173,
+    "type": "calibrated_estimate"
+  },
+  "3988": {
+    "chf_per_m2": 8127,
+    "type": "calibrated_estimate"
+  },
+  "4001": {
+    "chf_per_m2": 9001,
+    "type": "calibrated_estimate"
+  },
+  "4002": {
+    "chf_per_m2": 7084,
+    "type": "calibrated_estimate"
+  },
+  "4003": {
+    "chf_per_m2": 8648,
+    "type": "calibrated_estimate"
+  },
+  "4004": {
+    "chf_per_m2": 7148,
+    "type": "calibrated_estimate"
+  },
+  "4005": {
+    "chf_per_m2": 8127,
+    "type": "calibrated_estimate"
+  },
+  "4006": {
+    "chf_per_m2": 8016,
+    "type": "calibrated_estimate"
+  },
+  "4007": {
+    "chf_per_m2": 7688,
+    "type": "calibrated_estimate"
+  },
+  "4008": {
+    "chf_per_m2": 7456,
+    "type": "calibrated_estimate"
+  },
+  "4009": {
+    "chf_per_m2": 7427,
+    "type": "calibrated_estimate"
+  },
+  "4010": {
+    "chf_per_m2": 7356,
+    "type": "calibrated_estimate"
+  },
+  "4012": {
+    "chf_per_m2": 7103,
+    "type": "calibrated_estimate"
+  },
+  "4013": {
+    "chf_per_m2": 7777,
+    "type": "calibrated_estimate"
+  },
+  "4021": {
+    "chf_per_m2": 8085,
+    "type": "calibrated_estimate"
+  },
+  "4022": {
+    "chf_per_m2": 9523,
+    "type": "calibrated_estimate"
+  },
+  "4023": {
+    "chf_per_m2": 10949,
+    "type": "calibrated_estimate"
+  },
+  "4024": {
+    "chf_per_m2": 8594,
+    "type": "calibrated_estimate"
+  },
+  "4026": {
+    "chf_per_m2": 9641,
+    "type": "calibrated_estimate"
+  },
+  "4027": {
+    "chf_per_m2": 9887,
+    "type": "calibrated_estimate"
+  },
+  "4028": {
+    "chf_per_m2": 9464,
+    "type": "calibrated_estimate"
+  },
+  "4029": {
+    "chf_per_m2": 8127,
+    "type": "calibrated_estimate"
+  },
+  "4030": {
+    "chf_per_m2": 8190,
+    "type": "calibrated_estimate"
+  },
+  "4031": {
+    "chf_per_m2": 8330,
+    "type": "calibrated_estimate"
+  },
+  "4032": {
+    "chf_per_m2": 8898,
+    "type": "calibrated_estimate"
+  },
+  "4033": {
+    "chf_per_m2": 9678,
+    "type": "calibrated_estimate"
+  },
+  "4034": {
+    "chf_per_m2": 9343,
+    "type": "calibrated_estimate"
+  },
+  "4035": {
+    "chf_per_m2": 8364,
+    "type": "calibrated_estimate"
+  },
+  "4037": {
+    "chf_per_m2": 10077,
+    "type": "calibrated_estimate"
+  },
+  "4038": {
+    "chf_per_m2": 8827,
+    "type": "calibrated_estimate"
+  },
+  "4039": {
+    "chf_per_m2": 10036,
+    "type": "calibrated_estimate"
+  },
+  "4040": {
+    "chf_per_m2": 10121,
+    "type": "calibrated_estimate"
+  },
+  "4041": {
+    "chf_per_m2": 9062,
+    "type": "calibrated_estimate"
+  },
+  "4044": {
+    "chf_per_m2": 9897,
+    "type": "calibrated_estimate"
+  },
+  "4045": {
+    "chf_per_m2": 9284,
+    "type": "calibrated_estimate"
+  },
+  "4046": {
+    "chf_per_m2": 9184,
+    "type": "calibrated_estimate"
+  },
+  "4047": {
+    "chf_per_m2": 9083,
+    "type": "calibrated_estimate"
+  },
+  "4048": {
+    "chf_per_m2": 10283,
+    "type": "calibrated_estimate"
+  },
+  "4049": {
+    "chf_per_m2": 9091,
+    "type": "calibrated_estimate"
+  },
+  "4061": {
+    "chf_per_m2": 8844,
+    "type": "calibrated_estimate"
+  },
+  "4062": {
+    "chf_per_m2": 8457,
+    "type": "calibrated_estimate"
+  },
+  "4063": {
+    "chf_per_m2": 9010,
+    "type": "calibrated_estimate"
+  },
+  "4064": {
+    "chf_per_m2": 8388,
+    "type": "calibrated_estimate"
+  },
+  "4065": {
+    "chf_per_m2": 8330,
+    "type": "calibrated_estimate"
+  },
+  "4066": {
+    "chf_per_m2": 7985,
+    "type": "calibrated_estimate"
+  },
+  "4067": {
+    "chf_per_m2": 9037,
+    "type": "calibrated_estimate"
+  },
+  "4068": {
+    "chf_per_m2": 8234,
+    "type": "calibrated_estimate"
+  },
+  "4071": {
+    "chf_per_m2": 9475,
+    "type": "calibrated_estimate"
+  },
+  "4072": {
+    "chf_per_m2": 7957,
+    "type": "calibrated_estimate"
+  },
+  "4073": {
+    "chf_per_m2": 10780,
+    "type": "calibrated_estimate"
+  },
+  "4074": {
+    "chf_per_m2": 8984,
+    "type": "calibrated_estimate"
+  },
+  "4075": {
+    "chf_per_m2": 10663,
+    "type": "calibrated_estimate"
+  },
+  "4076": {
+    "chf_per_m2": 9403,
+    "type": "calibrated_estimate"
+  },
+  "4077": {
+    "chf_per_m2": 9132,
+    "type": "calibrated_estimate"
+  },
+  "4078": {
+    "chf_per_m2": 8809,
+    "type": "calibrated_estimate"
+  },
+  "4079": {
+    "chf_per_m2": 9680,
+    "type": "calibrated_estimate"
+  },
+  "4080": {
+    "chf_per_m2": 8711,
+    "type": "calibrated_estimate"
+  },
+  "4081": {
+    "chf_per_m2": 10598,
+    "type": "calibrated_estimate"
+  },
+  "4082": {
+    "chf_per_m2": 9822,
+    "type": "calibrated_estimate"
+  },
+  "4083": {
+    "chf_per_m2": 9498,
+    "type": "calibrated_estimate"
+  },
+  "4084": {
+    "chf_per_m2": 10771,
+    "type": "calibrated_estimate"
+  },
+  "4091": {
+    "chf_per_m2": 8624,
+    "type": "calibrated_estimate"
+  },
+  "4092": {
+    "chf_per_m2": 8032,
+    "type": "calibrated_estimate"
+  },
+  "4093": {
+    "chf_per_m2": 8783,
+    "type": "calibrated_estimate"
+  },
+  "4095": {
+    "chf_per_m2": 7867,
+    "type": "calibrated_estimate"
+  },
+  "4099": {
+    "chf_per_m2": 7559,
+    "type": "calibrated_estimate"
+  },
+  "4100": {
+    "chf_per_m2": 7648,
+    "type": "calibrated_estimate"
+  },
+  "4104": {
+    "chf_per_m2": 9290,
+    "type": "calibrated_estimate"
+  },
+  "4105": {
+    "chf_per_m2": 7981,
+    "type": "calibrated_estimate"
+  },
+  "4106": {
+    "chf_per_m2": 8596,
+    "type": "calibrated_estimate"
+  },
+  "4107": {
+    "chf_per_m2": 8819,
+    "type": "calibrated_estimate"
+  },
+  "4110": {
+    "chf_per_m2": 7793,
+    "type": "calibrated_estimate"
+  },
+  "4111": {
+    "chf_per_m2": 7815,
+    "type": "calibrated_estimate"
+  },
+  "4112": {
+    "chf_per_m2": 8356,
+    "type": "calibrated_estimate"
+  },
+  "4117": {
+    "chf_per_m2": 7806,
+    "type": "calibrated_estimate"
+  },
+  "4120": {
+    "chf_per_m2": 8239,
+    "type": "calibrated_estimate"
+  },
+  "4121": {
+    "chf_per_m2": 7924,
+    "type": "calibrated_estimate"
+  },
+  "4122": {
+    "chf_per_m2": 7716,
+    "type": "calibrated_estimate"
+  },
+  "4123": {
+    "chf_per_m2": 8074,
+    "type": "calibrated_estimate"
+  },
+  "4124": {
+    "chf_per_m2": 8133,
+    "type": "calibrated_estimate"
+  },
+  "4125": {
+    "chf_per_m2": 7675,
+    "type": "calibrated_estimate"
+  },
+  "4131": {
+    "chf_per_m2": 8470,
+    "type": "calibrated_estimate"
+  },
+  "4132": {
+    "chf_per_m2": 9076,
+    "type": "calibrated_estimate"
+  },
+  "4134": {
+    "chf_per_m2": 8348,
+    "type": "calibrated_estimate"
+  },
+  "4135": {
+    "chf_per_m2": 6848,
+    "type": "calibrated_estimate"
+  },
+  "4136": {
+    "chf_per_m2": 6835,
+    "type": "calibrated_estimate"
+  },
+  "4137": {
+    "chf_per_m2": 8332,
+    "type": "calibrated_estimate"
+  },
+  "4138": {
+    "chf_per_m2": 7482,
+    "type": "calibrated_estimate"
+  },
+  "4139": {
+    "chf_per_m2": 8418,
+    "type": "calibrated_estimate"
+  },
+  "4140": {
+    "chf_per_m2": 8234,
+    "type": "calibrated_estimate"
+  },
+  "4141": {
+    "chf_per_m2": 8953,
+    "type": "calibrated_estimate"
+  },
+  "4142": {
+    "chf_per_m2": 8606,
+    "type": "calibrated_estimate"
+  },
+  "4143": {
+    "chf_per_m2": 7369,
+    "type": "calibrated_estimate"
+  },
+  "4144": {
+    "chf_per_m2": 8055,
+    "type": "calibrated_estimate"
+  },
+  "4145": {
+    "chf_per_m2": 7035,
+    "type": "calibrated_estimate"
+  },
+  "4146": {
+    "chf_per_m2": 7518,
+    "type": "calibrated_estimate"
+  },
+  "4147": {
+    "chf_per_m2": 9079,
+    "type": "calibrated_estimate"
+  },
+  "4161": {
+    "chf_per_m2": 8041,
+    "type": "calibrated_estimate"
+  },
+  "4163": {
+    "chf_per_m2": 7513,
+    "type": "calibrated_estimate"
+  },
+  "4164": {
+    "chf_per_m2": 8470,
+    "type": "calibrated_estimate"
+  },
+  "4165": {
+    "chf_per_m2": 8802,
+    "type": "calibrated_estimate"
+  },
+  "4169": {
+    "chf_per_m2": 7392,
+    "type": "calibrated_estimate"
+  },
+  "4170": {
+    "chf_per_m2": 7703,
+    "type": "calibrated_estimate"
+  },
+  "4172": {
+    "chf_per_m2": 8164,
+    "type": "calibrated_estimate"
+  },
+  "4173": {
+    "chf_per_m2": 8227,
+    "type": "calibrated_estimate"
+  },
+  "4175": {
+    "chf_per_m2": 8021,
+    "type": "calibrated_estimate"
+  },
+  "4176": {
+    "chf_per_m2": 8963,
+    "type": "calibrated_estimate"
+  },
+  "4177": {
+    "chf_per_m2": 8477,
+    "type": "calibrated_estimate"
+  },
+  "4181": {
+    "chf_per_m2": 7884,
+    "type": "calibrated_estimate"
+  },
+  "4182": {
+    "chf_per_m2": 7556,
+    "type": "calibrated_estimate"
+  },
+  "4183": {
+    "chf_per_m2": 8221,
+    "type": "calibrated_estimate"
+  },
+  "4184": {
+    "chf_per_m2": 8164,
+    "type": "calibrated_estimate"
+  },
+  "4185": {
+    "chf_per_m2": 7518,
+    "type": "calibrated_estimate"
+  },
+  "4186": {
+    "chf_per_m2": 7456,
+    "type": "calibrated_estimate"
+  },
+  "4191": {
+    "chf_per_m2": 7553,
+    "type": "calibrated_estimate"
+  },
+  "4192": {
+    "chf_per_m2": 7554,
+    "type": "calibrated_estimate"
+  },
+  "4193": {
+    "chf_per_m2": 9836,
+    "type": "calibrated_estimate"
+  },
+  "4194": {
+    "chf_per_m2": 8514,
+    "type": "calibrated_estimate"
+  },
+  "4195": {
+    "chf_per_m2": 7640,
+    "type": "calibrated_estimate"
+  },
+  "4196": {
+    "chf_per_m2": 7314,
+    "type": "calibrated_estimate"
+  },
+  "4197": {
+    "chf_per_m2": 6979,
+    "type": "calibrated_estimate"
+  },
+  "4198": {
+    "chf_per_m2": 9063,
+    "type": "calibrated_estimate"
+  },
+  "4199": {
+    "chf_per_m2": 7347,
+    "type": "calibrated_estimate"
+  },
+  "4200": {
+    "chf_per_m2": 8794,
+    "type": "calibrated_estimate"
+  },
+  "4201": {
+    "chf_per_m2": 9145,
+    "type": "calibrated_estimate"
+  },
+  "4202": {
+    "chf_per_m2": 9888,
+    "type": "calibrated_estimate"
+  },
+  "4203": {
+    "chf_per_m2": 7286,
+    "type": "calibrated_estimate"
+  },
+  "4204": {
+    "chf_per_m2": 7733,
+    "type": "calibrated_estimate"
+  },
+  "4205": {
+    "chf_per_m2": 9139,
+    "type": "calibrated_estimate"
+  },
+  "4206": {
+    "chf_per_m2": 7293,
+    "type": "calibrated_estimate"
+  },
+  "4207": {
+    "chf_per_m2": 7916,
+    "type": "calibrated_estimate"
+  },
+  "4208": {
+    "chf_per_m2": 7863,
+    "type": "calibrated_estimate"
+  },
+  "4209": {
+    "chf_per_m2": 8972,
+    "type": "calibrated_estimate"
+  },
+  "4210": {
+    "chf_per_m2": 9125,
+    "type": "calibrated_estimate"
+  },
+  "4221": {
+    "chf_per_m2": 8844,
+    "type": "calibrated_estimate"
+  },
+  "4222": {
+    "chf_per_m2": 8064,
+    "type": "calibrated_estimate"
+  },
+  "4223": {
+    "chf_per_m2": 8226,
+    "type": "calibrated_estimate"
+  },
+  "4224": {
+    "chf_per_m2": 8411,
+    "type": "calibrated_estimate"
+  },
+  "4226": {
+    "chf_per_m2": 9343,
+    "type": "calibrated_estimate"
+  },
+  "4227": {
+    "chf_per_m2": 7869,
+    "type": "calibrated_estimate"
+  },
+  "4228": {
+    "chf_per_m2": 8768,
+    "type": "calibrated_estimate"
+  },
+  "4229": {
+    "chf_per_m2": 8255,
+    "type": "calibrated_estimate"
+  },
+  "4230": {
+    "chf_per_m2": 9374,
+    "type": "calibrated_estimate"
+  },
+  "4231": {
+    "chf_per_m2": 7906,
+    "type": "calibrated_estimate"
+  },
+  "4232": {
+    "chf_per_m2": 9421,
+    "type": "calibrated_estimate"
+  },
+  "4233": {
+    "chf_per_m2": 8367,
+    "type": "calibrated_estimate"
+  },
+  "4234": {
+    "chf_per_m2": 9730,
+    "type": "calibrated_estimate"
+  },
+  "4235": {
+    "chf_per_m2": 8398,
+    "type": "calibrated_estimate"
+  },
+  "4236": {
+    "chf_per_m2": 9626,
+    "type": "calibrated_estimate"
+  },
+  "4237": {
+    "chf_per_m2": 7666,
+    "type": "calibrated_estimate"
+  },
+  "4238": {
+    "chf_per_m2": 10542,
+    "type": "calibrated_estimate"
+  },
+  "4239": {
+    "chf_per_m2": 9506,
+    "type": "calibrated_estimate"
+  },
+  "4240": {
+    "chf_per_m2": 8848,
+    "type": "calibrated_estimate"
+  },
+  "4251": {
+    "chf_per_m2": 6850,
+    "type": "calibrated_estimate"
+  },
+  "4252": {
+    "chf_per_m2": 7337,
+    "type": "calibrated_estimate"
+  },
+  "4253": {
+    "chf_per_m2": 7428,
+    "type": "calibrated_estimate"
+  },
+  "4254": {
+    "chf_per_m2": 8292,
+    "type": "calibrated_estimate"
+  },
+  "4255": {
+    "chf_per_m2": 8022,
+    "type": "calibrated_estimate"
+  },
+  "4256": {
+    "chf_per_m2": 8014,
+    "type": "calibrated_estimate"
+  },
+  "4257": {
+    "chf_per_m2": 6545,
+    "type": "calibrated_estimate"
+  },
+  "4258": {
+    "chf_per_m2": 6852,
+    "type": "calibrated_estimate"
+  },
+  "4259": {
+    "chf_per_m2": 7864,
+    "type": "calibrated_estimate"
+  },
+  "4260": {
+    "chf_per_m2": 8617,
+    "type": "calibrated_estimate"
+  },
+  "4261": {
+    "chf_per_m2": 7667,
+    "type": "calibrated_estimate"
+  },
+  "4262": {
+    "chf_per_m2": 6509,
+    "type": "calibrated_estimate"
+  },
+  "4263": {
+    "chf_per_m2": 8080,
+    "type": "calibrated_estimate"
+  },
+  "4264": {
+    "chf_per_m2": 8116,
+    "type": "calibrated_estimate"
+  },
+  "4271": {
+    "chf_per_m2": 6890,
+    "type": "calibrated_estimate"
+  },
+  "4273": {
+    "chf_per_m2": 8128,
+    "type": "calibrated_estimate"
+  },
+  "4274": {
+    "chf_per_m2": 6888,
+    "type": "calibrated_estimate"
+  },
+  "4275": {
+    "chf_per_m2": 8583,
+    "type": "calibrated_estimate"
+  },
+  "4276": {
+    "chf_per_m2": 6856,
+    "type": "calibrated_estimate"
+  },
+  "4277": {
+    "chf_per_m2": 7474,
+    "type": "calibrated_estimate"
+  },
+  "4279": {
+    "chf_per_m2": 8195,
+    "type": "calibrated_estimate"
+  },
+  "4280": {
+    "chf_per_m2": 6842,
+    "type": "calibrated_estimate"
+  },
+  "4281": {
+    "chf_per_m2": 7438,
+    "type": "calibrated_estimate"
+  },
+  "4282": {
+    "chf_per_m2": 7036,
+    "type": "calibrated_estimate"
+  },
+  "4283": {
+    "chf_per_m2": 6487,
+    "type": "calibrated_estimate"
+  },
+  "4284": {
+    "chf_per_m2": 6596,
+    "type": "calibrated_estimate"
+  },
+  "4285": {
+    "chf_per_m2": 7521,
+    "type": "calibrated_estimate"
+  },
+  "4286": {
+    "chf_per_m2": 6922,
+    "type": "calibrated_estimate"
+  },
+  "4287": {
+    "chf_per_m2": 8364,
+    "type": "calibrated_estimate"
+  },
+  "4288": {
+    "chf_per_m2": 7371,
+    "type": "calibrated_estimate"
+  },
+  "4289": {
+    "chf_per_m2": 6574,
+    "type": "calibrated_estimate"
+  },
+  "4303": {
+    "chf_per_m2": 9661,
+    "type": "calibrated_estimate"
+  },
+  "4304": {
+    "chf_per_m2": 9478,
+    "type": "calibrated_estimate"
+  },
+  "4305": {
+    "chf_per_m2": 9079,
+    "type": "calibrated_estimate"
+  },
+  "4306": {
+    "chf_per_m2": 9194,
+    "type": "calibrated_estimate"
+  },
+  "4307": {
+    "chf_per_m2": 7340,
+    "type": "calibrated_estimate"
+  },
+  "4309": {
+    "chf_per_m2": 7903,
+    "type": "calibrated_estimate"
+  },
+  "4310": {
+    "chf_per_m2": 9178,
+    "type": "calibrated_estimate"
+  },
+  "4311": {
+    "chf_per_m2": 8964,
+    "type": "calibrated_estimate"
+  },
+  "4312": {
+    "chf_per_m2": 7751,
+    "type": "calibrated_estimate"
+  },
+  "4313": {
+    "chf_per_m2": 9001,
+    "type": "calibrated_estimate"
+  },
+  "4314": {
+    "chf_per_m2": 8142,
+    "type": "calibrated_estimate"
+  },
+  "4318": {
+    "chf_per_m2": 7325,
+    "type": "calibrated_estimate"
+  },
+  "4319": {
+    "chf_per_m2": 7397,
+    "type": "calibrated_estimate"
+  },
+  "4320": {
+    "chf_per_m2": 8014,
+    "type": "calibrated_estimate"
+  },
+  "4324": {
+    "chf_per_m2": 9420,
+    "type": "calibrated_estimate"
+  },
+  "4401": {
+    "chf_per_m2": 5842,
+    "type": "calibrated_estimate"
+  },
+  "4406": {
+    "chf_per_m2": 6660,
+    "type": "calibrated_estimate"
+  },
+  "4411": {
+    "chf_per_m2": 5871,
+    "type": "calibrated_estimate"
+  },
+  "4416": {
+    "chf_per_m2": 5327,
+    "type": "calibrated_estimate"
+  },
+  "4421": {
+    "chf_per_m2": 5691,
+    "type": "calibrated_estimate"
+  },
+  "4426": {
+    "chf_per_m2": 5865,
+    "type": "calibrated_estimate"
+  },
+  "4431": {
+    "chf_per_m2": 4918,
+    "type": "calibrated_estimate"
+  },
+  "4436": {
+    "chf_per_m2": 5844,
+    "type": "calibrated_estimate"
+  },
+  "4441": {
+    "chf_per_m2": 6452,
+    "type": "calibrated_estimate"
+  },
+  "4446": {
+    "chf_per_m2": 6056,
+    "type": "calibrated_estimate"
+  },
+  "4451": {
+    "chf_per_m2": 5550,
+    "type": "calibrated_estimate"
+  },
+  "4461": {
+    "chf_per_m2": 6740,
+    "type": "calibrated_estimate"
+  },
+  "4471": {
+    "chf_per_m2": 6242,
+    "type": "calibrated_estimate"
+  },
+  "4476": {
+    "chf_per_m2": 5283,
+    "type": "calibrated_estimate"
+  },
+  "4486": {
+    "chf_per_m2": 5830,
+    "type": "calibrated_estimate"
+  },
+  "4495": {
+    "chf_per_m2": 5625,
+    "type": "calibrated_estimate"
+  },
+  "4501": {
+    "chf_per_m2": 5607,
+    "type": "calibrated_estimate"
+  },
+  "4506": {
+    "chf_per_m2": 6158,
+    "type": "calibrated_estimate"
+  },
+  "4511": {
+    "chf_per_m2": 6145,
+    "type": "calibrated_estimate"
+  },
+  "4536": {
+    "chf_per_m2": 6593,
+    "type": "calibrated_estimate"
+  },
+  "4545": {
+    "chf_per_m2": 7017,
+    "type": "calibrated_estimate"
+  },
+  "4546": {
+    "chf_per_m2": 7580,
+    "type": "calibrated_estimate"
+  },
+  "4551": {
+    "chf_per_m2": 6130,
+    "type": "calibrated_estimate"
+  },
+  "4561": {
+    "chf_per_m2": 7957,
+    "type": "calibrated_estimate"
+  },
+  "4566": {
+    "chf_per_m2": 6065,
+    "type": "calibrated_estimate"
+  },
+  "4571": {
+    "chf_per_m2": 7077,
+    "type": "calibrated_estimate"
+  },
+  "4590": {
+    "chf_per_m2": 6936,
+    "type": "calibrated_estimate"
+  },
+  "4591": {
+    "chf_per_m2": 7992,
+    "type": "calibrated_estimate"
+  },
+  "4601": {
+    "chf_per_m2": 7294,
+    "type": "calibrated_estimate"
+  },
+  "4606": {
+    "chf_per_m2": 6725,
+    "type": "calibrated_estimate"
+  },
+  "4611": {
+    "chf_per_m2": 6866,
+    "type": "calibrated_estimate"
+  },
+  "4616": {
+    "chf_per_m2": 7260,
+    "type": "calibrated_estimate"
+  },
+  "4621": {
+    "chf_per_m2": 8605,
+    "type": "calibrated_estimate"
+  },
+  "4641": {
+    "chf_per_m2": 5847,
+    "type": "calibrated_estimate"
+  },
+  "4643": {
+    "chf_per_m2": 5935,
+    "type": "calibrated_estimate"
+  },
+  "4646": {
+    "chf_per_m2": 7757,
+    "type": "calibrated_estimate"
+  },
+  "4651": {
+    "chf_per_m2": 6529,
+    "type": "calibrated_estimate"
+  },
+  "4656": {
+    "chf_per_m2": 6691,
+    "type": "calibrated_estimate"
+  },
+  "4666": {
+    "chf_per_m2": 6857,
+    "type": "calibrated_estimate"
+  },
+  "4671": {
+    "chf_per_m2": 7181,
+    "type": "calibrated_estimate"
+  },
+  "4681": {
+    "chf_per_m2": 6762,
+    "type": "calibrated_estimate"
+  },
+  "4683": {
+    "chf_per_m2": 6214,
+    "type": "calibrated_estimate"
+  },
+  "4691": {
+    "chf_per_m2": 5685,
+    "type": "calibrated_estimate"
+  },
+  "4696": {
+    "chf_per_m2": 7018,
+    "type": "calibrated_estimate"
+  },
+  "4701": {
+    "chf_per_m2": 7403,
+    "type": "calibrated_estimate"
+  },
+  "4711": {
+    "chf_per_m2": 6128,
+    "type": "calibrated_estimate"
+  },
+  "4716": {
+    "chf_per_m2": 7428,
+    "type": "calibrated_estimate"
+  },
+  "4721": {
+    "chf_per_m2": 6993,
+    "type": "calibrated_estimate"
+  },
+  "4723": {
+    "chf_per_m2": 7102,
+    "type": "calibrated_estimate"
+  },
+  "4724": {
+    "chf_per_m2": 7280,
+    "type": "calibrated_estimate"
+  },
+  "4726": {
+    "chf_per_m2": 7754,
+    "type": "calibrated_estimate"
+  },
+  "4741": {
+    "chf_per_m2": 6009,
+    "type": "calibrated_estimate"
+  },
+  "4746": {
+    "chf_per_m2": 7496,
+    "type": "calibrated_estimate"
+  },
+  "4751": {
+    "chf_per_m2": 6694,
+    "type": "calibrated_estimate"
+  },
+  "4756": {
+    "chf_per_m2": 6058,
+    "type": "calibrated_estimate"
+  },
+  "4761": {
+    "chf_per_m2": 5972,
+    "type": "calibrated_estimate"
+  },
+  "4776": {
+    "chf_per_m2": 6189,
+    "type": "calibrated_estimate"
+  },
+  "4781": {
+    "chf_per_m2": 6023,
+    "type": "calibrated_estimate"
+  },
+  "4786": {
+    "chf_per_m2": 7770,
+    "type": "calibrated_estimate"
+  },
+  "4791": {
+    "chf_per_m2": 6545,
+    "type": "calibrated_estimate"
+  },
+  "4801": {
+    "chf_per_m2": 8062,
+    "type": "calibrated_estimate"
+  },
+  "4806": {
+    "chf_per_m2": 7131,
+    "type": "calibrated_estimate"
+  },
+  "4811": {
+    "chf_per_m2": 6479,
+    "type": "calibrated_estimate"
+  },
+  "4816": {
+    "chf_per_m2": 7469,
+    "type": "calibrated_estimate"
+  },
+  "4821": {
+    "chf_per_m2": 6409,
+    "type": "calibrated_estimate"
+  },
+  "4826": {
+    "chf_per_m2": 6742,
+    "type": "calibrated_estimate"
+  },
+  "4831": {
+    "chf_per_m2": 7495,
+    "type": "calibrated_estimate"
+  },
+  "4841": {
+    "chf_per_m2": 7730,
+    "type": "calibrated_estimate"
+  },
+  "4846": {
+    "chf_per_m2": 6504,
+    "type": "calibrated_estimate"
+  },
+  "4851": {
+    "chf_per_m2": 6315,
+    "type": "calibrated_estimate"
+  },
+  "4864": {
+    "chf_per_m2": 6879,
+    "type": "calibrated_estimate"
+  },
+  "4871": {
+    "chf_per_m2": 7918,
+    "type": "calibrated_estimate"
+  },
+  "4881": {
+    "chf_per_m2": 7325,
+    "type": "calibrated_estimate"
+  },
+  "4891": {
+    "chf_per_m2": 7274,
+    "type": "calibrated_estimate"
+  },
+  "4901": {
+    "chf_per_m2": 6111,
+    "type": "calibrated_estimate"
+  },
+  "4911": {
+    "chf_per_m2": 7343,
+    "type": "calibrated_estimate"
+  },
+  "4921": {
+    "chf_per_m2": 6621,
+    "type": "calibrated_estimate"
+  },
+  "4941": {
+    "chf_per_m2": 6734,
+    "type": "calibrated_estimate"
+  },
+  "4946": {
+    "chf_per_m2": 7463,
+    "type": "calibrated_estimate"
+  },
+  "4951": {
+    "chf_per_m2": 6862,
+    "type": "calibrated_estimate"
+  },
+  "5001": {
+    "chf_per_m2": 6876,
+    "type": "calibrated_estimate"
+  },
+  "5002": {
+    "chf_per_m2": 6717,
+    "type": "calibrated_estimate"
+  },
+  "5003": {
+    "chf_per_m2": 5532,
+    "type": "calibrated_estimate"
+  },
+  "5009": {
+    "chf_per_m2": 6491,
+    "type": "calibrated_estimate"
+  },
+  "5010": {
+    "chf_per_m2": 6925,
+    "type": "calibrated_estimate"
+  },
+  "5017": {
+    "chf_per_m2": 6576,
+    "type": "calibrated_estimate"
+  },
+  "5048": {
+    "chf_per_m2": 5935,
+    "type": "calibrated_estimate"
+  },
+  "5049": {
+    "chf_per_m2": 6028,
+    "type": "calibrated_estimate"
+  },
+  "5050": {
+    "chf_per_m2": 6592,
+    "type": "calibrated_estimate"
+  },
+  "5061": {
+    "chf_per_m2": 6656,
+    "type": "calibrated_estimate"
+  },
+  "5063": {
+    "chf_per_m2": 7522,
+    "type": "calibrated_estimate"
+  },
+  "5071": {
+    "chf_per_m2": 6853,
+    "type": "calibrated_estimate"
+  },
+  "5072": {
+    "chf_per_m2": 7133,
+    "type": "calibrated_estimate"
+  },
+  "5073": {
+    "chf_per_m2": 5992,
+    "type": "calibrated_estimate"
+  },
+  "5076": {
+    "chf_per_m2": 5448,
+    "type": "calibrated_estimate"
+  },
+  "5077": {
+    "chf_per_m2": 6967,
+    "type": "calibrated_estimate"
+  },
+  "5079": {
+    "chf_per_m2": 6636,
+    "type": "calibrated_estimate"
+  },
+  "5091": {
+    "chf_per_m2": 7407,
+    "type": "calibrated_estimate"
+  },
+  "5096": {
+    "chf_per_m2": 5984,
+    "type": "calibrated_estimate"
+  },
+  "5097": {
+    "chf_per_m2": 7273,
+    "type": "calibrated_estimate"
+  },
+  "5108": {
+    "chf_per_m2": 7202,
+    "type": "calibrated_estimate"
+  },
+  "5112": {
+    "chf_per_m2": 5434,
+    "type": "calibrated_estimate"
+  },
+  "5113": {
+    "chf_per_m2": 6575,
+    "type": "calibrated_estimate"
+  },
+  "5115": {
+    "chf_per_m2": 6056,
+    "type": "calibrated_estimate"
+  },
+  "5117": {
+    "chf_per_m2": 6791,
+    "type": "calibrated_estimate"
+  },
+  "5118": {
+    "chf_per_m2": 6727,
+    "type": "calibrated_estimate"
+  },
+  "5120": {
+    "chf_per_m2": 7320,
+    "type": "calibrated_estimate"
+  },
+  "5121": {
+    "chf_per_m2": 5700,
+    "type": "calibrated_estimate"
+  },
+  "5125": {
+    "chf_per_m2": 6652,
+    "type": "calibrated_estimate"
+  },
+  "5131": {
+    "chf_per_m2": 6819,
+    "type": "calibrated_estimate"
+  },
+  "5136": {
+    "chf_per_m2": 5396,
+    "type": "calibrated_estimate"
+  },
+  "5138": {
+    "chf_per_m2": 5495,
+    "type": "calibrated_estimate"
+  },
+  "5141": {
+    "chf_per_m2": 6917,
+    "type": "calibrated_estimate"
+  },
+  "5143": {
+    "chf_per_m2": 6045,
+    "type": "calibrated_estimate"
+  },
+  "5144": {
+    "chf_per_m2": 6051,
+    "type": "calibrated_estimate"
+  },
+  "5148": {
+    "chf_per_m2": 6548,
+    "type": "calibrated_estimate"
+  },
+  "5151": {
+    "chf_per_m2": 6737,
+    "type": "calibrated_estimate"
+  },
+  "5154": {
+    "chf_per_m2": 6845,
+    "type": "calibrated_estimate"
+  },
+  "5160": {
+    "chf_per_m2": 7214,
+    "type": "calibrated_estimate"
+  },
+  "5161": {
+    "chf_per_m2": 6030,
+    "type": "calibrated_estimate"
+  },
+  "5162": {
+    "chf_per_m2": 7000,
+    "type": "calibrated_estimate"
+  },
+  "5167": {
+    "chf_per_m2": 6561,
+    "type": "calibrated_estimate"
+  },
+  "5171": {
+    "chf_per_m2": 6414,
+    "type": "calibrated_estimate"
+  },
+  "5176": {
+    "chf_per_m2": 6247,
+    "type": "calibrated_estimate"
+  },
+  "5180": {
+    "chf_per_m2": 6733,
+    "type": "calibrated_estimate"
+  },
+  "5186": {
+    "chf_per_m2": 5960,
+    "type": "calibrated_estimate"
+  },
+  "5187": {
+    "chf_per_m2": 5735,
+    "type": "calibrated_estimate"
+  },
+  "5189": {
+    "chf_per_m2": 6807,
+    "type": "calibrated_estimate"
+  },
+  "5192": {
+    "chf_per_m2": 6425,
+    "type": "calibrated_estimate"
+  },
+  "5193": {
+    "chf_per_m2": 6226,
+    "type": "calibrated_estimate"
+  },
+  "5194": {
+    "chf_per_m2": 6652,
+    "type": "calibrated_estimate"
+  },
+  "5196": {
+    "chf_per_m2": 6024,
+    "type": "calibrated_estimate"
+  },
+  "5198": {
+    "chf_per_m2": 6061,
+    "type": "calibrated_estimate"
+  },
+  "5199": {
+    "chf_per_m2": 6468,
+    "type": "calibrated_estimate"
+  },
+  "5203": {
+    "chf_per_m2": 7354,
+    "type": "calibrated_estimate"
+  },
+  "5205": {
+    "chf_per_m2": 6030,
+    "type": "calibrated_estimate"
+  },
+  "5206": {
+    "chf_per_m2": 7103,
+    "type": "calibrated_estimate"
+  },
+  "5208": {
+    "chf_per_m2": 6470,
+    "type": "calibrated_estimate"
+  },
+  "5210": {
+    "chf_per_m2": 5845,
+    "type": "calibrated_estimate"
+  },
+  "5212": {
+    "chf_per_m2": 7031,
+    "type": "calibrated_estimate"
+  },
+  "5214": {
+    "chf_per_m2": 6514,
+    "type": "calibrated_estimate"
+  },
+  "5216": {
+    "chf_per_m2": 7099,
+    "type": "calibrated_estimate"
+  },
+  "5221": {
+    "chf_per_m2": 6338,
+    "type": "calibrated_estimate"
+  },
+  "5225": {
+    "chf_per_m2": 5723,
+    "type": "calibrated_estimate"
+  },
+  "5226": {
+    "chf_per_m2": 6623,
+    "type": "calibrated_estimate"
+  },
+  "5227": {
+    "chf_per_m2": 7017,
+    "type": "calibrated_estimate"
+  },
+  "5230": {
+    "chf_per_m2": 6055,
+    "type": "calibrated_estimate"
+  },
+  "5231": {
+    "chf_per_m2": 6067,
+    "type": "calibrated_estimate"
+  },
+  "5233": {
+    "chf_per_m2": 5678,
+    "type": "calibrated_estimate"
+  },
+  "5236": {
+    "chf_per_m2": 6657,
+    "type": "calibrated_estimate"
+  },
+  "5237": {
+    "chf_per_m2": 7056,
+    "type": "calibrated_estimate"
+  },
+  "5238": {
+    "chf_per_m2": 6961,
+    "type": "calibrated_estimate"
+  },
+  "5239": {
+    "chf_per_m2": 6762,
+    "type": "calibrated_estimate"
+  },
+  "5240": {
+    "chf_per_m2": 7222,
+    "type": "calibrated_estimate"
+  },
+  "5242": {
+    "chf_per_m2": 6710,
+    "type": "calibrated_estimate"
+  },
+  "5249": {
+    "chf_per_m2": 7106,
+    "type": "calibrated_estimate"
+  },
+  "5250": {
+    "chf_per_m2": 6348,
+    "type": "calibrated_estimate"
+  },
+  "5251": {
+    "chf_per_m2": 5674,
+    "type": "calibrated_estimate"
+  },
+  "5254": {
+    "chf_per_m2": 5850,
+    "type": "calibrated_estimate"
+  },
+  "5257": {
+    "chf_per_m2": 5692,
+    "type": "calibrated_estimate"
+  },
+  "5260": {
+    "chf_per_m2": 7100,
+    "type": "calibrated_estimate"
+  },
+  "5263": {
+    "chf_per_m2": 5491,
+    "type": "calibrated_estimate"
+  },
+  "5266": {
+    "chf_per_m2": 6637,
+    "type": "calibrated_estimate"
+  },
+  "5268": {
+    "chf_per_m2": 6116,
+    "type": "calibrated_estimate"
+  },
+  "5269": {
+    "chf_per_m2": 6843,
+    "type": "calibrated_estimate"
+  },
+  "5281": {
+    "chf_per_m2": 6368,
+    "type": "calibrated_estimate"
+  },
+  "5287": {
+    "chf_per_m2": 6482,
+    "type": "calibrated_estimate"
+  },
+  "5304": {
+    "chf_per_m2": 5455,
+    "type": "calibrated_estimate"
+  },
+  "5307": {
+    "chf_per_m2": 6157,
+    "type": "calibrated_estimate"
+  },
+  "5309": {
+    "chf_per_m2": 7161,
+    "type": "calibrated_estimate"
+  },
+  "5310": {
+    "chf_per_m2": 7210,
+    "type": "calibrated_estimate"
+  },
+  "5315": {
+    "chf_per_m2": 6581,
+    "type": "calibrated_estimate"
+  },
+  "5317": {
+    "chf_per_m2": 6824,
+    "type": "calibrated_estimate"
+  },
+  "5323": {
+    "chf_per_m2": 7427,
+    "type": "calibrated_estimate"
+  },
+  "5324": {
+    "chf_per_m2": 5469,
+    "type": "calibrated_estimate"
+  },
+  "5391": {
+    "chf_per_m2": 7901,
+    "type": "calibrated_estimate"
+  },
+  "5394": {
+    "chf_per_m2": 7215,
+    "type": "calibrated_estimate"
+  },
+  "5395": {
+    "chf_per_m2": 6816,
+    "type": "calibrated_estimate"
+  },
+  "5396": {
+    "chf_per_m2": 6701,
+    "type": "calibrated_estimate"
+  },
+  "5397": {
+    "chf_per_m2": 5979,
+    "type": "calibrated_estimate"
+  },
+  "5398": {
+    "chf_per_m2": 7079,
+    "type": "calibrated_estimate"
+  },
+  "5399": {
+    "chf_per_m2": 6752,
+    "type": "calibrated_estimate"
+  },
+  "5401": {
+    "chf_per_m2": 9681,
+    "type": "calibrated_estimate"
+  },
+  "5402": {
+    "chf_per_m2": 8816,
+    "type": "calibrated_estimate"
+  },
+  "5403": {
+    "chf_per_m2": 10612,
+    "type": "calibrated_estimate"
+  },
+  "5404": {
+    "chf_per_m2": 8934,
+    "type": "calibrated_estimate"
+  },
+  "5405": {
+    "chf_per_m2": 10242,
+    "type": "calibrated_estimate"
+  },
+  "5406": {
+    "chf_per_m2": 8485,
+    "type": "calibrated_estimate"
+  },
+  "5407": {
+    "chf_per_m2": 8039,
+    "type": "calibrated_estimate"
+  },
+  "5408": {
+    "chf_per_m2": 8184,
+    "type": "calibrated_estimate"
+  },
+  "5409": {
+    "chf_per_m2": 8295,
+    "type": "calibrated_estimate"
+  },
+  "5410": {
+    "chf_per_m2": 8515,
+    "type": "calibrated_estimate"
+  },
+  "5411": {
+    "chf_per_m2": 9525,
+    "type": "calibrated_estimate"
+  },
+  "5412": {
+    "chf_per_m2": 8829,
+    "type": "calibrated_estimate"
+  },
+  "5413": {
+    "chf_per_m2": 10490,
+    "type": "calibrated_estimate"
+  },
+  "5414": {
+    "chf_per_m2": 10274,
+    "type": "calibrated_estimate"
+  },
+  "5415": {
+    "chf_per_m2": 10165,
+    "type": "calibrated_estimate"
+  },
+  "5422": {
+    "chf_per_m2": 8982,
+    "type": "calibrated_estimate"
+  },
+  "5423": {
+    "chf_per_m2": 9917,
+    "type": "calibrated_estimate"
+  },
+  "5424": {
+    "chf_per_m2": 9756,
+    "type": "calibrated_estimate"
+  },
+  "5425": {
+    "chf_per_m2": 8654,
+    "type": "calibrated_estimate"
+  },
+  "5426": {
+    "chf_per_m2": 9292,
+    "type": "calibrated_estimate"
+  },
+  "5427": {
+    "chf_per_m2": 9889,
+    "type": "calibrated_estimate"
+  },
+  "5428": {
+    "chf_per_m2": 9809,
+    "type": "calibrated_estimate"
+  },
+  "5429": {
+    "chf_per_m2": 8901,
+    "type": "calibrated_estimate"
+  },
+  "5430": {
+    "chf_per_m2": 11281,
+    "type": "calibrated_estimate"
+  },
+  "5431": {
+    "chf_per_m2": 8567,
+    "type": "calibrated_estimate"
+  },
+  "5434": {
+    "chf_per_m2": 10413,
+    "type": "calibrated_estimate"
+  },
+  "5435": {
+    "chf_per_m2": 10255,
+    "type": "calibrated_estimate"
+  },
+  "5436": {
+    "chf_per_m2": 10102,
+    "type": "calibrated_estimate"
+  },
+  "5437": {
+    "chf_per_m2": 10606,
+    "type": "calibrated_estimate"
+  },
+  "5451": {
+    "chf_per_m2": 7373,
+    "type": "calibrated_estimate"
+  },
+  "5456": {
+    "chf_per_m2": 7889,
+    "type": "calibrated_estimate"
+  },
+  "5458": {
+    "chf_per_m2": 6132,
+    "type": "calibrated_estimate"
+  },
+  "5464": {
+    "chf_per_m2": 6164,
+    "type": "calibrated_estimate"
+  },
+  "5471": {
+    "chf_per_m2": 9370,
+    "type": "calibrated_estimate"
+  },
+  "5472": {
+    "chf_per_m2": 9288,
+    "type": "calibrated_estimate"
+  },
+  "5473": {
+    "chf_per_m2": 9507,
+    "type": "calibrated_estimate"
+  },
+  "5474": {
+    "chf_per_m2": 10062,
+    "type": "calibrated_estimate"
+  },
+  "5475": {
+    "chf_per_m2": 9093,
+    "type": "calibrated_estimate"
+  },
+  "5476": {
+    "chf_per_m2": 9803,
+    "type": "calibrated_estimate"
+  },
+  "5477": {
+    "chf_per_m2": 9378,
+    "type": "calibrated_estimate"
+  },
+  "5479": {
+    "chf_per_m2": 9736,
+    "type": "calibrated_estimate"
+  },
+  "5480": {
+    "chf_per_m2": 8471,
+    "type": "calibrated_estimate"
+  },
+  "5481": {
+    "chf_per_m2": 10160,
+    "type": "calibrated_estimate"
+  },
+  "5482": {
+    "chf_per_m2": 9215,
+    "type": "calibrated_estimate"
+  },
+  "5483": {
+    "chf_per_m2": 9700,
+    "type": "calibrated_estimate"
+  },
+  "5484": {
+    "chf_per_m2": 9741,
+    "type": "calibrated_estimate"
+  },
+  "5485": {
+    "chf_per_m2": 8812,
+    "type": "calibrated_estimate"
+  },
+  "5486": {
+    "chf_per_m2": 8252,
+    "type": "calibrated_estimate"
+  },
+  "5487": {
+    "chf_per_m2": 7748,
+    "type": "calibrated_estimate"
+  },
+  "5488": {
+    "chf_per_m2": 9239,
+    "type": "calibrated_estimate"
+  },
+  "5489": {
+    "chf_per_m2": 9232,
+    "type": "calibrated_estimate"
+  },
+  "5490": {
+    "chf_per_m2": 8540,
+    "type": "calibrated_estimate"
+  },
+  "5491": {
+    "chf_per_m2": 9780,
+    "type": "calibrated_estimate"
+  },
+  "5492": {
+    "chf_per_m2": 9138,
+    "type": "calibrated_estimate"
+  },
+  "5493": {
+    "chf_per_m2": 9462,
+    "type": "calibrated_estimate"
+  },
+  "5495": {
+    "chf_per_m2": 9617,
+    "type": "calibrated_estimate"
+  },
+  "5496": {
+    "chf_per_m2": 10161,
+    "type": "calibrated_estimate"
+  },
+  "5497": {
+    "chf_per_m2": 10243,
+    "type": "calibrated_estimate"
+  },
+  "5498": {
+    "chf_per_m2": 7971,
+    "type": "calibrated_estimate"
+  },
+  "5499": {
+    "chf_per_m2": 9000,
+    "type": "calibrated_estimate"
+  },
+  "5501": {
+    "chf_per_m2": 9281,
+    "type": "calibrated_estimate"
+  },
+  "5503": {
+    "chf_per_m2": 8765,
+    "type": "calibrated_estimate"
+  },
+  "5511": {
+    "chf_per_m2": 8894,
+    "type": "calibrated_estimate"
+  },
+  "5512": {
+    "chf_per_m2": 8018,
+    "type": "calibrated_estimate"
+  },
+  "5514": {
+    "chf_per_m2": 8260,
+    "type": "calibrated_estimate"
+  },
+  "5515": {
+    "chf_per_m2": 7845,
+    "type": "calibrated_estimate"
+  },
+  "5516": {
+    "chf_per_m2": 8388,
+    "type": "calibrated_estimate"
+  },
+  "5518": {
+    "chf_per_m2": 8595,
+    "type": "calibrated_estimate"
+  },
+  "5520": {
+    "chf_per_m2": 8999,
+    "type": "calibrated_estimate"
+  },
+  "5521": {
+    "chf_per_m2": 8297,
+    "type": "calibrated_estimate"
+  },
+  "5522": {
+    "chf_per_m2": 9712,
+    "type": "calibrated_estimate"
+  },
+  "5523": {
+    "chf_per_m2": 8038,
+    "type": "calibrated_estimate"
+  },
+  "5527": {
+    "chf_per_m2": 8505,
+    "type": "calibrated_estimate"
+  },
+  "5529": {
+    "chf_per_m2": 9145,
+    "type": "calibrated_estimate"
+  },
+  "5530": {
+    "chf_per_m2": 8183,
+    "type": "calibrated_estimate"
+  },
+  "5531": {
+    "chf_per_m2": 9495,
+    "type": "calibrated_estimate"
+  },
+  "5533": {
+    "chf_per_m2": 8887,
+    "type": "calibrated_estimate"
+  },
+  "5534": {
+    "chf_per_m2": 8730,
+    "type": "calibrated_estimate"
+  },
+  "5535": {
+    "chf_per_m2": 8893,
+    "type": "calibrated_estimate"
+  },
+  "5537": {
+    "chf_per_m2": 8296,
+    "type": "calibrated_estimate"
+  },
+  "5539": {
+    "chf_per_m2": 7514,
+    "type": "calibrated_estimate"
+  },
+  "5540": {
+    "chf_per_m2": 10037,
+    "type": "calibrated_estimate"
+  },
+  "5541": {
+    "chf_per_m2": 8854,
+    "type": "calibrated_estimate"
+  },
+  "5551": {
+    "chf_per_m2": 8982,
+    "type": "calibrated_estimate"
+  },
+  "5552": {
+    "chf_per_m2": 7704,
+    "type": "calibrated_estimate"
+  },
+  "5553": {
+    "chf_per_m2": 8030,
+    "type": "calibrated_estimate"
+  },
+  "5554": {
+    "chf_per_m2": 6695,
+    "type": "calibrated_estimate"
+  },
+  "5555": {
+    "chf_per_m2": 7814,
+    "type": "calibrated_estimate"
+  },
+  "5556": {
+    "chf_per_m2": 9373,
+    "type": "calibrated_estimate"
+  },
+  "5557": {
+    "chf_per_m2": 8714,
+    "type": "calibrated_estimate"
+  },
+  "5559": {
+    "chf_per_m2": 8415,
+    "type": "calibrated_estimate"
+  },
+  "5560": {
+    "chf_per_m2": 8467,
+    "type": "calibrated_estimate"
+  },
+  "5561": {
+    "chf_per_m2": 9304,
+    "type": "calibrated_estimate"
+  },
+  "5562": {
+    "chf_per_m2": 7685,
+    "type": "calibrated_estimate"
+  },
+  "5563": {
+    "chf_per_m2": 8422,
+    "type": "calibrated_estimate"
+  },
+  "5564": {
+    "chf_per_m2": 8933,
+    "type": "calibrated_estimate"
+  },
+  "5565": {
+    "chf_per_m2": 8522,
+    "type": "calibrated_estimate"
+  },
+  "5566": {
+    "chf_per_m2": 7227,
+    "type": "calibrated_estimate"
+  },
+  "5568": {
+    "chf_per_m2": 8319,
+    "type": "calibrated_estimate"
+  },
+  "5571": {
+    "chf_per_m2": 7977,
+    "type": "calibrated_estimate"
+  },
+  "5581": {
+    "chf_per_m2": 8201,
+    "type": "calibrated_estimate"
+  },
+  "5582": {
+    "chf_per_m2": 9141,
+    "type": "calibrated_estimate"
+  },
+  "5583": {
+    "chf_per_m2": 8022,
+    "type": "calibrated_estimate"
+  },
+  "5584": {
+    "chf_per_m2": 9133,
+    "type": "calibrated_estimate"
+  },
+  "5585": {
+    "chf_per_m2": 9976,
+    "type": "calibrated_estimate"
+  },
+  "5586": {
+    "chf_per_m2": 8370,
+    "type": "calibrated_estimate"
+  },
+  "5587": {
+    "chf_per_m2": 10351,
+    "type": "calibrated_estimate"
+  },
+  "5588": {
+    "chf_per_m2": 9644,
+    "type": "calibrated_estimate"
+  },
+  "5589": {
+    "chf_per_m2": 8018,
+    "type": "calibrated_estimate"
+  },
+  "5590": {
+    "chf_per_m2": 10519,
+    "type": "calibrated_estimate"
+  },
+  "5591": {
+    "chf_per_m2": 8715,
+    "type": "calibrated_estimate"
+  },
+  "5592": {
+    "chf_per_m2": 9897,
+    "type": "calibrated_estimate"
+  },
+  "5601": {
+    "chf_per_m2": 8724,
+    "type": "calibrated_estimate"
+  },
+  "5604": {
+    "chf_per_m2": 10180,
+    "type": "calibrated_estimate"
+  },
+  "5606": {
+    "chf_per_m2": 10022,
+    "type": "calibrated_estimate"
+  },
+  "5607": {
+    "chf_per_m2": 8199,
+    "type": "calibrated_estimate"
+  },
+  "5609": {
+    "chf_per_m2": 9285,
+    "type": "calibrated_estimate"
+  },
+  "5610": {
+    "chf_per_m2": 9102,
+    "type": "calibrated_estimate"
+  },
+  "5611": {
+    "chf_per_m2": 7793,
+    "type": "calibrated_estimate"
+  },
+  "5613": {
+    "chf_per_m2": 8218,
+    "type": "calibrated_estimate"
+  },
+  "5621": {
+    "chf_per_m2": 8927,
+    "type": "calibrated_estimate"
+  },
+  "5622": {
+    "chf_per_m2": 9185,
+    "type": "calibrated_estimate"
+  },
+  "5623": {
+    "chf_per_m2": 9739,
+    "type": "calibrated_estimate"
+  },
+  "5624": {
+    "chf_per_m2": 9576,
+    "type": "calibrated_estimate"
+  },
+  "5627": {
+    "chf_per_m2": 9066,
+    "type": "calibrated_estimate"
+  },
+  "5628": {
+    "chf_per_m2": 8952,
+    "type": "calibrated_estimate"
+  },
+  "5629": {
+    "chf_per_m2": 9680,
+    "type": "calibrated_estimate"
+  },
+  "5631": {
+    "chf_per_m2": 8505,
+    "type": "calibrated_estimate"
+  },
+  "5632": {
+    "chf_per_m2": 10658,
+    "type": "calibrated_estimate"
+  },
+  "5633": {
+    "chf_per_m2": 9986,
+    "type": "calibrated_estimate"
+  },
+  "5634": {
+    "chf_per_m2": 8801,
+    "type": "calibrated_estimate"
+  },
+  "5635": {
+    "chf_per_m2": 8791,
+    "type": "calibrated_estimate"
+  },
+  "5636": {
+    "chf_per_m2": 10628,
+    "type": "calibrated_estimate"
+  },
+  "5637": {
+    "chf_per_m2": 9599,
+    "type": "calibrated_estimate"
+  },
+  "5638": {
+    "chf_per_m2": 10020,
+    "type": "calibrated_estimate"
+  },
+  "5639": {
+    "chf_per_m2": 8962,
+    "type": "calibrated_estimate"
+  },
+  "5640": {
+    "chf_per_m2": 10447,
+    "type": "calibrated_estimate"
+  },
+  "5642": {
+    "chf_per_m2": 8951,
+    "type": "calibrated_estimate"
+  },
+  "5643": {
+    "chf_per_m2": 9776,
+    "type": "calibrated_estimate"
+  },
+  "5645": {
+    "chf_per_m2": 10800,
+    "type": "calibrated_estimate"
+  },
+  "5646": {
+    "chf_per_m2": 9820,
+    "type": "calibrated_estimate"
+  },
+  "5648": {
+    "chf_per_m2": 10203,
+    "type": "calibrated_estimate"
+  },
+  "5649": {
+    "chf_per_m2": 10046,
+    "type": "calibrated_estimate"
+  },
+  "5650": {
+    "chf_per_m2": 10081,
+    "type": "calibrated_estimate"
+  },
+  "5651": {
+    "chf_per_m2": 7940,
+    "type": "calibrated_estimate"
+  },
+  "5652": {
+    "chf_per_m2": 9345,
+    "type": "calibrated_estimate"
+  },
+  "5653": {
+    "chf_per_m2": 10808,
+    "type": "calibrated_estimate"
+  },
+  "5654": {
+    "chf_per_m2": 10031,
+    "type": "calibrated_estimate"
+  },
+  "5655": {
+    "chf_per_m2": 10304,
+    "type": "calibrated_estimate"
+  },
+  "5656": {
+    "chf_per_m2": 9694,
+    "type": "calibrated_estimate"
+  },
+  "5661": {
+    "chf_per_m2": 9316,
+    "type": "calibrated_estimate"
+  },
+  "5663": {
+    "chf_per_m2": 8680,
+    "type": "calibrated_estimate"
+  },
+  "5665": {
+    "chf_per_m2": 7792,
+    "type": "calibrated_estimate"
+  },
+  "5669": {
+    "chf_per_m2": 8749,
+    "type": "calibrated_estimate"
+  },
+  "5671": {
+    "chf_per_m2": 8562,
+    "type": "calibrated_estimate"
+  },
+  "5673": {
+    "chf_per_m2": 9675,
+    "type": "calibrated_estimate"
+  },
+  "5674": {
+    "chf_per_m2": 7508,
+    "type": "calibrated_estimate"
+  },
+  "5675": {
+    "chf_per_m2": 8954,
+    "type": "calibrated_estimate"
+  },
+  "5678": {
+    "chf_per_m2": 7420,
+    "type": "calibrated_estimate"
+  },
+  "5680": {
+    "chf_per_m2": 9705,
+    "type": "calibrated_estimate"
+  },
+  "5683": {
+    "chf_per_m2": 7392,
+    "type": "calibrated_estimate"
+  },
+  "5684": {
+    "chf_per_m2": 7536,
+    "type": "calibrated_estimate"
+  },
+  "5688": {
+    "chf_per_m2": 8340,
+    "type": "calibrated_estimate"
+  },
+  "5690": {
+    "chf_per_m2": 7643,
+    "type": "calibrated_estimate"
+  },
+  "5692": {
+    "chf_per_m2": 9252,
+    "type": "calibrated_estimate"
+  },
+  "5693": {
+    "chf_per_m2": 8418,
+    "type": "calibrated_estimate"
+  },
+  "5701": {
+    "chf_per_m2": 11524,
+    "type": "calibrated_estimate"
+  },
+  "5702": {
+    "chf_per_m2": 11630,
+    "type": "calibrated_estimate"
+  },
+  "5703": {
+    "chf_per_m2": 11249,
+    "type": "calibrated_estimate"
+  },
+  "5704": {
+    "chf_per_m2": 11008,
+    "type": "calibrated_estimate"
+  },
+  "5705": {
+    "chf_per_m2": 9315,
+    "type": "calibrated_estimate"
+  },
+  "5706": {
+    "chf_per_m2": 9624,
+    "type": "calibrated_estimate"
+  },
+  "5707": {
+    "chf_per_m2": 10019,
+    "type": "calibrated_estimate"
+  },
+  "5708": {
+    "chf_per_m2": 10384,
+    "type": "calibrated_estimate"
+  },
+  "5709": {
+    "chf_per_m2": 11205,
+    "type": "calibrated_estimate"
+  },
+  "5710": {
+    "chf_per_m2": 10696,
+    "type": "calibrated_estimate"
+  },
+  "5711": {
+    "chf_per_m2": 10441,
+    "type": "calibrated_estimate"
+  },
+  "5712": {
+    "chf_per_m2": 9959,
+    "type": "calibrated_estimate"
+  },
+  "5713": {
+    "chf_per_m2": 12121,
+    "type": "calibrated_estimate"
+  },
+  "5714": {
+    "chf_per_m2": 10204,
+    "type": "calibrated_estimate"
+  },
+  "5715": {
+    "chf_per_m2": 9984,
+    "type": "calibrated_estimate"
+  },
+  "5716": {
+    "chf_per_m2": 11588,
+    "type": "calibrated_estimate"
+  },
+  "5717": {
+    "chf_per_m2": 11703,
+    "type": "calibrated_estimate"
+  },
+  "5718": {
+    "chf_per_m2": 11011,
+    "type": "calibrated_estimate"
+  },
+  "5719": {
+    "chf_per_m2": 11240,
+    "type": "calibrated_estimate"
+  },
+  "5720": {
+    "chf_per_m2": 10743,
+    "type": "calibrated_estimate"
+  },
+  "5721": {
+    "chf_per_m2": 9402,
+    "type": "calibrated_estimate"
+  },
+  "5722": {
+    "chf_per_m2": 9823,
+    "type": "calibrated_estimate"
+  },
+  "5723": {
+    "chf_per_m2": 11380,
+    "type": "calibrated_estimate"
+  },
+  "5724": {
+    "chf_per_m2": 9753,
+    "type": "calibrated_estimate"
+  },
+  "5725": {
+    "chf_per_m2": 12102,
+    "type": "calibrated_estimate"
+  },
+  "5726": {
+    "chf_per_m2": 10020,
+    "type": "calibrated_estimate"
+  },
+  "5727": {
+    "chf_per_m2": 9796,
+    "type": "calibrated_estimate"
+  },
+  "5728": {
+    "chf_per_m2": 9748,
+    "type": "calibrated_estimate"
+  },
+  "5729": {
+    "chf_per_m2": 11727,
+    "type": "calibrated_estimate"
+  },
+  "5730": {
+    "chf_per_m2": 10043,
+    "type": "calibrated_estimate"
+  },
+  "5731": {
+    "chf_per_m2": 9669,
+    "type": "calibrated_estimate"
+  },
+  "5732": {
+    "chf_per_m2": 11705,
+    "type": "calibrated_estimate"
+  },
+  "5741": {
+    "chf_per_m2": 9396,
+    "type": "calibrated_estimate"
+  },
+  "5742": {
+    "chf_per_m2": 8158,
+    "type": "calibrated_estimate"
+  },
+  "5743": {
+    "chf_per_m2": 7868,
+    "type": "calibrated_estimate"
+  },
+  "5744": {
+    "chf_per_m2": 9627,
+    "type": "calibrated_estimate"
+  },
+  "5745": {
+    "chf_per_m2": 8270,
+    "type": "calibrated_estimate"
+  },
+  "5746": {
+    "chf_per_m2": 10134,
+    "type": "calibrated_estimate"
+  },
+  "5747": {
+    "chf_per_m2": 9731,
+    "type": "calibrated_estimate"
+  },
+  "5748": {
+    "chf_per_m2": 10080,
+    "type": "calibrated_estimate"
+  },
+  "5749": {
+    "chf_per_m2": 9601,
+    "type": "calibrated_estimate"
+  },
+  "5750": {
+    "chf_per_m2": 8145,
+    "type": "calibrated_estimate"
+  },
+  "5752": {
+    "chf_per_m2": 8299,
+    "type": "calibrated_estimate"
+  },
+  "5754": {
+    "chf_per_m2": 9597,
+    "type": "calibrated_estimate"
+  },
+  "5755": {
+    "chf_per_m2": 8294,
+    "type": "calibrated_estimate"
+  },
+  "5756": {
+    "chf_per_m2": 8612,
+    "type": "calibrated_estimate"
+  },
+  "5757": {
+    "chf_per_m2": 8077,
+    "type": "calibrated_estimate"
+  },
+  "5758": {
+    "chf_per_m2": 9275,
+    "type": "calibrated_estimate"
+  },
+  "5759": {
+    "chf_per_m2": 8166,
+    "type": "calibrated_estimate"
+  },
+  "5760": {
+    "chf_per_m2": 8729,
+    "type": "calibrated_estimate"
+  },
+  "5761": {
+    "chf_per_m2": 9923,
+    "type": "calibrated_estimate"
+  },
+  "5762": {
+    "chf_per_m2": 9188,
+    "type": "calibrated_estimate"
+  },
+  "5763": {
+    "chf_per_m2": 7772,
+    "type": "calibrated_estimate"
+  },
+  "5764": {
+    "chf_per_m2": 9947,
+    "type": "calibrated_estimate"
+  },
+  "5765": {
+    "chf_per_m2": 9676,
+    "type": "calibrated_estimate"
+  },
+  "5766": {
+    "chf_per_m2": 7842,
+    "type": "calibrated_estimate"
+  },
+  "5785": {
+    "chf_per_m2": 9321,
+    "type": "calibrated_estimate"
+  },
+  "5790": {
+    "chf_per_m2": 8796,
+    "type": "calibrated_estimate"
+  },
+  "5792": {
+    "chf_per_m2": 9279,
+    "type": "calibrated_estimate"
+  },
+  "5798": {
+    "chf_per_m2": 7609,
+    "type": "calibrated_estimate"
+  },
+  "5799": {
+    "chf_per_m2": 8709,
+    "type": "calibrated_estimate"
+  },
+  "5803": {
+    "chf_per_m2": 9317,
+    "type": "calibrated_estimate"
+  },
+  "5804": {
+    "chf_per_m2": 7796,
+    "type": "calibrated_estimate"
+  },
+  "5805": {
+    "chf_per_m2": 9594,
+    "type": "calibrated_estimate"
+  },
+  "5806": {
+    "chf_per_m2": 7558,
+    "type": "calibrated_estimate"
+  },
+  "5812": {
+    "chf_per_m2": 8421,
+    "type": "calibrated_estimate"
+  },
+  "5813": {
+    "chf_per_m2": 8286,
+    "type": "calibrated_estimate"
+  },
+  "5816": {
+    "chf_per_m2": 7244,
+    "type": "calibrated_estimate"
+  },
+  "5817": {
+    "chf_per_m2": 8298,
+    "type": "calibrated_estimate"
+  },
+  "5819": {
+    "chf_per_m2": 8804,
+    "type": "calibrated_estimate"
+  },
+  "5821": {
+    "chf_per_m2": 7250,
+    "type": "calibrated_estimate"
+  },
+  "5822": {
+    "chf_per_m2": 6847,
+    "type": "calibrated_estimate"
+  },
+  "5827": {
+    "chf_per_m2": 8669,
+    "type": "calibrated_estimate"
+  },
+  "5828": {
+    "chf_per_m2": 7382,
+    "type": "calibrated_estimate"
+  },
+  "5830": {
+    "chf_per_m2": 8111,
+    "type": "calibrated_estimate"
+  },
+  "5831": {
+    "chf_per_m2": 8868,
+    "type": "calibrated_estimate"
+  },
+  "5841": {
+    "chf_per_m2": 6899,
+    "type": "calibrated_estimate"
+  },
+  "5842": {
+    "chf_per_m2": 8630,
+    "type": "calibrated_estimate"
+  },
+  "5843": {
+    "chf_per_m2": 7798,
+    "type": "calibrated_estimate"
+  },
+  "5851": {
+    "chf_per_m2": 10461,
+    "type": "calibrated_estimate"
+  },
+  "5852": {
+    "chf_per_m2": 11487,
+    "type": "calibrated_estimate"
+  },
+  "5853": {
+    "chf_per_m2": 11292,
+    "type": "calibrated_estimate"
+  },
+  "5854": {
+    "chf_per_m2": 9007,
+    "type": "calibrated_estimate"
+  },
+  "5855": {
+    "chf_per_m2": 11549,
+    "type": "calibrated_estimate"
+  },
+  "5856": {
+    "chf_per_m2": 8966,
+    "type": "calibrated_estimate"
+  },
+  "5857": {
+    "chf_per_m2": 11361,
+    "type": "calibrated_estimate"
+  },
+  "5858": {
+    "chf_per_m2": 11835,
+    "type": "calibrated_estimate"
+  },
+  "5859": {
+    "chf_per_m2": 9638,
+    "type": "calibrated_estimate"
+  },
+  "5860": {
+    "chf_per_m2": 9947,
+    "type": "calibrated_estimate"
+  },
+  "5861": {
+    "chf_per_m2": 11402,
+    "type": "calibrated_estimate"
+  },
+  "5862": {
+    "chf_per_m2": 11156,
+    "type": "calibrated_estimate"
+  },
+  "5863": {
+    "chf_per_m2": 11465,
+    "type": "calibrated_estimate"
+  },
+  "5871": {
+    "chf_per_m2": 10699,
+    "type": "calibrated_estimate"
+  },
+  "5872": {
+    "chf_per_m2": 8616,
+    "type": "calibrated_estimate"
+  },
+  "5873": {
+    "chf_per_m2": 9938,
+    "type": "calibrated_estimate"
+  },
+  "5882": {
+    "chf_per_m2": 8086,
+    "type": "calibrated_estimate"
+  },
+  "5883": {
+    "chf_per_m2": 10524,
+    "type": "calibrated_estimate"
+  },
+  "5884": {
+    "chf_per_m2": 8359,
+    "type": "calibrated_estimate"
+  },
+  "5885": {
+    "chf_per_m2": 10224,
+    "type": "calibrated_estimate"
+  },
+  "5886": {
+    "chf_per_m2": 9311,
+    "type": "calibrated_estimate"
+  },
+  "5889": {
+    "chf_per_m2": 9224,
+    "type": "calibrated_estimate"
+  },
+  "5890": {
+    "chf_per_m2": 10297,
+    "type": "calibrated_estimate"
+  },
+  "5891": {
+    "chf_per_m2": 10170,
+    "type": "calibrated_estimate"
+  },
+  "5892": {
+    "chf_per_m2": 8760,
+    "type": "calibrated_estimate"
+  },
+  "5902": {
+    "chf_per_m2": 7882,
+    "type": "calibrated_estimate"
+  },
+  "5903": {
+    "chf_per_m2": 7587,
+    "type": "calibrated_estimate"
+  },
+  "5904": {
+    "chf_per_m2": 7765,
+    "type": "calibrated_estimate"
+  },
+  "5905": {
+    "chf_per_m2": 8496,
+    "type": "calibrated_estimate"
+  },
+  "5907": {
+    "chf_per_m2": 7317,
+    "type": "calibrated_estimate"
+  },
+  "5908": {
+    "chf_per_m2": 7540,
+    "type": "calibrated_estimate"
+  },
+  "5909": {
+    "chf_per_m2": 9049,
+    "type": "calibrated_estimate"
+  },
+  "5910": {
+    "chf_per_m2": 9203,
+    "type": "calibrated_estimate"
+  },
+  "5911": {
+    "chf_per_m2": 8581,
+    "type": "calibrated_estimate"
+  },
+  "5912": {
+    "chf_per_m2": 9019,
+    "type": "calibrated_estimate"
+  },
+  "5913": {
+    "chf_per_m2": 7666,
+    "type": "calibrated_estimate"
+  },
+  "5914": {
+    "chf_per_m2": 9564,
+    "type": "calibrated_estimate"
+  },
+  "5919": {
+    "chf_per_m2": 9683,
+    "type": "calibrated_estimate"
+  },
+  "5921": {
+    "chf_per_m2": 9114,
+    "type": "calibrated_estimate"
+  },
+  "5922": {
+    "chf_per_m2": 8647,
+    "type": "calibrated_estimate"
+  },
+  "5923": {
+    "chf_per_m2": 7499,
+    "type": "calibrated_estimate"
+  },
+  "5924": {
+    "chf_per_m2": 8886,
+    "type": "calibrated_estimate"
+  },
+  "5925": {
+    "chf_per_m2": 7733,
+    "type": "calibrated_estimate"
+  },
+  "5926": {
+    "chf_per_m2": 7633,
+    "type": "calibrated_estimate"
+  },
+  "5928": {
+    "chf_per_m2": 7485,
+    "type": "calibrated_estimate"
+  },
+  "5929": {
+    "chf_per_m2": 8088,
+    "type": "calibrated_estimate"
+  },
+  "5930": {
+    "chf_per_m2": 8006,
+    "type": "calibrated_estimate"
+  },
+  "5931": {
+    "chf_per_m2": 7890,
+    "type": "calibrated_estimate"
+  },
+  "5932": {
+    "chf_per_m2": 9235,
+    "type": "calibrated_estimate"
+  },
+  "5933": {
+    "chf_per_m2": 9669,
+    "type": "calibrated_estimate"
+  },
+  "5934": {
+    "chf_per_m2": 8035,
+    "type": "calibrated_estimate"
+  },
+  "5935": {
+    "chf_per_m2": 9033,
+    "type": "calibrated_estimate"
+  },
+  "5937": {
+    "chf_per_m2": 7236,
+    "type": "calibrated_estimate"
+  },
+  "5938": {
+    "chf_per_m2": 8890,
+    "type": "calibrated_estimate"
+  },
+  "5939": {
+    "chf_per_m2": 8771,
+    "type": "calibrated_estimate"
+  },
+  "6002": {
+    "chf_per_m2": 3753,
+    "type": "calibrated_estimate"
+  },
+  "6004": {
+    "chf_per_m2": 4903,
+    "type": "calibrated_estimate"
+  },
+  "6007": {
+    "chf_per_m2": 5850,
+    "type": "calibrated_estimate"
+  },
+  "6008": {
+    "chf_per_m2": 5277,
+    "type": "calibrated_estimate"
+  },
+  "6009": {
+    "chf_per_m2": 5512,
+    "type": "calibrated_estimate"
+  },
+  "6010": {
+    "chf_per_m2": 5990,
+    "type": "calibrated_estimate"
+  },
+  "6011": {
+    "chf_per_m2": 5844,
+    "type": "calibrated_estimate"
+  },
+  "6021": {
+    "chf_per_m2": 6932,
+    "type": "calibrated_estimate"
+  },
+  "6022": {
+    "chf_per_m2": 6552,
+    "type": "calibrated_estimate"
+  },
+  "6023": {
+    "chf_per_m2": 7602,
+    "type": "calibrated_estimate"
+  },
+  "6024": {
+    "chf_per_m2": 6897,
+    "type": "calibrated_estimate"
+  },
+  "6025": {
+    "chf_per_m2": 7766,
+    "type": "calibrated_estimate"
+  },
+  "6032": {
+    "chf_per_m2": 3956,
+    "type": "calibrated_estimate"
+  },
+  "6033": {
+    "chf_per_m2": 6588,
+    "type": "calibrated_estimate"
+  },
+  "6034": {
+    "chf_per_m2": 7545,
+    "type": "calibrated_estimate"
+  },
+  "6035": {
+    "chf_per_m2": 8957,
+    "type": "calibrated_estimate"
+  },
+  "6037": {
+    "chf_per_m2": 7911,
+    "type": "calibrated_estimate"
+  },
+  "6052": {
+    "chf_per_m2": 5702,
+    "type": "calibrated_estimate"
+  },
+  "6054": {
+    "chf_per_m2": 6044,
+    "type": "calibrated_estimate"
+  },
+  "6056": {
+    "chf_per_m2": 6046,
+    "type": "calibrated_estimate"
+  },
+  "6057": {
+    "chf_per_m2": 6022,
+    "type": "calibrated_estimate"
+  },
+  "6058": {
+    "chf_per_m2": 6569,
+    "type": "calibrated_estimate"
+  },
+  "6061": {
+    "chf_per_m2": 5251,
+    "type": "calibrated_estimate"
+  },
+  "6076": {
+    "chf_per_m2": 5746,
+    "type": "calibrated_estimate"
+  },
+  "6077": {
+    "chf_per_m2": 6639,
+    "type": "calibrated_estimate"
+  },
+  "6082": {
+    "chf_per_m2": 7229,
+    "type": "calibrated_estimate"
+  },
+  "6083": {
+    "chf_per_m2": 3647,
+    "type": "calibrated_estimate"
+  },
+  "6084": {
+    "chf_per_m2": 7545,
+    "type": "calibrated_estimate"
+  },
+  "6087": {
+    "chf_per_m2": 7741,
+    "type": "calibrated_estimate"
+  },
+  "6089": {
+    "chf_per_m2": 6418,
+    "type": "calibrated_estimate"
+  },
+  "6090": {
+    "chf_per_m2": 7436,
+    "type": "calibrated_estimate"
+  },
+  "6101": {
+    "chf_per_m2": 4809,
+    "type": "calibrated_estimate"
+  },
+  "6102": {
+    "chf_per_m2": 6424,
+    "type": "calibrated_estimate"
+  },
+  "6104": {
+    "chf_per_m2": 4327,
+    "type": "calibrated_estimate"
+  },
+  "6109": {
+    "chf_per_m2": 6678,
+    "type": "calibrated_estimate"
+  },
+  "6110": {
+    "chf_per_m2": 4956,
+    "type": "calibrated_estimate"
+  },
+  "6111": {
+    "chf_per_m2": 5843,
+    "type": "calibrated_estimate"
+  },
+  "6112": {
+    "chf_per_m2": 4346,
+    "type": "calibrated_estimate"
+  },
+  "6113": {
+    "chf_per_m2": 5747,
+    "type": "calibrated_estimate"
+  },
+  "6116": {
+    "chf_per_m2": 5894,
+    "type": "calibrated_estimate"
+  },
+  "6117": {
+    "chf_per_m2": 5675,
+    "type": "calibrated_estimate"
+  },
+  "6118": {
+    "chf_per_m2": 4858,
+    "type": "calibrated_estimate"
+  },
+  "6119": {
+    "chf_per_m2": 4213,
+    "type": "calibrated_estimate"
+  },
+  "6131": {
+    "chf_per_m2": 9129,
+    "type": "calibrated_estimate"
+  },
+  "6133": {
+    "chf_per_m2": 8086,
+    "type": "calibrated_estimate"
+  },
+  "6134": {
+    "chf_per_m2": 7324,
+    "type": "calibrated_estimate"
+  },
+  "6135": {
+    "chf_per_m2": 8111,
+    "type": "calibrated_estimate"
+  },
+  "6136": {
+    "chf_per_m2": 7309,
+    "type": "calibrated_estimate"
+  },
+  "6137": {
+    "chf_per_m2": 8385,
+    "type": "calibrated_estimate"
+  },
+  "6139": {
+    "chf_per_m2": 8083,
+    "type": "calibrated_estimate"
+  },
+  "6140": {
+    "chf_per_m2": 8791,
+    "type": "calibrated_estimate"
+  },
+  "6141": {
+    "chf_per_m2": 7222,
+    "type": "calibrated_estimate"
+  },
+  "6142": {
+    "chf_per_m2": 9471,
+    "type": "calibrated_estimate"
+  },
+  "6151": {
+    "chf_per_m2": 8746,
+    "type": "calibrated_estimate"
+  },
+  "6152": {
+    "chf_per_m2": 8219,
+    "type": "calibrated_estimate"
+  },
+  "6153": {
+    "chf_per_m2": 7047,
+    "type": "calibrated_estimate"
+  },
+  "6154": {
+    "chf_per_m2": 7378,
+    "type": "calibrated_estimate"
+  },
+  "6155": {
+    "chf_per_m2": 6487,
+    "type": "calibrated_estimate"
+  },
+  "6156": {
+    "chf_per_m2": 9389,
+    "type": "calibrated_estimate"
+  },
+  "6157": {
+    "chf_per_m2": 9192,
+    "type": "calibrated_estimate"
+  },
+  "6158": {
+    "chf_per_m2": 7091,
+    "type": "calibrated_estimate"
+  },
+  "6159": {
+    "chf_per_m2": 8936,
+    "type": "calibrated_estimate"
+  },
+  "6172": {
+    "chf_per_m2": 5299,
+    "type": "calibrated_estimate"
+  },
+  "6173": {
+    "chf_per_m2": 5620,
+    "type": "calibrated_estimate"
+  },
+  "6177": {
+    "chf_per_m2": 5952,
+    "type": "calibrated_estimate"
+  },
+  "6181": {
+    "chf_per_m2": 6634,
+    "type": "calibrated_estimate"
+  },
+  "6191": {
+    "chf_per_m2": 6332,
+    "type": "calibrated_estimate"
+  },
+  "6192": {
+    "chf_per_m2": 6168,
+    "type": "calibrated_estimate"
+  },
+  "6193": {
+    "chf_per_m2": 4041,
+    "type": "calibrated_estimate"
+  },
+  "6194": {
+    "chf_per_m2": 6356,
+    "type": "calibrated_estimate"
+  },
+  "6195": {
+    "chf_per_m2": 5265,
+    "type": "calibrated_estimate"
+  },
+  "6197": {
+    "chf_per_m2": 6062,
+    "type": "calibrated_estimate"
+  },
+  "6198": {
+    "chf_per_m2": 6303,
+    "type": "calibrated_estimate"
+  },
+  "6199": {
+    "chf_per_m2": 5408,
+    "type": "calibrated_estimate"
+  },
+  "6201": {
+    "chf_per_m2": 4430,
+    "type": "calibrated_estimate"
+  },
+  "6202": {
+    "chf_per_m2": 5722,
+    "type": "calibrated_estimate"
+  },
+  "6203": {
+    "chf_per_m2": 5457,
+    "type": "calibrated_estimate"
+  },
+  "6204": {
+    "chf_per_m2": 5876,
+    "type": "calibrated_estimate"
+  },
+  "6205": {
+    "chf_per_m2": 5877,
+    "type": "calibrated_estimate"
+  },
+  "6211": {
+    "chf_per_m2": 7549,
+    "type": "calibrated_estimate"
+  },
+  "6212": {
+    "chf_per_m2": 8362,
+    "type": "calibrated_estimate"
+  },
+  "6213": {
+    "chf_per_m2": 8249,
+    "type": "calibrated_estimate"
+  },
+  "6214": {
+    "chf_per_m2": 9230,
+    "type": "calibrated_estimate"
+  },
+  "6215": {
+    "chf_per_m2": 7488,
+    "type": "calibrated_estimate"
+  },
+  "6217": {
+    "chf_per_m2": 6954,
+    "type": "calibrated_estimate"
+  },
+  "6218": {
+    "chf_per_m2": 7198,
+    "type": "calibrated_estimate"
+  },
+  "6219": {
+    "chf_per_m2": 7788,
+    "type": "calibrated_estimate"
+  },
+  "6220": {
+    "chf_per_m2": 8522,
+    "type": "calibrated_estimate"
+  },
+  "6232": {
+    "chf_per_m2": 6556,
+    "type": "calibrated_estimate"
+  },
+  "6235": {
+    "chf_per_m2": 6601,
+    "type": "calibrated_estimate"
+  },
+  "6238": {
+    "chf_per_m2": 7185,
+    "type": "calibrated_estimate"
+  },
+  "6239": {
+    "chf_per_m2": 6054,
+    "type": "calibrated_estimate"
+  },
+  "6240": {
+    "chf_per_m2": 6412,
+    "type": "calibrated_estimate"
+  },
+  "6246": {
+    "chf_per_m2": 6179,
+    "type": "calibrated_estimate"
+  },
+  "6248": {
+    "chf_per_m2": 7413,
+    "type": "calibrated_estimate"
+  },
+  "6252": {
+    "chf_per_m2": 4452,
+    "type": "calibrated_estimate"
+  },
+  "6253": {
+    "chf_per_m2": 5797,
+    "type": "calibrated_estimate"
+  },
+  "6254": {
+    "chf_per_m2": 7226,
+    "type": "calibrated_estimate"
+  },
+  "6261": {
+    "chf_per_m2": 6435,
+    "type": "calibrated_estimate"
+  },
+  "6263": {
+    "chf_per_m2": 7139,
+    "type": "calibrated_estimate"
+  },
+  "6265": {
+    "chf_per_m2": 7516,
+    "type": "calibrated_estimate"
+  },
+  "6266": {
+    "chf_per_m2": 6463,
+    "type": "calibrated_estimate"
+  },
+  "6267": {
+    "chf_per_m2": 6798,
+    "type": "calibrated_estimate"
+  },
+  "6281": {
+    "chf_per_m2": 4945,
+    "type": "calibrated_estimate"
+  },
+  "6282": {
+    "chf_per_m2": 3716,
+    "type": "calibrated_estimate"
+  },
+  "6283": {
+    "chf_per_m2": 4261,
+    "type": "calibrated_estimate"
+  },
+  "6285": {
+    "chf_per_m2": 4329,
+    "type": "calibrated_estimate"
+  },
+  "6286": {
+    "chf_per_m2": 3631,
+    "type": "calibrated_estimate"
+  },
+  "6287": {
+    "chf_per_m2": 4567,
+    "type": "calibrated_estimate"
+  },
+  "6288": {
+    "chf_per_m2": 5198,
+    "type": "calibrated_estimate"
+  },
+  "6289": {
+    "chf_per_m2": 4999,
+    "type": "calibrated_estimate"
+  },
+  "6290": {
+    "chf_per_m2": 3844,
+    "type": "calibrated_estimate"
+  },
+  "6291": {
+    "chf_per_m2": 5854,
+    "type": "calibrated_estimate"
+  },
+  "6292": {
+    "chf_per_m2": 3641,
+    "type": "calibrated_estimate"
+  },
+  "6293": {
+    "chf_per_m2": 4265,
+    "type": "calibrated_estimate"
+  },
+  "6294": {
+    "chf_per_m2": 3991,
+    "type": "calibrated_estimate"
+  },
+  "6295": {
+    "chf_per_m2": 4598,
+    "type": "calibrated_estimate"
+  },
+  "6296": {
+    "chf_per_m2": 4363,
+    "type": "calibrated_estimate"
+  },
+  "6297": {
+    "chf_per_m2": 4029,
+    "type": "calibrated_estimate"
+  },
+  "6298": {
+    "chf_per_m2": 4262,
+    "type": "calibrated_estimate"
+  },
+  "6299": {
+    "chf_per_m2": 4354,
+    "type": "calibrated_estimate"
+  },
+  "6300": {
+    "chf_per_m2": 4088,
+    "type": "calibrated_estimate"
+  },
+  "6404": {
+    "chf_per_m2": 5847,
+    "type": "calibrated_estimate"
+  },
+  "6408": {
+    "chf_per_m2": 5531,
+    "type": "calibrated_estimate"
+  },
+  "6413": {
+    "chf_per_m2": 6467,
+    "type": "calibrated_estimate"
+  },
+  "6416": {
+    "chf_per_m2": 5620,
+    "type": "calibrated_estimate"
+  },
+  "6417": {
+    "chf_per_m2": 6045,
+    "type": "calibrated_estimate"
+  },
+  "6421": {
+    "chf_per_m2": 5135,
+    "type": "calibrated_estimate"
+  },
+  "6422": {
+    "chf_per_m2": 6784,
+    "type": "calibrated_estimate"
+  },
+  "6423": {
+    "chf_per_m2": 6632,
+    "type": "calibrated_estimate"
+  },
+  "6432": {
+    "chf_per_m2": 7218,
+    "type": "calibrated_estimate"
+  },
+  "6433": {
+    "chf_per_m2": 6394,
+    "type": "calibrated_estimate"
+  },
+  "6434": {
+    "chf_per_m2": 6074,
+    "type": "calibrated_estimate"
+  },
+  "6435": {
+    "chf_per_m2": 6192,
+    "type": "calibrated_estimate"
+  },
+  "6436": {
+    "chf_per_m2": 6935,
+    "type": "calibrated_estimate"
+  },
+  "6437": {
+    "chf_per_m2": 6990,
+    "type": "calibrated_estimate"
+  },
+  "6451": {
+    "chf_per_m2": 6016,
+    "type": "calibrated_estimate"
+  },
+  "6452": {
+    "chf_per_m2": 6127,
+    "type": "calibrated_estimate"
+  },
+  "6455": {
+    "chf_per_m2": 5337,
+    "type": "calibrated_estimate"
+  },
+  "6456": {
+    "chf_per_m2": 5384,
+    "type": "calibrated_estimate"
+  },
+  "6458": {
+    "chf_per_m2": 5382,
+    "type": "calibrated_estimate"
+  },
+  "6487": {
+    "chf_per_m2": 5697,
+    "type": "calibrated_estimate"
+  },
+  "6504": {
+    "chf_per_m2": 7909,
+    "type": "calibrated_estimate"
+  },
+  "6511": {
+    "chf_per_m2": 6567,
+    "type": "calibrated_estimate"
+  },
+  "6512": {
+    "chf_per_m2": 7202,
+    "type": "calibrated_estimate"
+  },
+  "6513": {
+    "chf_per_m2": 5435,
+    "type": "calibrated_estimate"
+  },
+  "6601": {
+    "chf_per_m2": 14047,
+    "type": "calibrated_estimate"
+  },
+  "6602": {
+    "chf_per_m2": 14673,
+    "type": "calibrated_estimate"
+  },
+  "6603": {
+    "chf_per_m2": 14776,
+    "type": "calibrated_estimate"
+  },
+  "6604": {
+    "chf_per_m2": 13403,
+    "type": "calibrated_estimate"
+  },
+  "6605": {
+    "chf_per_m2": 15244,
+    "type": "calibrated_estimate"
+  },
+  "6606": {
+    "chf_per_m2": 13692,
+    "type": "calibrated_estimate"
+  },
+  "6607": {
+    "chf_per_m2": 11825,
+    "type": "calibrated_estimate"
+  },
+  "6608": {
+    "chf_per_m2": 12443,
+    "type": "calibrated_estimate"
+  },
+  "6609": {
+    "chf_per_m2": 12160,
+    "type": "calibrated_estimate"
+  },
+  "6610": {
+    "chf_per_m2": 13740,
+    "type": "calibrated_estimate"
+  },
+  "6611": {
+    "chf_per_m2": 14766,
+    "type": "calibrated_estimate"
+  },
+  "6612": {
+    "chf_per_m2": 15040,
+    "type": "calibrated_estimate"
+  },
+  "6613": {
+    "chf_per_m2": 11714,
+    "type": "calibrated_estimate"
+  },
+  "6614": {
+    "chf_per_m2": 14302,
+    "type": "calibrated_estimate"
+  },
+  "6615": {
+    "chf_per_m2": 12032,
+    "type": "calibrated_estimate"
+  },
+  "6616": {
+    "chf_per_m2": 12674,
+    "type": "calibrated_estimate"
+  },
+  "6617": {
+    "chf_per_m2": 14468,
+    "type": "calibrated_estimate"
+  },
+  "6618": {
+    "chf_per_m2": 13747,
+    "type": "calibrated_estimate"
+  },
+  "6619": {
+    "chf_per_m2": 15026,
+    "type": "calibrated_estimate"
+  },
+  "6620": {
+    "chf_per_m2": 11959,
+    "type": "calibrated_estimate"
+  },
+  "6621": {
+    "chf_per_m2": 14460,
+    "type": "calibrated_estimate"
+  },
+  "6622": {
+    "chf_per_m2": 14607,
+    "type": "calibrated_estimate"
+  },
+  "6623": {
+    "chf_per_m2": 13640,
+    "type": "calibrated_estimate"
+  },
+  "6624": {
+    "chf_per_m2": 13056,
+    "type": "calibrated_estimate"
+  },
+  "6625": {
+    "chf_per_m2": 14614,
+    "type": "calibrated_estimate"
+  },
+  "6626": {
+    "chf_per_m2": 12569,
+    "type": "calibrated_estimate"
+  },
+  "6627": {
+    "chf_per_m2": 15125,
+    "type": "calibrated_estimate"
+  },
+  "6628": {
+    "chf_per_m2": 11411,
+    "type": "calibrated_estimate"
+  },
+  "6629": {
+    "chf_per_m2": 15060,
+    "type": "calibrated_estimate"
+  },
+  "6630": {
+    "chf_per_m2": 15265,
+    "type": "calibrated_estimate"
+  },
+  "6631": {
+    "chf_per_m2": 11751,
+    "type": "calibrated_estimate"
+  },
+  "6632": {
+    "chf_per_m2": 15371,
+    "type": "calibrated_estimate"
+  },
+  "6633": {
+    "chf_per_m2": 13455,
+    "type": "calibrated_estimate"
+  },
+  "6634": {
+    "chf_per_m2": 12574,
+    "type": "calibrated_estimate"
+  },
+  "6635": {
+    "chf_per_m2": 13741,
+    "type": "calibrated_estimate"
+  },
+  "6636": {
+    "chf_per_m2": 12056,
+    "type": "calibrated_estimate"
+  },
+  "6637": {
+    "chf_per_m2": 15057,
+    "type": "calibrated_estimate"
+  },
+  "6638": {
+    "chf_per_m2": 13629,
+    "type": "calibrated_estimate"
+  },
+  "6639": {
+    "chf_per_m2": 14402,
+    "type": "calibrated_estimate"
+  },
+  "6640": {
+    "chf_per_m2": 12891,
+    "type": "calibrated_estimate"
+  },
+  "6641": {
+    "chf_per_m2": 13577,
+    "type": "calibrated_estimate"
+  },
+  "6642": {
+    "chf_per_m2": 13105,
+    "type": "calibrated_estimate"
+  },
+  "6643": {
+    "chf_per_m2": 12341,
+    "type": "calibrated_estimate"
+  },
+  "6644": {
+    "chf_per_m2": 13289,
+    "type": "calibrated_estimate"
+  },
+  "6645": {
+    "chf_per_m2": 13502,
+    "type": "calibrated_estimate"
+  },
+  "6702": {
+    "chf_per_m2": 4195,
+    "type": "calibrated_estimate"
+  },
+  "6703": {
+    "chf_per_m2": 5585,
+    "type": "calibrated_estimate"
+  },
+  "6704": {
+    "chf_per_m2": 4809,
+    "type": "calibrated_estimate"
+  },
+  "6706": {
+    "chf_per_m2": 5586,
+    "type": "calibrated_estimate"
+  },
+  "6708": {
+    "chf_per_m2": 5539,
+    "type": "calibrated_estimate"
+  },
+  "6709": {
+    "chf_per_m2": 4858,
+    "type": "calibrated_estimate"
+  },
+  "6710": {
+    "chf_per_m2": 4634,
+    "type": "calibrated_estimate"
+  },
+  "6711": {
+    "chf_per_m2": 5003,
+    "type": "calibrated_estimate"
+  },
+  "6712": {
+    "chf_per_m2": 4422,
+    "type": "calibrated_estimate"
+  },
+  "6713": {
+    "chf_per_m2": 4514,
+    "type": "calibrated_estimate"
+  },
+  "6715": {
+    "chf_per_m2": 5027,
+    "type": "calibrated_estimate"
+  },
+  "6716": {
+    "chf_per_m2": 5619,
+    "type": "calibrated_estimate"
+  },
+  "6718": {
+    "chf_per_m2": 5125,
+    "type": "calibrated_estimate"
+  },
+  "6719": {
+    "chf_per_m2": 4852,
+    "type": "calibrated_estimate"
+  },
+  "6721": {
+    "chf_per_m2": 4407,
+    "type": "calibrated_estimate"
+  },
+  "6722": {
+    "chf_per_m2": 4357,
+    "type": "calibrated_estimate"
+  },
+  "6724": {
+    "chf_per_m2": 4864,
+    "type": "calibrated_estimate"
+  },
+  "6729": {
+    "chf_per_m2": 5123,
+    "type": "calibrated_estimate"
+  },
+  "6730": {
+    "chf_per_m2": 5069,
+    "type": "calibrated_estimate"
+  },
+  "6741": {
+    "chf_per_m2": 4771,
+    "type": "calibrated_estimate"
+  },
+  "6742": {
+    "chf_per_m2": 5107,
+    "type": "calibrated_estimate"
+  },
+  "6743": {
+    "chf_per_m2": 4183,
+    "type": "calibrated_estimate"
+  },
+  "6745": {
+    "chf_per_m2": 5049,
+    "type": "calibrated_estimate"
+  },
+  "6748": {
+    "chf_per_m2": 5120,
+    "type": "calibrated_estimate"
+  },
+  "6750": {
+    "chf_per_m2": 4731,
+    "type": "calibrated_estimate"
+  },
+  "6751": {
+    "chf_per_m2": 4550,
+    "type": "calibrated_estimate"
+  },
+  "6753": {
+    "chf_per_m2": 4091,
+    "type": "calibrated_estimate"
+  },
+  "6754": {
+    "chf_per_m2": 4975,
+    "type": "calibrated_estimate"
+  },
+  "6757": {
+    "chf_per_m2": 4131,
+    "type": "calibrated_estimate"
+  },
+  "6758": {
+    "chf_per_m2": 4915,
+    "type": "calibrated_estimate"
+  },
+  "6759": {
+    "chf_per_m2": 4617,
+    "type": "calibrated_estimate"
+  },
+  "6771": {
+    "chf_per_m2": 5475,
+    "type": "calibrated_estimate"
+  },
+  "6774": {
+    "chf_per_m2": 4964,
+    "type": "calibrated_estimate"
+  },
+  "6778": {
+    "chf_per_m2": 5041,
+    "type": "calibrated_estimate"
+  },
+  "6781": {
+    "chf_per_m2": 4244,
+    "type": "calibrated_estimate"
+  },
+  "6782": {
+    "chf_per_m2": 4163,
+    "type": "calibrated_estimate"
+  },
+  "6783": {
+    "chf_per_m2": 5353,
+    "type": "calibrated_estimate"
+  },
+  "6784": {
+    "chf_per_m2": 5435,
+    "type": "calibrated_estimate"
+  },
+  "6785": {
+    "chf_per_m2": 5047,
+    "type": "calibrated_estimate"
+  },
+  "6789": {
+    "chf_per_m2": 5186,
+    "type": "calibrated_estimate"
+  },
+  "6790": {
+    "chf_per_m2": 4641,
+    "type": "calibrated_estimate"
+  },
+  "6792": {
+    "chf_per_m2": 5259,
+    "type": "calibrated_estimate"
+  },
+  "6800": {
+    "chf_per_m2": 4441,
+    "type": "calibrated_estimate"
+  },
+  "6806": {
+    "chf_per_m2": 5230,
+    "type": "calibrated_estimate"
+  },
+  "6807": {
+    "chf_per_m2": 4173,
+    "type": "calibrated_estimate"
+  },
+  "6808": {
+    "chf_per_m2": 4713,
+    "type": "calibrated_estimate"
+  },
+  "6809": {
+    "chf_per_m2": 4575,
+    "type": "calibrated_estimate"
+  },
+  "6810": {
+    "chf_per_m2": 5057,
+    "type": "calibrated_estimate"
+  },
+  "6811": {
+    "chf_per_m2": 5181,
+    "type": "calibrated_estimate"
+  },
+  "6812": {
+    "chf_per_m2": 5147,
+    "type": "calibrated_estimate"
+  },
+  "9040": {
+    "chf_per_m2": 12758,
+    "type": "calibrated_estimate"
+  },
+  "9051": {
+    "chf_per_m2": 12523,
+    "type": "calibrated_estimate"
+  },
+  "9073": {
+    "chf_per_m2": 6157,
+    "type": "calibrated_estimate"
+  },
+  "9089": {
+    "chf_per_m2": 7591,
+    "type": "calibrated_estimate"
+  },
+  "9149": {
+    "chf_per_m2": 5468,
+    "type": "calibrated_estimate"
+  },
+  "9150": {
+    "chf_per_m2": 6216,
+    "type": "calibrated_estimate"
+  },
+  "9152": {
+    "chf_per_m2": 6429,
+    "type": "calibrated_estimate"
+  },
+  "9155": {
+    "chf_per_m2": 7700,
+    "type": "calibrated_estimate"
+  },
+  "9328": {
+    "chf_per_m2": 5980,
+    "type": "calibrated_estimate"
+  },
+  "9329": {
+    "chf_per_m2": 8053,
+    "type": "calibrated_estimate"
+  }
+}
