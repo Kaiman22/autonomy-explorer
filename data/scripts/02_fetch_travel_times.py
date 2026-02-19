@@ -83,7 +83,13 @@ def build_traveltime_request(municipalities, mode, batch_start, batch_end):
             "id": f"to_{city_id}_{batch_start}",
             "arrival_location_id": city_id,
             "departure_location_ids": departure_ids,
-            "transportation": {"type": mode},
+            "transportation": {
+                "type": mode,
+                # Allow up to 20 min walking to reach the nearest PT stop.
+                # Municipality centroids can be 1-3 km from the nearest bus/train stop,
+                # so the default (~10 min) causes many false "unreachable" results.
+                **({"walking_time": 1200} if mode == "public_transport" else {}),
+            },
             "arrival_time": ARRIVAL_TIME,
             "travel_time": MAX_TRAVEL_TIME,
             "properties": ["travel_time"],
@@ -309,9 +315,14 @@ def main():
     municipalities = load_municipalities()
     print(f"Loaded {len(municipalities)} municipalities")
 
-    # Load existing if present (for incremental updates)
+    # Load existing if present (preserves data for modes not being fetched)
     out_path = PROCESSED_DIR / "travel_times.json"
-    travel_times = {"driving": {}, "public_transport": {}}
+    if out_path.exists():
+        with open(out_path) as f:
+            travel_times = json.load(f)
+        print(f"Loaded existing travel times ({len(travel_times.get('driving', {}))} driving, {len(travel_times.get('public_transport', {}))} PT)")
+    else:
+        travel_times = {"driving": {}, "public_transport": {}}
 
     # ── Driving times ──
     if args.mode in ("both", "driving"):
