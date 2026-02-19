@@ -1,0 +1,2129 @@
+id,name,slug
+0001,Aeugst am Albis,aeugst-am-albis
+0002,Affoltern am Albis,affoltern-am-albis
+0003,Bonstetten,bonstetten
+0004,Hausen am Albis,hausen-am-albis
+0005,Hedingen,hedingen
+0006,Kappel am Albis,kappel-am-albis
+0007,Knonau,knonau
+0008,Maschwanden,maschwanden
+0009,Mettmenstetten,mettmenstetten
+0010,Obfelden,obfelden
+0011,Ottenbach,ottenbach
+0012,Rifferswil,rifferswil
+0013,Stallikon,stallikon
+0014,Wettswil am Albis,wettswil-am-albis
+0022,Benken (ZH),benken-zh
+0023,Berg am Irchel,berg-am-irchel
+0024,Buch am Irchel,buch-am-irchel
+0025,Dachsen,dachsen
+0026,Dorf,dorf
+0027,Feuerthalen,feuerthalen
+0028,Flaach,flaach
+0029,Flurlingen,flurlingen
+0031,Henggart,henggart
+0033,Kleinandelfingen,kleinandelfingen
+0034,Laufen-Uhwiesen,laufen-uhwiesen
+0035,Marthalen,marthalen
+0037,Ossingen,ossingen
+0038,Rheinau,rheinau
+0039,Thalheim an der Thur,thalheim-an-der-thur
+0040,Trüllikon,truellikon
+0041,Truttikon,truttikon
+0043,Volken,volken
+0051,Bachenbülach,bachenbuelach
+0052,Bassersdorf,bassersdorf
+0053,Bülach,buelach
+0054,Dietlikon,dietlikon
+0055,Eglisau,eglisau
+0056,Embrach,embrach
+0057,Freienstein-Teufen,freienstein-teufen
+0058,Glattfelden,glattfelden
+0059,Hochfelden,hochfelden
+0060,Höri,hoeri
+0061,Hüntwangen,huentwangen
+0062,Kloten,kloten
+0063,Lufingen,lufingen
+0064,Nürensdorf,nuerensdorf
+0065,Oberembrach,oberembrach
+0066,Opfikon,opfikon
+0067,Rafz,rafz
+0068,Rorbas,rorbas
+0069,Wallisellen,wallisellen
+0070,Wasterkingen,wasterkingen
+0071,Wil (ZH),wil-zh
+0072,Winkel,winkel
+0081,Bachs,bachs
+0082,Boppelsen,boppelsen
+0083,Buchs (ZH),buchs-zh
+0084,Dällikon,daellikon
+0085,Dänikon,daenikon
+0086,Dielsdorf,dielsdorf
+0087,Hüttikon,huettikon
+0088,Neerach,neerach
+0089,Niederglatt,niederglatt
+0090,Niederhasli,niederhasli
+0091,Niederweningen,niederweningen
+0092,Oberglatt,oberglatt
+0093,Oberweningen,oberweningen
+0094,Otelfingen,otelfingen
+0095,Regensberg,regensberg
+0096,Regensdorf,regensdorf
+0097,Rümlang,ruemlang
+0098,Schleinikon,schleinikon
+0099,Schöfflisdorf,schoefflisdorf
+0100,Stadel,stadel
+0101,Steinmaur,steinmaur
+0102,Weiach,weiach
+0111,Bäretswil,baeretswil
+0112,Bubikon,bubikon
+0113,Dürnten,duernten
+0114,Fischenthal,fischenthal
+0115,Gossau (ZH),gossau-zh
+0116,Grüningen,grueningen
+0117,Hinwil,hinwil
+0118,Rüti (ZH),rueti-zh
+0119,Seegräben,seegraeben
+0120,Wald (ZH),wald-zh
+0121,Wetzikon (ZH),wetzikon-zh
+0131,Adliswil,adliswil
+0135,Kilchberg (ZH),kilchberg-zh
+0136,Langnau am Albis,langnau-am-albis
+0137,Oberrieden,oberrieden
+0138,Richterswil,richterswil
+0139,Rüschlikon,rueschlikon
+0141,Thalwil,thalwil
+0151,Erlenbach (ZH),erlenbach-zh
+0152,Herrliberg,herrliberg
+0153,Hombrechtikon,hombrechtikon
+0154,Küsnacht (ZH),kuesnacht-zh
+0155,Männedorf,maennedorf
+0156,Meilen,meilen
+0157,Oetwil am See,oetwil-am-see
+0158,Stäfa,staefa
+0159,Uetikon am See,uetikon-am-see
+0160,Zumikon,zumikon
+0161,Zollikon,zollikon
+0172,Fehraltorf,fehraltorf
+0173,Hittnau,hittnau
+0176,Lindau,lindau
+0177,Pfäffikon,pfaeffikon
+0178,Russikon,russikon
+0180,Weisslingen,weisslingen
+0181,Wila,wila
+0182,Wildberg,wildberg
+0191,Dübendorf,duebendorf
+0192,Egg,egg
+0193,Fällanden,faellanden
+0194,Greifensee,greifensee
+0195,Maur,maur
+0196,Mönchaltorf,moenchaltorf
+0197,Schwerzenbach,schwerzenbach
+0198,Uster,uster
+0199,Volketswil,volketswil
+0200,Wangen-Brüttisellen,wangen-bruettisellen
+0211,Altikon,altikon
+0213,Brütten,bruetten
+0214,Dägerlen,daegerlen
+0215,Dättlikon,daettlikon
+0216,Dinhard,dinhard
+0218,Ellikon an der Thur,ellikon-an-der-thur
+0219,Elsau,elsau
+0220,Hagenbuch,hagenbuch
+0221,Hettlingen,hettlingen
+0223,Neftenbach,neftenbach
+0224,Pfungen,pfungen
+0225,Rickenbach (ZH),rickenbach-zh
+0226,Schlatt (ZH),schlatt-zh
+0227,Seuzach,seuzach
+0228,Turbenthal,turbenthal
+0230,Winterthur,winterthur
+0231,Zell (ZH),zell-zh
+0241,Aesch (ZH),aesch-zh
+0242,Birmensdorf (ZH),birmensdorf-zh
+0243,Dietikon,dietikon
+0244,Geroldswil,geroldswil
+0245,Oberengstringen,oberengstringen
+0246,Oetwil an der Limmat,oetwil-an-der-limmat
+0247,Schlieren,schlieren
+0248,Uitikon,uitikon
+0249,Unterengstringen,unterengstringen
+0250,Urdorf,urdorf
+0251,Weiningen (ZH),weiningen-zh
+0261,Zürich,zuerich
+0291,Andelfingen,andelfingen
+0292,Stammheim,stammheim
+0293,Wädenswil,waedenswil
+0294,Elgg,elgg
+0295,Horgen,horgen
+0296,Illnau-Effretikon,illnau-effretikon
+0297,Bauma,bauma
+0298,Wiesendangen,wiesendangen
+0301,Aarberg,aarberg
+0302,Bargen (BE),bargen-be
+0303,Grossaffoltern,grossaffoltern
+0304,Kallnach,kallnach
+0305,Kappelen,kappelen
+0306,Lyss,lyss
+0307,Meikirch,meikirch
+0309,Radelfingen,radelfingen
+0310,Rapperswil (BE),rapperswil-be
+0311,Schüpfen,schuepfen
+0312,Seedorf (BE),seedorf-be
+0321,Aarwangen,aarwangen
+0322,Auswil,auswil
+0323,Bannwil,bannwil
+0324,Bleienbach,bleienbach
+0325,Busswil bei Melchnau,busswil-bei-melchnau
+0326,Gondiswil,gondiswil
+0329,Langenthal,langenthal
+0331,Lotzwil,lotzwil
+0332,Madiswil,madiswil
+0333,Melchnau,melchnau
+0335,Oeschenbach,oeschenbach
+0336,Reisiswil,reisiswil
+0337,Roggwil (BE),roggwil-be
+0338,Rohrbach,rohrbach
+0339,Rohrbachgraben,rohrbachgraben
+0340,Rütschelen,ruetschelen
+0341,Schwarzhäusern,schwarzhaeusern
+0342,Thunstetten,thunstetten
+0344,Ursenbach,ursenbach
+0345,Wynau,wynau
+0351,Bern,bern
+0352,Bolligen,bolligen
+0353,Bremgarten bei Bern,bremgarten-bei-bern
+0354,Kirchlindach,kirchlindach
+0355,Köniz,koeniz
+0356,Muri bei Bern,muri-bei-bern
+0357,Oberbalm,oberbalm
+0358,Stettlen,stettlen
+0359,Vechigen,vechigen
+0360,Wohlen bei Bern,wohlen-bei-bern
+0361,Zollikofen,zollikofen
+0362,Ittigen,ittigen
+0363,Ostermundigen,ostermundigen
+0371,Biel/Bienne,biel-bienne
+0372,Evilard,evilard
+0381,Arch,arch
+0382,Büetigen,bueetigen
+0383,Büren an der Aare,bueren-an-der-aare
+0385,Diessbach bei Büren,diessbach-bei-bueren
+0386,Dotzigen,dotzigen
+0387,Lengnau (BE),lengnau-be
+0388,Leuzigen,leuzigen
+0389,Meienried,meienried
+0390,Meinisberg,meinisberg
+0391,Oberwil bei Büren,oberwil-bei-bueren
+0392,Pieterlen,pieterlen
+0393,Rüti bei Büren,rueti-bei-bueren
+0394,Wengi,wengi
+0401,Aefligen,aefligen
+0402,Alchenstorf,alchenstorf
+0403,Bäriswil,baeriswil
+0404,Burgdorf,burgdorf
+0405,Ersigen,ersigen
+0406,Hasle bei Burgdorf,hasle-bei-burgdorf
+0407,Heimiswil,heimiswil
+0408,Hellsau,hellsau
+0409,Hindelbank,hindelbank
+0410,Höchstetten,hoechstetten
+0411,Kernenried,kernenried
+0412,Kirchberg (BE),kirchberg-be
+0413,Koppigen,koppigen
+0414,Krauchthal,krauchthal
+0415,Lyssach,lyssach
+0418,Oberburg,oberburg
+0420,Rüdtligen-Alchenflüh,ruedtligen-alchenflueh
+0421,Rumendingen,rumendingen
+0422,Rüti bei Lyssach,rueti-bei-lyssach
+0423,Willadingen,willadingen
+0424,Wynigen,wynigen
+0431,Corgémont,corgemont
+0432,Cormoret,cormoret
+0433,Cortébert,cortebert
+0434,Courtelary,courtelary
+0435,La Ferrière,la-ferriere
+0437,Mont-Tramelan,mont-tramelan
+0438,Orvin,orvin
+0441,Renan (BE),renan-be
+0442,Romont (BE),romont-be
+0443,Saint-Imier,saint-imier
+0444,Sonceboz-Sombeval,sonceboz-sombeval
+0445,Sonvilier,sonvilier
+0446,Tramelan,tramelan
+0448,Villeret,villeret
+0449,Sauge,sauge
+0450,Péry-La Heutte,pery-la-heutte
+0491,Brüttelen,bruettelen
+0492,Erlach,erlach
+0493,Finsterhennen,finsterhennen
+0494,Gals,gals
+0495,Gampelen,gampelen
+0496,Ins,ins
+0497,Lüscherz,luescherz
+0498,Müntschemier,muentschemier
+0499,Siselen,siselen
+0500,Treiten,treiten
+0501,Tschugg,tschugg
+0502,Vinelz,vinelz
+0533,Bätterkinden,baetterkinden
+0535,Deisswil bei Münchenbuchsee,deisswil-bei-muenchenbuchsee
+0538,Fraubrunnen,fraubrunnen
+0540,Jegenstorf,jegenstorf
+0541,Iffwil,iffwil
+0543,Mattstetten,mattstetten
+0544,Moosseedorf,moosseedorf
+0546,Münchenbuchsee,muenchenbuchsee
+0551,Urtenen-Schönbühl,urtenen-schoenbuehl
+0552,Utzenstorf,utzenstorf
+0553,Wiggiswil,wiggiswil
+0554,Wiler bei Utzenstorf,wiler-bei-utzenstorf
+0556,Zielebach,zielebach
+0557,Zuzwil (BE),zuzwil-be
+0561,Adelboden,adelboden
+0562,Aeschi bei Spiez,aeschi-bei-spiez
+0563,Frutigen,frutigen
+0564,Kandergrund,kandergrund
+0565,Kandersteg,kandersteg
+0566,Krattigen,krattigen
+0567,Reichenbach im Kandertal,reichenbach-im-kandertal
+0571,Beatenberg,beatenberg
+0572,Bönigen,boenigen
+0573,Brienz (BE),brienz-be
+0574,Brienzwiler,brienzwiler
+0575,Därligen,daerligen
+0576,Grindelwald,grindelwald
+0577,Gsteigwiler,gsteigwiler
+0578,Gündlischwand,guendlischwand
+0579,Habkern,habkern
+0580,Hofstetten bei Brienz,hofstetten-bei-brienz
+0581,Interlaken,interlaken
+0582,Iseltwald,iseltwald
+0584,Lauterbrunnen,lauterbrunnen
+0585,Leissigen,leissigen
+0586,Lütschental,luetschental
+0587,Matten bei Interlaken,matten-bei-interlaken
+0588,Niederried bei Interlaken,niederried-bei-interlaken
+0589,Oberried am Brienzersee,oberried-am-brienzersee
+0590,Ringgenberg (BE),ringgenberg-be
+0591,Saxeten,saxeten
+0592,Schwanden bei Brienz,schwanden-bei-brienz
+0593,Unterseen,unterseen
+0594,Wilderswil,wilderswil
+0602,Arni (BE),arni-be
+0603,Biglen,biglen
+0605,Bowil,bowil
+0606,Brenzikofen,brenzikofen
+0607,Freimettigen,freimettigen
+0608,Grosshöchstetten,grosshoechstetten
+0609,Häutligen,haeutligen
+0610,Herbligen,herbligen
+0611,Kiesen,kiesen
+0612,Konolfingen,konolfingen
+0613,Landiswil,landiswil
+0614,Linden,linden
+0615,Mirchel,mirchel
+0616,Münsingen,muensingen
+0617,Niederhünigen,niederhuenigen
+0619,Oberdiessbach,oberdiessbach
+0620,Oberthal,oberthal
+0622,Oppligen,oppligen
+0623,Rubigen,rubigen
+0626,Walkringen,walkringen
+0627,Worb,worb
+0628,Zäziwil,zaeziwil
+0629,Oberhünigen,oberhuenigen
+0630,Allmendingen,allmendingen
+0632,Wichtrach,wichtrach
+0662,Ferenbalm,ferenbalm
+0663,Frauenkappelen,frauenkappelen
+0665,Gurbrü,gurbrue
+0666,Kriechenwil,kriechenwil
+0667,Laupen,laupen
+0668,Mühleberg,muehleberg
+0669,Münchenwiler,muenchenwiler
+0670,Neuenegg,neuenegg
+0671,Wileroltigen,wileroltigen
+0681,Belprahon,belprahon
+0683,Champoz,champoz
+0687,Corcelles (BE),corcelles-be
+0690,Court,court
+0691,Crémines,cremines
+0692,Eschert,eschert
+0694,Grandval,grandval
+0696,Loveresse,loveresse
+0700,Moutier,moutier
+0701,Perrefitte,perrefitte
+0703,Reconvilier,reconvilier
+0704,Roches (BE),roches-be
+0706,Saicourt,saicourt
+0707,Saules (BE),saules-be
+0708,Schelten,schelten
+0709,Seehof,seehof
+0711,Sorvilier,sorvilier
+0713,Tavannes,tavannes
+0715,Rebévelier,rebevelier
+0716,Petit-Val,petit-val
+0717,Valbirse,valbirse
+0723,La Neuveville,la-neuveville
+0724,Nods,nods
+0726,Plateau de Diesse,plateau-de-diesse
+0731,Aegerten,aegerten
+0732,Bellmund,bellmund
+0733,Brügg,bruegg
+0734,Bühl,buehl
+0735,Epsach,epsach
+0736,Hagneck,hagneck
+0737,Hermrigen,hermrigen
+0738,Jens,jens
+0739,Ipsach,ipsach
+0740,Ligerz,ligerz
+0741,Merzligen,merzligen
+0742,Mörigen,moerigen
+0743,Nidau,nidau
+0744,Orpund,orpund
+0745,Port,port
+0746,Safnern,safnern
+0747,Scheuren,scheuren
+0748,Schwadernau,schwadernau
+0749,Studen (BE),studen-be
+0750,Sutz-Lattrigen,sutz-lattrigen
+0751,Täuffelen,taeuffelen
+0754,Walperswil,walperswil
+0755,Worben,worben
+0756,Twann-Tüscherz,twann-tuescherz
+0761,Därstetten,daerstetten
+0762,Diemtigen,diemtigen
+0763,Erlenbach im Simmental,erlenbach-im-simmental
+0766,Oberwil im Simmental,oberwil-im-simmental
+0767,Reutigen,reutigen
+0768,Spiez,spiez
+0769,Wimmis,wimmis
+0770,Stocken-Höfen,stocken-hoefen
+0782,Guttannen,guttannen
+0783,Hasliberg,hasliberg
+0784,Innertkirchen,innertkirchen
+0785,Meiringen,meiringen
+0786,Schattenhalb,schattenhalb
+0791,Boltigen,boltigen
+0792,Lenk,lenk
+0793,St. Stephan,st-stephan
+0794,Zweisimmen,zweisimmen
+0841,Gsteig,gsteig
+0842,Lauenen,lauenen
+0843,Saanen,saanen
+0852,Guggisberg,guggisberg
+0853,Rüschegg,rueschegg
+0855,Schwarzenburg,schwarzenburg
+0861,Belp,belp
+0863,Burgistein,burgistein
+0866,Gerzensee,gerzensee
+0867,Gurzelen,gurzelen
+0868,Jaberg,jaberg
+0869,Kaufdorf,kaufdorf
+0870,Kehrsatz,kehrsatz
+0872,Kirchdorf (BE),kirchdorf-be
+0877,Niedermuhlern,niedermuhlern
+0879,Riggisberg,riggisberg
+0880,Rüeggisberg,rueeggisberg
+0883,Seftigen,seftigen
+0884,Toffen,toffen
+0885,Uttigen,uttigen
+0886,Wattenwil,wattenwil
+0888,Wald (BE),wald-be
+0889,Thurnen,thurnen
+0901,Eggiwil,eggiwil
+0902,Langnau im Emmental,langnau-im-emmental
+0903,Lauperswil,lauperswil
+0904,Röthenbach im Emmental,roethenbach-im-emmental
+0905,Rüderswil,ruederswil
+0906,Schangnau,schangnau
+0907,Signau,signau
+0908,Trub,trub
+0909,Trubschachen,trubschachen
+0921,Amsoldingen,amsoldingen
+0922,Blumenstein,blumenstein
+0923,Buchholterberg,buchholterberg
+0924,Eriz,eriz
+0925,Fahrni,fahrni
+0927,Heiligenschwendi,heiligenschwendi
+0928,Heimberg,heimberg
+0929,Hilterfingen,hilterfingen
+0931,Homberg,homberg
+0932,Horrenbach-Buchen,horrenbach-buchen
+0934,Oberhofen am Thunersee,oberhofen-am-thunersee
+0935,Oberlangenegg,oberlangenegg
+0936,Pohlern,pohlern
+0938,Sigriswil,sigriswil
+0939,Steffisburg,steffisburg
+0940,Teuffenthal (BE),teuffenthal-be
+0941,Thierachern,thierachern
+0942,Thun,thun
+0943,Uebeschi,uebeschi
+0944,Uetendorf,uetendorf
+0945,Unterlangenegg,unterlangenegg
+0946,Wachseldorn,wachseldorn
+0948,Forst-Längenbühl,forst-laengenbuehl
+0951,Affoltern im Emmental,affoltern-im-emmental
+0952,Dürrenroth,duerrenroth
+0953,Eriswil,eriswil
+0954,Huttwil,huttwil
+0955,Lützelflüh,luetzelflueh
+0956,Rüegsau,rueegsau
+0957,Sumiswald,sumiswald
+0958,Trachselwald,trachselwald
+0959,Walterswil (BE),walterswil-be
+0960,Wyssachen,wyssachen
+0971,Attiswil,attiswil
+0972,Berken,berken
+0973,Bettenhausen,bettenhausen
+0975,Farnern,farnern
+0976,Graben,graben
+0977,Heimenhausen,heimenhausen
+0979,Herzogenbuchsee,herzogenbuchsee
+0980,Inkwil,inkwil
+0981,Niederbipp,niederbipp
+0982,Niederönz,niederoenz
+0983,Oberbipp,oberbipp
+0985,Ochlenberg,ochlenberg
+0987,Rumisberg,rumisberg
+0988,Seeberg,seeberg
+0989,Thörigen,thoerigen
+0990,Walliswil bei Niederbipp,walliswil-bei-niederbipp
+0991,Walliswil bei Wangen,walliswil-bei-wangen
+0992,Wangen an der Aare,wangen-an-der-aare
+0995,Wiedlisbach,wiedlisbach
+1001,Doppleschwand,doppleschwand
+1002,Entlebuch,entlebuch
+1004,Flühli,fluehli
+1005,Hasle (LU),hasle-lu
+1007,Romoos,romoos
+1008,Schüpfheim,schuepfheim
+1009,Werthenstein,werthenstein
+1010,Escholzmatt-Marbach,escholzmatt-marbach
+1021,Aesch (LU),aesch-lu
+1023,Ballwil,ballwil
+1024,Emmen,emmen
+1025,Ermensee,ermensee
+1026,Eschenbach (LU),eschenbach-lu
+1030,Hitzkirch,hitzkirch
+1031,Hochdorf,hochdorf
+1032,Hohenrain,hohenrain
+1033,Inwil,inwil
+1037,Rain,rain
+1039,Römerswil,roemerswil
+1040,Rothenburg,rothenburg
+1041,Schongau,schongau
+1051,Adligenswil,adligenswil
+1052,Buchrain,buchrain
+1053,Dierikon,dierikon
+1054,Ebikon,ebikon
+1055,Gisikon,gisikon
+1056,Greppen,greppen
+1058,Horw,horw
+1059,Kriens,kriens
+1061,Luzern,luzern
+1062,Malters,malters
+1063,Meggen,meggen
+1064,Meierskappel,meierskappel
+1065,Root,root
+1066,Schwarzenberg,schwarzenberg
+1067,Udligenswil,udligenswil
+1068,Vitznau,vitznau
+1069,Weggis,weggis
+1081,Beromünster,beromuenster
+1082,Büron,bueron
+1083,Buttisholz,buttisholz
+1084,Eich,eich
+1085,Geuensee,geuensee
+1086,Grosswangen,grosswangen
+1088,Hildisrieden,hildisrieden
+1089,Knutwil,knutwil
+1091,Mauensee,mauensee
+1093,Neuenkirch,neuenkirch
+1094,Nottwil,nottwil
+1095,Oberkirch,oberkirch
+1097,Rickenbach (LU),rickenbach-lu
+1098,Ruswil,ruswil
+1099,Schenkon,schenkon
+1100,Schlierbach,schlierbach
+1102,Sempach,sempach
+1103,Sursee,sursee
+1104,Triengen,triengen
+1107,Wolhusen,wolhusen
+1121,Alberswil,alberswil
+1122,Altbüron,altbueron
+1123,Altishofen,altishofen
+1125,Dagmersellen,dagmersellen
+1127,Egolzwil,egolzwil
+1128,Ettiswil,ettiswil
+1129,Fischbach,fischbach
+1131,Grossdietwil,grossdietwil
+1132,Hergiswil bei Willisau,hergiswil-bei-willisau
+1135,Luthern,luthern
+1136,Menznau,menznau
+1137,Nebikon,nebikon
+1139,Pfaffnau,pfaffnau
+1140,Reiden,reiden
+1142,Roggliswil,roggliswil
+1143,Schötz,schoetz
+1145,Ufhusen,ufhusen
+1146,Wauwil,wauwil
+1147,Wikon,wikon
+1150,Zell (LU),zell-lu
+1151,Willisau,willisau
+1201,Altdorf (UR),altdorf-ur
+1202,Andermatt,andermatt
+1203,Attinghausen,attinghausen
+1205,Bürglen (UR),buerglen-ur
+1206,Erstfeld,erstfeld
+1207,Flüelen,flueelen
+1208,Göschenen,goeschenen
+1209,Gurtnellen,gurtnellen
+1210,Hospental,hospental
+1211,Isenthal,isenthal
+1212,Realp,realp
+1213,Schattdorf,schattdorf
+1214,Seedorf (UR),seedorf-ur
+1215,Seelisberg,seelisberg
+1216,Silenen,silenen
+1217,Sisikon,sisikon
+1218,Spiringen,spiringen
+1219,Unterschächen,unterschaechen
+1220,Wassen,wassen
+1301,Einsiedeln,einsiedeln
+1311,Gersau,gersau
+1321,Feusisberg,feusisberg
+1322,Freienbach,freienbach
+1323,Wollerau,wollerau
+1331,Küssnacht (SZ),kuessnacht-sz
+1341,Altendorf,altendorf
+1342,Galgenen,galgenen
+1343,Innerthal,innerthal
+1344,Lachen,lachen
+1345,Reichenburg,reichenburg
+1346,Schübelbach,schuebelbach
+1347,Tuggen,tuggen
+1348,Vorderthal,vorderthal
+1349,Wangen (SZ),wangen-sz
+1361,Alpthal,alpthal
+1362,Arth,arth
+1363,Illgau,illgau
+1364,Ingenbohl,ingenbohl
+1365,Lauerz,lauerz
+1366,Morschach,morschach
+1367,Muotathal,muotathal
+1368,Oberiberg,oberiberg
+1369,Riemenstalden,riemenstalden
+1370,Rothenthurm,rothenthurm
+1371,Sattel,sattel
+1372,Schwyz,schwyz
+1373,Steinen,steinen
+1374,Steinerberg,steinerberg
+1375,Unteriberg,unteriberg
+1401,Alpnach,alpnach
+1402,Engelberg,engelberg
+1403,Giswil,giswil
+1404,Kerns,kerns
+1405,Lungern,lungern
+1406,Sachseln,sachseln
+1407,Sarnen,sarnen
+1501,Beckenried,beckenried
+1502,Buochs,buochs
+1503,Dallenwil,dallenwil
+1504,Emmetten,emmetten
+1505,Ennetbürgen,ennetbuergen
+1506,Ennetmoos,ennetmoos
+1507,Hergiswil (NW),hergiswil-nw
+1508,Oberdorf (NW),oberdorf-nw
+1509,Stans,stans
+1510,Stansstad,stansstad
+1511,Wolfenschiessen,wolfenschiessen
+1630,Glarus Nord,glarus-nord
+1631,Glarus Süd,glarus-sued
+1632,Glarus,glarus
+1701,Baar,baar
+1702,Cham,cham
+1703,Hünenberg,huenenberg
+1704,Menzingen,menzingen
+1705,Neuheim,neuheim
+1706,Oberägeri,oberaegeri
+1707,Risch,risch
+1708,Steinhausen,steinhausen
+1709,Unterägeri,unteraegeri
+1710,Walchwil,walchwil
+1711,Zug,zug
+2008,Châtillon (FR),chtillon-fr
+2011,Cugy (FR),cugy-fr
+2016,Fétigny,fetigny
+2022,Gletterens,gletterens
+2025,Lully (FR),lully-fr
+2027,Ménières,menieres
+2029,Montagny (FR),montagny-fr
+2035,Nuvilly,nuvilly
+2038,Prévondavaux,prevondavaux
+2041,Saint-Aubin (FR),saint-aubin-fr
+2043,Sévaz,sevaz
+2044,Surpierre,surpierre
+2045,Vallon,vallon
+2050,Les Montets,les-montets
+2051,Delley-Portalban,delley-portalban
+2053,Belmont-Broye,belmont-broye
+2054,Estavayer,estavayer
+2055,Cheyres-Châbles,cheyres-chbles
+2063,Billens-Hennens,billens-hennens
+2067,Le Châtelard,le-chtelard
+2068,Châtonnaye,chtonnaye
+2079,Grangettes,grangettes
+2086,Massonnens,massonnens
+2087,Mézières (FR),mezieres-fr
+2096,Romont (FR),romont-fr
+2097,Rue,rue
+2099,Siviriez,siviriez
+2102,Ursy,ursy
+2113,Vuisternens-devant-Romont,vuisternens-devant-romont
+2114,Villorsonnens,villorsonnens
+2115,Torny,torny
+2117,Villaz,villaz
+2121,Haut-Intyamon,haut-intyamon
+2122,Pont-en-Ogoz,pont-en-ogoz
+2123,Botterens,botterens
+2124,Broc,broc
+2125,Bulle,bulle
+2128,Châtel-sur-Montsalvens,chtel-sur-montsalvens
+2129,Corbières,corbieres
+2130,Crésuz,cresuz
+2131,Echarlens,echarlens
+2134,Grandvillard,grandvillard
+2135,Gruyères,gruyeres
+2137,Hauteville,hauteville
+2138,Jaun,jaun
+2140,Marsens,marsens
+2143,Morlon,morlon
+2145,Le Pâquier (FR),le-pquier-fr
+2147,Pont-la-Ville,pont-la-ville
+2148,Riaz,riaz
+2149,La Roche,la-roche
+2152,Sâles,sles
+2153,Sorens,sorens
+2155,Vaulruz,vaulruz
+2160,Vuadens,vuadens
+2162,Bas-Intyamon,bas-intyamon
+2163,Val-de-Charmey,val-de-charmey
+2173,Autigny,autigny
+2174,Avry,avry
+2175,Belfaux,belfaux
+2177,Chénens,chenens
+2183,Corminboeuf,corminboeuf
+2186,Cottens (FR),cottens-fr
+2194,Ferpicloz,ferpicloz
+2196,Fribourg,fribourg
+2197,Givisiez,givisiez
+2198,Granges-Paccot,granges-paccot
+2206,Marly,marly
+2208,Matran,matran
+2211,Neyruz (FR),neyruz-fr
+2216,Pierrafortscha,pierrafortscha
+2220,Le Mouret,le-mouret
+2226,Treyvaux,treyvaux
+2228,Villars-sur-Glâne,villars-sur-glne
+2230,Villarsel-sur-Marly,villarsel-sur-marly
+2233,Hauterive (FR),hauterive-fr
+2234,La Brillaz,la-brillaz
+2235,La Sonnaz,la-sonnaz
+2236,Gibloux,gibloux
+2237,Prez,prez
+2238,Bois-d'Amont,bois-damont
+2239,Grolley-Ponthaux,grolley-ponthaux
+2250,Courgevaux,courgevaux
+2254,Courtepin,courtepin
+2257,Cressier (FR),cressier-fr
+2258,Fräschels,fraeschels
+2261,Greng,greng
+2262,Gurmels,gurmels
+2265,Kerzers,kerzers
+2266,Kleinbösingen,kleinboesingen
+2271,Meyriez,meyriez
+2272,Misery-Courtion,misery-courtion
+2274,Muntelier,muntelier
+2275,Murten,murten
+2276,Ried bei Kerzers,ried-bei-kerzers
+2278,Ulmiz,ulmiz
+2284,Mont-Vully,mont-vully
+2292,Brünisried,bruenisried
+2293,Düdingen,duedingen
+2294,Giffers,giffers
+2295,Bösingen,boesingen
+2296,Heitenried,heitenried
+2299,Plaffeien,plaffeien
+2300,Plasselb,plasselb
+2301,Rechthalten,rechthalten
+2303,St. Silvester,st-silvester
+2304,St. Ursen,st-ursen
+2305,Schmitten (FR),schmitten-fr
+2306,Tafers,tafers
+2307,Tentlingen,tentlingen
+2308,Ueberstorf,ueberstorf
+2309,Wünnewil-Flamatt,wuennewil-flamatt
+2321,Attalens,attalens
+2323,Bossonnens,bossonnens
+2325,Châtel-Saint-Denis,chtel-saint-denis
+2328,Granges (Veveyse),granges-veveyse
+2333,Remaufens,remaufens
+2335,Saint-Martin (FR),saint-martin-fr
+2336,Semsales,semsales
+2337,Le Flon,le-flon
+2338,La Verrerie,la-verrerie
+2391,Staatswald Galm,staatswald-galm
+2401,Egerkingen,egerkingen
+2402,Härkingen,haerkingen
+2403,Kestenholz,kestenholz
+2404,Neuendorf,neuendorf
+2405,Niederbuchsiten,niederbuchsiten
+2406,Oberbuchsiten,oberbuchsiten
+2407,Oensingen,oensingen
+2408,Wolfwil,wolfwil
+2421,Aedermannsdorf,aedermannsdorf
+2422,Balsthal,balsthal
+2424,Herbetswil,herbetswil
+2425,Holderbank (SO),holderbank-so
+2426,Laupersdorf,laupersdorf
+2427,Matzendorf,matzendorf
+2428,Mümliswil-Ramiswil,muemliswil-ramiswil
+2430,Welschenrohr-Gänsbrunnen,welschenrohr-gaensbrunnen
+2445,Biezwil,biezwil
+2455,Lüterkofen-Ichertswil,lueterkofen-ichertswil
+2457,Messen,messen
+2461,Schnottwil,schnottwil
+2463,Unterramsern,unterramsern
+2464,Lüsslingen-Nennigkofen,luesslingen-nennigkofen
+2465,Buchegg,buchegg
+2471,Bättwil,baettwil
+2472,Büren (SO),bueren-so
+2473,Dornach,dornach
+2474,Gempen,gempen
+2475,Hochwald,hochwald
+2476,Hofstetten-Flüh,hofstetten-flueh
+2477,Metzerlen-Mariastein,metzerlen-mariastein
+2478,Nuglar-St. Pantaleon,nuglar-st-pantaleon
+2479,Rodersdorf,rodersdorf
+2480,Seewen,seewen
+2481,Witterswil,witterswil
+2491,Hauenstein-Ifenthal,hauenstein-ifenthal
+2492,Kienberg,kienberg
+2493,Lostorf,lostorf
+2495,Niedergösgen,niedergoesgen
+2497,Obergösgen,obergoesgen
+2499,Stüsslingen,stuesslingen
+2500,Trimbach,trimbach
+2501,Winznau,winznau
+2502,Wisen (SO),wisen-so
+2503,Erlinsbach (SO),erlinsbach-so
+2511,Aeschi (SO),aeschi-so
+2513,Biberist,biberist
+2514,Bolken,bolken
+2516,Deitingen,deitingen
+2517,Derendingen,derendingen
+2518,Etziken,etziken
+2519,Gerlafingen,gerlafingen
+2520,Halten,halten
+2523,Horriwil,horriwil
+2524,Hüniken,hueniken
+2525,Kriegstetten,kriegstetten
+2526,Lohn-Ammannsegg,lohn-ammannsegg
+2527,Luterbach,luterbach
+2528,Obergerlafingen,obergerlafingen
+2529,Oekingen,oekingen
+2530,Recherswil,recherswil
+2532,Subingen,subingen
+2534,Zuchwil,zuchwil
+2535,Drei Höfe,drei-hoefe
+2541,Balm bei Günsberg,balm-bei-guensberg
+2542,Bellach,bellach
+2543,Bettlach,bettlach
+2544,Feldbrunnen-St. Niklaus,feldbrunnen-st-niklaus
+2545,Flumenthal,flumenthal
+2546,Grenchen,grenchen
+2547,Günsberg,guensberg
+2548,Hubersdorf,hubersdorf
+2549,Kammersrohr,kammersrohr
+2550,Langendorf,langendorf
+2551,Lommiswil,lommiswil
+2553,Oberdorf (SO),oberdorf-so
+2554,Riedholz,riedholz
+2555,Rüttenen,ruettenen
+2556,Selzach,selzach
+2571,Boningen,boningen
+2572,Däniken,daeniken
+2573,Dulliken,dulliken
+2574,Eppenberg-Wöschnau,eppenberg-woeschnau
+2575,Fulenbach,fulenbach
+2576,Gretzenbach,gretzenbach
+2578,Gunzgen,gunzgen
+2579,Hägendorf,haegendorf
+2580,Kappel (SO),kappel-so
+2581,Olten,olten
+2582,Rickenbach (SO),rickenbach-so
+2583,Schönenwerd,schoenenwerd
+2584,Starrkirch-Wil,starrkirch-wil
+2585,Walterswil (SO),walterswil-so
+2586,Wangen bei Olten,wangen-bei-olten
+2601,Solothurn,solothurn
+2611,Bärschwil,baerschwil
+2612,Beinwil (SO),beinwil-so
+2613,Breitenbach,breitenbach
+2614,Büsserach,buesserach
+2615,Erschwil,erschwil
+2616,Fehren,fehren
+2617,Grindel,grindel
+2618,Himmelried,himmelried
+2619,Kleinlützel,kleinluetzel
+2620,Meltingen,meltingen
+2621,Nunningen,nunningen
+2622,Zullwil,zullwil
+2701,Basel,basel
+2702,Bettingen,bettingen
+2703,Riehen,riehen
+2761,Aesch (BL),aesch-bl
+2762,Allschwil,allschwil
+2763,Arlesheim,arlesheim
+2764,Biel-Benken,biel-benken
+2765,Binningen,binningen
+2766,Birsfelden,birsfelden
+2767,Bottmingen,bottmingen
+2768,Ettingen,ettingen
+2769,Münchenstein,muenchenstein
+2770,Muttenz,muttenz
+2771,Oberwil (BL),oberwil-bl
+2772,Pfeffingen,pfeffingen
+2773,Reinach (BL),reinach-bl
+2774,Schönenbuch,schoenenbuch
+2775,Therwil,therwil
+2781,Blauen,blauen
+2782,Brislach,brislach
+2783,Burg im Leimental,burg-im-leimental
+2784,Dittingen,dittingen
+2785,Duggingen,duggingen
+2786,Grellingen,grellingen
+2787,Laufen,laufen
+2788,Liesberg,liesberg
+2789,Nenzlingen,nenzlingen
+2790,Roggenburg,roggenburg
+2791,Röschenz,roeschenz
+2792,Wahlen,wahlen
+2793,Zwingen,zwingen
+2821,Arisdorf,arisdorf
+2822,Augst,augst
+2823,Bubendorf,bubendorf
+2824,Frenkendorf,frenkendorf
+2825,Füllinsdorf,fuellinsdorf
+2826,Giebenach,giebenach
+2827,Hersberg,hersberg
+2828,Lausen,lausen
+2829,Liestal,liestal
+2830,Lupsingen,lupsingen
+2831,Pratteln,pratteln
+2832,Ramlinsburg,ramlinsburg
+2833,Seltisberg,seltisberg
+2834,Ziefen,ziefen
+2841,Anwil,anwil
+2842,Böckten,boeckten
+2843,Buckten,buckten
+2844,Buus,buus
+2845,Diepflingen,diepflingen
+2846,Gelterkinden,gelterkinden
+2847,Häfelfingen,haefelfingen
+2848,Hemmiken,hemmiken
+2849,Itingen,itingen
+2850,Känerkinden,kaenerkinden
+2851,Kilchberg (BL),kilchberg-bl
+2852,Läufelfingen,laeufelfingen
+2853,Maisprach,maisprach
+2854,Nusshof,nusshof
+2855,Oltingen,oltingen
+2856,Ormalingen,ormalingen
+2857,Rickenbach (BL),rickenbach-bl
+2858,Rothenfluh,rothenfluh
+2859,Rümlingen,ruemlingen
+2860,Rünenberg,ruenenberg
+2861,Sissach,sissach
+2862,Tecknau,tecknau
+2863,Tenniken,tenniken
+2864,Thürnen,thuernen
+2865,Wenslingen,wenslingen
+2866,Wintersingen,wintersingen
+2867,Wittinsburg,wittinsburg
+2868,Zeglingen,zeglingen
+2869,Zunzgen,zunzgen
+2881,Arboldswil,arboldswil
+2882,Bennwil,bennwil
+2883,Bretzwil,bretzwil
+2884,Diegten,diegten
+2885,Eptingen,eptingen
+2886,Hölstein,hoelstein
+2887,Lampenberg,lampenberg
+2888,Langenbruck,langenbruck
+2889,Lauwil,lauwil
+2890,Liedertswil,liedertswil
+2891,Niederdorf,niederdorf
+2892,Oberdorf (BL),oberdorf-bl
+2893,Reigoldswil,reigoldswil
+2894,Titterten,titterten
+2895,Waldenburg,waldenburg
+2901,Gächlingen,gaechlingen
+2903,Löhningen,loehningen
+2904,Neunkirch,neunkirch
+2914,Büttenhardt,buettenhardt
+2915,Dörflingen,doerflingen
+2917,Lohn (SH),lohn-sh
+2919,Stetten (SH),stetten-sh
+2920,Thayngen,thayngen
+2931,Bargen (SH),bargen-sh
+2932,Beringen,beringen
+2933,Buchberg,buchberg
+2936,Merishausen,merishausen
+2937,Neuhausen am Rheinfall,neuhausen-am-rheinfall
+2938,Rüdlingen,ruedlingen
+2939,Schaffhausen,schaffhausen
+2951,Beggingen,beggingen
+2952,Schleitheim,schleitheim
+2953,Siblingen,siblingen
+2961,Buch (SH),buch-sh
+2962,Hemishofen,hemishofen
+2963,Ramsen,ramsen
+2964,Stein am Rhein,stein-am-rhein
+2971,Hallau,hallau
+2972,Oberhallau,oberhallau
+2973,Trasadingen,trasadingen
+2974,Wilchingen,wilchingen
+3001,Herisau,herisau
+3002,Hundwil,hundwil
+3003,Schönengrund,schoenengrund
+3004,Schwellbrunn,schwellbrunn
+3005,Stein (AR),stein-ar
+3006,Urnäsch,urnaesch
+3007,Waldstatt,waldstatt
+3021,Bühler,buehler
+3022,Gais,gais
+3023,Speicher,speicher
+3024,Teufen (AR),teufen-ar
+3025,Trogen,trogen
+3031,Grub (AR),grub-ar
+3032,Heiden,heiden
+3033,Lutzenberg,lutzenberg
+3034,Rehetobel,rehetobel
+3035,Reute (AR),reute-ar
+3036,Wald (AR),wald-ar
+3037,Walzenhausen,walzenhausen
+3038,Wolfhalden,wolfhalden
+3101,Appenzell,appenzell
+3102,Gonten,gonten
+3104,Schlatt-Haslen,schlatt-haslen
+3111,Oberegg,oberegg
+3112,Schwende-Rüte,schwende-ruete
+3201,Häggenschwil,haeggenschwil
+3202,Muolen,muolen
+3203,St. Gallen,st-gallen
+3204,Wittenbach,wittenbach
+3211,Berg (SG),berg-sg
+3212,Eggersriet,eggersriet
+3213,Goldach,goldach
+3214,Mörschwil,moerschwil
+3215,Rorschach,rorschach
+3216,Rorschacherberg,rorschacherberg
+3217,Steinach,steinach
+3218,Tübach,tuebach
+3219,Untereggen,untereggen
+3231,Au (SG),au-sg
+3232,Balgach,balgach
+3233,Berneck,berneck
+3234,Diepoldsau,diepoldsau
+3235,Rheineck,rheineck
+3236,St. Margrethen,st-margrethen
+3237,Thal,thal
+3238,Widnau,widnau
+3251,Altstätten,altstaetten
+3252,Eichberg,eichberg
+3253,Marbach (SG),marbach-sg
+3254,Oberriet (SG),oberriet-sg
+3255,Rebstein,rebstein
+3256,Rüthi (SG),ruethi-sg
+3271,Buchs (SG),buchs-sg
+3272,Gams,gams
+3273,Grabs,grabs
+3274,Sennwald,sennwald
+3275,Sevelen,sevelen
+3276,Wartau,wartau
+3291,Bad Ragaz,bad-ragaz
+3292,Flums,flums
+3293,Mels,mels
+3294,Pfäfers,pfaefers
+3295,Quarten,quarten
+3296,Sargans,sargans
+3297,Vilters-Wangs,vilters-wangs
+3298,Walenstadt,walenstadt
+3311,Amden,amden
+3312,Benken (SG),benken-sg
+3313,Kaltbrunn,kaltbrunn
+3315,Schänis,schaenis
+3316,Weesen,weesen
+3338,Schmerikon,schmerikon
+3339,Uznach,uznach
+3340,Rapperswil-Jona,rapperswil-jona
+3341,Gommiswald,gommiswald
+3342,Eschenbach (SG),eschenbach-sg
+3352,Ebnat-Kappel,ebnat-kappel
+3359,Wildhaus-Alt St. Johann,wildhaus-alt-st-johann
+3360,Nesslau,nesslau
+3374,Lichtensteig,lichtensteig
+3379,Wattwil,wattwil
+3392,Kirchberg (SG),kirchberg-sg
+3393,Lütisburg,luetisburg
+3394,Mosnang,mosnang
+3395,Bütschwil-Ganterschwil,buetschwil-ganterschwil
+3396,Neckertal,neckertal
+3401,Degersheim,degersheim
+3402,Flawil,flawil
+3405,Jonschwil,jonschwil
+3407,Oberuzwil,oberuzwil
+3408,Uzwil,uzwil
+3422,Niederbüren,niederbueren
+3423,Niederhelfenschwil,niederhelfenschwil
+3424,Oberbüren,oberbueren
+3426,Zuzwil (SG),zuzwil-sg
+3427,Wil (SG),wil-sg
+3441,Andwil (SG),andwil-sg
+3442,Gaiserwald,gaiserwald
+3443,Gossau (SG),gossau-sg
+3444,Waldkirch,waldkirch
+3506,Vaz/Obervaz,vaz-obervaz
+3513,Lantsch/Lenz,lantsch-lenz
+3514,Schmitten (GR),schmitten-gr
+3542,Albula/Alvra,albula-alvra
+3543,Surses,surses
+3544,Bergün Filisur,berguen-filisur
+3551,Brusio,brusio
+3561,Poschiavo,poschiavo
+3572,Falera,falera
+3575,Laax,laax
+3581,Sagogn,sagogn
+3582,Schluein,schluein
+3603,Vals,vals
+3618,Lumnezia,lumnezia
+3619,Ilanz/Glion,ilanz-glion
+3633,Fürstenau,fuerstenau
+3637,Rothenbrunnen,rothenbrunnen
+3638,Scharans,scharans
+3640,Sils im Domleschg,sils-im-domleschg
+3661,Cazis,cazis
+3662,Flerden,flerden
+3663,Masein,masein
+3668,Thusis,thusis
+3669,Tschappina,tschappina
+3670,Urmein,urmein
+3672,Safiental,safiental
+3673,Domleschg,domleschg
+3681,Avers,avers
+3695,Sufers,sufers
+3701,Andeer,andeer
+3711,Rongellen,rongellen
+3712,Zillis-Reischen,zillis-reischen
+3713,Ferrera,ferrera
+3714,Rheinwald,rheinwald
+3715,Muntogna da Schons,muntogna-da-schons
+3721,Bonaduz,bonaduz
+3722,Domat/Ems,domat-ems
+3723,Rhäzüns,rhaezuens
+3731,Felsberg,felsberg
+3732,Flims,flims
+3733,Tamins,tamins
+3734,Trin,trin
+3746,Zernez,zernez
+3752,Samnaun,samnaun
+3762,Scuol,scuol
+3764,Valsot,valsot
+3781,Bever,bever
+3782,Celerina/Schlarigna,celerina-schlarigna
+3783,Madulain,madulain
+3784,Pontresina,pontresina
+3785,La Punt Chamues-ch,la-punt-chamues-ch
+3786,Samedan,samedan
+3787,St. Moritz,st-moritz
+3788,S-chanf,s-chanf
+3789,Sils im Engadin/Segl,sils-im-engadin-segl
+3790,Silvaplana,silvaplana
+3791,Zuoz,zuoz
+3792,Bregaglia,bregaglia
+3804,Buseno,buseno
+3805,Castaneda,castaneda
+3808,Rossa,rossa
+3810,Santa Maria in Calanca,santa-maria-in-calanca
+3821,Lostallo,lostallo
+3822,Mesocco,mesocco
+3823,Soazza,soazza
+3831,Cama,cama
+3832,Grono,grono
+3834,Roveredo (GR),roveredo-gr
+3835,San Vittore,san-vittore
+3837,Calanca,calanca
+3847,Val Müstair,val-muestair
+3851,Davos,davos
+3861,Fideris,fideris
+3862,Furna,furna
+3863,Jenaz,jenaz
+3871,Klosters,klosters
+3881,Conters im Prättigau,conters-im-praettigau
+3882,Küblis,kueblis
+3891,Luzein,luzein
+3901,Chur,chur
+3911,Churwalden,churwalden
+3921,Arosa,arosa
+3945,Trimmis,trimmis
+3946,Untervaz,untervaz
+3947,Zizers,zizers
+3951,Fläsch,flaesch
+3952,Jenins,jenins
+3953,Maienfeld,maienfeld
+3954,Malans,malans
+3955,Landquart,landquart
+3961,Grüsch,gruesch
+3962,Schiers,schiers
+3972,Seewis im Prättigau,seewis-im-praettigau
+3981,Breil/Brigels,breil-brigels
+3982,Disentis/Mustér,disentis-muster
+3983,Medel (Lucmagn),medel-lucmagn
+3985,Sumvitg,sumvitg
+3986,Tujetsch,tujetsch
+3987,Trun,trun
+3988,Obersaxen Mundaun,obersaxen-mundaun
+4001,Aarau,aarau
+4002,Biberstein,biberstein
+4003,Buchs (AG),buchs-ag
+4004,Densbüren,densbueren
+4005,Erlinsbach (AG),erlinsbach-ag
+4006,Gränichen,graenichen
+4007,Hirschthal,hirschthal
+4008,Küttigen,kuettigen
+4009,Muhen,muhen
+4010,Oberentfelden,oberentfelden
+4012,Suhr,suhr
+4013,Unterentfelden,unterentfelden
+4021,Baden,baden
+4022,Bellikon,bellikon
+4023,Bergdietikon,bergdietikon
+4024,Birmenstorf (AG),birmenstorf-ag
+4026,Ennetbaden,ennetbaden
+4027,Fislisbach,fislisbach
+4028,Freienwil,freienwil
+4029,Gebenstorf,gebenstorf
+4030,Killwangen,killwangen
+4031,Künten,kuenten
+4032,Mägenwil,maegenwil
+4033,Mellingen,mellingen
+4034,Neuenhof,neuenhof
+4035,Niederrohrdorf,niederrohrdorf
+4037,Oberrohrdorf,oberrohrdorf
+4038,Obersiggenthal,obersiggenthal
+4039,Remetschwil,remetschwil
+4040,Spreitenbach,spreitenbach
+4041,Stetten (AG),stetten-ag
+4044,Untersiggenthal,untersiggenthal
+4045,Wettingen,wettingen
+4046,Wohlenschwil,wohlenschwil
+4047,Würenlingen,wuerenlingen
+4048,Würenlos,wuerenlos
+4049,Ehrendingen,ehrendingen
+4061,Arni (AG),arni-ag
+4062,Berikon,berikon
+4063,Bremgarten (AG),bremgarten-ag
+4064,Büttikon,buettikon
+4065,Dottikon,dottikon
+4066,Eggenwil,eggenwil
+4067,Fischbach-Göslikon,fischbach-goeslikon
+4068,Hägglingen,haegglingen
+4071,Jonen,jonen
+4072,Niederwil (AG),niederwil-ag
+4073,Oberlunkhofen,oberlunkhofen
+4074,Oberwil-Lieli,oberwil-lieli
+4075,Rudolfstetten-Friedlisberg,rudolfstetten-friedlisberg
+4076,Sarmenstorf,sarmenstorf
+4077,Tägerig,taegerig
+4078,Uezwil,uezwil
+4079,Unterlunkhofen,unterlunkhofen
+4080,Villmergen,villmergen
+4081,Widen,widen
+4082,Wohlen (AG),wohlen-ag
+4083,Zufikon,zufikon
+4084,Islisberg,islisberg
+4091,Auenstein,auenstein
+4092,Birr,birr
+4093,Birrhard,birrhard
+4095,Brugg,brugg
+4099,Habsburg,habsburg
+4100,Hausen (AG),hausen-ag
+4104,Lupfig,lupfig
+4105,Mandach,mandach
+4106,Mönthal,moenthal
+4107,Mülligen,muelligen
+4110,Remigen,remigen
+4111,Riniken,riniken
+4112,Rüfenach,ruefenach
+4117,Thalheim (AG),thalheim-ag
+4120,Veltheim (AG),veltheim-ag
+4121,Villigen,villigen
+4122,Villnachern,villnachern
+4123,Windisch,windisch
+4124,Bözberg,boezberg
+4125,Schinznach,schinznach
+4131,Beinwil am See,beinwil-am-see
+4132,Birrwil,birrwil
+4134,Dürrenäsch,duerrenaesch
+4135,Gontenschwil,gontenschwil
+4136,Holziken,holziken
+4137,Leimbach (AG),leimbach-ag
+4138,Leutwil,leutwil
+4139,Menziken,menziken
+4140,Oberkulm,oberkulm
+4141,Reinach (AG),reinach-ag
+4142,Schlossrued,schlossrued
+4143,Schmiedrued,schmiedrued
+4144,Schöftland,schoeftland
+4145,Teufenthal (AG),teufenthal-ag
+4146,Unterkulm,unterkulm
+4147,Zetzwil,zetzwil
+4161,Eiken,eiken
+4163,Frick,frick
+4164,Gansingen,gansingen
+4165,Gipf-Oberfrick,gipf-oberfrick
+4169,Kaisten,kaisten
+4170,Laufenburg,laufenburg
+4172,Münchwilen (AG),muenchwilen-ag
+4173,Oberhof,oberhof
+4175,Oeschgen,oeschgen
+4176,Schwaderloch,schwaderloch
+4177,Sisseln,sisseln
+4181,Wittnau,wittnau
+4182,Wölflinswil,woelflinswil
+4183,Zeihen,zeihen
+4184,Mettauertal,mettauertal
+4185,Böztal,boeztal
+4186,Herznach-Ueken,herznach-ueken
+4191,Ammerswil,ammerswil
+4192,Boniswil,boniswil
+4193,Brunegg,brunegg
+4194,Dintikon,dintikon
+4195,Egliswil,egliswil
+4196,Fahrwangen,fahrwangen
+4197,Hallwil,hallwil
+4198,Hendschiken,hendschiken
+4199,Holderbank (AG),holderbank-ag
+4200,Hunzenschwil,hunzenschwil
+4201,Lenzburg,lenzburg
+4202,Meisterschwanden,meisterschwanden
+4203,Möriken-Wildegg,moeriken-wildegg
+4204,Niederlenz,niederlenz
+4205,Othmarsingen,othmarsingen
+4206,Rupperswil,rupperswil
+4207,Schafisheim,schafisheim
+4208,Seengen,seengen
+4209,Seon,seon
+4210,Staufen,staufen
+4221,Abtwil,abtwil
+4222,Aristau,aristau
+4223,Auw,auw
+4224,Beinwil (Freiamt),beinwil-freiamt
+4226,Besenbüren,besenbueren
+4227,Bettwil,bettwil
+4228,Boswil,boswil
+4229,Bünzen,buenzen
+4230,Buttwil,buttwil
+4231,Dietwil,dietwil
+4232,Geltwil,geltwil
+4233,Kallern,kallern
+4234,Merenschwand,merenschwand
+4235,Mühlau,muehlau
+4236,Muri (AG),muri-ag
+4237,Oberrüti,oberrueti
+4238,Rottenschwil,rottenschwil
+4239,Sins,sins
+4240,Waltenschwil,waltenschwil
+4251,Hellikon,hellikon
+4252,Kaiseraugst,kaiseraugst
+4253,Magden,magden
+4254,Möhlin,moehlin
+4255,Mumpf,mumpf
+4256,Obermumpf,obermumpf
+4257,Olsberg,olsberg
+4258,Rheinfelden,rheinfelden
+4259,Schupfart,schupfart
+4260,Stein (AG),stein-ag
+4261,Wallbach,wallbach
+4262,Wegenstetten,wegenstetten
+4263,Zeiningen,zeiningen
+4264,Zuzgen,zuzgen
+4271,Aarburg,aarburg
+4273,Bottenwil,bottenwil
+4274,Brittnau,brittnau
+4275,Kirchleerau,kirchleerau
+4276,Kölliken,koelliken
+4277,Moosleerau,moosleerau
+4279,Murgenthal,murgenthal
+4280,Oftringen,oftringen
+4281,Reitnau,reitnau
+4282,Rothrist,rothrist
+4283,Safenwil,safenwil
+4284,Staffelbach,staffelbach
+4285,Strengelbach,strengelbach
+4286,Uerkheim,uerkheim
+4287,Vordemwald,vordemwald
+4288,Wiliberg,wiliberg
+4289,Zofingen,zofingen
+4303,Böttstein,boettstein
+4304,Döttingen,doettingen
+4305,Endingen,endingen
+4306,Fisibach,fisibach
+4307,Full-Reuenthal,full-reuenthal
+4309,Klingnau,klingnau
+4310,Koblenz,koblenz
+4311,Leibstadt,leibstadt
+4312,Lengnau (AG),lengnau-ag
+4313,Leuggern,leuggern
+4314,Mellikon,mellikon
+4318,Schneisingen,schneisingen
+4319,Siglistorf,siglistorf
+4320,Tegerfelden,tegerfelden
+4324,Zurzach,zurzach
+4401,Arbon,arbon
+4406,Dozwil,dozwil
+4411,Egnach,egnach
+4416,Hefenhofen,hefenhofen
+4421,Horn,horn
+4426,Kesswil,kesswil
+4431,Roggwil (TG),roggwil-tg
+4436,Romanshorn,romanshorn
+4441,Salmsach,salmsach
+4446,Sommeri,sommeri
+4451,Uttwil,uttwil
+4461,Amriswil,amriswil
+4471,Bischofszell,bischofszell
+4476,Erlen,erlen
+4486,Hauptwil-Gottshaus,hauptwil-gottshaus
+4495,Hohentannen,hohentannen
+4501,Kradolf-Schönenberg,kradolf-schoenenberg
+4506,Sulgen,sulgen
+4511,Zihlschlacht-Sitterdorf,zihlschlacht-sitterdorf
+4536,Basadingen-Schlattingen,basadingen-schlattingen
+4545,Diessenhofen,diessenhofen
+4546,Schlatt (TG),schlatt-tg
+4551,Aadorf,aadorf
+4561,Felben-Wellhausen,felben-wellhausen
+4566,Frauenfeld,frauenfeld
+4571,Gachnang,gachnang
+4590,Hüttlingen,huettlingen
+4591,Matzingen,matzingen
+4601,Neunforn,neunforn
+4606,Stettfurt,stettfurt
+4611,Thundorf,thundorf
+4616,Uesslingen-Buch,uesslingen-buch
+4621,Warth-Weiningen,warth-weiningen
+4641,Altnau,altnau
+4643,Bottighofen,bottighofen
+4646,Ermatingen,ermatingen
+4651,Gottlieben,gottlieben
+4656,Güttingen,guettingen
+4666,Kemmental,kemmental
+4671,Kreuzlingen,kreuzlingen
+4681,Langrickenbach,langrickenbach
+4683,Lengwil,lengwil
+4691,Münsterlingen,muensterlingen
+4696,Tägerwilen,taegerwilen
+4701,Wäldi,waeldi
+4711,Affeltrangen,affeltrangen
+4716,Bettwiesen,bettwiesen
+4721,Bichelsee-Balterswil,bichelsee-balterswil
+4723,Braunau,braunau
+4724,Eschlikon,eschlikon
+4726,Fischingen,fischingen
+4741,Lommis,lommis
+4746,Münchwilen (TG),muenchwilen-tg
+4751,Rickenbach (TG),rickenbach-tg
+4756,Schönholzerswilen,schoenholzerswilen
+4761,Sirnach,sirnach
+4776,Tobel-Tägerschen,tobel-taegerschen
+4781,Wängi,waengi
+4786,Wilen (TG),wilen-tg
+4791,Wuppenau,wuppenau
+4801,Berlingen,berlingen
+4806,Eschenz,eschenz
+4811,Herdern,herdern
+4816,Homburg,homburg
+4821,Hüttwilen,huettwilen
+4826,Mammern,mammern
+4831,Müllheim,muellheim
+4841,Pfyn,pfyn
+4846,Raperswilen,raperswilen
+4851,Salenstein,salenstein
+4864,Steckborn,steckborn
+4871,Wagenhausen,wagenhausen
+4881,Amlikon-Bissegg,amlikon-bissegg
+4891,Berg (TG),berg-tg
+4901,Birwinken,birwinken
+4911,Bürglen (TG),buerglen-tg
+4921,Bussnang,bussnang
+4941,Märstetten,maerstetten
+4946,Weinfelden,weinfelden
+4951,Wigoltingen,wigoltingen
+5001,Arbedo-Castione,arbedo-castione
+5002,Bellinzona,bellinzona
+5003,Cadenazzo,cadenazzo
+5009,Isone,isone
+5010,Lumino,lumino
+5017,Sant'Antonino,santantonino
+5048,Acquarossa,acquarossa
+5049,Blenio,blenio
+5050,Serravalle,serravalle
+5061,Airolo,airolo
+5063,Bedretto,bedretto
+5071,Dalpe,dalpe
+5072,Faido,faido
+5073,Giornico,giornico
+5076,Personico,personico
+5077,Pollegio,pollegio
+5079,Quinto,quinto
+5091,Ascona,ascona
+5096,Brione sopra Minusio,brione-sopra-minusio
+5097,Brissago,brissago
+5108,Gordola,gordola
+5112,Lavertezzo,lavertezzo
+5113,Locarno,locarno
+5115,Losone,losone
+5117,Mergoscia,mergoscia
+5118,Minusio,minusio
+5120,Muralto,muralto
+5121,Orselina,orselina
+5125,Ronco sopra Ascona,ronco-sopra-ascona
+5131,Tenero-Contra,tenero-contra
+5136,Onsernone,onsernone
+5138,Cugnasco-Gerra,cugnasco-gerra
+5141,Agno,agno
+5143,Aranno,aranno
+5144,Arogno,arogno
+5148,Bedano,bedano
+5151,Bioggio,bioggio
+5154,Bissone,bissone
+5160,Brusino Arsizio,brusino-arsizio
+5161,Cademario,cademario
+5162,Cadempino,cadempino
+5167,Canobbio,canobbio
+5171,Caslano,caslano
+5176,Comano,comano
+5180,Cureglia,cureglia
+5186,Grancia,grancia
+5187,Gravesano,gravesano
+5189,Lamone,lamone
+5192,Lugano,lugano
+5193,Magliaso,magliaso
+5194,Manno,manno
+5196,Massagno,massagno
+5198,Melide,melide
+5199,Mezzovico-Vira,mezzovico-vira
+5203,Morcote,morcote
+5205,Muzzano,muzzano
+5206,Neggio,neggio
+5208,Origlio,origlio
+5210,Paradiso,paradiso
+5212,Ponte Capriasca,ponte-capriasca
+5214,Porza,porza
+5216,Pura,pura
+5221,Savosa,savosa
+5225,Sorengo,sorengo
+5226,Capriasca,capriasca
+5227,Torricella-Taverne,torricella-taverne
+5230,Vernate,vernate
+5231,Vezia,vezia
+5233,Vico Morcote,vico-morcote
+5236,Collina d'Oro,collina-doro
+5237,Alto Malcantone,alto-malcantone
+5238,Monteceneri,monteceneri
+5239,Tresa,tresa
+5240,Val Mara,val-mara
+5242,Balerna,balerna
+5249,Castel San Pietro,castel-san-pietro
+5250,Chiasso,chiasso
+5251,Coldrerio,coldrerio
+5254,Mendrisio,mendrisio
+5257,Morbio Inferiore,morbio-inferiore
+5260,Novazzano,novazzano
+5263,Riva San Vitale,riva-san-vitale
+5266,Stabio,stabio
+5268,Vacallo,vacallo
+5269,Breggia,breggia
+5281,Biasca,biasca
+5287,Riviera,riviera
+5304,Bosco/Gurin,bosco-gurin
+5307,Campo (Vallemaggia),campo-vallemaggia
+5309,Cerentino,cerentino
+5310,Cevio,cevio
+5315,Linescio,linescio
+5317,Maggia,maggia
+5323,Lavizzara,lavizzara
+5324,Avegno Gordevio,avegno-gordevio
+5391,Comunanza Cadenazzo/Monteceneri,comunanza-cadenazzo-monteceneri
+5394,Comunanza Capriasca/Lugano,comunanza-capriasca-lugano
+5395,Lema,lema
+5396,Terre di Pedemonte,terre-di-pedemonte
+5397,Centovalli,centovalli
+5398,Gambarogno,gambarogno
+5399,Verzasca,verzasca
+5401,Aigle,aigle
+5402,Bex,bex
+5403,Chessel,chessel
+5404,Corbeyrier,corbeyrier
+5405,Gryon,gryon
+5406,Lavey-Morcles,lavey-morcles
+5407,Leysin,leysin
+5408,Noville,noville
+5409,Ollon,ollon
+5410,Ormont-Dessous,ormont-dessous
+5411,Ormont-Dessus,ormont-dessus
+5412,Rennaz,rennaz
+5413,Roche (VD),roche-vd
+5414,Villeneuve (VD),villeneuve-vd
+5415,Yvorne,yvorne
+5422,Aubonne,aubonne
+5423,Ballens,ballens
+5424,Berolle,berolle
+5425,Bière,biere
+5426,Bougy-Villars,bougy-villars
+5427,Féchy,fechy
+5428,Gimel,gimel
+5429,Longirod,longirod
+5430,Marchissy,marchissy
+5431,Mollens (VD),mollens-vd
+5434,Saint-George,saint-george
+5435,Saint-Livres,saint-livres
+5436,Saint-Oyens,saint-oyens
+5437,Saubraz,saubraz
+5451,Avenches,avenches
+5456,Cudrefin,cudrefin
+5458,Faoug,faoug
+5464,Vully-les-Lacs,vully-les-lacs
+5471,Bettens,bettens
+5472,Bournens,bournens
+5473,Boussens,boussens
+5474,La Chaux (Cossonay),la-chaux-cossonay
+5475,Chavannes-le-Veyron,chavannes-le-veyron
+5476,Chevilly,chevilly
+5477,Cossonay,cossonay
+5479,Cuarnens,cuarnens
+5480,Daillens,daillens
+5481,Dizy,dizy
+5482,Eclépens,eclepens
+5483,Ferreyres,ferreyres
+5484,Gollion,gollion
+5485,Grancy,grancy
+5486,L'Isle,lisle
+5487,Lussery-Villars,lussery-villars
+5488,Mauraz,mauraz
+5489,Mex (VD),mex-vd
+5490,Moiry,moiry
+5491,Mont-la-Ville,mont-la-ville
+5492,Montricher,montricher
+5493,Orny,orny
+5495,Penthalaz,penthalaz
+5496,Penthaz,penthaz
+5497,Pompaples,pompaples
+5498,La Sarraz,la-sarraz
+5499,Senarclens,senarclens
+5501,Sullens,sullens
+5503,Vufflens-la-Ville,vufflens-la-ville
+5511,Assens,assens
+5512,Bercher,bercher
+5514,Bottens,bottens
+5515,Bretigny-sur-Morrens,bretigny-sur-morrens
+5516,Cugy (VD),cugy-vd
+5518,Echallens,echallens
+5520,Essertines-sur-Yverdon,essertines-sur-yverdon
+5521,Etagnières,etagnieres
+5522,Fey,fey
+5523,Froideville,froideville
+5527,Morrens (VD),morrens-vd
+5529,Oulens-sous-Echallens,oulens-sous-echallens
+5530,Pailly,pailly
+5531,Penthéréaz,penthereaz
+5533,Poliez-Pittet,poliez-pittet
+5534,Rueyres,rueyres
+5535,Saint-Barthélemy (VD),saint-barthelemy-vd
+5537,Villars-le-Terroir,villars-le-terroir
+5539,Vuarrens,vuarrens
+5540,Montilliez,montilliez
+5541,Goumoëns,goumons
+5551,Bonvillars,bonvillars
+5552,Bullet,bullet
+5553,Champagne,champagne
+5554,Concise,concise
+5555,Corcelles-près-Concise,corcelles-pres-concise
+5556,Fiez,fiez
+5557,Fontaines-sur-Grandson,fontaines-sur-grandson
+5559,Giez,giez
+5560,Grandevent,grandevent
+5561,Grandson,grandson
+5562,Mauborget,mauborget
+5563,Mutrux,mutrux
+5564,Novalles,novalles
+5565,Onnens (VD),onnens-vd
+5566,Provence,provence
+5568,Sainte-Croix,sainte-croix
+5571,Tévenon,tevenon
+5581,Belmont-sur-Lausanne,belmont-sur-lausanne
+5582,Cheseaux-sur-Lausanne,cheseaux-sur-lausanne
+5583,Crissier,crissier
+5584,Epalinges,epalinges
+5585,Jouxtens-Mézery,jouxtens-mezery
+5586,Lausanne,lausanne
+5587,Le Mont-sur-Lausanne,le-mont-sur-lausanne
+5588,Paudex,paudex
+5589,Prilly,prilly
+5590,Pully,pully
+5591,Renens (VD),renens-vd
+5592,Romanel-sur-Lausanne,romanel-sur-lausanne
+5601,Chexbres,chexbres
+5604,Forel (Lavaux),forel-lavaux
+5606,Lutry,lutry
+5607,Puidoux,puidoux
+5609,Rivaz,rivaz
+5610,Saint-Saphorin (Lavaux),saint-saphorin-lavaux
+5611,Savigny,savigny
+5613,Bourg-en-Lavaux,bourg-en-lavaux
+5621,Aclens,aclens
+5622,Bremblens,bremblens
+5623,Buchillon,buchillon
+5624,Bussigny,bussigny
+5627,Chavannes-près-Renens,chavannes-pres-renens
+5628,Chigny,chigny
+5629,Clarmont,clarmont
+5631,Denens,denens
+5632,Denges,denges
+5633,Echandens,echandens
+5634,Echichens,echichens
+5635,Ecublens (VD),ecublens-vd
+5636,Etoy,etoy
+5637,Lavigny,lavigny
+5638,Lonay,lonay
+5639,Lully (VD),lully-vd
+5640,Lussy-sur-Morges,lussy-sur-morges
+5642,Morges,morges
+5643,Préverenges,preverenges
+5645,Romanel-sur-Morges,romanel-sur-morges
+5646,Saint-Prex,saint-prex
+5648,Saint-Sulpice (VD),saint-sulpice-vd
+5649,Tolochenaz,tolochenaz
+5650,Vaux-sur-Morges,vaux-sur-morges
+5651,Villars-Sainte-Croix,villars-sainte-croix
+5652,Villars-sous-Yens,villars-sous-yens
+5653,Vufflens-le-Château,vufflens-le-chteau
+5654,Vullierens,vullierens
+5655,Yens,yens
+5656,Hautemorges,hautemorges
+5661,Boulens,boulens
+5663,Bussy-sur-Moudon,bussy-sur-moudon
+5665,Chavannes-sur-Moudon,chavannes-sur-moudon
+5669,Curtilles,curtilles
+5671,Dompierre (VD),dompierre-vd
+5673,Hermenches,hermenches
+5674,Lovatens,lovatens
+5675,Lucens,lucens
+5678,Moudon,moudon
+5680,Ogens,ogens
+5683,Prévonloup,prevonloup
+5684,Rossenges,rossenges
+5688,Syens,syens
+5690,Villars-le-Comte,villars-le-comte
+5692,Vucherens,vucherens
+5693,Montanaire,montanaire
+5701,Arnex-sur-Nyon,arnex-sur-nyon
+5702,Arzier-Le Muids,arzier-le-muids
+5703,Bassins,bassins
+5704,Begnins,begnins
+5705,Bogis-Bossey,bogis-bossey
+5706,Borex,borex
+5707,Chavannes-de-Bogis,chavannes-de-bogis
+5708,Chavannes-des-Bois,chavannes-des-bois
+5709,Chéserex,cheserex
+5710,Coinsins,coinsins
+5711,Commugny,commugny
+5712,Coppet,coppet
+5713,Crans (VD),crans-vd
+5714,Crassier,crassier
+5715,Duillier,duillier
+5716,Eysins,eysins
+5717,Founex,founex
+5718,Genolier,genolier
+5719,Gingins,gingins
+5720,Givrins,givrins
+5721,Gland,gland
+5722,Grens,grens
+5723,Mies,mies
+5724,Nyon,nyon
+5725,Prangins,prangins
+5726,La Rippe,la-rippe
+5727,Saint-Cergue,saint-cergue
+5728,Signy-Avenex,signy-avenex
+5729,Tannay,tannay
+5730,Trélex,trelex
+5731,Le Vaud,le-vaud
+5732,Vich,vich
+5741,L'Abergement,labergement
+5742,Agiez,agiez
+5743,Arnex-sur-Orbe,arnex-sur-orbe
+5744,Ballaigues,ballaigues
+5745,Baulmes,baulmes
+5746,Bavois,bavois
+5747,Bofflens,bofflens
+5748,Bretonnières,bretonnieres
+5749,Chavornay,chavornay
+5750,Les Clées,les-clees
+5752,Croy,croy
+5754,Juriens,juriens
+5755,Lignerolle,lignerolle
+5756,Montcherand,montcherand
+5757,Orbe,orbe
+5758,La Praz,la-praz
+5759,Premier,premier
+5760,Rances,rances
+5761,Romainmôtier-Envy,romainmotier-envy
+5762,Sergey,sergey
+5763,Valeyres-sous-Rances,valeyres-sous-rances
+5764,Vallorbe,vallorbe
+5765,Vaulion,vaulion
+5766,Vuiteboeuf,vuiteboeuf
+5785,Corcelles-le-Jorat,corcelles-le-jorat
+5790,Maracon,maracon
+5792,Montpreveyres,montpreveyres
+5798,Ropraz,ropraz
+5799,Servion,servion
+5803,Vulliens,vulliens
+5804,Jorat-Menthue,jorat-menthue
+5805,Oron,oron
+5806,Jorat-Mézières,jorat-mezieres
+5812,Champtauroz,champtauroz
+5813,Chevroux,chevroux
+5816,Corcelles-près-Payerne,corcelles-pres-payerne
+5817,Grandcour,grandcour
+5819,Henniez,henniez
+5821,Missy,missy
+5822,Payerne,payerne
+5827,Trey,trey
+5828,Treytorrens (Payerne),treytorrens-payerne
+5830,Villarzel,villarzel
+5831,Valbroye,valbroye
+5841,Château-d'Oex,chteau-doex
+5842,Rossinière,rossiniere
+5843,Rougemont,rougemont
+5851,Allaman,allaman
+5852,Bursinel,bursinel
+5853,Bursins,bursins
+5854,Burtigny,burtigny
+5855,Dully,dully
+5856,Essertines-sur-Rolle,essertines-sur-rolle
+5857,Gilly,gilly
+5858,Luins,luins
+5859,Mont-sur-Rolle,mont-sur-rolle
+5860,Perroy,perroy
+5861,Rolle,rolle
+5862,Tartegnin,tartegnin
+5863,Vinzel,vinzel
+5871,L'Abbaye,labbaye
+5872,Le Chenit,le-chenit
+5873,Le Lieu,le-lieu
+5882,Chardonne,chardonne
+5883,Corseaux,corseaux
+5884,Corsier-sur-Vevey,corsier-sur-vevey
+5885,Jongny,jongny
+5886,Montreux,montreux
+5889,La Tour-de-Peilz,la-tour-de-peilz
+5890,Vevey,vevey
+5891,Veytaux,veytaux
+5892,Blonay - Saint-Légier,blonay-saint-legier
+5902,Belmont-sur-Yverdon,belmont-sur-yverdon
+5903,Bioley-Magnoux,bioley-magnoux
+5904,Chamblon,chamblon
+5905,Champvent,champvent
+5907,Chavannes-le-Chêne,chavannes-le-chene
+5908,Chêne-Pâquier,chene-pquier
+5909,Cheseaux-Noréaz,cheseaux-noreaz
+5910,Cronay,cronay
+5911,Cuarny,cuarny
+5912,Démoret,demoret
+5913,Donneloye,donneloye
+5914,Ependes (VD),ependes-vd
+5919,Mathod,mathod
+5921,Molondin,molondin
+5922,Montagny-près-Yverdon,montagny-pres-yverdon
+5923,Oppens,oppens
+5924,Orges,orges
+5925,Orzens,orzens
+5926,Pomy,pomy
+5928,Rovray,rovray
+5929,Suchy,suchy
+5930,Suscévaz,suscevaz
+5931,Treycovagnes,treycovagnes
+5932,Ursins,ursins
+5933,Valeyres-sous-Montagny,valeyres-sous-montagny
+5934,Valeyres-sous-Ursins,valeyres-sous-ursins
+5935,Villars-Epeney,villars-epeney
+5937,Vugelles-La Mothe,vugelles-la-mothe
+5938,Yverdon-les-Bains,yverdon-les-bains
+5939,Yvonand,yvonand
+6002,Brig-Glis,brig-glis
+6004,Eggerberg,eggerberg
+6007,Naters,naters
+6008,Ried-Brig,ried-brig
+6009,Simplon,simplon
+6010,Termen,termen
+6011,Zwischbergen,zwischbergen
+6021,Ardon,ardon
+6022,Chamoson,chamoson
+6023,Conthey,conthey
+6024,Nendaz,nendaz
+6025,Vétroz,vetroz
+6032,Bourg-Saint-Pierre,bourg-saint-pierre
+6033,Liddes,liddes
+6034,Orsières,orsieres
+6035,Sembrancher,sembrancher
+6037,Val de Bagnes,val-de-bagnes
+6052,Bellwald,bellwald
+6054,Binn,binn
+6056,Ernen,ernen
+6057,Fiesch,fiesch
+6058,Fieschertal,fieschertal
+6061,Lax,lax
+6076,Obergoms,obergoms
+6077,Goms,goms
+6082,Ayent,ayent
+6083,Evolène,evolene
+6084,Hérémence,heremence
+6087,Saint-Martin (VS),saint-martin-vs
+6089,Vex,vex
+6090,Mont-Noble,mont-noble
+6101,Agarn,agarn
+6102,Albinen,albinen
+6104,Ergisch,ergisch
+6109,Inden,inden
+6110,Leuk,leuk
+6111,Leukerbad,leukerbad
+6112,Oberems,oberems
+6113,Salgesch,salgesch
+6116,Varen,varen
+6117,Guttet-Feschel,guttet-feschel
+6118,Gampel-Bratsch,gampel-bratsch
+6119,Turtmann-Unterems,turtmann-unterems
+6131,Bovernier,bovernier
+6133,Fully,fully
+6134,Isérables,iserables
+6135,Leytron,leytron
+6136,Martigny,martigny
+6137,Martigny-Combe,martigny-combe
+6139,Riddes,riddes
+6140,Saillon,saillon
+6141,Saxon,saxon
+6142,Trient,trient
+6151,Champéry,champery
+6152,Collombey-Muraz,collombey-muraz
+6153,Monthey,monthey
+6154,Port-Valais,port-valais
+6155,Saint-Gingolph,saint-gingolph
+6156,Troistorrents,troistorrents
+6157,Val-d'Illiez,val-dilliez
+6158,Vionnaz,vionnaz
+6159,Vouvry,vouvry
+6172,Bister,bister
+6173,Bitsch,bitsch
+6177,Grengiols,grengiols
+6181,Riederalp,riederalp
+6191,Ausserberg,ausserberg
+6192,Blatten,blatten
+6193,Bürchen,buerchen
+6194,Eischoll,eischoll
+6195,Ferden,ferden
+6197,Kippel,kippel
+6198,Niedergesteln,niedergesteln
+6199,Raron,raron
+6201,Unterbäch,unterbaech
+6202,Wiler (Lötschen),wiler-loetschen
+6203,Mörel-Filet,moerel-filet
+6204,Steg-Hohtenn,steg-hohtenn
+6205,Bettmeralp,bettmeralp
+6211,Collonges,collonges
+6212,Dorénaz,dorenaz
+6213,Evionnaz,evionnaz
+6214,Finhaut,finhaut
+6215,Massongex,massongex
+6217,Saint-Maurice,saint-maurice
+6218,Salvan,salvan
+6219,Vernayaz,vernayaz
+6220,Vérossaz,verossaz
+6232,Chalais,chalais
+6235,Chippis,chippis
+6238,Grône,grone
+6239,Icogne,icogne
+6240,Lens,lens
+6246,Saint-Léonard,saint-leonard
+6248,Sierre,sierre
+6252,Anniviers,anniviers
+6253,Crans-Montana,crans-montana
+6254,Noble-Contrée,noble-contree
+6261,Arbaz,arbaz
+6263,Grimisuat,grimisuat
+6265,Savièse,saviese
+6266,Sion,sion
+6267,Veysonnaz,veysonnaz
+6281,Baltschieder,baltschieder
+6282,Eisten,eisten
+6283,Embd,embd
+6285,Grächen,graechen
+6286,Lalden,lalden
+6287,Randa,randa
+6288,Saas-Almagell,saas-almagell
+6289,Saas-Balen,saas-balen
+6290,Saas-Fee,saas-fee
+6291,Saas-Grund,saas-grund
+6292,St. Niklaus,st-niklaus
+6293,Stalden (VS),stalden-vs
+6294,Staldenried,staldenried
+6295,Täsch,taesch
+6296,Törbel,toerbel
+6297,Visp,visp
+6298,Visperterminen,visperterminen
+6299,Zeneggen,zeneggen
+6300,Zermatt,zermatt
+6404,Boudry,boudry
+6408,Cortaillod,cortaillod
+6413,Rochefort,rochefort
+6416,Milvignes,milvignes
+6417,La Grande Béroche,la-grande-beroche
+6421,La Chaux-de-Fonds,la-chaux-de-fonds
+6422,Les Planchettes,les-planchettes
+6423,La Sagne,la-sagne
+6432,La Brévine,la-brevine
+6433,Brot-Plamboz,brot-plamboz
+6434,Le Cerneux-Péquignot,le-cerneux-pequignot
+6435,La Chaux-du-Milieu,la-chaux-du-milieu
+6436,Le Locle,le-locle
+6437,Les Ponts-de-Martel,les-ponts-de-martel
+6451,Cornaux,cornaux
+6452,Cressier (NE),cressier-ne
+6455,Le Landeron,le-landeron
+6456,Lignières,lignieres
+6458,Neuchâtel,neuchtel
+6487,Val-de-Ruz,val-de-ruz
+6504,La Côte-aux-Fées,la-cote-aux-fees
+6511,Les Verrières,les-verrieres
+6512,Val-de-Travers,val-de-travers
+6513,Laténa,latena
+6601,Aire-la-Ville,aire-la-ville
+6602,Anières,anieres
+6603,Avully,avully
+6604,Avusy,avusy
+6605,Bardonnex,bardonnex
+6606,Bellevue,bellevue
+6607,Bernex,bernex
+6608,Carouge (GE),carouge-ge
+6609,Cartigny,cartigny
+6610,Céligny,celigny
+6611,Chancy,chancy
+6612,Chêne-Bougeries,chene-bougeries
+6613,Chêne-Bourg,chene-bourg
+6614,Choulex,choulex
+6615,Collex-Bossy,collex-bossy
+6616,Collonge-Bellerive,collonge-bellerive
+6617,Cologny,cologny
+6618,Confignon,confignon
+6619,Corsier (GE),corsier-ge
+6620,Dardagny,dardagny
+6621,Genève,geneve
+6622,Genthod,genthod
+6623,Le Grand-Saconnex,le-grand-saconnex
+6624,Gy,gy
+6625,Hermance,hermance
+6626,Jussy,jussy
+6627,Laconnex,laconnex
+6628,Lancy,lancy
+6629,Meinier,meinier
+6630,Meyrin,meyrin
+6631,Onex,onex
+6632,Perly-Certoux,perly-certoux
+6633,Plan-les-Ouates,plan-les-ouates
+6634,Pregny-Chambésy,pregny-chambesy
+6635,Presinge,presinge
+6636,Puplinge,puplinge
+6637,Russin,russin
+6638,Satigny,satigny
+6639,Soral,soral
+6640,Thônex,thonex
+6641,Troinex,troinex
+6642,Vandoeuvres,vandoeuvres
+6643,Vernier,vernier
+6644,Versoix,versoix
+6645,Veyrier,veyrier
+6702,Boécourt,boecourt
+6703,Bourrignon,bourrignon
+6704,Châtillon (JU),chtillon-ju
+6706,Courchapoix,courchapoix
+6708,Courrendlin,courrendlin
+6709,Courroux,courroux
+6710,Courtételle,courtetelle
+6711,Delémont,delemont
+6712,Develier,develier
+6713,Ederswiler,ederswiler
+6715,Mervelier,mervelier
+6716,Mettembert,mettembert
+6718,Movelier,movelier
+6719,Pleigne,pleigne
+6721,Rossemaison,rossemaison
+6722,Saulcy,saulcy
+6724,Soyhières,soyhieres
+6729,Haute-Sorne,haute-sorne
+6730,Val Terbi,val-terbi
+6741,Le Bémont (JU),le-bemont-ju
+6742,Les Bois,les-bois
+6743,Les Breuleux,les-breuleux
+6745,Les Enfers,les-enfers
+6748,Les Genevez (JU),les-genevez-ju
+6750,Lajoux (JU),lajoux-ju
+6751,Montfaucon,montfaucon
+6753,Muriaux,muriaux
+6754,Le Noirmont,le-noirmont
+6757,Saignelégier,saignelegier
+6758,Saint-Brais,saint-brais
+6759,Soubey,soubey
+6771,Alle,alle
+6774,Boncourt,boncourt
+6778,Bure,bure
+6781,Coeuve,coeuve
+6782,Cornol,cornol
+6783,Courchavon,courchavon
+6784,Courgenay,courgenay
+6785,Courtedoux,courtedoux
+6789,Fahy,fahy
+6790,Fontenais,fontenais
+6792,Grandfontaine,grandfontaine
+6800,Porrentruy,porrentruy
+6806,Vendlincourt,vendlincourt
+6807,Basse-Allaine,basse-allaine
+6808,Clos du Doubs,clos-du-doubs
+6809,Haute-Ajoie,haute-ajoie
+6810,La Baroche,la-baroche
+6811,Damphreux-Lugnez,damphreux-lugnez
+6812,Basse-Vendline,basse-vendline
+9040,Greifensee,greifensee
+9051,Zürichsee (ZH),zuerichsee-zh
+9073,Thunersee,thunersee
+9089,Brienzersee,brienzersee
+9149,Bielersee (BE),bielersee-be
+9150,Bielersee (NE),bielersee-ne
+9152,Lac de Neuchâtel (BE),lac-de-neuchtel-be
+9155,Lac de Neuchâtel (NE),lac-de-neuchtel-ne
+9328,Bodensee (SG),bodensee-sg
+9329,Bodensee (TG),bodensee-tg
