@@ -388,18 +388,17 @@ function CustomLocationsList({ customLocations, toggleCustomLocation, removeCust
   )
 }
 
-function MunicipalityDetail({ feature, onClose, allCities, enabledCities, customLocations }) {
+function MunicipalityDetail({ feature, onClose, allCities, enabledCities, customLocations, modelParams }) {
   const p = feature.properties
   const driveTimesRaw = p.drive_times
   const ptTimesRaw = p.pt_times
-  const gainRaw = p.gain_per_city
 
   const driveTimes =
     typeof driveTimesRaw === 'string' ? JSON.parse(driveTimesRaw) : driveTimesRaw || {}
   const ptTimes =
     typeof ptTimesRaw === 'string' ? JSON.parse(ptTimesRaw) : ptTimesRaw || {}
-  const gains =
-    typeof gainRaw === 'string' ? JSON.parse(gainRaw) : gainRaw || {}
+
+  const { avFactor = 0.7, ptFactor = 0.7 } = modelParams || {}
 
   const scoreColor =
     p.autonomy_score != null
@@ -525,22 +524,42 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <thead>
           <tr>
             <th>City</th>
-            <th>Drive</th>
-            <th>PT</th>
-            <th>Gain</th>
+            <th title="Raw driving time">Drive</th>
+            <th title="Raw public transport time (incl. walking to station)">PT</th>
+            <th title="Autonomous vehicle: drive time × AV comfort factor" style={{ color: 'var(--accent)' }}>AV</th>
+            <th title="Time saved: best today (min of drive, PT×comfort) minus AV time">Saved</th>
           </tr>
         </thead>
         <tbody>
           {sortedRefs.map(([id, name]) => {
-            const gain = gains[id]
+            const driveS = driveTimes[id]
+            const ptS = ptTimes[id]
             const isEnabled = enabledSet.has(id)
+
+            // Compute comfort-weighted times live from current sliders
+            const driveMin = driveS != null ? driveS / 60 : null
+            const ptComfortMin = ptS != null ? (ptS / 60) * ptFactor : null
+            const avMin = driveS != null ? (driveS / 60) * avFactor : null
+
+            // Best option today = min(manual drive, PT×comfort)
+            const bestToday = driveMin != null && ptComfortMin != null
+              ? Math.min(driveMin, ptComfortMin)
+              : driveMin != null ? driveMin
+              : ptComfortMin
+
+            // Gain = time saved by switching to AV
+            const gain = bestToday != null && avMin != null ? bestToday - avMin : null
+
             return (
               <tr key={id} className={isEnabled ? '' : 'row-disabled'}>
                 <th>{typeof name === 'string' ? name : name}</th>
-                <td>{formatTime(driveTimes[id])}</td>
-                <td>{formatTime(ptTimes[id])}</td>
+                <td>{formatTime(driveS)}</td>
+                <td>{formatTime(ptS)}</td>
+                <td style={{ color: 'var(--accent)' }}>
+                  {avMin != null ? `${Math.round(avMin)}m` : '—'}
+                </td>
                 <td className={gain > 0 ? 'positive' : gain < 0 ? 'negative' : ''}>
-                  {gain != null ? `${gain > 0 ? '+' : ''}${gain.toFixed(0)}m` : '—'}
+                  {gain != null ? `${gain > 0 ? '+' : ''}${Math.round(gain)}m` : '—'}
                 </td>
               </tr>
             )
@@ -786,6 +805,7 @@ export default function SidePanel({
           allCities={allCities}
           enabledCities={enabledCities}
           customLocations={customLocations}
+          modelParams={modelParams}
         />
       )}
 
