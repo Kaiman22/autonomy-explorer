@@ -23,7 +23,8 @@ const PT_WALK_DEDUCTION_S = 600  // 10 minutes
  *
  * Each ref has an optional max travel time. Municipalities that exceed ANY
  * ref's max-time constraint are excluded from scoring and normalization.
- * Aggregation: simple average across enabled refs.
+ * Aggregation: bottleneck (worst ref) — accessibility = ability to reach ALL
+ * targets. Adding a ref shrinks the high-accessibility region (intersection).
  */
 function recomputeScores(geojson, weights, enabledCities, customLocations, refMaxTimes, modelParams) {
   if (!geojson) return null
@@ -85,11 +86,13 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
 
     // If excluded, still compute values (for detail panel) but they won't
     // participate in normalization
-    // --- Average aggregation across refs ---
-    let sqWeightedSum = 0
-    let sqWeightTotal = 0
-    let avWeightedSum = 0
-    let avWeightTotal = 0
+    // --- Bottleneck aggregation across refs ---
+    // Use MAX (worst ref) so accessibility = ability to reach ALL targets.
+    // Adding a ref can only shrink the high-accessibility region (intersection),
+    // not grow it (union). This matches the intuition: "I need to commute to
+    // both Zürich AND Basel, so I need to be close to both."
+    const sqTimes = []
+    const avTimes = []
 
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
@@ -102,9 +105,7 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
       if (driveS != null) candidates.push(driveS / 60)
       if (ptS != null) candidates.push((ptS / 60) * ptFactor)
       if (candidates.length > 0) {
-        const sqTime = Math.min(...candidates)
-        sqWeightedSum += sqTime
-        sqWeightTotal += 1
+        sqTimes.push(Math.min(...candidates))
       }
 
       // Post-AV: best of AV driving or PT
@@ -112,19 +113,18 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
       if (driveS != null) avCandidates.push((driveS / 60) * avFactor)
       if (ptS != null) avCandidates.push((ptS / 60) * ptFactor)
       if (avCandidates.length > 0) {
-        const avTime = Math.min(...avCandidates)
-        avWeightedSum += avTime
-        avWeightTotal += 1
+        avTimes.push(Math.min(...avCandidates))
       }
     }
 
-    const sq = sqWeightTotal > 0 ? sqWeightedSum / sqWeightTotal : null
+    // Bottleneck: worst (max) time across all refs
+    const sq = sqTimes.length > 0 ? Math.max(...sqTimes) : null
     rawStatusQuo.push(sq)
 
-    const av = avWeightTotal > 0 ? avWeightedSum / avWeightTotal : null
+    const av = avTimes.length > 0 ? Math.max(...avTimes) : null
     rawPostAV.push(av)
 
-    // Delta: how much AV improves accessibility
+    // Delta: how much AV improves the bottleneck
     if (sq != null && av != null) {
       rawDelta.push(sq - av)
     } else {

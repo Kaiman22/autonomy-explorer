@@ -157,7 +157,11 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
 def compute_status_quo_access(driving_times, pt_times, comfort=None):
     """
     Compute status-quo accessibility (without AV).
-    = average of best(manual_drive, PT×comfort) across all cities.
+    = MAX of best(manual_drive, PT×comfort) across all cities.
+
+    Uses bottleneck (worst city) so accessibility = ability to reach ALL targets.
+    Adding a city can only make the score worse, shrinking the high-accessibility
+    region to the intersection rather than growing it as a union.
 
     PT times have walking deducted before comfort weighting.
     Matches frontend recomputeScores logic: manual drive factor = 1.0.
@@ -179,7 +183,7 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
         if candidates:
             times.append(min(candidates))
 
-    return statistics.mean(times) if times else None
+    return max(times) if times else None
 
 
 def normalize_values(values, invert=False):
@@ -245,12 +249,26 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         })
 
     # --- Sub-score 1: Accessibility Gain ---
+    # Gain = bottleneck_SQ - bottleneck_AV.  The bottleneck (worst city)
+    # determines effective accessibility, so the gain is how much AV
+    # improves the worst-case connection.  This matches the frontend.
     raw_gains = []
     for sf in features:
-        gains = compute_accessibility_gain(sf["driving"], sf["pt"])
-        valid_gains = [g for g in gains.values() if g is not None]
-        if valid_gains:
-            raw_gains.append(statistics.mean(valid_gains))
+        sq = compute_status_quo_access(sf["driving"], sf["pt"])
+        av_times = []
+        for city_id in CITIES:
+            drive_s = sf["driving"].get(city_id)
+            pt_s = deduct_pt_walking(sf["pt"].get(city_id))
+            av_candidates = []
+            if drive_s is not None:
+                av_candidates.append(compute_comfort_time(drive_s, "driving_av"))
+            if pt_s is not None:
+                av_candidates.append(compute_comfort_time(pt_s, "public_transport"))
+            if av_candidates:
+                av_times.append(min(av_candidates))
+        av_bottleneck = max(av_times) if av_times else None
+        if sq is not None and av_bottleneck is not None:
+            raw_gains.append(sq - av_bottleneck)
         else:
             raw_gains.append(None)
 
