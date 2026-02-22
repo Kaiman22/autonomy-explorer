@@ -236,7 +236,11 @@ function TopList({ data, onSelect, colorBy }) {
 
 const MAX_TIME_OPTIONS = [
   { value: null, label: 'Any' },
+  { value: 10, label: '10 min' },
+  { value: 20, label: '20 min' },
   { value: 30, label: '30 min' },
+  { value: 40, label: '40 min' },
+  { value: 50, label: '50 min' },
   { value: 60, label: '1 h' },
   { value: 90, label: '1.5 h' },
   { value: 120, label: '2 h' },
