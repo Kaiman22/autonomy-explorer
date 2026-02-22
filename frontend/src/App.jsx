@@ -143,11 +143,10 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   // (within ±15% of commute time), then ask "what % of those peers are cheaper?"
   //
   // High percentile = most peers with similar commute are cheaper = this place is
-  // expensive for its accessibility level (Gstaad, St. Moritz).
-  // Low percentile = most peers are more expensive = this place is a bargain
-  // for its accessibility level (hidden gem).
+  // expensive for its accessibility level → inherently desirable (St. Moritz, Gstaad).
+  // People pay a premium NOT for the commute but for nature, prestige, culture.
   //
-  // Attractiveness = 100 - percentile (so bargains score high).
+  // Attractiveness = percentile (expensive among peers = inherently desirable).
   const rawAttractiveness = new Array(geojson.features.length).fill(null)
   const pricePercentile = new Array(geojson.features.length).fill(null)
 
@@ -175,7 +174,7 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
         const cheaper = peerPrices.filter((p) => p < entry.price).length
         const pctile = (cheaper / peerPrices.length) * 100  // 0 = cheapest among peers, 100 = most expensive
         pricePercentile[entry.index] = Math.round(pctile)
-        rawAttractiveness[entry.index] = 100 - pctile  // invert: high = bargain
+        rawAttractiveness[entry.index] = pctile  // expensive among peers = inherently desirable
       }
     }
   }

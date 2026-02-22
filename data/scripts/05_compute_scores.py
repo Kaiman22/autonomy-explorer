@@ -257,6 +257,9 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
     norm_gains = normalize_values(raw_gains)
 
     # --- Sub-score 2: Inherent Attractiveness ---
+    # price × status_quo_access: expensive AND remote = very inherently desirable
+    # (people pay a premium for non-transport reasons: nature, prestige, culture)
+    # St. Moritz: 26k × 217min = very high. Cheap remote village: 3k × 200min = low.
     raw_attractiveness = []
     raw_status_quo = []
     for sf in features:
@@ -265,7 +268,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
 
         pd = sf["price_data"]
         if pd and pd.get("chf_per_m2") and sq and sq > 0:
-            raw_attractiveness.append(pd["chf_per_m2"] / sq)
+            raw_attractiveness.append(pd["chf_per_m2"] * sq)
         else:
             raw_attractiveness.append(None)
 

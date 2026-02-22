@@ -40,7 +40,7 @@ const METRICS = {
   },
   score_attractiveness: {
     label: 'Inherent Attractiveness',
-    desc: 'How cheap is this place compared to others with a similar commute?',
+    desc: 'How expensive vs peers with similar commute? High = desirable for non-transport reasons',
     unit: '',
     isScore: true,
   },
