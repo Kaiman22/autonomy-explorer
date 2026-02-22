@@ -291,7 +291,13 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             k: v for k, v in components.items() if v is not None
         }
 
-        if valid_components:
+        # Require price data for compound score (it depends on inherent
+        # attractiveness which needs price).  Without price the dot should
+        # appear as no-data on the map.
+        price_data = sf["price_data"]
+        has_price = price_data and price_data.get("chf_per_m2") is not None
+
+        if has_price and valid_components:
             total_weight = sum(w[k] for k in valid_components)
             if total_weight > 0:
                 score = sum(

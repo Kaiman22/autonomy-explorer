@@ -236,12 +236,14 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const scoreAccess = normDelta[i]
     const scoreAttract = normAttract[i]
 
-    // Weighted combination
+    // Weighted combination — require price data for compound score
+    // (compound depends on inherent attractiveness which needs price)
+    const hasPrice = p.chf_per_m2 != null
     let score = null
     const components = []
     if (scoreAccess !== null) components.push({ v: scoreAccess, w: weights.accessibility_gain })
     if (scoreAttract !== null) components.push({ v: scoreAttract, w: weights.inherent_attractiveness })
-    if (components.length > 0) {
+    if (hasPrice && components.length > 0) {
       const totalWeight = components.reduce((s, c) => s + c.w, 0)
       if (totalWeight > 0) {
         score = components.reduce((s, c) => s + c.v * c.w, 0) / totalWeight
