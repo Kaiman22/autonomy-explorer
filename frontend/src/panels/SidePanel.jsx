@@ -20,9 +20,15 @@ function formatMinutes(val) {
 
 // Color-by metric definitions
 const METRICS = {
-  autonomy_score: {
-    label: 'Compound Score',
-    desc: 'Weighted combo: inherent attractiveness + relative accessibility gain (%)',
+  autonomy_score_rel: {
+    label: 'Compound Score (relative)',
+    desc: 'Attractiveness + relative gain (%). Distance-neutral — doesn\'t bias towards remote areas',
+    unit: '',
+    isScore: true,
+  },
+  autonomy_score_abs: {
+    label: 'Compound Score (absolute)',
+    desc: 'Attractiveness + absolute gain (min saved). Favors remote areas with long commutes',
     unit: '',
     isScore: true,
   },
@@ -142,7 +148,7 @@ function SearchBox({ data, onSelect }) {
     const byMuni = {}
     for (const f of matches) {
       const key = f.properties.municipality_id || f.properties.id
-      if (!byMuni[key] || (f.properties.autonomy_score || 0) > (byMuni[key].properties.autonomy_score || 0)) {
+      if (!byMuni[key] || (f.properties.autonomy_score_rel || 0) > (byMuni[key].properties.autonomy_score_rel || 0)) {
         byMuni[key] = f
       }
     }
@@ -154,7 +160,7 @@ function SearchBox({ data, onSelect }) {
         const aStarts = aName.startsWith(q) ? 0 : 1
         const bStarts = bName.startsWith(q) ? 0 : 1
         if (aStarts !== bStarts) return aStarts - bStarts
-        return (b.properties.autonomy_score || 0) - (a.properties.autonomy_score || 0)
+        return (b.properties.autonomy_score_rel || 0) - (a.properties.autonomy_score_rel || 0)
       })
       .slice(0, 8)
   }, [data, query])
@@ -186,8 +192,8 @@ function SearchBox({ data, onSelect }) {
               <span className="search-result-meta">
                 {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.settlement_name} · </>}
                 {f.properties.canton_code}
-                {f.properties.autonomy_score != null && (
-                  <> · {f.properties.autonomy_score.toFixed(1)}</>
+                {f.properties.autonomy_score_rel != null && (
+                  <> · {f.properties.autonomy_score_rel.toFixed(1)}</>
                 )}
               </span>
             </div>
@@ -201,7 +207,7 @@ function SearchBox({ data, onSelect }) {
 function TopList({ data, onSelect, colorBy }) {
   const top = useMemo(() => {
     if (!data) return []
-    const prop = colorBy || 'autonomy_score'
+    const prop = colorBy || 'autonomy_score_rel'
 
     // Deduplicate by municipality: pick the best PLZ per municipality
     const byMuni = {}
@@ -220,12 +226,12 @@ function TopList({ data, onSelect, colorBy }) {
 
   if (top.length === 0) return null
 
-  const metric = METRICS[colorBy] || METRICS.autonomy_score
+  const metric = METRICS[colorBy] || METRICS.autonomy_score_rel
 
   return (
     <div className="top-list">
       {top.map((f, i) => {
-        const val = f.properties[colorBy || 'autonomy_score']
+        const val = f.properties[colorBy || 'autonomy_score_rel']
         return (
           <div
             key={f.properties.id}
@@ -417,11 +423,12 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
 
   const { avFactor = 0.7, ptFactor = 0.7 } = modelParams || {}
 
+  const compoundScore = p.autonomy_score_rel
   const scoreColor =
-    p.autonomy_score != null
-      ? p.autonomy_score > 70
+    compoundScore != null
+      ? compoundScore > 70
         ? 'var(--accent)'
-        : p.autonomy_score > 40
+        : compoundScore > 40
         ? '#f57f17'
         : 'var(--accent-blue)'
       : 'var(--text-secondary)'
@@ -478,9 +485,13 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
       </div>
 
       <div className="detail-score" style={{ color: scoreColor }}>
-        {formatScore(p.autonomy_score)}
+        {formatScore(p.autonomy_score_rel)}
       </div>
-      <div className="detail-score-label">Compound Score</div>
+      <div className="detail-score-label" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+        <span>Compound (rel)</span>
+        <span style={{ color: 'var(--text-secondary)' }}>|</span>
+        <span style={{ color: 'var(--text-secondary)' }}>{formatScore(p.autonomy_score_abs)} (abs)</span>
+      </div>
 
       <div className="detail-grid">
         <div className="detail-stat">
@@ -630,7 +641,7 @@ export default function SidePanel({
   const totalFeatures = data?.features?.length || 0
   const excludedCount = data?.features?.filter((f) => f.properties.excluded).length || 0
   const withScore =
-    data?.features?.filter((f) => f.properties.autonomy_score != null && !f.properties.excluded).length || 0
+    data?.features?.filter((f) => f.properties.autonomy_score_rel != null && !f.properties.excluded).length || 0
   const totalCities = Object.keys(allCities).length
   const activeCities = enabledCities.length + (customLocations?.filter((l) => l.enabled).length || 0)
   const totalRefs = totalCities + (customLocations?.length || 0)
@@ -696,7 +707,8 @@ export default function SidePanel({
           <label>Color map by</label>
           <select value={colorBy} onChange={(e) => setColorBy(e.target.value)}>
             <optgroup label="Compound">
-              <option value="autonomy_score">Compound Score (combined)</option>
+              <option value="autonomy_score_rel">Compound (relative gain)</option>
+              <option value="autonomy_score_abs">Compound (absolute gain)</option>
             </optgroup>
             <optgroup label="Pricing">
               <option value="chf_per_m2">Property Price (CHF/m²)</option>

@@ -247,19 +247,27 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const scoreAbsDelta = normDelta[i]   // absolute delta — separate visualization
     const scoreAttract = normAttract[i]
 
-    // Weighted combination — uses RELATIVE gain (not absolute) so the compound
-    // doesn't just point to the most remote places.
+    // Two compound scores: one with relative gain (%), one with absolute (min)
     // Require price data (compound depends on inherent attractiveness which needs price).
     const hasPrice = p.chf_per_m2 != null
-    let score = null
-    const components = []
-    if (scoreRelGain !== null) components.push({ v: scoreRelGain, w: weights.accessibility_gain })
-    if (scoreAttract !== null) components.push({ v: scoreAttract, w: weights.inherent_attractiveness })
-    if (hasPrice && components.length > 0) {
-      const totalWeight = components.reduce((s, c) => s + c.w, 0)
-      if (totalWeight > 0) {
-        score = components.reduce((s, c) => s + c.v * c.w, 0) / totalWeight
-        score = Math.round(score * 10) / 10
+
+    let scoreRel = null
+    let scoreAbs = null
+    if (hasPrice) {
+      const relComps = []
+      if (scoreRelGain !== null) relComps.push({ v: scoreRelGain, w: weights.accessibility_gain })
+      if (scoreAttract !== null) relComps.push({ v: scoreAttract, w: weights.inherent_attractiveness })
+      if (relComps.length > 0) {
+        const tw = relComps.reduce((s, c) => s + c.w, 0)
+        if (tw > 0) scoreRel = Math.round((relComps.reduce((s, c) => s + c.v * c.w, 0) / tw) * 10) / 10
+      }
+
+      const absComps = []
+      if (scoreAbsDelta !== null) absComps.push({ v: scoreAbsDelta, w: weights.accessibility_gain })
+      if (scoreAttract !== null) absComps.push({ v: scoreAttract, w: weights.inherent_attractiveness })
+      if (absComps.length > 0) {
+        const tw = absComps.reduce((s, c) => s + c.w, 0)
+        if (tw > 0) scoreAbs = Math.round((absComps.reduce((s, c) => s + c.v * c.w, 0) / tw) * 10) / 10
       }
     }
 
@@ -312,8 +320,9 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
         gain_per_city: gainPerCity,
         min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
         min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
-        // Final combined score — null if excluded
-        autonomy_score: isExcl ? null : score,
+        // Final combined scores — null if excluded
+        autonomy_score_rel: isExcl ? null : scoreRel,
+        autonomy_score_abs: isExcl ? null : scoreAbs,
       },
     }
   })
@@ -326,7 +335,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
-  const [colorBy, setColorBy] = useState('autonomy_score')
+  const [colorBy, setColorBy] = useState('autonomy_score_rel')
   const [filterCity, setFilterCity] = useState('best')
   const [weights, setWeights] = useState({
     accessibility_gain: 0.5,

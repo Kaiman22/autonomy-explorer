@@ -52,7 +52,8 @@ const METRIC_CONFIG = {
 const PRICE_DEPENDENT_METRICS = new Set([
   'chf_per_m2',
   'score_attractiveness',
-  'autonomy_score',
+  'autonomy_score_rel',
+  'autonomy_score_abs',
 ])
 
 function getColorExpression(property) {
@@ -109,11 +110,14 @@ function getHeatRadiusExpression() {
 
 // Legend labels for each metric
 const LEGEND_LABELS = {
-  autonomy_score: 'Compound Score',
+  autonomy_score_rel: 'Compound (relative)',
+  autonomy_score_abs: 'Compound (absolute)',
   chf_per_m2: 'Property Price (CHF/m\u00b2)',
   score_status_quo: 'Status-Quo Accessibility',
   score_attractiveness: 'Inherent Attractiveness',
   score_post_av: 'Post-Autonomy Accessibility',
+  score_rel_gain: 'Relative Gain (%)',
+  score_abs_delta: 'Absolute Gain (min)',
   score_delta: 'Accessibility Delta',
   score_accessibility: 'Accessibility Gain',
 }

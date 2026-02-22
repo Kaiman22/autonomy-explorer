@@ -276,6 +276,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             raw_rel_gains.append(None)
 
     norm_rel_gains = normalize_values(raw_rel_gains)
+    norm_abs_gains = normalize_values(raw_abs_gains)
 
     # --- Sub-score 2: Inherent Attractiveness ---
     # price × status_quo_access: expensive AND remote = very inherently desirable
@@ -303,32 +304,23 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         pt = sf["pt"]
         gains = compute_accessibility_gain(d, pt)
 
-        components = {
-            "accessibility_gain": norm_rel_gains[i],  # relative gain (%) in compound
-            "inherent_attractiveness": norm_attract[i],
-        }
-
-        valid_components = {
-            k: v for k, v in components.items() if v is not None
-        }
-
-        # Require price data for compound score (it depends on inherent
-        # attractiveness which needs price).  Without price the dot should
-        # appear as no-data on the map.
+        # Two compound scores: one with relative gain, one with absolute
         price_data = sf["price_data"]
         has_price = price_data and price_data.get("chf_per_m2") is not None
 
-        if has_price and valid_components:
-            total_weight = sum(w[k] for k in valid_components)
-            if total_weight > 0:
-                score = sum(
-                    v * w[k] / total_weight
-                    for k, v in valid_components.items()
-                )
-            else:
-                score = None
-        else:
-            score = None
+        def weighted_score(gain_val, attract_val):
+            comps = {}
+            if gain_val is not None:
+                comps["accessibility_gain"] = gain_val
+            if attract_val is not None:
+                comps["inherent_attractiveness"] = attract_val
+            if not has_price or not comps:
+                return None
+            tw = sum(w[k] for k in comps)
+            return sum(v * w[k] / tw for k, v in comps.items()) if tw > 0 else None
+
+        score_rel = weighted_score(norm_rel_gains[i], norm_attract[i])
+        score_abs = weighted_score(norm_abs_gains[i], norm_attract[i])
 
         # Find best city (highest gain)
         best_city = None
@@ -372,10 +364,12 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             # Raw inherent attractiveness
             "inherent_attractiveness_raw": round(raw_attractiveness[i], 1) if raw_attractiveness[i] else None,
             # Sub-scores (0-100)
-            "score_accessibility": components["accessibility_gain"],
-            "score_attractiveness": components["inherent_attractiveness"],
-            # Final score (0-100)
-            "autonomy_score": round(score, 1) if score is not None else None,
+            "score_rel_gain": norm_rel_gains[i],
+            "score_abs_delta": norm_abs_gains[i],
+            "score_attractiveness": norm_attract[i],
+            # Final scores (0-100) — two variants
+            "autonomy_score_rel": round(score_rel, 1) if score_rel is not None else None,
+            "autonomy_score_abs": round(score_abs, 1) if score_abs is not None else None,
         })
 
     return scored
@@ -410,11 +404,12 @@ def export_geojson(scored):
     print(f"Saved scored GeoJSON to {out_path}")
     print(f"  {len(features)} features (settlement-level points)")
 
-    scores = [s["autonomy_score"] for s in scored if s["autonomy_score"] is not None]
-    if scores:
-        print(f"  Score range: {min(scores):.1f} - {max(scores):.1f}")
-        print(f"  Score median: {statistics.median(scores):.1f}")
-        print(f"  Score mean: {statistics.mean(scores):.1f}")
+    scores_rel = [s["autonomy_score_rel"] for s in scored if s["autonomy_score_rel"] is not None]
+    scores_abs = [s["autonomy_score_abs"] for s in scored if s["autonomy_score_abs"] is not None]
+    if scores_rel:
+        print(f"  Score (rel) range: {min(scores_rel):.1f} - {max(scores_rel):.1f}  median: {statistics.median(scores_rel):.1f}")
+    if scores_abs:
+        print(f"  Score (abs) range: {min(scores_abs):.1f} - {max(scores_abs):.1f}  median: {statistics.median(scores_abs):.1f}")
 
     # Print municipality coverage
     munis = set(s["municipality_id"] for s in scored if s["municipality_id"])
