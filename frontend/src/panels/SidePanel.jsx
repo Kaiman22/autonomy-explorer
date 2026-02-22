@@ -22,7 +22,7 @@ function formatMinutes(val) {
 const METRICS = {
   autonomy_score: {
     label: 'Compound Score',
-    desc: 'Weighted combo: inherent attractiveness + accessibility gain',
+    desc: 'Weighted combo: inherent attractiveness + relative accessibility gain (%)',
     unit: '',
     isScore: true,
   },
@@ -50,18 +50,31 @@ const METRICS = {
     unit: '',
     isScore: true,
   },
-  score_delta: {
-    label: 'Accessibility Delta',
-    desc: 'Improvement from AV: status-quo minus post-AV accessibility',
+  score_rel_gain: {
+    label: 'Relative Accessibility Gain',
+    desc: 'What % of commute time does AV eliminate? Doesn\'t bias towards remote areas',
     unit: '',
     isScore: true,
   },
-  score_accessibility: {
-    label: 'Accessibility Gain (normalized)',
-    desc: 'Normalized version of delta — same as above, 0-100 scale',
+  score_abs_delta: {
+    label: 'Absolute Accessibility Gain',
+    desc: 'Minutes saved by AV (absolute). Naturally favors remote areas with long commutes',
     unit: '',
     isScore: true,
-    hidden: true, // same as score_delta, hide to avoid confusion
+  },
+  score_delta: {
+    label: 'Accessibility Delta',
+    desc: 'Same as absolute gain (legacy)',
+    unit: '',
+    isScore: true,
+    hidden: true,
+  },
+  score_accessibility: {
+    label: 'Accessibility Gain (normalized)',
+    desc: 'Normalized version of relative gain — same as above, 0-100 scale',
+    unit: '',
+    isScore: true,
+    hidden: true,
   },
 }
 
@@ -494,7 +507,13 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
           <div className="detail-stat-value">
             {p.delta_accessibility != null ? `${p.delta_accessibility > 0 ? '+' : ''}${formatMinutes(p.delta_accessibility)}` : '—'}
           </div>
-          <div className="detail-stat-label">Delta</div>
+          <div className="detail-stat-label">Δ Absolute</div>
+        </div>
+        <div className="detail-stat">
+          <div className="detail-stat-value">
+            {p.relative_gain_pct != null ? `${p.relative_gain_pct.toFixed(1)}%` : '—'}
+          </div>
+          <div className="detail-stat-label">Δ Relative</div>
         </div>
         <div className="detail-stat">
           <div className="detail-stat-value">{formatTime(p.min_drive_s)}</div>
@@ -502,7 +521,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         </div>
       </div>
 
-      <ScoreBar value={p.score_accessibility} label="Accessibility Gain" color="var(--accent-blue)" />
+      <ScoreBar value={p.score_rel_gain} label="Relative Accessibility Gain" color="var(--accent-blue)" />
       <ScoreBar value={p.score_attractiveness} label="Inherent Attractiveness" color="var(--accent-green)" />
       {p.price_percentile != null && (
         <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.3 }}>
@@ -686,7 +705,8 @@ export default function SidePanel({
             <optgroup label="Accessibility">
               <option value="score_status_quo">Status-Quo Accessibility</option>
               <option value="score_post_av">Post-Autonomy Accessibility</option>
-              <option value="score_delta">Accessibility Delta (improvement)</option>
+              <option value="score_rel_gain">Relative Gain (% improvement)</option>
+              <option value="score_abs_delta">Absolute Gain (minutes saved)</option>
             </optgroup>
           </select>
         </div>

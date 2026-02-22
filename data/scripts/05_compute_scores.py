@@ -248,11 +248,12 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             "tax_data": tax_data,
         })
 
-    # --- Sub-score 1: Accessibility Gain ---
-    # Gain = bottleneck_SQ - bottleneck_AV.  The bottleneck (worst city)
-    # determines effective accessibility, so the gain is how much AV
-    # improves the worst-case connection.  This matches the frontend.
-    raw_gains = []
+    # --- Sub-score 1: Accessibility Gain (relative %) ---
+    # Relative gain = (SQ - AV) / SQ × 100  — what % of commute pain does AV eliminate?
+    # This doesn't bias towards remote areas like absolute gain does.
+    # Uses bottleneck (worst city) for both SQ and AV.
+    raw_rel_gains = []
+    raw_abs_gains = []
     for sf in features:
         sq = compute_status_quo_access(sf["driving"], sf["pt"])
         av_times = []
@@ -267,12 +268,14 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             if av_candidates:
                 av_times.append(min(av_candidates))
         av_bottleneck = max(av_times) if av_times else None
-        if sq is not None and av_bottleneck is not None:
-            raw_gains.append(sq - av_bottleneck)
+        if sq is not None and av_bottleneck is not None and sq > 0:
+            raw_abs_gains.append(sq - av_bottleneck)
+            raw_rel_gains.append(((sq - av_bottleneck) / sq) * 100)
         else:
-            raw_gains.append(None)
+            raw_abs_gains.append(None)
+            raw_rel_gains.append(None)
 
-    norm_gains = normalize_values(raw_gains)
+    norm_rel_gains = normalize_values(raw_rel_gains)
 
     # --- Sub-score 2: Inherent Attractiveness ---
     # price × status_quo_access: expensive AND remote = very inherently desirable
@@ -301,7 +304,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         gains = compute_accessibility_gain(d, pt)
 
         components = {
-            "accessibility_gain": norm_gains[i],
+            "accessibility_gain": norm_rel_gains[i],  # relative gain (%) in compound
             "inherent_attractiveness": norm_attract[i],
         }
 

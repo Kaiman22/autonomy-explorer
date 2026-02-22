@@ -51,7 +51,8 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   // First pass: collect raw values for normalization
   const rawStatusQuo = []       // status-quo accessibility (lower = better today)
   const rawPostAV = []          // post-AV accessibility (lower = better with AV)
-  const rawDelta = []           // delta = status_quo - post_AV (higher = more gain)
+  const rawDelta = []           // delta = status_quo - post_AV (higher = more gain, minutes)
+  const rawRelGain = []         // relative gain = (sq - av) / sq * 100 (% improvement)
   const excluded = []           // true if municipality violates any max-time constraint
 
   // Temporary arrays for peer-group benchmarking
@@ -124,11 +125,19 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const av = avTimes.length > 0 ? Math.max(...avTimes) : null
     rawPostAV.push(av)
 
-    // Delta: how much AV improves the bottleneck
+    // Delta: how much AV improves the bottleneck (absolute minutes)
     if (sq != null && av != null) {
       rawDelta.push(sq - av)
     } else {
       rawDelta.push(null)
+    }
+
+    // Relative gain: what % of current commute pain does AV eliminate?
+    // This doesn't bias towards remote areas like absolute delta does.
+    if (sq != null && av != null && sq > 0) {
+      rawRelGain.push(((sq - av) / sq) * 100)
+    } else {
+      rawRelGain.push(null)
     }
 
     // Collect pairs for peer-group benchmarking
@@ -203,7 +212,8 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     )
   }
 
-  const normDelta = normalize(rawDelta)             // higher delta = higher score
+  const normDelta = normalize(rawDelta)             // higher abs delta = higher score
+  const normRelGain = normalize(rawRelGain)          // higher % gain = higher score
   const normAttract = normalize(rawAttractiveness)   // higher attract = higher score
 
   // Normalize SQ and post-AV on the SAME scale so they're visually comparable.
@@ -233,15 +243,17 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const driveTimes = parseTimes(p.drive_times)
     const ptTimes = parseTimes(p.pt_times)
 
-    const scoreAccess = normDelta[i]
+    const scoreRelGain = normRelGain[i]  // relative gain — used in compound
+    const scoreAbsDelta = normDelta[i]   // absolute delta — separate visualization
     const scoreAttract = normAttract[i]
 
-    // Weighted combination — require price data for compound score
-    // (compound depends on inherent attractiveness which needs price)
+    // Weighted combination — uses RELATIVE gain (not absolute) so the compound
+    // doesn't just point to the most remote places.
+    // Require price data (compound depends on inherent attractiveness which needs price).
     const hasPrice = p.chf_per_m2 != null
     let score = null
     const components = []
-    if (scoreAccess !== null) components.push({ v: scoreAccess, w: weights.accessibility_gain })
+    if (scoreRelGain !== null) components.push({ v: scoreRelGain, w: weights.accessibility_gain })
     if (scoreAttract !== null) components.push({ v: scoreAttract, w: weights.inherent_attractiveness })
     if (hasPrice && components.length > 0) {
       const totalWeight = components.reduce((s, c) => s + c.w, 0)
@@ -285,10 +297,13 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
         status_quo_access: rawStatusQuo[i] != null ? Math.round(rawStatusQuo[i] * 10) / 10 : null,
         post_av_access: rawPostAV[i] != null ? Math.round(rawPostAV[i] * 10) / 10 : null,
         delta_accessibility: rawDelta[i] != null ? Math.round(rawDelta[i] * 10) / 10 : null,
+        relative_gain_pct: rawRelGain[i] != null ? Math.round(rawRelGain[i] * 10) / 10 : null,
         inherent_attractiveness_raw: rawAttractiveness[i] != null ? Math.round(rawAttractiveness[i] * 10) / 10 : null,
         price_percentile: pricePercentile[i],  // "X% of similar-commute places are cheaper"
         // Normalized scores (0-100, higher = better) — null if excluded
-        score_accessibility: isExcl ? null : scoreAccess,
+        score_accessibility: isExcl ? null : scoreRelGain,
+        score_rel_gain: isExcl ? null : scoreRelGain,
+        score_abs_delta: isExcl ? null : scoreAbsDelta,
         score_attractiveness: isExcl ? null : scoreAttract,
         score_status_quo: isExcl ? null : normSQ[i],
         score_post_av: isExcl ? null : normPostAV[i],
