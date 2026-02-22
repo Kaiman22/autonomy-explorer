@@ -24,6 +24,7 @@ from config import (
     COMFORT,
     FRONTEND_DATA_DIR,
     PROCESSED_DIR,
+    PT_WALK_DEDUCTION_S,
     SCORING_WEIGHTS,
 )
 
@@ -99,6 +100,18 @@ def compute_comfort_time(raw_seconds, mode, comfort=None):
     return minutes
 
 
+def deduct_pt_walking(pt_seconds):
+    """
+    Subtract the estimated origin walking time from a PT travel time.
+    Walking to the first PT stop is noise (depends on centroid placement)
+    and disproportionately inflates PT times because walking is slow.
+    Returns the adjusted PT time in seconds, floored at 0.
+    """
+    if pt_seconds is None:
+        return None
+    return max(0, pt_seconds - PT_WALK_DEDUCTION_S)
+
+
 def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     """
     Compute accessibility gain per city.
@@ -107,6 +120,7 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     best_today  = min(manual_drive, PT×comfort)
     best_with_AV = min(AV_drive, PT×comfort)  — PT remains an option post-AV
 
+    PT times have the walking segment deducted before comfort weighting.
     This matches the frontend recomputeScores logic exactly.
     """
     if comfort is None:
@@ -115,7 +129,7 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     gains = {}
     for city_id in CITIES:
         drive_s = driving_times.get(city_id)
-        pt_s = pt_times.get(city_id)
+        pt_s = deduct_pt_walking(pt_times.get(city_id))
 
         # Need at least one mode for each scenario
         today_candidates = []
@@ -145,6 +159,7 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
     Compute status-quo accessibility (without AV).
     = average of best(manual_drive, PT×comfort) across all cities.
 
+    PT times have walking deducted before comfort weighting.
     Matches frontend recomputeScores logic: manual drive factor = 1.0.
     """
     if comfort is None:
@@ -153,7 +168,7 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
     times = []
     for city_id in CITIES:
         drive_s = driving_times.get(city_id)
-        pt_s = pt_times.get(city_id)
+        pt_s = deduct_pt_walking(pt_times.get(city_id))
 
         candidates = []
         if drive_s is not None:

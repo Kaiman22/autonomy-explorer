@@ -10,6 +10,12 @@ const DEFAULT_MODEL_PARAMS = {
   ptFactor: 0.70,     // PT comfort factor (0.5 = very comfortable, 1.0 = same as driving)
 }
 
+// Walking deduction from PT times (seconds).
+// TravelTime API includes walking to/from PT stops, but the origin walking segment
+// is noise (depends on centroid placement) and disproportionately inflates PT times.
+// Must match config.py PT_WALK_DEDUCTION_S.
+const PT_WALK_DEDUCTION_S = 600  // 10 minutes
+
 /**
  * Recompute all metrics from raw travel times, prices —
  * accounting for which cities/custom locations are enabled, max travel time
@@ -87,7 +93,9 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
 
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
-      const ptS = ptTimes[ref.id]
+      const rawPtS = ptTimes[ref.id]
+      // Deduct walking to first PT stop (noise from centroid placement)
+      const ptS = rawPtS != null ? Math.max(0, rawPtS - PT_WALK_DEDUCTION_S) : null
 
       // Status quo: best of manual drive or PT for this ref
       const candidates = []
@@ -198,8 +206,27 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
 
   const normDelta = normalize(rawDelta)             // higher delta = higher score
   const normAttract = normalize(rawAttractiveness)   // higher attract = higher score
-  const normSQ = normalizeInverted(rawStatusQuo)     // lower raw SQ = better = higher score
-  const normPostAV = normalizeInverted(rawPostAV)    // lower raw postAV = better = higher score
+
+  // Normalize SQ and post-AV on the SAME scale so they're visually comparable.
+  // Both are raw minutes (lower = better). Using a shared min/max ensures that
+  // if AV improves accessibility everywhere, post-AV scores are uniformly higher.
+  const allAccessValues = rawStatusQuo.concat(rawPostAV)
+  const validAccess = allAccessValues.filter((v, i) => {
+    const origIdx = i >= rawStatusQuo.length ? i - rawStatusQuo.length : i
+    return v !== null && !excluded[origIdx]
+  })
+  const accessLo = validAccess.length > 0 ? Math.min(...validAccess) : 0
+  const accessHi = validAccess.length > 0 ? Math.max(...validAccess) : 1
+  const accessRange = accessHi - accessLo || 1
+
+  function normalizeInvertedShared(values) {
+    return values.map((v, i) =>
+      v !== null && !excluded[i] ? Math.round(((accessHi - v) / accessRange) * 1000) / 10 : null
+    )
+  }
+
+  const normSQ = normalizeInvertedShared(rawStatusQuo)       // shared scale
+  const normPostAV = normalizeInvertedShared(rawPostAV)      // shared scale
 
   // Second pass: build enriched features
   const features = geojson.features.map((f, i) => {
@@ -226,7 +253,8 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     // Per-city gains for detail panel (all cities, not just enabled)
     const gainPerCity = {}
     for (const [refId, driveS] of Object.entries(driveTimes)) {
-      const ptS = ptTimes[refId]
+      const rawPtS = ptTimes[refId]
+      const ptS = rawPtS != null ? Math.max(0, rawPtS - PT_WALK_DEDUCTION_S) : null
       if (driveS != null && ptS != null) {
         const humanDrive = driveS / 60
         const ptComfort = (ptS / 60) * ptFactor

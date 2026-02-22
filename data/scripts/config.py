@@ -58,6 +58,13 @@ COMFORT = {
     "oev_sitting_factor": 0.70, # Sitting on train is 70% as burdensome
 }
 
+# Walking deduction from PT times (seconds).
+# TravelTime API includes walking to/from PT stops, but the origin walking
+# segment is noise (depends on centroid placement) and disproportionately
+# inflates PT times because walking is slow. We subtract this fixed estimate
+# before applying comfort weighting. Must match frontend/src/App.jsx.
+PT_WALK_DEDUCTION_S = 600  # 10 minutes — typical walk to nearest PT stop
+
 # Arrival time for commuter scenario
 ARRIVAL_TIME = "2026-03-02T08:00:00+01:00"  # Monday 8am CET
 MAX_TRAVEL_TIME = 14400  # 4 hours in seconds

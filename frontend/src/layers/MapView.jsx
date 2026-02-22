@@ -48,16 +48,36 @@ const METRIC_CONFIG = {
   },
 }
 
+// Metrics that depend on price data — show no color when price is missing
+const PRICE_DEPENDENT_METRICS = new Set([
+  'chf_per_m2',
+  'score_attractiveness',
+  'autonomy_score',
+])
+
 function getColorExpression(property) {
   const config = METRIC_CONFIG[property]
   const colors = config ? config.colors : SCORE_COLORS
   const stops = colors.flatMap(([val, color]) => [val, color])
-  return [
+
+  const interpolation = [
     'interpolate',
     ['linear'],
     ['coalesce', ['get', property], 0],
     ...stops,
   ]
+
+  // For price-dependent metrics, return transparent when value is null
+  if (PRICE_DEPENDENT_METRICS.has(property)) {
+    return [
+      'case',
+      ['==', ['get', property], null],
+      'rgba(100,100,120,0.3)',  // faint grey for no-data
+      interpolation,
+    ]
+  }
+
+  return interpolation
 }
 
 // Fixed radius that only scales with zoom — no data-driven sizing
@@ -179,7 +199,7 @@ export default function MapView({
           ['==', ['get', 'excluded'], true],
           0.15,                     // very faint for excluded
           ['==', ['get', colorProp], null],
-          0.2,
+          0.12,                     // very faint for no-data
           0.75,
         ],
         'circle-stroke-width': 0.5,
@@ -254,6 +274,20 @@ export default function MapView({
         ['==', ['get', 'excluded'], true],
         'rgba(100,100,120,0.5)',
         getColorExpression(colorBy),
+      ]
+    )
+
+    // Update opacity too — no-data dots should be very faint
+    map.setPaintProperty(
+      'municipalities-circles',
+      'circle-opacity',
+      [
+        'case',
+        ['==', ['get', 'excluded'], true],
+        0.15,
+        ['==', ['get', colorBy], null],
+        0.12,
+        0.75,
       ]
     )
   }, [colorBy])
