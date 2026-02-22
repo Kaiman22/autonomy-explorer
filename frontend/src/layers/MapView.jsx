@@ -81,7 +81,6 @@ function getColorExpression(property) {
 }
 
 // Fixed radius that only scales with zoom — no data-driven sizing
-// Scaled down for PLZ-level density (~3,181 points vs old 2,128 municipalities)
 function getRadiusExpression() {
   return [
     'interpolate',
@@ -94,10 +93,24 @@ function getRadiusExpression() {
   ]
 }
 
+// Large blurred radius for heatmap-like continuous surface
+function getHeatRadiusExpression() {
+  return [
+    'interpolate',
+    ['linear'],
+    ['zoom'],
+    6, 12,
+    8, 25,
+    10, 50,
+    12, 80,
+    14, 120,
+  ]
+}
+
 // Legend labels for each metric
 const LEGEND_LABELS = {
   autonomy_score: 'Compound Score',
-  chf_per_m2: 'Property Price (CHF/m²)',
+  chf_per_m2: 'Property Price (CHF/m\u00b2)',
   score_status_quo: 'Status-Quo Accessibility',
   score_attractiveness: 'Inherent Attractiveness',
   score_post_av: 'Post-Autonomy Accessibility',
@@ -163,29 +176,43 @@ export default function MapView({
 
     map.addSource('municipalities', { type: 'geojson', data: geojsonData })
 
+    const isHeatmap = lMode === 'heatmap'
+
+    // Continuous surface layer: large blurred circles that blend together
+    // Colored by the actual metric value (not density), fading to transparent
+    // where there are no data points
     map.addLayer({
       id: 'municipalities-heat',
-      type: 'heatmap',
+      type: 'circle',
       source: 'municipalities',
-      maxzoom: 10,
-      layout: { visibility: lMode === 'heatmap' ? 'visible' : 'none' },
+      layout: { visibility: isHeatmap ? 'visible' : 'none' },
       paint: {
-        'heatmap-weight': ['interpolate', ['linear'], ['coalesce', ['get', colorProp], 0], 0, 0, 100, 1],
-        'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 6, 1, 10, 3],
-        'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 6, 15, 10, 30],
-        'heatmap-color': [
-          'interpolate', ['linear'], ['heatmap-density'],
-          0, 'rgba(0,0,0,0)', 0.2, '#1a237e', 0.4, '#4527a0',
-          0.6, '#f57f17', 0.8, '#e65100', 1, '#e94560',
+        'circle-radius': getHeatRadiusExpression(),
+        'circle-color': [
+          'case',
+          ['==', ['get', 'excluded'], true],
+          'rgba(100,100,120,0.3)',
+          getColorExpression(colorProp),
         ],
-        'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 10, 0],
+        'circle-opacity': [
+          'case',
+          ['==', ['get', 'excluded'], true],
+          0.05,
+          ['==', ['get', colorProp], null],
+          0.03,
+          0.35,
+        ],
+        'circle-blur': 1,   // full Gaussian blur — creates smooth blending
+        'circle-stroke-width': 0,
       },
     })
 
+    // Crisp circle layer
     map.addLayer({
       id: 'municipalities-circles',
       type: 'circle',
       source: 'municipalities',
+      layout: { visibility: isHeatmap ? 'none' : 'visible' },
       paint: {
         'circle-radius': getRadiusExpression(),
         'circle-color': [
@@ -228,11 +255,23 @@ export default function MapView({
     map.on('click', 'municipalities-circles', (e) => {
       if (e.features?.length) onSelectRef.current(e.features[0])
     })
+    // Also allow clicking on heatmap blobs
+    map.on('click', 'municipalities-heat', (e) => {
+      if (e.features?.length) onSelectRef.current(e.features[0])
+    })
     map.on('mousemove', 'municipalities-circles', (e) => {
       map.getCanvas().style.cursor = 'pointer'
       if (e.features?.length) onHoverRef.current(e.features[0], e.point)
     })
+    map.on('mousemove', 'municipalities-heat', (e) => {
+      map.getCanvas().style.cursor = 'pointer'
+      if (e.features?.length) onHoverRef.current(e.features[0], e.point)
+    })
     map.on('mouseleave', 'municipalities-circles', () => {
+      map.getCanvas().style.cursor = ''
+      onHoverRef.current(null)
+    })
+    map.on('mouseleave', 'municipalities-heat', () => {
       map.getCanvas().style.cursor = ''
       onHoverRef.current(null)
     })
@@ -264,43 +303,79 @@ export default function MapView({
   // Update paint properties when colorBy changes
   useEffect(() => {
     const map = mapRef.current
-    if (!map || !map.getLayer('municipalities-circles')) return
+    if (!map) return
 
-    map.setPaintProperty(
-      'municipalities-circles',
-      'circle-color',
-      [
-        'case',
-        ['==', ['get', 'excluded'], true],
-        'rgba(100,100,120,0.5)',
-        getColorExpression(colorBy),
-      ]
-    )
+    // Update circles layer
+    if (map.getLayer('municipalities-circles')) {
+      map.setPaintProperty(
+        'municipalities-circles',
+        'circle-color',
+        [
+          'case',
+          ['==', ['get', 'excluded'], true],
+          'rgba(100,100,120,0.5)',
+          getColorExpression(colorBy),
+        ]
+      )
+      map.setPaintProperty(
+        'municipalities-circles',
+        'circle-opacity',
+        [
+          'case',
+          ['==', ['get', 'excluded'], true],
+          0.15,
+          ['==', ['get', colorBy], null],
+          0.12,
+          0.75,
+        ]
+      )
+    }
 
-    // Update opacity too — no-data dots should be very faint
-    map.setPaintProperty(
-      'municipalities-circles',
-      'circle-opacity',
-      [
-        'case',
-        ['==', ['get', 'excluded'], true],
-        0.15,
-        ['==', ['get', colorBy], null],
-        0.12,
-        0.75,
-      ]
-    )
+    // Update heat surface layer
+    if (map.getLayer('municipalities-heat')) {
+      map.setPaintProperty(
+        'municipalities-heat',
+        'circle-color',
+        [
+          'case',
+          ['==', ['get', 'excluded'], true],
+          'rgba(100,100,120,0.3)',
+          getColorExpression(colorBy),
+        ]
+      )
+      map.setPaintProperty(
+        'municipalities-heat',
+        'circle-opacity',
+        [
+          'case',
+          ['==', ['get', 'excluded'], true],
+          0.05,
+          ['==', ['get', colorBy], null],
+          0.03,
+          0.35,
+        ]
+      )
+    }
   }, [colorBy])
 
   // Update layer visibility for mode toggle
   useEffect(() => {
     const map = mapRef.current
     if (!map) return
+    const isHeatmap = layerMode === 'heatmap'
+
     if (map.getLayer('municipalities-heat')) {
       map.setLayoutProperty(
         'municipalities-heat',
         'visibility',
-        layerMode === 'heatmap' ? 'visible' : 'none'
+        isHeatmap ? 'visible' : 'none'
+      )
+    }
+    if (map.getLayer('municipalities-circles')) {
+      map.setLayoutProperty(
+        'municipalities-circles',
+        'visibility',
+        isHeatmap ? 'none' : 'visible'
       )
     }
   }, [layerMode])
