@@ -1,4 +1,4 @@
-# Deploy the frontend to GitHub Pages
+# Deploy the frontend to GitHub Pages on every push to main
 name: Deploy to GitHub Pages
 
 on:
