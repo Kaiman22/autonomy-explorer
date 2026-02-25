@@ -58,13 +58,31 @@ COMFORT = {
     "oev_sitting_factor": 0.70, # Sitting on train is 70% as burdensome
 }
 
-# Walking deduction from PT times (seconds).
+# Walking deduction from PT times (seconds), by population category.
 # TravelTime API includes walking to/from PT stops, but the origin walking
 # segment is noise (depends on centroid placement) and disproportionately
-# inflates PT times because walking is slow. We subtract this fixed estimate
-# before applying comfort weighting. Must match frontend/src/App.jsx.
-PT_WALK_DEDUCTION_S = 600  # 10 minutes — typical walk to nearest PT stop
+# inflates PT times because walking is slow. Must match frontend/src/App.jsx.
+# Urban areas have nearby PT stops (short walk), rural areas don't.
+PT_WALK_DEDUCTION_S = {
+    "> 100'000": 180,           # 3 min — dense urban, PT stop everywhere
+    "50'000 bis 100'000": 240,  # 4 min
+    "10'000 bis 49'999": 360,   # 6 min — small city/town
+    "2'000 bis 9'999": 480,     # 8 min — large village
+    "1'000 bis 1'999": 600,     # 10 min — village
+    "100 bis 999": 720,         # 12 min — small village, bus stop may be far
+    "default": 600,             # 10 min fallback
+}
 
-# Arrival time for commuter scenario
-ARRIVAL_TIME = "2026-03-02T08:00:00+01:00"  # Monday 8am CET
+# Arrival times for commuter scenario — multiple departures for robustness.
+# TravelTime PT routes vary significantly by time of day (peak vs off-peak).
+# We average across these to get a more representative commute time.
+# All are weekday arrivals to capture traffic/PT schedule variation.
+ARRIVAL_TIMES = [
+    "2026-03-02T07:30:00+01:00",  # Monday 7:30am
+    "2026-03-02T08:30:00+01:00",  # Monday 8:30am
+    "2026-03-03T08:00:00+01:00",  # Tuesday 8:00am
+    "2026-03-04T09:00:00+01:00",  # Wednesday 9:00am (flex start)
+    "2026-03-05T08:00:00+01:00",  # Thursday 8:00am
+]
+ARRIVAL_TIME = ARRIVAL_TIMES[0]  # backward compat for scripts using single time
 MAX_TRAVEL_TIME = 14400  # 4 hours in seconds

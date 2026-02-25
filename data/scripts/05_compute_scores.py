@@ -9,15 +9,16 @@ prices and taxes.
 
 Scoring model (2 components):
   1. Accessibility Gain: how much AV improves connectivity vs status quo
-     (PT comfort time - AV comfort time, averaged across enabled cities)
-  2. Inherent Attractiveness: price / status_quo_accessibility
-     (expensive despite poor current transport = people love it for
-      inherent reasons like nature, tax, culture, safety — all priced in)
+     Bottleneck (worst city) aggregation; both relative (%) and absolute (min).
+  2. Inherent Attractiveness: peer-group price percentile
+     Among places with similar commute time, how expensive is this place?
+     High = desirable for non-transport reasons (nature, prestige, culture).
 
 Outputs: frontend/public/data/municipalities_scored.geojson
 """
 import json
 import statistics
+from datetime import datetime, timezone
 
 from config import (
     CITIES,
@@ -100,19 +101,21 @@ def compute_comfort_time(raw_seconds, mode, comfort=None):
     return minutes
 
 
-def deduct_pt_walking(pt_seconds):
+def deduct_pt_walking(pt_seconds, pop_category=None):
     """
     Subtract the estimated origin walking time from a PT travel time.
     Walking to the first PT stop is noise (depends on centroid placement)
     and disproportionately inflates PT times because walking is slow.
+    Deduction varies by population density: urban areas have nearby stops.
     Returns the adjusted PT time in seconds, floored at 0.
     """
     if pt_seconds is None:
         return None
-    return max(0, pt_seconds - PT_WALK_DEDUCTION_S)
+    deduction = PT_WALK_DEDUCTION_S.get(pop_category, PT_WALK_DEDUCTION_S["default"])
+    return max(0, pt_seconds - deduction)
 
 
-def compute_accessibility_gain(driving_times, pt_times, comfort=None):
+def compute_accessibility_gain(driving_times, pt_times, pop_category=None, comfort=None):
     """
     Compute accessibility gain per city.
     Gain = best_today - best_with_AV
@@ -129,7 +132,7 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     gains = {}
     for city_id in CITIES:
         drive_s = driving_times.get(city_id)
-        pt_s = deduct_pt_walking(pt_times.get(city_id))
+        pt_s = deduct_pt_walking(pt_times.get(city_id), pop_category)
 
         # Need at least one mode for each scenario
         today_candidates = []
@@ -154,7 +157,7 @@ def compute_accessibility_gain(driving_times, pt_times, comfort=None):
     return gains
 
 
-def compute_status_quo_access(driving_times, pt_times, comfort=None):
+def compute_status_quo_access(driving_times, pt_times, pop_category=None, comfort=None):
     """
     Compute status-quo accessibility (without AV).
     = MAX of best(manual_drive, PT×comfort) across all cities.
@@ -172,7 +175,7 @@ def compute_status_quo_access(driving_times, pt_times, comfort=None):
     times = []
     for city_id in CITIES:
         drive_s = driving_times.get(city_id)
-        pt_s = deduct_pt_walking(pt_times.get(city_id))
+        pt_s = deduct_pt_walking(pt_times.get(city_id), pop_category)
 
         candidates = []
         if drive_s is not None:
@@ -255,11 +258,12 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
     raw_rel_gains = []
     raw_abs_gains = []
     for sf in features:
-        sq = compute_status_quo_access(sf["driving"], sf["pt"])
+        pop_cat = sf.get("pop_category")
+        sq = compute_status_quo_access(sf["driving"], sf["pt"], pop_cat)
         av_times = []
         for city_id in CITIES:
             drive_s = sf["driving"].get(city_id)
-            pt_s = deduct_pt_walking(sf["pt"].get(city_id))
+            pt_s = deduct_pt_walking(sf["pt"].get(city_id), pop_cat)
             av_candidates = []
             if drive_s is not None:
                 av_candidates.append(compute_comfort_time(drive_s, "driving_av"))
@@ -278,21 +282,44 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
     norm_rel_gains = normalize_values(raw_rel_gains)
     norm_abs_gains = normalize_values(raw_abs_gains)
 
-    # --- Sub-score 2: Inherent Attractiveness ---
-    # price × status_quo_access: expensive AND remote = very inherently desirable
-    # (people pay a premium for non-transport reasons: nature, prestige, culture)
-    # St. Moritz: 26k × 217min = very high. Cheap remote village: 3k × 200min = low.
+    # --- Sub-score 2: Inherent Attractiveness (peer-group percentile) ---
+    # For each municipality: find all places with similar status-quo accessibility
+    # (within ±15% of commute time, min ±5 min), then ask "what % of peers are
+    # cheaper?" High percentile = expensive among peers = inherently desirable.
+    # Matches the frontend recomputeScores logic exactly.
     raw_attractiveness = []
     raw_status_quo = []
-    for sf in features:
-        sq = compute_status_quo_access(sf["driving"], sf["pt"])
+    sq_price_pairs = []  # (index, sq, price)
+
+    for i, sf in enumerate(features):
+        pop_cat = sf.get("pop_category")
+        sq = compute_status_quo_access(sf["driving"], sf["pt"], pop_cat)
         raw_status_quo.append(sq)
 
         pd = sf["price_data"]
-        if pd and pd.get("chf_per_m2") and sq and sq > 0:
-            raw_attractiveness.append(pd["chf_per_m2"] * sq)
-        else:
-            raw_attractiveness.append(None)
+        price = pd.get("chf_per_m2") if pd else None
+        if price and sq and price > 0:
+            sq_price_pairs.append((i, sq, price))
+
+    # Compute peer-group percentile
+    raw_attractiveness = [None] * len(features)
+    if len(sq_price_pairs) > 10:
+        sorted_pairs = sorted(sq_price_pairs, key=lambda x: x[1])
+        for idx, sq, price in sq_price_pairs:
+            # Adaptive bandwidth: start at ±15%, widen if too few peers
+            peer_prices = []
+            pct = 0.15
+            while pct <= 0.50:
+                margin = max(5, sq * pct)
+                lo, hi = sq - margin, sq + margin
+                peer_prices = [p for _, s, p in sorted_pairs if lo <= s <= hi]
+                if len(peer_prices) >= 10:
+                    break
+                pct += 0.10
+            if len(peer_prices) >= 5:
+                cheaper = sum(1 for p in peer_prices if p < price)
+                pctile = (cheaper / len(peer_prices)) * 100
+                raw_attractiveness[idx] = pctile
 
     norm_attract = normalize_values(raw_attractiveness)
 
@@ -302,7 +329,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
     for i, sf in enumerate(features):
         d = sf["driving"]
         pt = sf["pt"]
-        gains = compute_accessibility_gain(d, pt)
+        gains = compute_accessibility_gain(d, pt, sf.get("pop_category"))
 
         # Two compound scores: one with relative gain, one with absolute
         price_data = sf["price_data"]
@@ -388,12 +415,34 @@ def export_geojson(scored):
             },
         })
 
+    # Compute data freshness from price timestamps
+    price_timestamps = []
+    for s in scored:
+        # price_data has fetched_at if scraped with updated script
+        pass  # timestamps are in the raw price files, not in scored output
+
+    # Read price file for freshness info
+    price_freshness = None
+    price_path = PROCESSED_DIR / "prices.json"
+    if price_path.exists():
+        with open(price_path) as pf:
+            pdata = json.load(pf)
+        timestamps = [v.get("fetched_at") for v in pdata.values() if isinstance(v, dict) and v.get("fetched_at")]
+        if timestamps:
+            oldest = min(timestamps)
+            newest = max(timestamps)
+            price_freshness = {"oldest": oldest, "newest": newest, "count": len(timestamps)}
+
     geojson = {
         "type": "FeatureCollection",
         "metadata": {
             "cities": {k: v["name"] for k, v in CITIES.items()},
             "scoring_weights": SCORING_WEIGHTS,
             "comfort_factors": COMFORT,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "data_freshness": {
+                "prices": price_freshness,
+            },
         },
         "features": features,
     }

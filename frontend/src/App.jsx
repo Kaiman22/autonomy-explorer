@@ -10,11 +10,22 @@ const DEFAULT_MODEL_PARAMS = {
   ptFactor: 0.70,     // PT comfort factor (0.5 = very comfortable, 1.0 = same as driving)
 }
 
-// Walking deduction from PT times (seconds).
-// TravelTime API includes walking to/from PT stops, but the origin walking segment
-// is noise (depends on centroid placement) and disproportionately inflates PT times.
+// Walking deduction from PT times (seconds), varies by population density.
+// Urban areas have nearby PT stops (short walk), rural areas don't.
 // Must match config.py PT_WALK_DEDUCTION_S.
-const PT_WALK_DEDUCTION_S = 600  // 10 minutes
+const PT_WALK_DEDUCTION = {
+  "> 100'000": 180,           // 3 min — dense urban
+  "50'000 bis 100'000": 240,  // 4 min
+  "10'000 bis 49'999": 360,   // 6 min — small city
+  "2'000 bis 9'999": 480,     // 8 min — large village
+  "1'000 bis 1'999": 600,     // 10 min — village
+  "100 bis 999": 720,         // 12 min — small village
+}
+const PT_WALK_DEFAULT = 600    // 10 min fallback
+
+function ptWalkDeduction(popCategory) {
+  return PT_WALK_DEDUCTION[popCategory] || PT_WALK_DEFAULT
+}
 
 /**
  * Recompute all metrics from raw travel times, prices —
@@ -66,11 +77,15 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     // --- Check max-time constraints ---
     // Uses RAW travel times (no comfort weighting) — the user's question is
     // "can I physically reach this city within X hours?" not "does it feel like X hours?"
+    // PT walk deduction is applied consistently (same as in scoring) so
+    // constraints and scores don't contradict each other.
     let isExcluded = false
     for (const ref of allRefs) {
       if (ref.maxMinutes == null) continue // no limit set
       const driveS = driveTimes[ref.id]
-      const ptS = ptTimes[ref.id]
+      const rawPtS = ptTimes[ref.id]
+      const walkDed = ptWalkDeduction(p.pop_category)
+      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
 
       // Raw time to this ref (best of driving or PT, no comfort factor)
       const candidates = []
@@ -94,12 +109,13 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     // both Zürich AND Basel, so I need to be close to both."
     const sqTimes = []
     const avTimes = []
+    const walkDed = ptWalkDeduction(p.pop_category)
 
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
       const rawPtS = ptTimes[ref.id]
       // Deduct walking to first PT stop (noise from centroid placement)
-      const ptS = rawPtS != null ? Math.max(0, rawPtS - PT_WALK_DEDUCTION_S) : null
+      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
 
       // Status quo: best of manual drive or PT for this ref
       const candidates = []
@@ -164,37 +180,45 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const sorted = [...sqPricePairs].sort((a, b) => a.sq - b.sq)
 
     for (const entry of sqPricePairs) {
-      // Find peers: places with status-quo accessibility within ±15%
-      // (but at least ±5 min to avoid tiny peer groups for very short commutes)
-      const margin = Math.max(5, entry.sq * 0.15)
-      const lo = entry.sq - margin
-      const hi = entry.sq + margin
-
-      // Collect peer prices using the sorted array
-      const peerPrices = []
-      for (const peer of sorted) {
-        if (peer.sq < lo) continue
-        if (peer.sq > hi) break
-        peerPrices.push(peer.price)
+      // Find peers: places with similar status-quo accessibility.
+      // Adaptive bandwidth: start at ±15% (min ±5 min), widen if too few peers.
+      // This ensures remote areas (few peers) still get a meaningful percentile.
+      let peerPrices = []
+      let pct = 0.15
+      while (pct <= 0.50) {
+        const margin = Math.max(5, entry.sq * pct)
+        const lo = entry.sq - margin
+        const hi = entry.sq + margin
+        peerPrices = []
+        for (const peer of sorted) {
+          if (peer.sq < lo) continue
+          if (peer.sq > hi) break
+          peerPrices.push(peer.price)
+        }
+        if (peerPrices.length >= 10) break  // enough peers
+        pct += 0.10  // widen
       }
 
       if (peerPrices.length >= 5) {
-        // What % of peers are cheaper than this place?
         const cheaper = peerPrices.filter((p) => p < entry.price).length
-        const pctile = (cheaper / peerPrices.length) * 100  // 0 = cheapest among peers, 100 = most expensive
+        const pctile = (cheaper / peerPrices.length) * 100
         pricePercentile[entry.index] = Math.round(pctile)
-        rawAttractiveness[entry.index] = pctile  // expensive among peers = inherently desirable
+        rawAttractiveness[entry.index] = pctile
       }
     }
   }
 
   // Normalize helper — only uses non-excluded municipalities for min/max range
+  // When all values are equal (range=0), returns 50 for all (matches backend).
   function normalize(values) {
     const valid = values.filter((v, i) => v !== null && !excluded[i])
     if (valid.length === 0) return values.map(() => null)
     const lo = Math.min(...valid)
     const hi = Math.max(...valid)
-    const range = hi - lo || 1
+    if (hi === lo) {
+      return values.map((v, i) => v !== null && !excluded[i] ? 50 : null)
+    }
+    const range = hi - lo
     return values.map((v, i) =>
       v !== null && !excluded[i] ? Math.round(((v - lo) / range) * 1000) / 10 : null
     )
@@ -206,7 +230,10 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     if (valid.length === 0) return values.map(() => null)
     const lo = Math.min(...valid)
     const hi = Math.max(...valid)
-    const range = hi - lo || 1
+    if (hi === lo) {
+      return values.map((v, i) => v !== null && !excluded[i] ? 50 : null)
+    }
+    const range = hi - lo
     return values.map((v, i) =>
       v !== null && !excluded[i] ? Math.round(((hi - v) / range) * 1000) / 10 : null
     )
@@ -273,9 +300,10 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
 
     // Per-city gains for detail panel (all cities, not just enabled)
     const gainPerCity = {}
+    const walkDedDetail = ptWalkDeduction(p.pop_category)
     for (const [refId, driveS] of Object.entries(driveTimes)) {
       const rawPtS = ptTimes[refId]
-      const ptS = rawPtS != null ? Math.max(0, rawPtS - PT_WALK_DEDUCTION_S) : null
+      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDedDetail) : null
       if (driveS != null && ptS != null) {
         const humanDrive = driveS / 60
         const ptComfort = (ptS / 60) * ptFactor
@@ -330,16 +358,49 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   return { ...geojson, features }
 }
 
+// --- URL state helpers ---
+function getUrlState() {
+  try {
+    const params = new URLSearchParams(window.location.search)
+    const state = {}
+    if (params.get('colorBy')) state.colorBy = params.get('colorBy')
+    if (params.get('cities')) state.enabledCities = params.get('cities').split(',')
+    if (params.get('avFactor')) state.avFactor = parseFloat(params.get('avFactor'))
+    if (params.get('ptFactor')) state.ptFactor = parseFloat(params.get('ptFactor'))
+    if (params.get('wGain')) state.wGain = parseFloat(params.get('wGain'))
+    if (params.get('wAttract')) state.wAttract = parseFloat(params.get('wAttract'))
+    return state
+  } catch { return {} }
+}
+
+function setUrlState(state) {
+  try {
+    const params = new URLSearchParams()
+    if (state.colorBy && state.colorBy !== 'autonomy_score_rel') params.set('colorBy', state.colorBy)
+    if (state.enabledCities) params.set('cities', state.enabledCities.join(','))
+    if (state.avFactor != null && state.avFactor !== DEFAULT_MODEL_PARAMS.avFactor) params.set('avFactor', state.avFactor.toFixed(2))
+    if (state.ptFactor != null && state.ptFactor !== DEFAULT_MODEL_PARAMS.ptFactor) params.set('ptFactor', state.ptFactor.toFixed(2))
+    if (state.wGain != null && state.wGain !== 0.5) params.set('wGain', state.wGain.toFixed(2))
+    if (state.wAttract != null && state.wAttract !== 0.5) params.set('wAttract', state.wAttract.toFixed(2))
+    const str = params.toString()
+    const newUrl = str ? `${window.location.pathname}?${str}` : window.location.pathname
+    window.history.replaceState(null, '', newUrl)
+  } catch { /* ignore */ }
+}
+
 export default function App() {
+  const urlState = useMemo(() => getUrlState(), [])
+
   const [rawData, setRawData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(null)
   const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
-  const [colorBy, setColorBy] = useState('autonomy_score_rel')
+  const [colorBy, setColorBy] = useState(urlState.colorBy || 'autonomy_score_rel')
   const [filterCity, setFilterCity] = useState('best')
   const [weights, setWeights] = useState({
-    accessibility_gain: 0.5,
-    inherent_attractiveness: 0.5,
+    accessibility_gain: urlState.wGain ?? 0.5,
+    inherent_attractiveness: urlState.wAttract ?? 0.5,
   })
 
   // All available cities from metadata, and which are enabled
@@ -353,23 +414,47 @@ export default function App() {
   const [refMaxTimes, setRefMaxTimes] = useState({})
 
   // Model parameters (comfort factors etc.)
-  const [modelParams, setModelParams] = useState(DEFAULT_MODEL_PARAMS)
+  const [modelParams, setModelParams] = useState({
+    avFactor: urlState.avFactor ?? DEFAULT_MODEL_PARAMS.avFactor,
+    ptFactor: urlState.ptFactor ?? DEFAULT_MODEL_PARAMS.ptFactor,
+  })
+
+  // Sync state → URL (debounced)
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setUrlState({
+        colorBy,
+        enabledCities,
+        avFactor: modelParams.avFactor,
+        ptFactor: modelParams.ptFactor,
+        wGain: weights.accessibility_gain,
+        wAttract: weights.inherent_attractiveness,
+      })
+    }, 300)
+    return () => clearTimeout(t)
+  }, [colorBy, enabledCities, modelParams, weights])
 
   useEffect(() => {
     fetch(DATA_URL)
       .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        if (!r.ok) throw new Error(`HTTP ${r.status}: Failed to load data`)
         return r.json()
       })
       .then((geojson) => {
         setRawData(geojson)
         const cities = geojson.metadata?.cities || {}
         setAllCities(cities)
-        setEnabledCities(Object.keys(cities))
+        // Use URL state cities if valid, otherwise enable all
+        if (urlState.enabledCities && urlState.enabledCities.every(c => c in cities)) {
+          setEnabledCities(urlState.enabledCities)
+        } else {
+          setEnabledCities(Object.keys(cities))
+        }
         setLoading(false)
       })
       .catch((err) => {
         console.error('Failed to load data:', err)
+        setLoadError(err.message)
         setLoading(false)
       })
   }, [])
@@ -436,6 +521,19 @@ export default function App() {
     setRefMaxTimes((prev) => ({ ...prev, [refId]: minutes }))
   }, [])
 
+  // Reset everything to defaults
+  const resetToDefaults = useCallback(() => {
+    setColorBy('autonomy_score_rel')
+    setWeights({ accessibility_gain: 0.5, inherent_attractiveness: 0.5 })
+    setModelParams(DEFAULT_MODEL_PARAMS)
+    setEnabledCities(Object.keys(allCities))
+    setRefMaxTimes({})
+    setCustomLocations([])
+    setSelected(null)
+    // Clear URL params
+    window.history.replaceState(null, '', window.location.pathname)
+  }, [allCities])
+
   const data = useMemo(
     () => recomputeScores(rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams),
     [rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams]
@@ -497,6 +595,25 @@ export default function App() {
             <div className="loading-spinner" />
           </div>
         )}
+        {loadError && !loading && (
+          <div className="loading-overlay" style={{ background: 'rgba(20,20,30,0.95)' }}>
+            <div style={{ textAlign: 'center', color: '#fff', maxWidth: 400, padding: 24 }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
+              <h2 style={{ marginBottom: 8 }}>Failed to load data</h2>
+              <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 16 }}>{loadError}</p>
+              <button
+                onClick={() => window.location.reload()}
+                style={{
+                  padding: '8px 24px', borderRadius: 6, border: 'none',
+                  background: 'var(--accent-blue, #1976d2)', color: '#fff', cursor: 'pointer',
+                  fontSize: 14,
+                }}
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
         <MapView
           data={data}
           colorBy={colorBy}
@@ -550,6 +667,7 @@ export default function App() {
         setModelParams={setModelParams}
         onClose={() => setSelected(null)}
         onSelectFeature={handleSelectFromSearch}
+        resetToDefaults={resetToDefaults}
       />
     </div>
   )

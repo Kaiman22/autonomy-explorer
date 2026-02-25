@@ -26,6 +26,7 @@ import requests
 
 from config import (
     ARRIVAL_TIME,
+    ARRIVAL_TIMES,
     CITIES,
     MAX_TRAVEL_TIME,
     OSRM_BASE_URL,
@@ -35,9 +36,84 @@ from config import (
     TRAVELTIME_BASE_URL,
 )
 
-TRAVELTIME_MAX_LOCATIONS = 2000
+TRAVELTIME_MAX_LOCATIONS = 1000
 OSRM_PUBLIC_URL = "https://router.project-osrm.org"
 OSRM_BATCH_SIZE = 90
+
+
+def validate_traveltime_credentials():
+    """
+    Validate TravelTime API credentials before starting a long batch job.
+    Makes a minimal test request to detect expired/invalid keys early.
+    Returns True if credentials are valid, False otherwise.
+    """
+    if not TRAVELTIME_APP_ID or not TRAVELTIME_API_KEY:
+        print("ERROR: TravelTime API credentials not set.")
+        print("  Set TRAVELTIME_APP_ID and TRAVELTIME_API_KEY environment variables.")
+        return False
+
+    print(f"  Validating TravelTime API credentials (app_id={TRAVELTIME_APP_ID[:8]}...)...")
+    sys.stdout.flush()
+
+    headers = {
+        "Content-Type": "application/json",
+        "X-Application-Id": TRAVELTIME_APP_ID,
+        "X-Api-Key": TRAVELTIME_API_KEY,
+    }
+    # Minimal test: time-filter with a single point
+    test_payload = {
+        "locations": [
+            {"id": "test_origin", "coords": {"lat": 47.3769, "lng": 8.5417}},
+            {"id": "test_dest", "coords": {"lat": 46.9490, "lng": 7.4395}},
+        ],
+        "arrival_searches": [{
+            "id": "test",
+            "arrival_location_id": "test_dest",
+            "departure_location_ids": ["test_origin"],
+            "transportation": {"type": "public_transport", "walking_time": 900},
+            "arrival_time": ARRIVAL_TIME,
+            "travel_time": 7200,
+            "properties": ["travel_time"],
+        }],
+    }
+
+    try:
+        url = f"{TRAVELTIME_BASE_URL}/time-filter"
+        resp = requests.post(url, json=test_payload, headers=headers, timeout=30)
+
+        if resp.status_code == 401:
+            print("ERROR: TravelTime API credentials are INVALID (401 Unauthorized).")
+            print("  Your API key may have expired or been revoked.")
+            print(f"  App ID: {TRAVELTIME_APP_ID}")
+            print("  Get new credentials at: https://account.traveltime.com/")
+            return False
+        elif resp.status_code == 403:
+            print("ERROR: TravelTime API access FORBIDDEN (403).")
+            print("  Your account may be suspended or the plan expired.")
+            print("  Check your account at: https://account.traveltime.com/")
+            return False
+        elif resp.status_code == 429:
+            print("WARNING: TravelTime API rate limited (429). Credentials valid but quota exceeded.")
+            print("  Waiting 60s before continuing...")
+            time_mod.sleep(60)
+            return True
+        elif resp.status_code >= 400:
+            print(f"WARNING: TravelTime API returned {resp.status_code}: {resp.text[:200]}")
+            print("  Proceeding anyway, but errors may occur.")
+            return True
+
+        resp.raise_for_status()
+        print("  Credentials valid. API responding normally.")
+        return True
+
+    except requests.exceptions.Timeout:
+        print("WARNING: TravelTime API timeout during validation. Server may be slow.")
+        print("  Proceeding anyway...")
+        return True
+    except Exception as e:
+        print(f"WARNING: Could not validate credentials: {e}")
+        print("  Proceeding anyway...")
+        return True
 
 
 def load_settlement_data():
@@ -130,8 +206,11 @@ def fetch_osrm_driving(settlements, base_url, batch_size=None):
 # ─────────────── TravelTime PT ───────────────
 
 
-def build_traveltime_request(batch, mode, batch_start, idx_to_uuid):
+def build_traveltime_request(batch, mode, batch_start, idx_to_uuid, arrival_time=None):
     """Build a TravelTime time-filter request for one batch of settlement points."""
+    if arrival_time is None:
+        arrival_time = ARRIVAL_TIME
+
     locations = []
     for city_id, city in CITIES.items():
         locations.append({
@@ -158,7 +237,7 @@ def build_traveltime_request(batch, mode, batch_start, idx_to_uuid):
                 "type": mode,
                 **({"walking_time": 1200} if mode == "public_transport" else {}),
             },
-            "arrival_time": ARRIVAL_TIME,
+            "arrival_time": arrival_time,
             "travel_time": MAX_TRAVEL_TIME,
             "properties": ["travel_time"],
         })
@@ -167,37 +246,52 @@ def build_traveltime_request(batch, mode, batch_start, idx_to_uuid):
 
 
 def call_traveltime(payload):
-    """Call TravelTime time-filter endpoint."""
+    """Call TravelTime time-filter endpoint with retry/backoff."""
     headers = {
         "Content-Type": "application/json",
         "X-Application-Id": TRAVELTIME_APP_ID,
         "X-Api-Key": TRAVELTIME_API_KEY,
     }
     url = f"{TRAVELTIME_BASE_URL}/time-filter"
-    resp = requests.post(url, json=payload, headers=headers, timeout=120)
-    if resp.status_code == 429:
-        print("  Rate limited, waiting 60s...")
-        sys.stdout.flush()
-        time_mod.sleep(60)
+
+    for attempt in range(5):
         resp = requests.post(url, json=payload, headers=headers, timeout=120)
+        if resp.status_code == 429:
+            wait = min(60 * (2 ** attempt), 300)  # 60, 120, 240, 300, 300
+            print(f"  Rate limited (429), waiting {wait}s (attempt {attempt + 1}/5)...")
+            sys.stdout.flush()
+            time_mod.sleep(wait)
+            continue
+        break
+
     resp.raise_for_status()
     return resp.json()
 
 
-def fetch_traveltime_pt(settlements):
-    """Fetch PT travel times for all settlement points via TravelTime API."""
+def fetch_traveltime_pt_single(settlements, arrival_time):
+    """Fetch PT travel times for all settlements for a single arrival time."""
     results = {}  # uuid → { city_id: seconds }
     n = len(settlements)
 
     for batch_start in range(0, n, TRAVELTIME_MAX_LOCATIONS):
         batch_end = min(batch_start + TRAVELTIME_MAX_LOCATIONS, n)
         batch = settlements[batch_start:batch_end]
-        print(f"  TravelTime PT: batch {batch_start}-{batch_end} of {n}")
+        print(f"    batch {batch_start}-{batch_end} of {n}")
         sys.stdout.flush()
 
         idx_to_uuid = {}  # loc_id → uuid (filled by build_traveltime_request)
-        payload = build_traveltime_request(batch, "public_transport", batch_start, idx_to_uuid)
-        data = call_traveltime(payload)
+        payload = build_traveltime_request(
+            batch, "public_transport", batch_start, idx_to_uuid,
+            arrival_time=arrival_time,
+        )
+
+        try:
+            data = call_traveltime(payload)
+        except Exception as e:
+            print(f"    ERROR in batch: {e}")
+            for p in batch:
+                results.setdefault(p["uuid"], {})[None] = None  # mark as failed
+            continue
 
         for search_result in data.get("results", []):
             search_id = search_result["search_id"]
@@ -218,6 +312,90 @@ def fetch_traveltime_pt(settlements):
         time_mod.sleep(1)
 
     return results
+
+
+def fetch_traveltime_pt(settlements):
+    """
+    Fetch PT travel times averaged across multiple departure times.
+
+    Calls TravelTime API once per arrival time in ARRIVAL_TIMES, then averages
+    the results. This captures schedule variation (peak vs off-peak, different
+    weekdays) for more representative commute times.
+
+    If a settlement is unreachable for some departure times but reachable for
+    others, only the reachable times are averaged. If unreachable for ALL
+    departure times, the result is None.
+    """
+    city_list = list(CITIES.keys())
+    arrival_times = ARRIVAL_TIMES
+
+    print(f"  Fetching PT times for {len(settlements)} settlements "
+          f"across {len(arrival_times)} departure times...")
+    sys.stdout.flush()
+
+    # Collect results per arrival time: list of { uuid: { city_id: seconds } }
+    all_runs = []
+    for t_idx, arrival_time in enumerate(arrival_times):
+        print(f"  === Departure {t_idx + 1}/{len(arrival_times)}: {arrival_time} ===")
+        sys.stdout.flush()
+        run_results = fetch_traveltime_pt_single(settlements, arrival_time)
+        all_runs.append(run_results)
+
+        # Save intermediate checkpoint
+        checkpoint_path = PROCESSED_DIR / f"settlement_travel_times_pt_run{t_idx}.json"
+        with open(checkpoint_path, "w") as f:
+            json.dump(run_results, f)
+        print(f"    Saved checkpoint to {checkpoint_path}")
+
+    # Average across all runs
+    print(f"  Averaging across {len(all_runs)} departure times...")
+    sys.stdout.flush()
+    averaged = {}  # uuid → { city_id: avg_seconds }
+
+    all_uuids = set()
+    for run in all_runs:
+        all_uuids.update(run.keys())
+
+    for uuid in all_uuids:
+        avg_times = {}
+        for city_id in city_list:
+            values = []
+            for run in all_runs:
+                val = run.get(uuid, {}).get(city_id)
+                if val is not None:
+                    values.append(val)
+            if values:
+                avg_times[city_id] = round(sum(values) / len(values))
+            else:
+                avg_times[city_id] = None
+        averaged[uuid] = avg_times
+
+    # Print averaging stats
+    total_pairs = len(all_uuids) * len(city_list)
+    full_coverage = sum(
+        1 for uuid in all_uuids
+        for city_id in city_list
+        if all(
+            run.get(uuid, {}).get(city_id) is not None
+            for run in all_runs
+        )
+    )
+    partial_coverage = sum(
+        1 for uuid in all_uuids
+        for city_id in city_list
+        if any(
+            run.get(uuid, {}).get(city_id) is not None
+            for run in all_runs
+        )
+        and not all(
+            run.get(uuid, {}).get(city_id) is not None
+            for run in all_runs
+        )
+    )
+    print(f"    {full_coverage}/{total_pairs} pairs fully covered across all times")
+    print(f"    {partial_coverage}/{total_pairs} pairs partially covered (averaged fewer runs)")
+
+    return averaged
 
 
 # ─────────────── Aggregation ───────────────
@@ -302,8 +480,8 @@ def main():
 
     # ── Public transport times ──
     if args.mode in ("both", "pt"):
-        if not TRAVELTIME_APP_ID or not TRAVELTIME_API_KEY:
-            print("ERROR: TravelTime API keys needed for PT. Set TRAVELTIME_APP_ID/KEY")
+        if not validate_traveltime_credentials():
+            print("Aborting PT fetch due to credential issues.")
             return
 
         pt_times = fetch_traveltime_pt(settlements)

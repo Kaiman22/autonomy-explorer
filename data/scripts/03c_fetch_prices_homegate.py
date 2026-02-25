@@ -6,7 +6,7 @@ Strategy:
   - For each municipality, navigate to the Homegate buy search page
   - Extract listing data from Vue __INITIAL_STATE__ (price + living space)
   - Compute median CHF/m² from listings with both price and living space
-  - Paginate to get up to ~60 listings per municipality (3 pages)
+  - Paginate to get up to ~100 listings per municipality (5 pages)
   - Output: data/processed/prices_homegate.json
 
 Resumable: saves progress every 25 municipalities.
@@ -17,6 +17,7 @@ import re
 import statistics
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 from config import PROCESSED_DIR
@@ -24,7 +25,7 @@ from config import PROCESSED_DIR
 DELAY_MIN = 2.0
 DELAY_MAX = 4.5
 SAVE_EVERY = 25
-MAX_PAGES_PER_MUNI = 2  # max result pages to fetch per municipality (20 listings each)
+MAX_PAGES_PER_MUNI = 5  # max result pages to fetch per municipality (20 listings each)
 
 
 def normalize_for_url(name):
@@ -170,7 +171,7 @@ def main():
                 if status != 200:
                     errors += 1
                     consecutive_errors += 1
-                    existing[m["id"]] = {"chf_per_m2": None, "n_listings": 0, "type": "homegate", "error": f"status_{status}"}
+                    existing[m["id"]] = {"chf_per_m2": None, "n_listings": 0, "type": "homegate", "error": f"status_{status}", "fetched_at": datetime.now(timezone.utc).isoformat()}
                 else:
                     time.sleep(random.uniform(2, 4))
 
@@ -196,6 +197,7 @@ def main():
                     # Compute CHF/m²
                     median_price, n_valid = compute_chf_per_m2(all_listings)
 
+                    now_iso = datetime.now(timezone.utc).isoformat()
                     if median_price:
                         existing[m["id"]] = {
                             "chf_per_m2": median_price,
@@ -203,6 +205,7 @@ def main():
                             "n_valid": n_valid,
                             "result_count": result_count,
                             "type": "homegate",
+                            "fetched_at": now_iso,
                         }
                         success += 1
                         consecutive_errors = 0
@@ -213,6 +216,7 @@ def main():
                             "n_valid": n_valid if n_valid else 0,
                             "result_count": result_count,
                             "type": "homegate",
+                            "fetched_at": now_iso,
                         }
                         no_listings += 1
                         consecutive_errors = 0
@@ -220,7 +224,7 @@ def main():
             except Exception as e:
                 errors += 1
                 consecutive_errors += 1
-                existing[m["id"]] = {"chf_per_m2": None, "n_listings": 0, "type": "homegate", "error": str(e)[:100]}
+                existing[m["id"]] = {"chf_per_m2": None, "n_listings": 0, "type": "homegate", "error": str(e)[:100], "fetched_at": datetime.now(timezone.utc).isoformat()}
 
             # Long pause after consecutive errors
             if consecutive_errors >= 10:

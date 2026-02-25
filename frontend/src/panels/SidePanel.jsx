@@ -128,13 +128,23 @@ function normalize(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 }
 
+function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useState(value)
+  React.useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay)
+    return () => clearTimeout(t)
+  }, [value, delay])
+  return debounced
+}
+
 function SearchBox({ data, onSelect }) {
   const [query, setQuery] = useState('')
   const [focused, setFocused] = useState(false)
+  const debouncedQuery = useDebounce(query, 150)
 
   const results = useMemo(() => {
-    if (!data || query.length < 2) return []
-    const q = normalize(query)
+    if (!data || debouncedQuery.length < 2) return []
+    const q = normalize(debouncedQuery)
     const isNumeric = /^\d+$/.test(query.trim())
 
     // Search by name or settlement name
@@ -633,6 +643,7 @@ export default function SidePanel({
   setModelParams,
   onClose,
   onSelectFeature,
+  resetToDefaults,
 }) {
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [showCities, setShowCities] = useState(true)
@@ -649,8 +660,25 @@ export default function SidePanel({
   return (
     <div className="side-panel">
       <div className="side-panel-header">
-        <h1>Autonomy Explorer</h1>
-        <p>Swiss real estate upside from autonomous driving</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <h1>Autonomy Explorer</h1>
+            <p>Swiss real estate upside from autonomous driving</p>
+          </div>
+          {resetToDefaults && (
+            <button
+              onClick={resetToDefaults}
+              title="Reset all settings to defaults"
+              style={{
+                background: 'none', border: '1px solid var(--border)', borderRadius: 4,
+                color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px 8px',
+                fontSize: 11, marginTop: 4, whiteSpace: 'nowrap',
+              }}
+            >
+              Reset
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Search */}

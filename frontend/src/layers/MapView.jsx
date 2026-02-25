@@ -468,8 +468,11 @@ export default function MapView({
           style={{ background: gradientBg }}
         />
         <div className="legend-labels">
-          <span>{config ? config.lowLabel : 'Low'}</span>
-          <span>{config ? config.highLabel : 'High'}</span>
+          <span>{config ? config.lowLabel : '0'}</span>
+          {!config && <span>25</span>}
+          {!config && <span>50</span>}
+          {!config && <span>75</span>}
+          <span>{config ? config.highLabel : '100'}</span>
         </div>
       </div>
     </>
