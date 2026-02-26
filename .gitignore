@@ -32,3 +32,9 @@ data/raw/csv_LV95_LN02/
 data/raw/swissnames3d_csv.zip
 data/raw/swissnames3d.zip
 data/raw/readme.txt
+
+# Intermediate checkpoint files
+data/processed/settlement_travel_times_pt_run*.json
+
+# Chrome profile for scraping
+/tmp/homegate_chrome_profile/
