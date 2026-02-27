@@ -35,8 +35,17 @@ TRAVELTIME_APP_ID = os.environ.get("TRAVELTIME_APP_ID", "")
 TRAVELTIME_API_KEY = os.environ.get("TRAVELTIME_API_KEY", "")
 TRAVELTIME_BASE_URL = "https://api.traveltimeapp.com/v4"
 
-# OSRM local instance
+# OSRM local instance (legacy — replaced by Geoapify for production)
 OSRM_BASE_URL = os.environ.get("OSRM_URL", "http://localhost:5000")
+
+# Geoapify Routing API (with traffic approximation)
+# Sign up free at https://myprojects.geoapify.com/ — no credit card required
+# Free tier: 3,000 credits/day. Route Matrix: Max(S,T)*Min(S,T,10) credits per call.
+GEOAPIFY_API_KEY = os.environ.get("GEOAPIFY_API_KEY", "")
+GEOAPIFY_MATRIX_URL = "https://api.geoapify.com/v1/routematrix"
+GEOAPIFY_ROUTING_URL = "https://api.geoapify.com/v1/routing"
+GEOAPIFY_BATCH_SOURCES = 100  # max sources per matrix call (Geoapify limit)
+GEOAPIFY_DAILY_CREDITS = 3000  # free tier daily limit
 
 # ESTV Tax API
 ESTV_TAX_URL = "https://swisstaxcalculator.estv.admin.ch/delegate/ost-integration/v1/lg-proxy/operation/c3b67379_ESTV/API_exportManySimpleRates"

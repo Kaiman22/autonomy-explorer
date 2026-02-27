@@ -35,6 +35,7 @@ data/raw/readme.txt
 
 # Intermediate checkpoint files
 data/processed/settlement_travel_times_pt_run*.json
+data/processed/geoapify_driving_checkpoint.json
 
 # Chrome profile for scraping
 /tmp/homegate_chrome_profile/

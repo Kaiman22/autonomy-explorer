@@ -459,53 +459,141 @@ export default function App() {
       })
   }, [])
 
+  // Geoapify API key for frontend routing (custom locations)
+  // Loaded from env at build time or hardcoded for the deployed version
+  const geoapifyKey = import.meta.env.VITE_GEOAPIFY_API_KEY || ''
+
   // Add a custom reference location
   const addCustomLocation = useCallback((location) => {
     // location: { id, name, lat, lon, enabled }
-    setCustomLocations((prev) => [...prev, { ...location, enabled: true }])
+    setCustomLocations((prev) => [...prev, { ...location, enabled: true, loading: true }])
 
-    // Compute travel times for this custom location to all municipalities
-    // For now use haversine estimate; later can use OSRM API
-    setRawData((prevData) => {
-      if (!prevData) return prevData
-      const newFeatures = prevData.features.map((f) => {
-        const p = f.properties
-        const driveTimes = typeof p.drive_times === 'string' ? JSON.parse(p.drive_times) : { ...p.drive_times }
-        const ptTimes = typeof p.pt_times === 'string' ? JSON.parse(p.pt_times) : { ...p.pt_times }
+    // Fetch real driving times from Geoapify Routing API for each settlement
+    // We batch this: compute route from custom location to each settlement
+    const fetchRoutingTimes = async () => {
+      if (!rawData) return
 
-        // Haversine distance estimate → drive time
-        const coords = f.geometry.coordinates // [lon, lat]
-        const R = 6371
-        const dLat = ((location.lat - coords[1]) * Math.PI) / 180
-        const dLon = ((location.lon - coords[0]) * Math.PI) / 180
-        const a =
-          Math.sin(dLat / 2) ** 2 +
-          Math.cos((coords[1] * Math.PI) / 180) *
-            Math.cos((location.lat * Math.PI) / 180) *
-            Math.sin(dLon / 2) ** 2
-        const dist = R * 2 * Math.asin(Math.sqrt(a))
+      // Strategy: Use Geoapify Route Matrix API to get times efficiently.
+      // Send batches of 100 settlements as targets with the custom location as source.
+      // Falls back to haversine if no API key or on error.
+      const features = rawData.features
+      const results = {} // featureIndex → { drive_s, pt_s }
 
-        // Estimate driving time: ~70 km/h avg for Swiss roads
-        const driveSec = Math.round((dist / 70) * 3600)
-        // Estimate PT: 1.3-1.8x driving based on distance
-        const ptRatio = dist < 30 ? 1.2 : dist < 80 ? 1.4 : 1.7
-        const ptSec = Math.round(driveSec * ptRatio)
-
-        driveTimes[location.id] = driveSec
-        ptTimes[location.id] = ptSec
-
-        return {
-          ...f,
-          properties: {
-            ...p,
-            drive_times: driveTimes,
-            pt_times: ptTimes,
-          },
+      if (geoapifyKey) {
+        const BATCH_SIZE = 100 // 1 source x 100 targets = 100 credits per batch
+        const batches = []
+        for (let i = 0; i < features.length; i += BATCH_SIZE) {
+          batches.push(features.slice(i, i + BATCH_SIZE).map((f, idx) => ({ f, origIdx: i + idx })))
         }
+
+        console.log(`[Custom location] Fetching ${batches.length} batches from Geoapify...`)
+
+        for (let batchIdx = 0; batchIdx < batches.length; batchIdx++) {
+          const batch = batches[batchIdx]
+          const payload = {
+            mode: 'drive',
+            traffic: 'approximated',
+            sources: [{ location: [location.lon, location.lat] }],
+            targets: batch.map(({ f }) => ({
+              location: [f.geometry.coordinates[0], f.geometry.coordinates[1]],
+            })),
+          }
+
+          try {
+            const resp = await fetch(
+              `https://api.geoapify.com/v1/routematrix?apiKey=${geoapifyKey}`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              }
+            )
+
+            if (resp.status === 429) {
+              console.warn(`[Custom location] Rate limited at batch ${batchIdx + 1}, using haversine for remaining`)
+              break
+            }
+
+            if (!resp.ok) {
+              console.warn(`[Custom location] Geoapify error ${resp.status}, using haversine for batch ${batchIdx + 1}`)
+              continue
+            }
+
+            const data = await resp.json()
+            const s2t = data.sources_to_targets || []
+
+            if (s2t.length > 0) {
+              const row = s2t[0] // single source
+              row.forEach((cell, tgtIdx) => {
+                const origIdx = batch[tgtIdx].origIdx
+                const driveTime = cell.time != null ? Math.round(cell.time) : null
+                results[origIdx] = { drive_s: driveTime }
+              })
+            }
+          } catch (err) {
+            console.warn(`[Custom location] Fetch error batch ${batchIdx + 1}:`, err.message)
+          }
+
+          // Small delay between batches
+          if (batchIdx < batches.length - 1) {
+            await new Promise((r) => setTimeout(r, 200))
+          }
+        }
+
+        console.log(`[Custom location] Got Geoapify times for ${Object.keys(results).length}/${features.length} settlements`)
+      }
+
+      // Apply results: use Geoapify times where available, haversine fallback otherwise
+      setRawData((prevData) => {
+        if (!prevData) return prevData
+        const newFeatures = prevData.features.map((f, i) => {
+          const p = f.properties
+          const driveTimes = typeof p.drive_times === 'string' ? JSON.parse(p.drive_times) : { ...p.drive_times }
+          const ptTimes = typeof p.pt_times === 'string' ? JSON.parse(p.pt_times) : { ...p.pt_times }
+
+          let driveSec
+          if (results[i] && results[i].drive_s != null) {
+            // Use real Geoapify driving time (with traffic)
+            driveSec = results[i].drive_s
+          } else {
+            // Fallback: haversine estimate at 50 km/h (conservative for Swiss roads)
+            const coords = f.geometry.coordinates
+            const R = 6371
+            const dLat = ((location.lat - coords[1]) * Math.PI) / 180
+            const dLon = ((location.lon - coords[0]) * Math.PI) / 180
+            const a =
+              Math.sin(dLat / 2) ** 2 +
+              Math.cos((coords[1] * Math.PI) / 180) *
+                Math.cos((location.lat * Math.PI) / 180) *
+                Math.sin(dLon / 2) ** 2
+            const dist = R * 2 * Math.asin(Math.sqrt(a))
+            // Use 50 km/h (was 70) — more conservative for Swiss mountain/rural roads
+            driveSec = Math.round((dist / 50) * 3600)
+          }
+
+          // PT estimate: scale from drive time (no API for PT routing from custom loc)
+          const ptRatio = driveSec < 1800 ? 1.3 : driveSec < 4800 ? 1.5 : 1.8
+          const ptSec = Math.round(driveSec * ptRatio)
+
+          driveTimes[location.id] = driveSec
+          ptTimes[location.id] = ptSec
+
+          return {
+            ...f,
+            properties: { ...p, drive_times: driveTimes, pt_times: ptTimes },
+          }
+        })
+        return { ...prevData, features: newFeatures }
       })
-      return { ...prevData, features: newFeatures }
-    })
-  }, [])
+
+      // Mark custom location as done loading
+      setCustomLocations((prev) =>
+        prev.map((l) => (l.id === location.id ? { ...l, loading: false } : l))
+      )
+    }
+
+    fetchRoutingTimes()
+  }, [rawData, geoapifyKey])
 
   const removeCustomLocation = useCallback((locId) => {
     setCustomLocations((prev) => prev.filter((l) => l.id !== locId))

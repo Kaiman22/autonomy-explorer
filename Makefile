@@ -10,13 +10,13 @@
 # Environment variables:
 #   TRAVELTIME_APP_ID    — TravelTime API application ID
 #   TRAVELTIME_API_KEY   — TravelTime API key
-#   OSRM_URL             — OSRM server URL (default: http://localhost:5000)
+#   GEOAPIFY_API_KEY     — Geoapify API key (for driving times with traffic)
 
 SCRIPTS_DIR := data/scripts
 PROCESSED_DIR := data/processed
 FRONTEND_DIR := frontend
 
-.PHONY: pipeline scores travel-times travel-pt travel-driving prices taxes frontend validate clean help
+.PHONY: pipeline scores travel-times travel-pt travel-driving travel-driving-geoapify prices taxes frontend validate clean help
 
 help:
 	@echo "Autonomy Explorer Pipeline"
@@ -25,8 +25,9 @@ help:
 	@echo "  pipeline        Full data pipeline (all steps)"
 	@echo "  municipalities  Step 1: Fetch municipality + settlement data"
 	@echo "  travel-times    Step 2: Fetch travel times (driving + PT)"
-	@echo "  travel-driving  Step 2a: Fetch driving times only (OSRM)"
-	@echo "  travel-pt       Step 2b: Fetch PT times only (TravelTime API)"
+	@echo "  travel-driving          Step 2a: Fetch driving times (Geoapify with traffic)"
+	@echo "  travel-driving-geoapify Step 2a: Fetch driving times (Geoapify, resumable)"
+	@echo "  travel-pt               Step 2b: Fetch PT times only (TravelTime API)"
 	@echo "  prices          Step 3: Scrape property prices (Homegate)"
 	@echo "  merge-prices    Step 3b: Merge price sources"
 	@echo "  taxes           Step 4: Fetch tax data"
@@ -36,7 +37,7 @@ help:
 	@echo "  validate        Run data quality checks"
 	@echo ""
 	@echo "Required env vars for travel times:"
-	@echo "  TRAVELTIME_APP_ID, TRAVELTIME_API_KEY"
+	@echo "  TRAVELTIME_APP_ID, TRAVELTIME_API_KEY, GEOAPIFY_API_KEY"
 
 # ── Full Pipeline ──
 
@@ -55,9 +56,16 @@ municipalities:
 
 travel-times: travel-driving travel-pt
 
-travel-driving:
-	@echo "=== Step 2: Fetching driving times (OSRM) ==="
-	cd $(SCRIPTS_DIR) && python 02c_fetch_travel_times_settlements.py --mode driving --osrm-public
+travel-driving: travel-driving-geoapify
+
+travel-driving-geoapify:
+	@echo "=== Step 2: Fetching driving times (Geoapify with traffic) ==="
+	@test -n "$(GEOAPIFY_API_KEY)" || (echo "ERROR: GEOAPIFY_API_KEY not set" && exit 1)
+	cd $(SCRIPTS_DIR) && python3 02d_fetch_driving_times_geoapify.py
+
+travel-driving-osrm:
+	@echo "=== Step 2: Fetching driving times (OSRM, no traffic — legacy) ==="
+	cd $(SCRIPTS_DIR) && python3 02c_fetch_travel_times_settlements.py --mode driving --osrm-public
 
 travel-pt:
 	@echo "=== Step 2: Fetching PT times (TravelTime API) ==="

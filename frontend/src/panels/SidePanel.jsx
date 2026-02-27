@@ -393,7 +393,10 @@ function CustomLocationsList({ customLocations, toggleCustomLocation, removeCust
                 checked={loc.enabled}
                 onChange={() => toggleCustomLocation(loc.id)}
               />
-              <span className={loc.enabled ? '' : 'disabled'}>{loc.name}</span>
+              <span className={loc.enabled ? '' : 'disabled'}>
+                {loc.name}
+                {loc.loading && <span style={{ marginLeft: 4, fontSize: '0.8em', opacity: 0.6 }}>loading...</span>}
+              </span>
             </label>
             {loc.enabled && (
               <select
