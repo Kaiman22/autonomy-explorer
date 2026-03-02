@@ -277,7 +277,11 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   const normDelta = normalize(rawDelta)             // higher abs delta = higher score
   const normRelGain = normalize(rawRelGain)          // higher % gain = higher score
   const normAttract = normalize(rawAttractiveness)   // higher attract = higher score
-  const normGravity = normalize(rawGravity)          // higher gravity = higher score
+  // Log-transform gravity before normalizing: raw gravity is extremely skewed
+  // (cities get 10,000+, rural areas get 200). Log compresses the range so
+  // the 0-100 scale is actually useful, not just 0-2 everywhere except cities.
+  const logGravity = rawGravity.map(v => v != null ? Math.log(v) : null)
+  const normGravity = normalize(logGravity)          // higher gravity = higher score
 
   // Normalize SQ and post-AV on the SAME scale so they're visually comparable.
   // Both are raw minutes (lower = better). Using a shared min/max ensures that
