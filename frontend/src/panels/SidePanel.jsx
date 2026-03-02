@@ -108,17 +108,11 @@ const METRICS = {
     unit: '%',
     isScore: false,
   },
-  score_general_access: {
-    label: 'General Accessibility',
-    desc: 'Gravity model: proximity to all 10 major cities, population-weighted. Independent of your selection',
+  score_gravity: {
+    label: 'Gravity Accessibility',
+    desc: 'Population-weighted proximity to your selected ref. locations (Hansen gravity model)',
     unit: '',
     isScore: true,
-  },
-  reachable_60min: {
-    label: 'Cities Reachable (60 min)',
-    desc: 'How many of 10 major Swiss cities are reachable by car within 1 hour',
-    unit: '',
-    isScore: false,
   },
 }
 
@@ -613,12 +607,8 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
           <div className="detail-stat-label">Avg PT</div>
         </div>
         <div className="detail-stat">
-          <div className="detail-stat-value">{formatScore(p.score_general_access)}</div>
-          <div className="detail-stat-label">General Access</div>
-        </div>
-        <div className="detail-stat">
-          <div className="detail-stat-value">{p.reachable_60min != null ? `${p.reachable_60min} / 10` : '—'}</div>
-          <div className="detail-stat-label">Cities &lt;60m</div>
+          <div className="detail-stat-value">{formatScore(p.score_gravity)}</div>
+          <div className="detail-stat-label">Gravity Score</div>
         </div>
       </div>
 
@@ -827,16 +817,13 @@ export default function SidePanel({
               <option value="score_post_av">Post-Autonomy Accessibility</option>
               <option value="score_rel_gain">Relative Gain (% improvement)</option>
               <option value="score_abs_delta">Absolute Gain (minutes saved)</option>
+              <option value="score_gravity">Gravity Accessibility</option>
             </optgroup>
             <optgroup label="Raw Travel Times">
               <option value="avg_car_access">Average Car Access (min)</option>
               <option value="avg_pt_access">Average PT Access (min)</option>
               <option value="car_pt_delta_min">Car − PT Delta (min)</option>
               <option value="car_pt_delta_pct">Car − PT Delta (%)</option>
-            </optgroup>
-            <optgroup label="General Accessibility">
-              <option value="score_general_access">General Accessibility (gravity)</option>
-              <option value="reachable_60min">Cities Reachable (60 min)</option>
             </optgroup>
           </select>
         </div>

@@ -65,15 +65,6 @@ const DELTA_PCT_COLORS = [
   [100, '#b71c1c'],
 ]
 
-// Reachable cities count (red = 0 → green = 10)
-const REACHABLE_COLORS = [
-  [0, '#e94560'],
-  [3, '#ef6c00'],
-  [5, '#ffc107'],
-  [7, '#4caf50'],
-  [10, '#1b5e20'],
-]
-
 // Map from colorBy property to its config
 const METRIC_CONFIG = {
   chf_per_m2: {
@@ -107,12 +98,6 @@ const METRIC_CONFIG = {
     lowLabel: '-100%',
     highLabel: '+100%',
     centerLabel: '0',
-  },
-  reachable_60min: {
-    colors: REACHABLE_COLORS,
-    gradient: 'linear-gradient(to right, #e94560, #ef6c00, #ffc107, #4caf50, #1b5e20)',
-    lowLabel: '0',
-    highLabel: '10',
   },
 }
 
@@ -192,8 +177,7 @@ const LEGEND_LABELS = {
   avg_pt_access: 'Average PT Travel Time',
   car_pt_delta_min: 'Car \u2212 PT Delta (minutes)',
   car_pt_delta_pct: 'Car \u2212 PT Delta (%)',
-  score_general_access: 'General Accessibility',
-  reachable_60min: 'Cities Reachable (60 min)',
+  score_gravity: 'Gravity Accessibility',
 }
 
 export default function MapView({

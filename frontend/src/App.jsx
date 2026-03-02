@@ -27,8 +27,8 @@ function ptWalkDeduction(popCategory) {
   return PT_WALK_DEDUCTION[popCategory] || PT_WALK_DEFAULT
 }
 
-// City populations for general accessibility gravity model (metro area, 2024 est.)
-// Used by score_general_access — independent of user's selected target locations.
+// City populations for gravity accessibility model (city-proper, 2024 est.)
+// Used by score_gravity — weighted by population, computed for selected refs.
 const CITY_POPULATIONS = {
   zurich: 434000,
   bern: 134000,
@@ -41,7 +41,7 @@ const CITY_POPULATIONS = {
   winterthur: 115000,
   biel: 55000,
 }
-const ALL_CITY_IDS = Object.keys(CITY_POPULATIONS)
+const CUSTOM_LOCATION_POP = 100000  // default population weight for custom locations
 const GRAVITY_ALPHA = 1.5  // decay exponent: higher = penalizes distance more
 
 /**
@@ -83,8 +83,7 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   const rawRelGain = []         // relative gain = (sq - av) / sq * 100 (% improvement)
   const excluded = []           // true if municipality violates any max-time constraint
 
-  const rawGravity = []         // Hansen gravity index (higher = more accessible to major cities)
-  const rawReachable = []       // count of major cities reachable within 60 min by car
+  const rawGravity = []         // Hansen gravity index (higher = more accessible, population-weighted)
 
   // Temporary arrays for peer-group benchmarking
   const sqPricePairs = []       // { index, sq, price } for municipalities with both values
@@ -176,20 +175,17 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
       rawRelGain.push(null)
     }
 
-    // --- General accessibility (independent of user selection) ---
-    // Uses ALL 10 major cities regardless of which the user has enabled.
+    // --- Gravity accessibility (uses selected refs, population-weighted) ---
     let gravitySum = 0
-    let reachCount = 0
-    for (const cityId of ALL_CITY_IDS) {
-      const driveS = driveTimes[cityId]
+    for (const ref of allRefs) {
+      const driveS = driveTimes[ref.id]
       if (driveS != null && driveS > 0) {
         const driveMin = driveS / 60
-        gravitySum += CITY_POPULATIONS[cityId] / Math.pow(driveMin, GRAVITY_ALPHA)
-        if (driveMin <= 60) reachCount++
+        const pop = CITY_POPULATIONS[ref.id] || CUSTOM_LOCATION_POP
+        gravitySum += pop / Math.pow(driveMin, GRAVITY_ALPHA)
       }
     }
     rawGravity.push(gravitySum > 0 ? gravitySum : null)
-    rawReachable.push(reachCount)
 
     // Collect pairs for peer-group benchmarking
     const price = p.chf_per_m2
@@ -415,9 +411,8 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
         avg_pt_access: avgPtAccess != null ? Math.round(avgPtAccess * 10) / 10 : null,
         car_pt_delta_min: carPtDeltaMin != null ? Math.round(carPtDeltaMin * 10) / 10 : null,
         car_pt_delta_pct: carPtDeltaPct != null ? Math.round(carPtDeltaPct * 10) / 10 : null,
-        // General accessibility (independent of user selection)
-        score_general_access: isExcl ? null : normGravity[i],
-        reachable_60min: rawReachable[i],
+        // Gravity accessibility (population-weighted proximity to selected refs)
+        score_gravity: isExcl ? null : normGravity[i],
         // Final combined scores — null if excluded
         autonomy_score_rel: isExcl ? null : scoreRel,
         autonomy_score_abs: isExcl ? null : scoreAbs,
@@ -744,9 +739,6 @@ export default function App() {
     }
     if (colorBy === 'car_pt_delta_pct') {
       return `${val > 0 ? '+' : ''}${val.toFixed(1)}%`
-    }
-    if (colorBy === 'reachable_60min') {
-      return `${val} / 10`
     }
     if (colorBy === 'chf_per_m2') {
       return `${val.toLocaleString()} CHF/m²`
