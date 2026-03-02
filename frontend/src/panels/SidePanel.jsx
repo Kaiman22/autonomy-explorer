@@ -108,12 +108,6 @@ const METRICS = {
     unit: '%',
     isScore: false,
   },
-  score_gravity: {
-    label: 'Gravity Accessibility',
-    desc: 'Population-weighted proximity to your selected ref. locations (Hansen gravity model)',
-    unit: '',
-    isScore: true,
-  },
 }
 
 function ScoreBar({ value, label, color }) {
@@ -606,10 +600,6 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
           <div className="detail-stat-value">{formatMinutes(p.avg_pt_access)}</div>
           <div className="detail-stat-label">Avg PT</div>
         </div>
-        <div className="detail-stat">
-          <div className="detail-stat-value">{formatScore(p.score_gravity)}</div>
-          <div className="detail-stat-label">Gravity Score</div>
-        </div>
       </div>
 
       <ScoreBar value={p.score_rel_gain} label="Relative Accessibility Gain" color="var(--accent-blue)" />
@@ -817,7 +807,6 @@ export default function SidePanel({
               <option value="score_post_av">Post-Autonomy Accessibility</option>
               <option value="score_rel_gain">Relative Gain (% improvement)</option>
               <option value="score_abs_delta">Absolute Gain (minutes saved)</option>
-              <option value="score_gravity">Gravity Accessibility</option>
             </optgroup>
             <optgroup label="Raw Travel Times">
               <option value="avg_car_access">Average Car Access (min)</option>

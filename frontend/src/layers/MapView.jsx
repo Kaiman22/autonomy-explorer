@@ -177,7 +177,6 @@ const LEGEND_LABELS = {
   avg_pt_access: 'Average PT Travel Time',
   car_pt_delta_min: 'Car \u2212 PT Delta (minutes)',
   car_pt_delta_pct: 'Car \u2212 PT Delta (%)',
-  score_gravity: 'Gravity Accessibility',
 }
 
 export default function MapView({
