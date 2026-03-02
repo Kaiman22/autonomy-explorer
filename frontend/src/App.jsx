@@ -27,6 +27,23 @@ function ptWalkDeduction(popCategory) {
   return PT_WALK_DEDUCTION[popCategory] || PT_WALK_DEFAULT
 }
 
+// City populations for general accessibility gravity model (metro area, 2024 est.)
+// Used by score_general_access — independent of user's selected target locations.
+const CITY_POPULATIONS = {
+  zurich: 434000,
+  bern: 134000,
+  basel: 178000,
+  luzern: 82000,
+  geneve: 204000,
+  lausanne: 140000,
+  stgallen: 76000,
+  lugano: 64000,
+  winterthur: 115000,
+  biel: 55000,
+}
+const ALL_CITY_IDS = Object.keys(CITY_POPULATIONS)
+const GRAVITY_ALPHA = 1.5  // decay exponent: higher = penalizes distance more
+
 /**
  * Recompute all metrics from raw travel times, prices —
  * accounting for which cities/custom locations are enabled, max travel time
@@ -65,6 +82,9 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   const rawDelta = []           // delta = status_quo - post_AV (higher = more gain, minutes)
   const rawRelGain = []         // relative gain = (sq - av) / sq * 100 (% improvement)
   const excluded = []           // true if municipality violates any max-time constraint
+
+  const rawGravity = []         // Hansen gravity index (higher = more accessible to major cities)
+  const rawReachable = []       // count of major cities reachable within 60 min by car
 
   // Temporary arrays for peer-group benchmarking
   const sqPricePairs = []       // { index, sq, price } for municipalities with both values
@@ -156,6 +176,21 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
       rawRelGain.push(null)
     }
 
+    // --- General accessibility (independent of user selection) ---
+    // Uses ALL 10 major cities regardless of which the user has enabled.
+    let gravitySum = 0
+    let reachCount = 0
+    for (const cityId of ALL_CITY_IDS) {
+      const driveS = driveTimes[cityId]
+      if (driveS != null && driveS > 0) {
+        const driveMin = driveS / 60
+        gravitySum += CITY_POPULATIONS[cityId] / Math.pow(driveMin, GRAVITY_ALPHA)
+        if (driveMin <= 60) reachCount++
+      }
+    }
+    rawGravity.push(gravitySum > 0 ? gravitySum : null)
+    rawReachable.push(reachCount)
+
     // Collect pairs for peer-group benchmarking
     const price = p.chf_per_m2
     if (price != null && sq != null && price > 0) {
@@ -242,6 +277,7 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   const normDelta = normalize(rawDelta)             // higher abs delta = higher score
   const normRelGain = normalize(rawRelGain)          // higher % gain = higher score
   const normAttract = normalize(rawAttractiveness)   // higher attract = higher score
+  const normGravity = normalize(rawGravity)          // higher gravity = higher score
 
   // Normalize SQ and post-AV on the SAME scale so they're visually comparable.
   // Both are raw minutes (lower = better). Using a shared min/max ensures that
@@ -313,6 +349,28 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
       }
     }
 
+    // Average raw car and PT access across enabled refs (no comfort weighting)
+    const walkDedRaw = ptWalkDeduction(p.pop_category)
+    let carSum = 0, carCount = 0
+    let ptRawSum = 0, ptRawCount = 0
+    for (const ref of allRefs) {
+      const driveS = driveTimes[ref.id]
+      const rawPtS = ptTimes[ref.id]
+      if (driveS != null) { carSum += driveS / 60; carCount++ }
+      if (rawPtS != null) {
+        ptRawSum += Math.max(0, rawPtS - walkDedRaw) / 60
+        ptRawCount++
+      }
+    }
+    const avgCarAccess = carCount > 0 ? carSum / carCount : null
+    const avgPtAccess = ptRawCount > 0 ? ptRawSum / ptRawCount : null
+    const carPtDeltaMin = avgCarAccess != null && avgPtAccess != null
+      ? avgCarAccess - avgPtAccess : null  // positive = car slower = PT advantage
+    const avgMid = avgCarAccess != null && avgPtAccess != null
+      ? (avgCarAccess + avgPtAccess) / 2 : null
+    const carPtDeltaPct = avgMid != null && avgMid > 0
+      ? ((avgCarAccess - avgPtAccess) / avgMid) * 100 : null
+
     // Min drive/pt for enabled refs only
     const enabledDrive = allRefIds
       .map((c) => driveTimes[c])
@@ -348,6 +406,14 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
         gain_per_city: gainPerCity,
         min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
         min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
+        // Raw travel time views (average across enabled refs, minutes)
+        avg_car_access: avgCarAccess != null ? Math.round(avgCarAccess * 10) / 10 : null,
+        avg_pt_access: avgPtAccess != null ? Math.round(avgPtAccess * 10) / 10 : null,
+        car_pt_delta_min: carPtDeltaMin != null ? Math.round(carPtDeltaMin * 10) / 10 : null,
+        car_pt_delta_pct: carPtDeltaPct != null ? Math.round(carPtDeltaPct * 10) / 10 : null,
+        // General accessibility (independent of user selection)
+        score_general_access: isExcl ? null : normGravity[i],
+        reachable_60min: rawReachable[i],
         // Final combined scores — null if excluded
         autonomy_score_rel: isExcl ? null : scoreRel,
         autonomy_score_abs: isExcl ? null : scoreAbs,
@@ -666,8 +732,17 @@ export default function App() {
     const val = p[colorBy]
     if (val == null) return 'No data'
     // For raw minute values, show as minutes
-    if (['status_quo_access', 'post_av_access', 'delta_accessibility'].includes(colorBy)) {
+    if (['status_quo_access', 'post_av_access', 'delta_accessibility', 'avg_car_access', 'avg_pt_access'].includes(colorBy)) {
       return `${val.toFixed(1)} min`
+    }
+    if (colorBy === 'car_pt_delta_min') {
+      return `${val > 0 ? '+' : ''}${val.toFixed(1)} min`
+    }
+    if (colorBy === 'car_pt_delta_pct') {
+      return `${val > 0 ? '+' : ''}${val.toFixed(1)}%`
+    }
+    if (colorBy === 'reachable_60min') {
+      return `${val} / 10`
     }
     if (colorBy === 'chf_per_m2') {
       return `${val.toLocaleString()} CHF/m²`

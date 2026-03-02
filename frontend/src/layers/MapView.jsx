@@ -38,6 +38,42 @@ const PRICE_COLORS = [
   [16000, '#e94560'],
 ]
 
+// Raw travel time colors (green → yellow → red, lower = better)
+const ACCESS_TIME_COLORS = [
+  [10, '#1b5e20'],
+  [30, '#4caf50'],
+  [60, '#ffc107'],
+  [120, '#ef6c00'],
+  [180, '#e94560'],
+]
+
+// Diverging: car/PT delta in minutes (blue = car faster → white = equal → red = PT faster)
+const DELTA_MIN_COLORS = [
+  [-60, '#1565c0'],
+  [-30, '#42a5f5'],
+  [0, '#f5f5f5'],
+  [30, '#ef5350'],
+  [60, '#b71c1c'],
+]
+
+// Diverging: car/PT delta in % (blue = car faster → white = equal → red = PT faster)
+const DELTA_PCT_COLORS = [
+  [-100, '#1565c0'],
+  [-50, '#42a5f5'],
+  [0, '#f5f5f5'],
+  [50, '#ef5350'],
+  [100, '#b71c1c'],
+]
+
+// Reachable cities count (red = 0 → green = 10)
+const REACHABLE_COLORS = [
+  [0, '#e94560'],
+  [3, '#ef6c00'],
+  [5, '#ffc107'],
+  [7, '#4caf50'],
+  [10, '#1b5e20'],
+]
+
 // Map from colorBy property to its config
 const METRIC_CONFIG = {
   chf_per_m2: {
@@ -45,6 +81,38 @@ const METRIC_CONFIG = {
     gradient: 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)',
     lowLabel: '3k',
     highLabel: '16k+',
+  },
+  avg_car_access: {
+    colors: ACCESS_TIME_COLORS,
+    gradient: 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)',
+    lowLabel: '10m',
+    highLabel: '180m',
+  },
+  avg_pt_access: {
+    colors: ACCESS_TIME_COLORS,
+    gradient: 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)',
+    lowLabel: '10m',
+    highLabel: '180m',
+  },
+  car_pt_delta_min: {
+    colors: DELTA_MIN_COLORS,
+    gradient: 'linear-gradient(to right, #1565c0, #42a5f5, #f5f5f5, #ef5350, #b71c1c)',
+    lowLabel: '-60m',
+    highLabel: '+60m',
+    centerLabel: '0',
+  },
+  car_pt_delta_pct: {
+    colors: DELTA_PCT_COLORS,
+    gradient: 'linear-gradient(to right, #1565c0, #42a5f5, #f5f5f5, #ef5350, #b71c1c)',
+    lowLabel: '-100%',
+    highLabel: '+100%',
+    centerLabel: '0',
+  },
+  reachable_60min: {
+    colors: REACHABLE_COLORS,
+    gradient: 'linear-gradient(to right, #e94560, #ef6c00, #ffc107, #4caf50, #1b5e20)',
+    lowLabel: '0',
+    highLabel: '10',
   },
 }
 
@@ -120,6 +188,12 @@ const LEGEND_LABELS = {
   score_abs_delta: 'Absolute Gain (min)',
   score_delta: 'Accessibility Delta',
   score_accessibility: 'Accessibility Gain',
+  avg_car_access: 'Average Car Travel Time',
+  avg_pt_access: 'Average PT Travel Time',
+  car_pt_delta_min: 'Car \u2212 PT Delta (minutes)',
+  car_pt_delta_pct: 'Car \u2212 PT Delta (%)',
+  score_general_access: 'General Accessibility',
+  reachable_60min: 'Cities Reachable (60 min)',
 }
 
 export default function MapView({
@@ -470,6 +544,7 @@ export default function MapView({
         <div className="legend-labels">
           <span>{config ? config.lowLabel : '0'}</span>
           {!config && <span>25</span>}
+          {config?.centerLabel && <span>{config.centerLabel}</span>}
           {!config && <span>50</span>}
           {!config && <span>75</span>}
           <span>{config ? config.highLabel : '100'}</span>

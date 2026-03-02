@@ -82,6 +82,44 @@ const METRICS = {
     isScore: true,
     hidden: true,
   },
+  avg_car_access: {
+    label: 'Average Car Access',
+    desc: 'Mean driving time to enabled ref. locations (raw minutes, no comfort weighting)',
+    unit: 'min',
+    isScore: false,
+    sortAscending: true,
+  },
+  avg_pt_access: {
+    label: 'Average PT Access',
+    desc: 'Mean public transport time to enabled ref. locations (raw minutes)',
+    unit: 'min',
+    isScore: false,
+    sortAscending: true,
+  },
+  car_pt_delta_min: {
+    label: 'Car \u2212 PT Delta (min)',
+    desc: 'Positive = car slower (PT advantage). Negative = PT slower (car advantage)',
+    unit: 'min',
+    isScore: false,
+  },
+  car_pt_delta_pct: {
+    label: 'Car \u2212 PT Delta (%)',
+    desc: 'Relative car/PT difference. Positive = PT advantage, negative = car advantage',
+    unit: '%',
+    isScore: false,
+  },
+  score_general_access: {
+    label: 'General Accessibility',
+    desc: 'Gravity model: proximity to all 10 major cities, population-weighted. Independent of your selection',
+    unit: '',
+    isScore: true,
+  },
+  reachable_60min: {
+    label: 'Cities Reachable (60 min)',
+    desc: 'How many of 10 major Swiss cities are reachable by car within 1 hour',
+    unit: '',
+    isScore: false,
+  },
 }
 
 function ScoreBar({ value, label, color }) {
@@ -218,19 +256,25 @@ function TopList({ data, onSelect, colorBy }) {
   const top = useMemo(() => {
     if (!data) return []
     const prop = colorBy || 'autonomy_score_rel'
+    const metric = METRICS[prop] || METRICS.autonomy_score_rel
+    const ascending = metric?.sortAscending
 
     // Deduplicate by municipality: pick the best PLZ per municipality
     const byMuni = {}
     for (const f of data.features) {
       if (f.properties[prop] == null || f.properties.excluded) continue
       const key = f.properties.municipality_id || f.properties.id
-      if (!byMuni[key] || f.properties[prop] > byMuni[key].properties[prop]) {
+      if (!byMuni[key] || (ascending
+        ? f.properties[prop] < byMuni[key].properties[prop]
+        : f.properties[prop] > byMuni[key].properties[prop])) {
         byMuni[key] = f
       }
     }
 
     return Object.values(byMuni)
-      .sort((a, b) => b.properties[prop] - a.properties[prop])
+      .sort((a, b) => ascending
+        ? a.properties[prop] - b.properties[prop]
+        : b.properties[prop] - a.properties[prop])
       .slice(0, 10)
   }, [data, colorBy])
 
@@ -543,6 +587,22 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
           <div className="detail-stat-value">{formatTime(p.min_drive_s)}</div>
           <div className="detail-stat-label">Best Drive</div>
         </div>
+        <div className="detail-stat">
+          <div className="detail-stat-value">{formatMinutes(p.avg_car_access)}</div>
+          <div className="detail-stat-label">Avg Car</div>
+        </div>
+        <div className="detail-stat">
+          <div className="detail-stat-value">{formatMinutes(p.avg_pt_access)}</div>
+          <div className="detail-stat-label">Avg PT</div>
+        </div>
+        <div className="detail-stat">
+          <div className="detail-stat-value">{formatScore(p.score_general_access)}</div>
+          <div className="detail-stat-label">General Access</div>
+        </div>
+        <div className="detail-stat">
+          <div className="detail-stat-value">{p.reachable_60min != null ? `${p.reachable_60min} / 10` : '—'}</div>
+          <div className="detail-stat-label">Cities &lt;60m</div>
+        </div>
       </div>
 
       <ScoreBar value={p.score_rel_gain} label="Relative Accessibility Gain" color="var(--accent-blue)" />
@@ -750,6 +810,16 @@ export default function SidePanel({
               <option value="score_post_av">Post-Autonomy Accessibility</option>
               <option value="score_rel_gain">Relative Gain (% improvement)</option>
               <option value="score_abs_delta">Absolute Gain (minutes saved)</option>
+            </optgroup>
+            <optgroup label="Raw Travel Times">
+              <option value="avg_car_access">Average Car Access (min)</option>
+              <option value="avg_pt_access">Average PT Access (min)</option>
+              <option value="car_pt_delta_min">Car − PT Delta (min)</option>
+              <option value="car_pt_delta_pct">Car − PT Delta (%)</option>
+            </optgroup>
+            <optgroup label="General Accessibility">
+              <option value="score_general_access">General Accessibility (gravity)</option>
+              <option value="reachable_60min">Cities Reachable (60 min)</option>
             </optgroup>
           </select>
         </div>
