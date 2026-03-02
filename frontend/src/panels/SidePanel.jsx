@@ -252,9 +252,37 @@ function SearchBox({ data, onSelect }) {
   )
 }
 
-function TopList({ data, onSelect, colorBy }) {
-  const top = useMemo(() => {
-    if (!data) return []
+function RankedList({ items, onSelect, colorBy, startRank = 1 }) {
+  if (items.length === 0) return null
+
+  return (
+    <div className="top-list">
+      {items.map((f, i) => {
+        const val = f.properties[colorBy || 'autonomy_score_rel']
+        return (
+          <div
+            key={f.properties.id}
+            className="top-list-item"
+            onClick={() => onSelect(f)}
+          >
+            <span className="top-list-rank">{startRank + i}</span>
+            <span className="top-list-name">{f.properties.name}</span>
+            <span className="top-list-canton">{f.properties.canton_code}</span>
+            <span className="top-list-score">
+              {colorBy === 'chf_per_m2'
+                ? val?.toLocaleString()
+                : val?.toFixed(1)}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function useRankedData(data, colorBy) {
+  return useMemo(() => {
+    if (!data) return { sorted: [], top: [], bottom: [] }
     const prop = colorBy || 'autonomy_score_rel'
     const metric = METRICS[prop] || METRICS.autonomy_score_rel
     const ascending = metric?.sortAscending
@@ -271,40 +299,29 @@ function TopList({ data, onSelect, colorBy }) {
       }
     }
 
-    return Object.values(byMuni)
+    const sorted = Object.values(byMuni)
       .sort((a, b) => ascending
         ? a.properties[prop] - b.properties[prop]
         : b.properties[prop] - a.properties[prop])
-      .slice(0, 10)
+
+    const top = sorted.slice(0, 10)
+    const bottom = sorted.length > 10 ? sorted.slice(-10).reverse() : []
+
+    return { sorted, top, bottom }
   }, [data, colorBy])
+}
 
-  if (top.length === 0) return null
+function TopList({ data, onSelect, colorBy }) {
+  const { top } = useRankedData(data, colorBy)
+  return <RankedList items={top} onSelect={onSelect} colorBy={colorBy} startRank={1} />
+}
 
-  const metric = METRICS[colorBy] || METRICS.autonomy_score_rel
-
-  return (
-    <div className="top-list">
-      {top.map((f, i) => {
-        const val = f.properties[colorBy || 'autonomy_score_rel']
-        return (
-          <div
-            key={f.properties.id}
-            className="top-list-item"
-            onClick={() => onSelect(f)}
-          >
-            <span className="top-list-rank">{i + 1}</span>
-            <span className="top-list-name">{f.properties.name}</span>
-            <span className="top-list-canton">{f.properties.canton_code}</span>
-            <span className="top-list-score">
-              {colorBy === 'chf_per_m2'
-                ? val?.toLocaleString()
-                : val?.toFixed(1)}
-            </span>
-          </div>
-        )
-      })}
-    </div>
-  )
+function BottomList({ data, onSelect, colorBy }) {
+  const { sorted, bottom } = useRankedData(data, colorBy)
+  if (bottom.length === 0) return null
+  // Start rank is total count minus 9 (so the last item is ranked = total)
+  const startRank = sorted.length - 9
+  return <RankedList items={bottom} onSelect={onSelect} colorBy={colorBy} startRank={startRank} />
 }
 
 const MAX_TIME_OPTIONS = [
@@ -953,7 +970,7 @@ export default function SidePanel({
         />
       )}
 
-      {/* Top 10 ranking */}
+      {/* Top 10 & Bottom 10 ranking */}
       {!selected && (
         <div className="panel-section" style={{ flex: 1 }}>
           <div
@@ -961,14 +978,25 @@ export default function SidePanel({
             onClick={() => setShowTop(!showTop)}
           >
             <h3 style={{ margin: 0 }}>
-              Top 10
+              Top & Bottom 10
               <span style={{ fontWeight: 400, opacity: 0.6, marginLeft: 6 }}>
                 by {METRICS[colorBy]?.label || colorBy}
               </span>
             </h3>
             <span className={`arrow ${showTop ? 'open' : ''}`}>▶</span>
           </div>
-          {showTop && <TopList data={data} onSelect={onSelectFeature} colorBy={colorBy} />}
+          {showTop && (
+            <>
+              <div style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, marginTop: 8, marginBottom: 4 }}>
+                ▲ Top 10
+              </div>
+              <TopList data={data} onSelect={onSelectFeature} colorBy={colorBy} />
+              <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 16, marginBottom: 4, borderTop: '1px solid var(--border)', paddingTop: 8 }}>
+                ▼ Bottom 10
+              </div>
+              <BottomList data={data} onSelect={onSelectFeature} colorBy={colorBy} />
+            </>
+          )}
         </div>
       )}
     </div>
