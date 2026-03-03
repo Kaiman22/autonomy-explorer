@@ -37,7 +37,7 @@ function ptWalkDeduction(popCategory) {
  * Aggregation: bottleneck (worst ref) — accessibility = ability to reach ALL
  * targets. Adding a ref shrinks the high-accessibility region (intersection).
  */
-function recomputeScores(geojson, weights, enabledCities, customLocations, refMaxTimes, modelParams) {
+function recomputeScores(geojson, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy) {
   if (!geojson) return null
   const { avFactor, ptFactor } = modelParams
 
@@ -75,10 +75,10 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     const ptTimes = parseTimes(p.pt_times)
 
     // --- Check max-time constraints ---
-    // Uses RAW travel times (no comfort weighting) — the user's question is
-    // "can I physically reach this city within X hours?" not "does it feel like X hours?"
-    // PT walk deduction is applied consistently (same as in scoring) so
-    // constraints and scores don't contradict each other.
+    // Which travel mode to check depends on the active visualization:
+    //   avg_car_access → car only
+    //   avg_pt_access → PT only
+    //   everything else → min(car, PT) = best available
     let isExcluded = false
     for (const ref of allRefs) {
       if (ref.maxMinutes == null) continue // no limit set
@@ -87,13 +87,22 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
       const walkDed = ptWalkDeduction(p.pop_category)
       const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
 
-      // Raw time to this ref (best of driving or PT, no comfort factor)
-      const candidates = []
-      if (driveS != null) candidates.push(driveS / 60)
-      if (ptS != null) candidates.push(ptS / 60)
-      const bestTime = candidates.length > 0 ? Math.min(...candidates) : Infinity
+      let checkTime = Infinity
+      if (colorBy === 'avg_car_access') {
+        // Car only
+        checkTime = driveS != null ? driveS / 60 : Infinity
+      } else if (colorBy === 'avg_pt_access') {
+        // PT only
+        checkTime = ptS != null ? ptS / 60 : Infinity
+      } else {
+        // Best of car or PT (default for all other views)
+        const candidates = []
+        if (driveS != null) candidates.push(driveS / 60)
+        if (ptS != null) candidates.push(ptS / 60)
+        checkTime = candidates.length > 0 ? Math.min(...candidates) : Infinity
+      }
 
-      if (bestTime > ref.maxMinutes) {
+      if (checkTime > ref.maxMinutes) {
         isExcluded = true
         break
       }
@@ -649,8 +658,8 @@ export default function App() {
   }, [allCities])
 
   const data = useMemo(
-    () => recomputeScores(rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams),
-    [rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams]
+    () => recomputeScores(rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy),
+    [rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy]
   )
 
   const handleSelect = useCallback((feature) => {
