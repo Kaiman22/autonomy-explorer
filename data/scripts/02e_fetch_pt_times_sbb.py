@@ -68,9 +68,12 @@ CITY_STATION_NAMES = {
 CHECKPOINT_PATH = PROCESSED_DIR / "sbb_checkpoint.json"
 OUTPUT_PATH = PROCESSED_DIR / "settlement_travel_times_pt_sbb.json"
 
-# Rate limiting: max requests per second across all workers
-MAX_RPS = 3
-REQUEST_INTERVAL = 1.0 / MAX_RPS  # seconds between requests
+# Rate limiting: the SBB/search.ch backend is rate-limited (undocumented).
+# Testing shows the rate limit is aggressive — a sliding window allows
+# about 3-4 requests before triggering 429. Using 3s interval for safety.
+# With exponential backoff on 429s, actual throughput self-adjusts.
+MAX_RPS = 1
+REQUEST_INTERVAL = 3.0  # seconds between requests
 
 
 def parse_duration(duration_str):
@@ -89,6 +92,7 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
     """
     Fetch a single connection from coordinates to a station.
     Returns travel time in seconds, or None if no connection found.
+    Retries up to 4 times with exponential backoff on 429/5xx errors.
     """
     params = {
         "from": f"{from_coords[0]},{from_coords[1]}",  # lat,lon
@@ -98,37 +102,50 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
         "isArrivalTime": 1,
         "limit": 1,
     }
-    try:
-        resp = requests.get(
-            f"{SBB_API_BASE}/connections",
-            params=params,
-            timeout=timeout,
-        )
-        if resp.status_code == 429:
-            # Rate limited — wait and retry once
-            time_mod.sleep(10)
+    max_retries = 3
+    for attempt in range(max_retries + 1):
+        try:
             resp = requests.get(
                 f"{SBB_API_BASE}/connections",
                 params=params,
                 timeout=timeout,
             )
+            if resp.status_code == 429 or resp.status_code >= 500:
+                if attempt < max_retries:
+                    wait = 10 * (2 ** attempt)  # 10s, 20s, 40s
+                    print(f"    [429] {to_station}, retry {attempt+1}/{max_retries} in {wait}s", flush=True)
+                    time_mod.sleep(wait)
+                    continue
+                else:
+                    print(f"    [FAIL] {to_station} after {max_retries} retries", flush=True)
+                    return None
 
-        resp.raise_for_status()
-        data = resp.json()
+            resp.raise_for_status()
+            data = resp.json()
 
-        connections = data.get("connections", [])
-        if not connections:
+            connections = data.get("connections", [])
+            if not connections:
+                return None
+
+            # Take the first (best) connection
+            duration_str = connections[0].get("duration")
+            return parse_duration(duration_str)
+
+        except requests.exceptions.Timeout:
+            if attempt < max_retries:
+                wait = 10 * (2 ** attempt)
+                print(f"    [TIMEOUT] {to_station}, retry {attempt+1}/{max_retries} in {wait}s", flush=True)
+                time_mod.sleep(wait)
+                continue
             return None
-
-        # Take the first (best) connection
-        duration_str = connections[0].get("duration")
-        return parse_duration(duration_str)
-
-    except requests.exceptions.Timeout:
-        return None
-    except requests.exceptions.RequestException as e:
-        # Log but don't crash
-        return None
+        except requests.exceptions.RequestException as e:
+            if attempt < max_retries:
+                wait = 10 * (2 ** attempt)
+                print(f"    [ERROR] {to_station}: {e}, retry {attempt+1}/{max_retries} in {wait}s", flush=True)
+                time_mod.sleep(wait)
+                continue
+            return None
+    return None
 
 
 def fetch_settlement_times(settlement, city_ids, arrival_times, rate_limiter):
@@ -293,21 +310,21 @@ def main():
                     results[settlement["uuid"]] = times
                     completed += 1
 
-                    if completed % 10 == 0:
-                        elapsed = time_mod.time() - start_time
-                        rate = completed / elapsed * 60 if elapsed > 0 else 0
-                        eta_s = (total_todo - completed) / (rate / 60) if rate > 0 else 0
-                        eta_h = eta_s / 3600
-                        non_null = sum(
-                            1 for v in times.values() if v is not None
-                        )
-                        print(
-                            f"  [{already_done + completed}/{len(settlements)}] "
-                            f"{settlement['name']} ({settlement['canton']}): "
-                            f"{non_null}/{len(city_ids)} cities reachable | "
-                            f"{rate:.1f} settlements/min | ETA {eta_h:.1f}h"
-                        )
-                        sys.stdout.flush()
+                    # Log every settlement for monitoring
+                    elapsed = time_mod.time() - start_time
+                    rate = completed / elapsed * 60 if elapsed > 0 else 0
+                    eta_s = (total_todo - completed) / (rate / 60) if rate > 0 else 0
+                    eta_h = eta_s / 3600
+                    non_null = sum(
+                        1 for v in times.values() if v is not None
+                    )
+                    print(
+                        f"  [{already_done + completed}/{len(settlements)}] "
+                        f"{settlement['name']} ({settlement['canton']}): "
+                        f"{non_null}/{len(city_ids)} cities reachable | "
+                        f"{rate:.1f} settlements/min | ETA {eta_h:.1f}h"
+                    )
+                    sys.stdout.flush()
             else:
                 # Parallel processing
                 with ThreadPoolExecutor(max_workers=args.workers) as executor:
@@ -330,7 +347,7 @@ def main():
 
                         completed += 1
 
-                        if completed % 10 == 0:
+                        if completed % 5 == 0:
                             elapsed = time_mod.time() - start_time
                             rate = completed / elapsed * 60 if elapsed > 0 else 0
                             eta_s = (total_todo - completed) / (rate / 60) if rate > 0 else 0
