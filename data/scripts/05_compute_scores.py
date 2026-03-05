@@ -257,6 +257,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
     # Uses bottleneck (worst city) for both SQ and AV.
     raw_rel_gains = []
     raw_abs_gains = []
+    raw_post_av = []
     for sf in features:
         pop_cat = sf.get("pop_category")
         sq = compute_status_quo_access(sf["driving"], sf["pt"], pop_cat)
@@ -272,6 +273,7 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             if av_candidates:
                 av_times.append(min(av_candidates))
         av_bottleneck = max(av_times) if av_times else None
+        raw_post_av.append(av_bottleneck)
         if sq is not None and av_bottleneck is not None and sq > 0:
             raw_abs_gains.append(sq - av_bottleneck)
             raw_rel_gains.append(((sq - av_bottleneck) / sq) * 100)
@@ -323,6 +325,18 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
 
     norm_attract = normalize_values(raw_attractiveness)
 
+    # Normalize SQ and post-AV (inverted: lower minutes = better = higher score)
+    # Use shared min/max for visual comparability (same as frontend)
+    all_access = [v for v in raw_status_quo + raw_post_av if v is not None]
+    if all_access:
+        access_lo, access_hi = min(all_access), max(all_access)
+        access_range = access_hi - access_lo if access_hi != access_lo else 1
+        norm_sq = [round(((access_hi - v) / access_range) * 100, 1) if v is not None else None for v in raw_status_quo]
+        norm_post_av = [round(((access_hi - v) / access_range) * 100, 1) if v is not None else None for v in raw_post_av]
+    else:
+        norm_sq = [None] * len(features)
+        norm_post_av = [None] * len(features)
+
     # --- Combined Score ---
     w = SCORING_WEIGHTS
     scored = []
@@ -360,6 +374,29 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         drive_times_list = [d.get(c) for c in CITIES if d.get(c) is not None]
         pt_times_list = [pt.get(c) for c in CITIES if pt.get(c) is not None]
 
+        # Average raw car and PT access across all 10 cities (minutes, no comfort)
+        pop_cat = sf.get("pop_category")
+        car_times_min = []
+        pt_times_min = []
+        for city_id in CITIES:
+            ds = d.get(city_id)
+            ps = deduct_pt_walking(pt.get(city_id), pop_cat)
+            if ds is not None:
+                car_times_min.append(ds / 60.0)
+            if ps is not None:
+                pt_times_min.append(ps / 60.0)
+
+        avg_car = sum(car_times_min) / len(car_times_min) if car_times_min else None
+        avg_pt = sum(pt_times_min) / len(pt_times_min) if pt_times_min else None
+
+        if avg_car is not None and avg_pt is not None:
+            delta_min = avg_car - avg_pt
+            avg_mid = (avg_car + avg_pt) / 2
+            delta_pct = (delta_min / avg_mid) * 100 if avg_mid > 0 else None
+        else:
+            delta_min = None
+            delta_pct = None
+
         price_data = sf["price_data"]
         tax_data = sf["tax_data"]
 
@@ -386,14 +423,26 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             "chf_per_m2": price_data.get("chf_per_m2") if price_data else None,
             # Tax (from municipality)
             "tax_multiplier": tax_data.get("multiplier") if tax_data else None,
-            # Status-quo accessibility
+            # Status-quo accessibility (raw minutes, bottleneck)
             "status_quo_access": round(raw_status_quo[i], 1) if raw_status_quo[i] else None,
+            # Post-AV accessibility (raw minutes, bottleneck)
+            "post_av_access": round(raw_post_av[i], 1) if raw_post_av[i] else None,
+            # Absolute delta and relative gain (raw values)
+            "delta_accessibility": round(raw_abs_gains[i], 1) if raw_abs_gains[i] is not None else None,
+            "relative_gain_pct": round(raw_rel_gains[i], 1) if raw_rel_gains[i] is not None else None,
             # Raw inherent attractiveness
             "inherent_attractiveness_raw": round(raw_attractiveness[i], 1) if raw_attractiveness[i] else None,
+            # Average raw travel times (minutes, across all 10 cities)
+            "avg_car_access": round(avg_car, 1) if avg_car is not None else None,
+            "avg_pt_access": round(avg_pt, 1) if avg_pt is not None else None,
+            "car_pt_delta_min": round(delta_min, 1) if delta_min is not None else None,
+            "car_pt_delta_pct": round(delta_pct, 1) if delta_pct is not None else None,
             # Sub-scores (0-100)
             "score_rel_gain": norm_rel_gains[i],
             "score_abs_delta": norm_abs_gains[i],
             "score_attractiveness": norm_attract[i],
+            "score_status_quo": norm_sq[i],
+            "score_post_av": norm_post_av[i],
             # Final scores (0-100) — two variants
             "autonomy_score_rel": round(score_rel, 1) if score_rel is not None else None,
             "autonomy_score_abs": round(score_abs, 1) if score_abs is not None else None,

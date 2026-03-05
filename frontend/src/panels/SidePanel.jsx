@@ -1,11 +1,22 @@
 import React, { useState, useMemo, useCallback } from 'react'
 
+// PT walk deduction — must match App.jsx and config.py
+const PT_WALK_DEDUCTION = {
+  "> 100'000": 180,
+  "50'000 bis 100'000": 240,
+  "10'000 bis 49'999": 360,
+  "2'000 bis 9'999": 480,
+  "1'000 bis 1'999": 600,
+  "100 bis 999": 720,
+}
+const PT_WALK_DEFAULT = 600
+
 function formatTime(seconds) {
   if (seconds == null) return '—'
   const h = Math.floor(seconds / 3600)
   const m = Math.round((seconds % 3600) / 60)
-  if (h > 0) return `${h}h ${m}m`
-  return `${m}m`
+  if (h > 0) return `${h}h ${m} min`
+  return `${m} min`
 }
 
 function formatScore(val) {
@@ -15,7 +26,7 @@ function formatScore(val) {
 
 function formatMinutes(val) {
   if (val == null) return '—'
-  return `${val.toFixed(0)}m`
+  return `${val.toFixed(1)} min`
 }
 
 // Color-by metric definitions
@@ -364,65 +375,86 @@ function CityCheckboxes({ allCities, enabledCities, toggleCity, refMaxTimes, set
   )
 }
 
-function CustomLocationInput({ addCustomLocation }) {
-  const [input, setInput] = useState('')
-  const [searching, setSearching] = useState(false)
+function MunicipalityPicker({ data, addCustomLocation, customLocations }) {
+  const [query, setQuery] = useState('')
+  const [focused, setFocused] = useState(false)
+  const debouncedQuery = useDebounce(query, 150)
 
-  const handleAdd = useCallback(async () => {
-    if (!input.trim()) return
-    setSearching(true)
-
-    try {
-      // Use Nominatim (OpenStreetMap) for geocoding
-      const query = `${input.trim()}, Switzerland`
-      const resp = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=ch`,
-        {
-          headers: { 'User-Agent': 'AutonomyExplorer/1.0' },
-        }
-      )
-      const results = await resp.json()
-
-      if (results.length > 0) {
-        const r = results[0]
-        const loc = {
-          id: `custom_${Date.now()}`,
-          name: r.display_name.split(',')[0],
-          lat: parseFloat(r.lat),
-          lon: parseFloat(r.lon),
-          enabled: true,
-        }
-        addCustomLocation(loc)
-        setInput('')
-      } else {
-        alert('Location not found. Try a more specific address in Switzerland.')
-      }
-    } catch (err) {
-      console.error('Geocoding error:', err)
-      alert('Failed to find location. Please try again.')
-    } finally {
-      setSearching(false)
+  const existingIds = useMemo(() => {
+    const ids = new Set()
+    if (customLocations) {
+      customLocations.forEach((loc) => ids.add(loc.id))
     }
-  }, [input, addCustomLocation])
+    return ids
+  }, [customLocations])
+
+  const results = useMemo(() => {
+    if (!data || debouncedQuery.length < 2) return []
+    const q = normalize(debouncedQuery)
+
+    const byMuni = {}
+    for (const f of data.features) {
+      const nameMatch = normalize(f.properties.name).includes(q)
+      const settlementMatch = normalize(f.properties.settlement_name || '').includes(q)
+      if (!nameMatch && !settlementMatch) continue
+      const key = f.properties.municipality_id || f.properties.id
+      if (existingIds.has(`custom_muni_${key}`)) continue
+      if (!byMuni[key] || (f.properties.autonomy_score_rel || 0) > (byMuni[key].properties.autonomy_score_rel || 0)) {
+        byMuni[key] = f
+      }
+    }
+
+    return Object.values(byMuni)
+      .sort((a, b) => {
+        const aName = normalize(a.properties.name)
+        const bName = normalize(b.properties.name)
+        const aStarts = aName.startsWith(q) ? 0 : 1
+        const bStarts = bName.startsWith(q) ? 0 : 1
+        if (aStarts !== bStarts) return aStarts - bStarts
+        return (b.properties.autonomy_score_rel || 0) - (a.properties.autonomy_score_rel || 0)
+      })
+      .slice(0, 8)
+  }, [data, debouncedQuery, existingIds])
+
+  const handleSelect = useCallback((f) => {
+    const key = f.properties.municipality_id || f.properties.id
+    addCustomLocation({
+      id: `custom_muni_${key}`,
+      name: f.properties.name,
+      lat: f.geometry.coordinates[1],
+      lon: f.geometry.coordinates[0],
+      enabled: true,
+    })
+    setQuery('')
+    setFocused(false)
+  }, [addCustomLocation])
 
   return (
-    <div className="custom-location-input">
+    <div className="search-box" style={{ marginTop: 6 }}>
       <input
         type="text"
-        placeholder="Add address (e.g. Bahnhofstrasse 1, Zürich)"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+        placeholder="Add reference location (search municipality)..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setTimeout(() => setFocused(false), 200)}
         className="search-input"
         style={{ fontSize: 11 }}
       />
-      <button
-        onClick={handleAdd}
-        disabled={searching || !input.trim()}
-        className="add-location-btn"
-      >
-        {searching ? '...' : '+'}
-      </button>
+      {focused && results.length > 0 && (
+        <div className="search-results">
+          {results.map((f) => (
+            <div
+              key={f.properties.id}
+              className="search-result-item"
+              onMouseDown={() => handleSelect(f)}
+            >
+              <span className="search-result-name">{f.properties.name}</span>
+              <span className="search-result-meta">{f.properties.canton_code}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -473,7 +505,7 @@ function CustomLocationsList({ customLocations, toggleCustomLocation, removeCust
   )
 }
 
-function MunicipalityDetail({ feature, onClose, allCities, enabledCities, customLocations, modelParams }) {
+function MunicipalityDetail({ feature, onClose, allCities, enabledCities, customLocations, modelParams, colorBy }) {
   const p = feature.properties
   const driveTimesRaw = p.drive_times
   const ptTimesRaw = p.pt_times
@@ -494,6 +526,18 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         ? '#f57f17'
         : 'var(--accent-blue)'
       : 'var(--text-secondary)'
+
+  // Active metric display
+  const isCompound = colorBy === 'autonomy_score_rel' || colorBy === 'autonomy_score_abs'
+  const activeMetric = METRICS[colorBy]
+  const activeVal = p[colorBy]
+  let activeDisplay = '—'
+  if (activeVal != null) {
+    if (colorBy === 'chf_per_m2') activeDisplay = `${activeVal.toLocaleString()} CHF/m²`
+    else if (activeMetric?.unit === '%') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)}%`
+    else if (activeMetric?.unit === 'min') activeDisplay = `${activeVal.toFixed(1)} min`
+    else activeDisplay = formatScore(activeVal)
+  }
 
   // Combine predefined + custom locations
   const allRefs = { ...allCities }
@@ -546,19 +590,33 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         </button>
       </div>
 
-      <div className="detail-score" style={{ color: scoreColor }}>
-        {formatScore(p.autonomy_score_rel)}
-      </div>
-      <div className="detail-score-label" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-        <span>Compound (rel)</span>
-        <span style={{ color: 'var(--text-secondary)' }}>|</span>
-        <span style={{ color: 'var(--text-secondary)' }}>{formatScore(p.autonomy_score_abs)} (abs)</span>
-      </div>
+      {isCompound ? (
+        <>
+          <div className="detail-score" style={{ color: scoreColor }}>
+            {formatScore(p.autonomy_score_rel)}
+          </div>
+          <div className="detail-score-label" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+            <span>Compound (rel)</span>
+            <span style={{ color: 'var(--text-secondary)' }}>|</span>
+            <span style={{ color: 'var(--text-secondary)' }}>{formatScore(p.autonomy_score_abs)} (abs)</span>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="detail-score" style={{ color: 'var(--accent-blue)' }}>
+            {activeDisplay}
+          </div>
+          <div className="detail-score-label">{activeMetric?.label || colorBy}</div>
+          <div style={{ fontSize: 11, color: 'var(--text-secondary)', textAlign: 'center', marginTop: 4 }}>
+            Compound: {formatScore(p.autonomy_score_rel)} (rel) · {formatScore(p.autonomy_score_abs)} (abs)
+          </div>
+        </>
+      )}
 
       <div className="detail-grid">
         <div className="detail-stat">
           <div className="detail-stat-value">
-            {p.chf_per_m2 != null ? `${p.chf_per_m2.toLocaleString()} CHF` : '—'}
+            {p.chf_per_m2 != null ? `${p.chf_per_m2.toLocaleString()} CHF/m²` : '—'}
           </div>
           <div className="detail-stat-label">Price / m²</div>
         </div>
@@ -636,7 +694,10 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <tbody>
           {sortedRefs.map(([id, name]) => {
             const driveS = driveTimes[id]
-            const ptS = ptTimes[id]
+            const rawPtS = ptTimes[id]
+            // Apply walk deduction to PT times (must match App.jsx scoring)
+            const walkDed = PT_WALK_DEDUCTION[p.pop_category] || PT_WALK_DEFAULT
+            const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
             const isEnabled = enabledSet.has(id)
 
             // Comfort-weighted times — same formula as recomputeScores in App.jsx
@@ -659,18 +720,18 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
               <tr key={id} className={isEnabled ? '' : 'row-disabled'}>
                 <th>{typeof name === 'string' ? name : name}</th>
                 <td title={driveMin != null && ptComfortMin != null
-                  ? `Drive ${Math.round(driveMin)}m vs PT ${Math.round(ptComfortMin)}m (felt)`
+                  ? `Drive ${Math.round(driveMin)} min vs PT ${Math.round(ptComfortMin)} min (felt)`
                   : undefined}>
-                  {bestToday != null ? `${Math.round(bestToday)}m` : '—'}
+                  {bestToday != null ? `${Math.round(bestToday)} min` : '—'}
                 </td>
                 <td title={avDriveMin != null && ptComfortMin != null
-                  ? `AV ${Math.round(avDriveMin)}m vs PT ${Math.round(ptComfortMin)}m (felt)`
+                  ? `AV ${Math.round(avDriveMin)} min vs PT ${Math.round(ptComfortMin)} min (felt)`
                   : undefined}
                   style={{ color: 'var(--accent)' }}>
-                  {bestWithAV != null ? `${Math.round(bestWithAV)}m` : '—'}
+                  {bestWithAV != null ? `${Math.round(bestWithAV)} min` : '—'}
                 </td>
                 <td className={saved > 0 ? 'positive' : saved < 0 ? 'negative' : ''}>
-                  {saved != null ? `${saved > 0 ? '+' : ''}${Math.round(saved)}m` : '—'}
+                  {saved != null ? `${saved > 0 ? '+' : ''}${Math.round(saved)} min` : '—'}
                 </td>
               </tr>
             )
@@ -782,7 +843,7 @@ export default function SidePanel({
               refMaxTimes={refMaxTimes}
               setRefMaxTime={setRefMaxTime}
             />
-            <CustomLocationInput addCustomLocation={addCustomLocation} />
+            <MunicipalityPicker data={data} addCustomLocation={addCustomLocation} customLocations={customLocations} />
           </>
         )}
       </div>
@@ -943,6 +1004,7 @@ export default function SidePanel({
           enabledCities={enabledCities}
           customLocations={customLocations}
           modelParams={modelParams}
+          colorBy={colorBy}
         />
       )}
 

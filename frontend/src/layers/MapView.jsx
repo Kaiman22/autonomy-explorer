@@ -88,16 +88,16 @@ const METRIC_CONFIG = {
   car_pt_delta_min: {
     colors: DELTA_MIN_COLORS,
     gradient: 'linear-gradient(to right, #1565c0, #42a5f5, #f5f5f5, #ef5350, #b71c1c)',
-    lowLabel: '-60m',
-    highLabel: '+60m',
-    centerLabel: '0',
+    lowLabel: '← Car faster',
+    highLabel: 'PT faster →',
+    centerLabel: 'Equal',
   },
   car_pt_delta_pct: {
     colors: DELTA_PCT_COLORS,
     gradient: 'linear-gradient(to right, #1565c0, #42a5f5, #f5f5f5, #ef5350, #b71c1c)',
-    lowLabel: '-100%',
-    highLabel: '+100%',
-    centerLabel: '0',
+    lowLabel: '← Car faster',
+    highLabel: 'PT faster →',
+    centerLabel: 'Equal',
   },
 }
 
@@ -175,8 +175,8 @@ const LEGEND_LABELS = {
   score_accessibility: 'Accessibility Gain',
   avg_car_access: 'Average Car Travel Time',
   avg_pt_access: 'Average PT Travel Time',
-  car_pt_delta_min: 'Car \u2212 PT Delta (minutes)',
-  car_pt_delta_pct: 'Car \u2212 PT Delta (%)',
+  car_pt_delta_min: 'Car vs PT Travel Time (minutes)',
+  car_pt_delta_pct: 'Car vs PT Travel Time (%)',
 }
 
 export default function MapView({
