@@ -68,12 +68,14 @@ CITY_STATION_NAMES = {
 CHECKPOINT_PATH = PROCESSED_DIR / "sbb_checkpoint.json"
 OUTPUT_PATH = PROCESSED_DIR / "settlement_travel_times_pt_sbb.json"
 
-# Rate limiting: the SBB/search.ch backend is rate-limited (undocumented).
-# Testing shows the rate limit is aggressive — a sliding window allows
-# about 3-4 requests before triggering 429. Using 3s interval for safety.
-# With exponential backoff on 429s, actual throughput self-adjusts.
+# Rate limiting: timetable.search.ch has a DAILY request quota (undocumented).
+# Once exceeded, all requests return 429 with "Too many requests today".
+# The limit appears to be ~1000-2000 requests/day per IP.
+# Strategy: 5s between requests, detect daily limit and pause until reset.
 MAX_RPS = 1
-REQUEST_INTERVAL = 3.0  # seconds between requests
+REQUEST_INTERVAL = 5.0  # seconds between requests (conservative)
+DAILY_LIMIT_PAUSE = 3600  # 1 hour pause when daily limit detected
+MAX_CONSECUTIVE_429 = 5   # consecutive 429s before assuming daily limit hit
 
 
 def parse_duration(duration_str):
@@ -88,12 +90,31 @@ def parse_duration(duration_str):
     return None
 
 
+# Global 429 counter for daily-limit detection
+_consecutive_429s = 0
+
+
+def _handle_daily_limit():
+    """Pause when daily limit is detected, waiting for reset."""
+    global _consecutive_429s
+    import datetime
+    now = datetime.datetime.now()
+    # Estimate next reset (midnight CET = 23:00 UTC, or just wait 1h increments)
+    print(f"\n    *** DAILY RATE LIMIT DETECTED at {now.strftime('%H:%M:%S')} ***", flush=True)
+    print(f"    Pausing for {DAILY_LIMIT_PAUSE // 60} minutes before retrying...", flush=True)
+    time_mod.sleep(DAILY_LIMIT_PAUSE)
+    _consecutive_429s = 0
+    print(f"    Resuming after pause at {datetime.datetime.now().strftime('%H:%M:%S')}", flush=True)
+
+
 def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
     """
     Fetch a single connection from coordinates to a station.
     Returns travel time in seconds, or None if no connection found.
-    Retries up to 4 times with exponential backoff on 429/5xx errors.
+    Retries with exponential backoff on 429/5xx errors.
+    Detects daily rate limits and pauses accordingly.
     """
+    global _consecutive_429s
     params = {
         "from": f"{from_coords[0]},{from_coords[1]}",  # lat,lon
         "to": to_station,
@@ -102,7 +123,7 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
         "isArrivalTime": 1,
         "limit": 1,
     }
-    max_retries = 3
+    max_retries = 5
     for attempt in range(max_retries + 1):
         try:
             resp = requests.get(
@@ -111,8 +132,16 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
                 timeout=timeout,
             )
             if resp.status_code == 429 or resp.status_code >= 500:
+                _consecutive_429s += 1
+
+                # Check if this looks like a daily limit
+                if _consecutive_429s >= MAX_CONSECUTIVE_429:
+                    _handle_daily_limit()
+                    # After pause, retry this request from scratch
+                    continue
+
                 if attempt < max_retries:
-                    wait = 10 * (2 ** attempt)  # 10s, 20s, 40s
+                    wait = 30 * (2 ** attempt)  # 30s, 60s, 120s, 240s, 480s
                     print(f"    [429] {to_station}, retry {attempt+1}/{max_retries} in {wait}s", flush=True)
                     time_mod.sleep(wait)
                     continue
@@ -121,6 +150,7 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
                     return None
 
             resp.raise_for_status()
+            _consecutive_429s = 0  # Reset on success
             data = resp.json()
 
             connections = data.get("connections", [])
@@ -133,14 +163,14 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
 
         except requests.exceptions.Timeout:
             if attempt < max_retries:
-                wait = 10 * (2 ** attempt)
+                wait = 30 * (2 ** attempt)
                 print(f"    [TIMEOUT] {to_station}, retry {attempt+1}/{max_retries} in {wait}s", flush=True)
                 time_mod.sleep(wait)
                 continue
             return None
         except requests.exceptions.RequestException as e:
             if attempt < max_retries:
-                wait = 10 * (2 ** attempt)
+                wait = 30 * (2 ** attempt)
                 print(f"    [ERROR] {to_station}: {e}, retry {attempt+1}/{max_retries} in {wait}s", flush=True)
                 time_mod.sleep(wait)
                 continue
@@ -270,7 +300,7 @@ def main():
     print(f"Arrival times: {len(arrival_times)}")
     print(f"Total API calls: ~{len(settlements) * len(city_ids) * len(arrival_times):,}")
     print(f"Workers: {args.workers}")
-    est_hours = len(settlements) * len(city_ids) * len(arrival_times) / MAX_RPS / 3600
+    est_hours = len(settlements) * len(city_ids) * len(arrival_times) * REQUEST_INTERVAL / 3600
     print(f"Estimated time: ~{est_hours:.1f} hours")
     print()
 
