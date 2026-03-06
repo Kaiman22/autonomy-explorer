@@ -16,10 +16,11 @@ Supports resume: saves a checkpoint after every batch of settlements.
 If interrupted, re-running picks up where it left off.
 
 Usage:
-  python 02e_fetch_pt_times_sbb.py                # full run, all settlements
-  python 02e_fetch_pt_times_sbb.py --resume        # resume from checkpoint
-  python 02e_fetch_pt_times_sbb.py --workers 4     # parallel requests
-  python 02e_fetch_pt_times_sbb.py --dry-run       # test with 5 settlements
+  python 02e_fetch_pt_times_sbb.py                          # full run
+  python 02e_fetch_pt_times_sbb.py --resume                 # resume from checkpoint
+  python 02e_fetch_pt_times_sbb.py --vpn protonvpn          # auto-rotate IP via ProtonVPN
+  python 02e_fetch_pt_times_sbb.py --vpn protonvpn --resume # resume with VPN rotation
+  python 02e_fetch_pt_times_sbb.py --dry-run                # test with 5 settlements
 
 Outputs:
   - data/processed/settlement_travel_times_pt_sbb.json (raw settlement-level)
@@ -29,6 +30,7 @@ Outputs:
 import argparse
 import json
 import re
+import subprocess
 import sys
 import time as time_mod
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -90,20 +92,80 @@ def parse_duration(duration_str):
     return None
 
 
-# Global 429 counter for daily-limit detection
+# Global state for daily-limit detection and VPN rotation
 _consecutive_429s = 0
+_used_ips = set()
+_vpn_provider = "none"  # Set via --vpn flag
+
+
+def _get_current_ip():
+    """Get current public IP address."""
+    try:
+        return requests.get("https://api.ipify.org", timeout=10).text.strip()
+    except Exception:
+        return None
+
+
+def _rotate_vpn():
+    """Rotate VPN to get a fresh IP. Returns True on success."""
+    global _used_ips
+    if _vpn_provider != "protonvpn":
+        return False
+
+    # Record current IP as used/exhausted
+    current_ip = _get_current_ip()
+    if current_ip:
+        _used_ips.add(current_ip)
+
+    for attempt in range(20):  # Try up to 20 different servers
+        print(f"    VPN rotation attempt {attempt + 1}...", flush=True)
+        subprocess.run(
+            ["protonvpn-cli", "disconnect"],
+            capture_output=True, timeout=30,
+        )
+        time_mod.sleep(2)
+        result = subprocess.run(
+            ["protonvpn-cli", "connect", "--random"],
+            capture_output=True, text=True, timeout=60,
+        )
+        if result.returncode != 0:
+            print(f"    VPN connect failed: {result.stderr.strip()}", flush=True)
+            time_mod.sleep(5)
+            continue
+
+        time_mod.sleep(5)  # Wait for connection to stabilize
+        new_ip = _get_current_ip()
+
+        if new_ip and new_ip not in _used_ips:
+            _used_ips.add(new_ip)
+            print(f"    New IP: {new_ip} ({len(_used_ips)} IPs used total)", flush=True)
+            return True
+        elif new_ip:
+            print(f"    Duplicate IP: {new_ip} (already rate-limited), trying another...", flush=True)
+
+    print(f"    All {len(_used_ips)} VPN IPs exhausted for today.", flush=True)
+    return False
 
 
 def _handle_daily_limit():
-    """Pause when daily limit is detected, waiting for reset."""
+    """Handle daily rate limit: rotate VPN or pause."""
     global _consecutive_429s
     import datetime
     now = datetime.datetime.now()
-    # Estimate next reset (midnight CET = 23:00 UTC, or just wait 1h increments)
     print(f"\n    *** DAILY RATE LIMIT DETECTED at {now.strftime('%H:%M:%S')} ***", flush=True)
+
+    # Try VPN rotation first
+    if _vpn_provider != "none" and _rotate_vpn():
+        print("    VPN rotated successfully, continuing with new IP...", flush=True)
+        _consecutive_429s = 0
+        return
+
+    # Fallback: sleep and retry later
     print(f"    Pausing for {DAILY_LIMIT_PAUSE // 60} minutes before retrying...", flush=True)
     time_mod.sleep(DAILY_LIMIT_PAUSE)
     _consecutive_429s = 0
+    # After sleeping, clear used IPs (daily limits may have reset)
+    _used_ips.clear()
     print(f"    Resuming after pause at {datetime.datetime.now().strftime('%H:%M:%S')}", flush=True)
 
 
@@ -279,7 +341,23 @@ def main():
         "--arrival-times", type=int, default=None,
         help="Number of arrival times to use (1-3, default: all 3)"
     )
+    parser.add_argument(
+        "--vpn", choices=["protonvpn", "none"], default="none",
+        help="VPN provider for auto IP rotation on daily limit (default: none)"
+    )
     args = parser.parse_args()
+
+    # Configure VPN rotation
+    global _vpn_provider
+    _vpn_provider = args.vpn
+    if _vpn_provider == "protonvpn":
+        ip = _get_current_ip()
+        if ip:
+            _used_ips.add(ip)
+            print(f"VPN mode: protonvpn (current IP: {ip})")
+        else:
+            print("VPN mode: protonvpn (couldn't detect current IP)")
+
 
     # Load settlement data
     with open(PROCESSED_DIR / "settlement_points.json") as f:
