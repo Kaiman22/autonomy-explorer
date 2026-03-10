@@ -30,6 +30,7 @@ Outputs:
 import argparse
 import json
 import re
+import socket
 import subprocess
 import sys
 import time as time_mod
@@ -75,7 +76,7 @@ OUTPUT_PATH = PROCESSED_DIR / "settlement_travel_times_pt_sbb.json"
 # The limit appears to be ~1000-2000 requests/day per IP.
 # Strategy: 5s between requests, detect daily limit and pause until reset.
 MAX_RPS = 1
-REQUEST_INTERVAL = 5.0  # seconds between requests (conservative)
+REQUEST_INTERVAL = 3.0  # seconds between requests
 DAILY_LIMIT_PAUSE = 3600  # 1 hour pause when daily limit detected
 MAX_CONSECUTIVE_429 = 5   # consecutive 429s before assuming daily limit hit
 
@@ -92,23 +93,89 @@ def parse_duration(duration_str):
     return None
 
 
-# Global state for daily-limit detection and VPN rotation
+# Global state for daily-limit detection and VPN/Tor rotation
 _consecutive_429s = 0
-_used_ips = set()
-_vpn_provider = "none"  # Set via --vpn flag
+_used_ips = set()        # IPs used by ProtonVPN (limited pool)
+_ratelimited_ips = set() # IPs that actually got rate-limited (for Tor)
+_vpn_provider = "none"   # Set via --vpn flag
+
+# Tor SOCKS5 proxy config
+TOR_SOCKS_PROXY = "socks5h://127.0.0.1:9050"
+TOR_CONTROL_PORT = 9051
+TOR_CONTROL_PASSWORD = "tor_rotate_123"
+
+
+def _get_tor_session():
+    """Create a requests session routed through Tor."""
+    session = requests.Session()
+    session.proxies = {
+        "http": TOR_SOCKS_PROXY,
+        "https": TOR_SOCKS_PROXY,
+    }
+    return session
+
+
+def _rotate_tor_circuit():
+    """Request a new Tor circuit (new exit node/IP). Returns True on success."""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("127.0.0.1", TOR_CONTROL_PORT))
+        s.send(f'AUTHENTICATE "{TOR_CONTROL_PASSWORD}"\r\n'.encode())
+        resp = s.recv(256).decode().strip()
+        if "250 OK" not in resp:
+            print(f"    Tor auth failed: {resp}", flush=True)
+            s.close()
+            return False
+        s.send(b"SIGNAL NEWNYM\r\n")
+        resp = s.recv(256).decode().strip()
+        s.close()
+        if "250 OK" in resp:
+            time_mod.sleep(8)  # Wait for new circuit to be established
+            return True
+        print(f"    Tor NEWNYM failed: {resp}", flush=True)
+        return False
+    except Exception as e:
+        print(f"    Tor control error: {e}", flush=True)
+        return False
 
 
 def _get_current_ip():
-    """Get current public IP address."""
+    """Get current public IP address (through Tor if in tor mode)."""
     try:
+        if _vpn_provider == "tor":
+            return _get_tor_session().get("https://api.ipify.org", timeout=15).text.strip()
         return requests.get("https://api.ipify.org", timeout=10).text.strip()
     except Exception:
         return None
 
 
 def _rotate_vpn():
-    """Rotate VPN to get a fresh IP. Returns True on success."""
-    global _used_ips
+    """Rotate VPN/Tor to get a fresh IP. Returns True on success."""
+    global _used_ips, _ratelimited_ips
+
+    if _vpn_provider == "tor":
+        # Record current IP as rate-limited (this IP specifically hit the limit)
+        current_ip = _get_current_ip()
+        if current_ip:
+            _ratelimited_ips.add(current_ip)
+            print(f"    Rate-limited IP: {current_ip} ({len(_ratelimited_ips)} IPs blocked)", flush=True)
+
+        for attempt in range(50):  # Tor has ~1000+ exit nodes
+            print(f"    Tor circuit rotation attempt {attempt + 1}...", flush=True)
+            if not _rotate_tor_circuit():
+                continue
+            new_ip = _get_current_ip()
+            if new_ip and new_ip not in _ratelimited_ips:
+                print(f"    New Tor IP: {new_ip} (not rate-limited)", flush=True)
+                return True
+            elif new_ip:
+                print(f"    Tor IP {new_ip} was rate-limited, trying another...", flush=True)
+            else:
+                print(f"    Couldn't detect IP, trying another circuit...", flush=True)
+        print(f"    Failed to get fresh Tor IP after 50 attempts "
+              f"({len(_ratelimited_ips)} IPs rate-limited today).", flush=True)
+        return False
+
     if _vpn_provider != "protonvpn":
         return False
 
@@ -164,8 +231,9 @@ def _handle_daily_limit():
     print(f"    Pausing for {DAILY_LIMIT_PAUSE // 60} minutes before retrying...", flush=True)
     time_mod.sleep(DAILY_LIMIT_PAUSE)
     _consecutive_429s = 0
-    # After sleeping, clear used IPs (daily limits may have reset)
+    # After sleeping, clear used/rate-limited IPs (daily limits may have reset)
     _used_ips.clear()
+    _ratelimited_ips.clear()
     print(f"    Resuming after pause at {datetime.datetime.now().strftime('%H:%M:%S')}", flush=True)
 
 
@@ -186,9 +254,10 @@ def fetch_connection(from_coords, to_station, date, time_str, timeout=30):
         "limit": 1,
     }
     max_retries = 5
+    http_client = _get_tor_session() if _vpn_provider == "tor" else requests
     for attempt in range(max_retries + 1):
         try:
-            resp = requests.get(
+            resp = http_client.get(
                 f"{SBB_API_BASE}/connections",
                 params=params,
                 timeout=timeout,
@@ -342,21 +411,21 @@ def main():
         help="Number of arrival times to use (1-3, default: all 3)"
     )
     parser.add_argument(
-        "--vpn", choices=["protonvpn", "none"], default="none",
-        help="VPN provider for auto IP rotation on daily limit (default: none)"
+        "--vpn", choices=["protonvpn", "tor", "none"], default="none",
+        help="VPN/proxy for auto IP rotation on daily limit (default: none)"
     )
     args = parser.parse_args()
 
-    # Configure VPN rotation
+    # Configure VPN/Tor rotation
     global _vpn_provider
     _vpn_provider = args.vpn
-    if _vpn_provider == "protonvpn":
+    if _vpn_provider in ("protonvpn", "tor"):
         ip = _get_current_ip()
         if ip:
             _used_ips.add(ip)
-            print(f"VPN mode: protonvpn (current IP: {ip})")
+            print(f"IP rotation mode: {_vpn_provider} (current IP: {ip})")
         else:
-            print("VPN mode: protonvpn (couldn't detect current IP)")
+            print(f"IP rotation mode: {_vpn_provider} (couldn't detect current IP)")
 
 
     # Load settlement data
