@@ -322,15 +322,22 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     }
 
     // Average raw car and PT access across enabled refs (no comfort weighting)
+    // Plausibility filter: skip city pairs where PT/car ratio > 3.5 (bad SBB routing,
+    // e.g. API returned overnight connection) or car/PT > 3.5 (car-free settlement inflation)
     const walkDedRaw = ptWalkDeduction(p.pop_category)
     let carSum = 0, carCount = 0
     let ptRawSum = 0, ptRawCount = 0
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
       const rawPtS = ptTimes[ref.id]
-      if (driveS != null) { carSum += driveS / 60; carCount++ }
-      if (rawPtS != null) {
-        ptRawSum += Math.max(0, rawPtS - walkDedRaw) / 60
+      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDedRaw) : null
+      // Check plausibility when both modes available
+      const ratio = (ptS != null && driveS != null && driveS > 0) ? ptS / driveS : null
+      const ptImplausible = ratio != null && ratio > 3.5
+      const carImplausible = ratio != null && ratio < (1 / 3.5)
+      if (driveS != null && !carImplausible) { carSum += driveS / 60; carCount++ }
+      if (ptS != null && !ptImplausible) {
+        ptRawSum += ptS / 60
         ptRawCount++
       }
     }
@@ -662,6 +669,41 @@ export default function App() {
     [rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy]
   )
 
+  // Compute percentile-based color bounds for dynamic map scales
+  const colorBounds = useMemo(() => {
+    if (!data) return {}
+
+    function getValues(prop) {
+      return data.features
+        .filter(f => f.properties[prop] != null && !f.properties.excluded)
+        .map(f => f.properties[prop])
+    }
+
+    function pctl(sorted, p) {
+      const idx = Math.floor(sorted.length * p / 100)
+      return sorted[Math.min(idx, sorted.length - 1)]
+    }
+
+    function bounds(prop) {
+      const vals = getValues(prop)
+      if (vals.length === 0) return null
+      vals.sort((a, b) => a - b)
+      return {
+        p2: pctl(vals, 2),
+        p98: pctl(vals, 98),
+        min: vals[0],
+        max: vals[vals.length - 1],
+      }
+    }
+
+    return {
+      car_pt_delta_min: bounds('car_pt_delta_min'),
+      car_pt_delta_pct: bounds('car_pt_delta_pct'),
+      avg_car_access: bounds('avg_car_access'),
+      avg_pt_access: bounds('avg_pt_access'),
+    }
+  }, [data])
+
   const handleSelect = useCallback((feature) => {
     setSelected((prev) => {
       if (!feature) return null
@@ -746,6 +788,7 @@ export default function App() {
         <MapView
           data={data}
           colorBy={colorBy}
+          colorBounds={colorBounds}
           filterCity={filterCity}
           weights={weights}
           onSelect={handleSelect}

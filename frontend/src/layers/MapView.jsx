@@ -101,6 +101,59 @@ const METRIC_CONFIG = {
   },
 }
 
+// Build CSS gradient for legend with proportional stop positions
+function buildGradientCSS(stops) {
+  const lo = stops[0][0]
+  const hi = stops[stops.length - 1][0]
+  const range = hi - lo || 1
+  return 'linear-gradient(to right, ' +
+    stops.map(([val, color]) => `${color} ${((val - lo) / range * 100).toFixed(1)}%`).join(', ') +
+    ')'
+}
+
+// Build resolved metric config with data-driven percentile color bounds.
+// Falls back to static config when no bounds are available.
+function getResolvedMetricConfig(property, colorBounds) {
+  const b = colorBounds?.[property]
+  const staticConfig = METRIC_CONFIG[property]
+
+  if (property === 'car_pt_delta_min' && b) {
+    const lo = Math.round(b.p2)
+    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
+    const stops = [
+      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
+      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
+    ]
+    return { colors: stops, gradient: buildGradientCSS(stops),
+      lowLabel: `${lo}m`, highLabel: `+${hiPos}m`, centerLabel: '0' }
+  }
+
+  if (property === 'car_pt_delta_pct' && b) {
+    const lo = Math.round(b.p2)
+    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
+    const stops = [
+      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
+      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
+    ]
+    return { colors: stops, gradient: buildGradientCSS(stops),
+      lowLabel: `${lo}%`, highLabel: `+${hiPos}%`, centerLabel: '0' }
+  }
+
+  if ((property === 'avg_car_access' || property === 'avg_pt_access') && b) {
+    const lo = Math.round(b.p2)
+    const hi = Math.round(b.p98)
+    const r = hi - lo || 1
+    const stops = [
+      [lo, '#1b5e20'], [lo + r * 0.25, '#4caf50'], [lo + r * 0.5, '#ffc107'],
+      [lo + r * 0.75, '#ef6c00'], [hi, '#e94560'],
+    ]
+    return { colors: stops, gradient: buildGradientCSS(stops),
+      lowLabel: `${lo}m`, highLabel: `${hi}m` }
+  }
+
+  return staticConfig || null
+}
+
 // Metrics that depend on price data — show no color when price is missing
 const PRICE_DEPENDENT_METRICS = new Set([
   'chf_per_m2',
@@ -109,8 +162,8 @@ const PRICE_DEPENDENT_METRICS = new Set([
   'autonomy_score_abs',
 ])
 
-function getColorExpression(property) {
-  const config = METRIC_CONFIG[property]
+function getColorExpression(property, colorBounds) {
+  const config = getResolvedMetricConfig(property, colorBounds)
   const colors = config ? config.colors : SCORE_COLORS
   const stops = colors.flatMap(([val, color]) => [val, color])
 
@@ -182,6 +235,7 @@ const LEGEND_LABELS = {
 export default function MapView({
   data,
   colorBy,
+  colorBounds,
   filterCity,
   weights,
   onSelect,
@@ -227,6 +281,8 @@ export default function MapView({
   const onHoverRef = useRef(onHover)
   useEffect(() => { onSelectRef.current = onSelect }, [onSelect])
   useEffect(() => { onHoverRef.current = onHover }, [onHover])
+  const colorBoundsRef = useRef(colorBounds)
+  useEffect(() => { colorBoundsRef.current = colorBounds }, [colorBounds])
 
   // Add layers to map (called when data first arrives or after basemap switch)
   function addLayersToMap(map, geojsonData, colorProp, lMode, selId) {
@@ -253,7 +309,7 @@ export default function MapView({
           'case',
           ['==', ['get', 'excluded'], true],
           'rgba(100,100,120,0.3)',
-          getColorExpression(colorProp),
+          getColorExpression(colorProp, colorBoundsRef.current),
         ],
         'circle-opacity': [
           'case',
@@ -280,7 +336,7 @@ export default function MapView({
           'case',
           ['==', ['get', 'excluded'], true],
           'rgba(100,100,120,0.5)',  // grey for excluded
-          getColorExpression(colorProp),
+          getColorExpression(colorProp, colorBoundsRef.current),
         ],
         'circle-opacity': [
           'case',
@@ -375,7 +431,7 @@ export default function MapView({
           'case',
           ['==', ['get', 'excluded'], true],
           'rgba(100,100,120,0.5)',
-          getColorExpression(colorBy),
+          getColorExpression(colorBy, colorBounds),
         ]
       )
       map.setPaintProperty(
@@ -401,7 +457,7 @@ export default function MapView({
           'case',
           ['==', ['get', 'excluded'], true],
           'rgba(100,100,120,0.3)',
-          getColorExpression(colorBy),
+          getColorExpression(colorBy, colorBounds),
         ]
       )
       map.setPaintProperty(
@@ -417,7 +473,7 @@ export default function MapView({
         ]
       )
     }
-  }, [colorBy])
+  }, [colorBy, colorBounds])
 
   // Update layer visibility for mode toggle
   useEffect(() => {
@@ -489,7 +545,7 @@ export default function MapView({
     }
   }, [selected])
 
-  const config = METRIC_CONFIG[colorBy]
+  const config = getResolvedMetricConfig(colorBy, colorBounds)
   const gradientBg = config
     ? config.gradient
     : 'linear-gradient(to right, #1a237e, #4527a0, #f57f17, #e65100, #e94560)'
