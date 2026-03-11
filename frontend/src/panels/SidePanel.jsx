@@ -682,13 +682,17 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
       >
         Travel Times by Reference
       </h3>
+      <div style={{ fontSize: 10, color: 'var(--text-secondary)', marginBottom: 6 }}>
+        Each cell: actual / <span style={{ color: 'var(--accent)' }}>comfort-adjusted</span>.
+        AV comfort ×{avFactor.toFixed(2)}, PT comfort ×{ptFactor.toFixed(2)}.
+      </div>
       <table className="detail-city-table">
         <thead>
           <tr>
             <th>City</th>
-            <th title="Felt time today: best of manual driving (1:1) or PT (×comfort factor)">Today</th>
-            <th title="Felt time with AV: best of AV driving (×AV factor) or PT (×comfort factor)">With AV</th>
-            <th title="Minutes saved: today minus with-AV (same formula used for scoring)">Saved</th>
+            <th title="Car: actual drive time / AV comfort-equivalent (drive × avFactor)">Car</th>
+            <th title="PT: actual time (walk-deducted) / comfort-weighted (PT × ptFactor)">PT</th>
+            <th title="Delta: (Car − PT) actual / (Car AV equiv − PT comfort-weighted)">Delta</th>
           </tr>
         </thead>
         <tbody>
@@ -700,38 +704,38 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
             const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
             const isEnabled = enabledSet.has(id)
 
-            // Comfort-weighted times — same formula as recomputeScores in App.jsx
-            const driveMin = driveS != null ? driveS / 60 : null          // manual drive: factor 1.0
-            const ptComfortMin = ptS != null ? (ptS / 60) * ptFactor : null  // PT × comfort
-            const avDriveMin = driveS != null ? (driveS / 60) * avFactor : null  // AV drive × factor
+            // Raw times in minutes
+            const carActual = driveS != null ? driveS / 60 : null
+            const ptActual = ptS != null ? ptS / 60 : null
 
-            // Best option today = min(manual drive, PT×comfort)
-            const todayCandidates = [driveMin, ptComfortMin].filter((v) => v != null)
-            const bestToday = todayCandidates.length > 0 ? Math.min(...todayCandidates) : null
+            // Comfort-weighted equivalents
+            const carAV = driveS != null ? (driveS / 60) * avFactor : null
+            const ptComfort = ptS != null ? (ptS / 60) * ptFactor : null
 
-            // Best option with AV = min(AV drive, PT×comfort) — you still have PT as an option
-            const avCandidates = [avDriveMin, ptComfortMin].filter((v) => v != null)
-            const bestWithAV = avCandidates.length > 0 ? Math.min(...avCandidates) : null
+            // Delta: car - PT (negative = car faster)
+            const deltaActual = carActual != null && ptActual != null ? carActual - ptActual : null
+            const deltaEquiv = carAV != null && ptComfort != null ? carAV - ptComfort : null
 
-            // Saved = today - withAV (positive = AV saves time)
-            const saved = bestToday != null && bestWithAV != null ? bestToday - bestWithAV : null
+            const fmtDelta = (v) => v != null ? `${v > 0 ? '+' : ''}${Math.round(v)}` : '—'
+            const deltaClass = (v) => v != null ? (v < 0 ? 'positive' : v > 0 ? 'negative' : '') : ''
 
             return (
               <tr key={id} className={isEnabled ? '' : 'row-disabled'}>
-                <th>{typeof name === 'string' ? name : name}</th>
-                <td title={driveMin != null && ptComfortMin != null
-                  ? `Drive ${Math.round(driveMin)} min vs PT ${Math.round(ptComfortMin)} min (felt)`
-                  : undefined}>
-                  {bestToday != null ? `${Math.round(bestToday)} min` : '—'}
+                <th>{name}</th>
+                <td>
+                  {carActual != null
+                    ? <>{Math.round(carActual)} / <span style={{ color: 'var(--accent)' }}>{Math.round(carAV)}</span></>
+                    : '—'}
                 </td>
-                <td title={avDriveMin != null && ptComfortMin != null
-                  ? `AV ${Math.round(avDriveMin)} min vs PT ${Math.round(ptComfortMin)} min (felt)`
-                  : undefined}
-                  style={{ color: 'var(--accent)' }}>
-                  {bestWithAV != null ? `${Math.round(bestWithAV)} min` : '—'}
+                <td>
+                  {ptActual != null
+                    ? <>{Math.round(ptActual)} / <span style={{ color: 'var(--text-secondary)' }}>{Math.round(ptComfort)}</span></>
+                    : '—'}
                 </td>
-                <td className={saved > 0 ? 'positive' : saved < 0 ? 'negative' : ''}>
-                  {saved != null ? `${saved > 0 ? '+' : ''}${Math.round(saved)} min` : '—'}
+                <td className={deltaClass(deltaEquiv)}>
+                  {deltaActual != null
+                    ? <>{fmtDelta(deltaActual)} / <span style={{ fontWeight: 600 }}>{fmtDelta(deltaEquiv)}</span></>
+                    : '—'}
                 </td>
               </tr>
             )
