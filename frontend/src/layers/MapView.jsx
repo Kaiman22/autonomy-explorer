@@ -125,7 +125,7 @@ function getResolvedMetricConfig(property, colorBounds) {
       [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
     ]
     return { colors: stops, gradient: buildGradientCSS(stops),
-      lowLabel: `${lo}m`, highLabel: `+${hiPos}m`, centerLabel: '0' }
+      lowLabel: '← Car faster', highLabel: 'PT faster →', centerLabel: 'Equal' }
   }
 
   if (property === 'car_pt_delta_pct' && b) {
@@ -136,7 +136,7 @@ function getResolvedMetricConfig(property, colorBounds) {
       [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
     ]
     return { colors: stops, gradient: buildGradientCSS(stops),
-      lowLabel: `${lo}%`, highLabel: `+${hiPos}%`, centerLabel: '0' }
+      lowLabel: '← Car faster', highLabel: 'PT faster →', centerLabel: 'Equal' }
   }
 
   if ((property === 'avg_car_access' || property === 'avg_pt_access') && b) {

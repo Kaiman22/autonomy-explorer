@@ -534,7 +534,8 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
   let activeDisplay = '—'
   if (activeVal != null) {
     if (colorBy === 'chf_per_m2') activeDisplay = `${activeVal.toLocaleString()} CHF/m²`
-    else if (activeMetric?.unit === '%') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)}%`
+    else if (colorBy === 'car_pt_delta_min') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)} min`
+    else if (colorBy === 'car_pt_delta_pct') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)}%`
     else if (activeMetric?.unit === 'min') activeDisplay = `${activeVal.toFixed(1)} min`
     else activeDisplay = formatScore(activeVal)
   }
