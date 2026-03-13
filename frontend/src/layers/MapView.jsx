@@ -16,18 +16,6 @@ const BASEMAPS = {
   },
 }
 
-// Standard 0-100 score colors (blue → purple → orange → red)
-const SCORE_COLORS = [
-  [0, '#1a237e'],
-  [20, '#283593'],
-  [35, '#4527a0'],
-  [50, '#f57f17'],
-  [65, '#ef6c00'],
-  [80, '#e65100'],
-  [90, '#e94560'],
-  [100, '#ff1744'],
-]
-
 // Price colors (green → yellow → orange → red)
 const PRICE_COLORS = [
   [3000, '#1b5e20'],
@@ -65,41 +53,13 @@ const DELTA_PCT_COLORS = [
   [100, '#b71c1c'],
 ]
 
-// Map from colorBy property to its config
-const METRIC_CONFIG = {
-  chf_per_m2: {
-    colors: PRICE_COLORS,
-    gradient: 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)',
-    lowLabel: '3k',
-    highLabel: '16k+',
-  },
-  avg_car_access: {
-    colors: ACCESS_TIME_COLORS,
-    gradient: 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)',
-    lowLabel: '10m',
-    highLabel: '180m',
-  },
-  avg_pt_access: {
-    colors: ACCESS_TIME_COLORS,
-    gradient: 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)',
-    lowLabel: '10m',
-    highLabel: '180m',
-  },
-  car_pt_delta_min: {
-    colors: DELTA_MIN_COLORS,
-    gradient: 'linear-gradient(to right, #1565c0, #42a5f5, #f5f5f5, #ef5350, #b71c1c)',
-    lowLabel: '← Car faster',
-    highLabel: 'PT faster →',
-    centerLabel: 'Equal',
-  },
-  car_pt_delta_pct: {
-    colors: DELTA_PCT_COLORS,
-    gradient: 'linear-gradient(to right, #1565c0, #42a5f5, #f5f5f5, #ef5350, #b71c1c)',
-    lowLabel: '← Car faster',
-    highLabel: 'PT faster →',
-    centerLabel: 'Equal',
-  },
-}
+// AV upside: higher = more minutes saved by switching to AV (pale → deep green)
+const AV_UPSIDE_COLORS = [
+  [0, '#e8f5e9'],
+  [5, '#66bb6a'],
+  [10, '#2e7d32'],
+  [20, '#1b5e20'],
+]
 
 // Build CSS gradient for legend with proportional stop positions
 function buildGradientCSS(stops) {
@@ -111,35 +71,62 @@ function buildGradientCSS(stops) {
     ')'
 }
 
+// Map from colorBy property to its config
+const METRIC_CONFIG = {
+  avg_car_access: {
+    colors: ACCESS_TIME_COLORS,
+    gradient: buildGradientCSS(ACCESS_TIME_COLORS),
+    lowLabel: '10m',
+    highLabel: '180m',
+  },
+  avg_pt_access: {
+    colors: ACCESS_TIME_COLORS,
+    gradient: buildGradientCSS(ACCESS_TIME_COLORS),
+    lowLabel: '10m',
+    highLabel: '180m',
+  },
+  optimum_access: {
+    colors: ACCESS_TIME_COLORS,
+    gradient: buildGradientCSS(ACCESS_TIME_COLORS),
+    lowLabel: '10m',
+    highLabel: '180m',
+  },
+  car_pt_delta_min: {
+    colors: DELTA_MIN_COLORS,
+    gradient: buildGradientCSS(DELTA_MIN_COLORS),
+    lowLabel: '\u2190 Car faster',
+    highLabel: 'PT faster \u2192',
+    centerLabel: 'Equal',
+  },
+  car_pt_delta_pct: {
+    colors: DELTA_PCT_COLORS,
+    gradient: buildGradientCSS(DELTA_PCT_COLORS),
+    lowLabel: '\u2190 Car faster',
+    highLabel: 'PT faster \u2192',
+    centerLabel: 'Equal',
+  },
+  av_upside: {
+    colors: AV_UPSIDE_COLORS,
+    gradient: buildGradientCSS(AV_UPSIDE_COLORS),
+    lowLabel: '0m',
+    highLabel: '20m+',
+  },
+  chf_per_m2: {
+    colors: PRICE_COLORS,
+    gradient: buildGradientCSS(PRICE_COLORS),
+    lowLabel: '3k',
+    highLabel: '16k+',
+  },
+}
+
 // Build resolved metric config with data-driven percentile color bounds.
 // Falls back to static config when no bounds are available.
 function getResolvedMetricConfig(property, colorBounds) {
   const b = colorBounds?.[property]
   const staticConfig = METRIC_CONFIG[property]
 
-  if (property === 'car_pt_delta_min' && b) {
-    const lo = Math.round(b.p2)
-    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
-    const stops = [
-      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
-      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
-    ]
-    return { colors: stops, gradient: buildGradientCSS(stops),
-      lowLabel: '← Car faster', highLabel: 'PT faster →', centerLabel: 'Equal' }
-  }
-
-  if (property === 'car_pt_delta_pct' && b) {
-    const lo = Math.round(b.p2)
-    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
-    const stops = [
-      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
-      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
-    ]
-    return { colors: stops, gradient: buildGradientCSS(stops),
-      lowLabel: '← Car faster', highLabel: 'PT faster →', centerLabel: 'Equal' }
-  }
-
-  if ((property === 'avg_car_access' || property === 'avg_pt_access') && b) {
+  // Access time metrics: dynamic p2→p98 range
+  if (['avg_car_access', 'avg_pt_access', 'optimum_access'].includes(property) && b) {
     const lo = Math.round(b.p2)
     const hi = Math.round(b.p98)
     const r = hi - lo || 1
@@ -151,21 +138,53 @@ function getResolvedMetricConfig(property, colorBounds) {
       lowLabel: `${lo}m`, highLabel: `${hi}m` }
   }
 
+  // Diverging delta minutes: asymmetric range anchored at 0
+  if (property === 'car_pt_delta_min' && b) {
+    const lo = Math.round(b.p2)
+    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
+    const stops = [
+      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
+      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
+    ]
+    return { colors: stops, gradient: buildGradientCSS(stops),
+      lowLabel: '\u2190 Car faster', highLabel: 'PT faster \u2192', centerLabel: 'Equal' }
+  }
+
+  // Diverging delta %: asymmetric range anchored at 0
+  if (property === 'car_pt_delta_pct' && b) {
+    const lo = Math.round(b.p2)
+    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
+    const stops = [
+      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
+      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
+    ]
+    return { colors: stops, gradient: buildGradientCSS(stops),
+      lowLabel: '\u2190 Car faster', highLabel: 'PT faster \u2192', centerLabel: 'Equal' }
+  }
+
+  // AV upside: dynamic range (all values positive)
+  if (property === 'av_upside' && b) {
+    const lo = Math.max(0, Math.round(b.p2))
+    const hi = Math.round(b.p98)
+    const r = hi - lo || 1
+    const stops = [
+      [lo, '#e8f5e9'], [lo + r * 0.33, '#66bb6a'],
+      [lo + r * 0.67, '#2e7d32'], [hi, '#1b5e20'],
+    ]
+    return { colors: stops, gradient: buildGradientCSS(stops),
+      lowLabel: `${lo}m`, highLabel: `${hi}m` }
+  }
+
   return staticConfig || null
 }
 
 // Metrics that depend on price data — show no color when price is missing
-const PRICE_DEPENDENT_METRICS = new Set([
-  'chf_per_m2',
-  'score_attractiveness',
-  'autonomy_score_rel',
-  'autonomy_score_abs',
-])
+const PRICE_DEPENDENT_METRICS = new Set(['chf_per_m2'])
 
 function getColorExpression(property, colorBounds) {
   const config = getResolvedMetricConfig(property, colorBounds)
-  const colors = config ? config.colors : SCORE_COLORS
-  const stops = colors.flatMap(([val, color]) => [val, color])
+  if (!config) return ['coalesce', ['get', property], 0]
+  const stops = config.colors.flatMap(([val, color]) => [val, color])
 
   const interpolation = [
     'interpolate',
@@ -179,7 +198,7 @@ function getColorExpression(property, colorBounds) {
     return [
       'case',
       ['==', ['get', property], null],
-      'rgba(100,100,120,0.3)',  // faint grey for no-data
+      'rgba(100,100,120,0.3)',
       interpolation,
     ]
   }
@@ -216,28 +235,19 @@ function getHeatRadiusExpression() {
 
 // Legend labels for each metric
 const LEGEND_LABELS = {
-  autonomy_score_rel: 'Compound (relative)',
-  autonomy_score_abs: 'Compound (absolute)',
-  chf_per_m2: 'Property Price (CHF/m\u00b2)',
-  score_status_quo: 'Status-Quo Accessibility',
-  score_attractiveness: 'Inherent Attractiveness',
-  score_post_av: 'Post-Autonomy Accessibility',
-  score_rel_gain: 'Relative Gain (%)',
-  score_abs_delta: 'Absolute Gain (min)',
-  score_delta: 'Accessibility Delta',
-  score_accessibility: 'Accessibility Gain',
   avg_car_access: 'Average Car Travel Time',
   avg_pt_access: 'Average PT Travel Time',
+  optimum_access: 'Optimum Accessibility (best mode)',
   car_pt_delta_min: 'Car vs PT Travel Time (minutes)',
   car_pt_delta_pct: 'Car vs PT Travel Time (%)',
+  av_upside: 'AV Upside Potential',
+  chf_per_m2: 'Property Price (CHF/m\u00b2)',
 }
 
 export default function MapView({
   data,
   colorBy,
   colorBounds,
-  filterCity,
-  weights,
   onSelect,
   onHover,
   selected,
@@ -296,8 +306,6 @@ export default function MapView({
     const isHeatmap = lMode === 'heatmap'
 
     // Continuous surface layer: large blurred circles that blend together
-    // Colored by the actual metric value (not density), fading to transparent
-    // where there are no data points
     map.addLayer({
       id: 'municipalities-heat',
       type: 'circle',
@@ -319,7 +327,7 @@ export default function MapView({
           0.03,
           0.35,
         ],
-        'circle-blur': 1,   // full Gaussian blur — creates smooth blending
+        'circle-blur': 1,
         'circle-stroke-width': 0,
       },
     })
@@ -335,15 +343,15 @@ export default function MapView({
         'circle-color': [
           'case',
           ['==', ['get', 'excluded'], true],
-          'rgba(100,100,120,0.5)',  // grey for excluded
+          'rgba(100,100,120,0.5)',
           getColorExpression(colorProp, colorBoundsRef.current),
         ],
         'circle-opacity': [
           'case',
           ['==', ['get', 'excluded'], true],
-          0.15,                     // very faint for excluded
+          0.15,
           ['==', ['get', colorProp], null],
-          0.12,                     // very faint for no-data
+          0.12,
           0.75,
         ],
         'circle-stroke-width': 0.5,
@@ -372,7 +380,6 @@ export default function MapView({
     map.on('click', 'municipalities-circles', (e) => {
       if (e.features?.length) onSelectRef.current(e.features[0])
     })
-    // Also allow clicking on heatmap blobs
     map.on('click', 'municipalities-heat', (e) => {
       if (e.features?.length) onSelectRef.current(e.features[0])
     })
@@ -422,7 +429,6 @@ export default function MapView({
     const map = mapRef.current
     if (!map) return
 
-    // Update circles layer
     if (map.getLayer('municipalities-circles')) {
       map.setPaintProperty(
         'municipalities-circles',
@@ -448,7 +454,6 @@ export default function MapView({
       )
     }
 
-    // Update heat surface layer
     if (map.getLayer('municipalities-heat')) {
       map.setPaintProperty(
         'municipalities-heat',
@@ -548,7 +553,7 @@ export default function MapView({
   const config = getResolvedMetricConfig(colorBy, colorBounds)
   const gradientBg = config
     ? config.gradient
-    : 'linear-gradient(to right, #1a237e, #4527a0, #f57f17, #e65100, #e94560)'
+    : 'linear-gradient(to right, #1b5e20, #4caf50, #ffc107, #ef6c00, #e94560)'
 
   return (
     <>
@@ -582,10 +587,7 @@ export default function MapView({
         />
         <div className="legend-labels">
           <span>{config ? config.lowLabel : '0'}</span>
-          {!config && <span>25</span>}
           {config?.centerLabel && <span>{config.centerLabel}</span>}
-          {!config && <span>50</span>}
-          {!config && <span>75</span>}
           <span>{config ? config.highLabel : '100'}</span>
         </div>
       </div>

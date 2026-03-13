@@ -7,37 +7,22 @@ const DATA_URL = './data/municipalities_scored.geojson'
 // Default model parameters (can be adjusted via UI sliders)
 const DEFAULT_MODEL_PARAMS = {
   avFactor: 0.70,     // AV comfort factor (0.5 = very comfortable, 1.0 = same as driving)
-  ptFactor: 0.70,     // PT comfort factor (0.5 = very comfortable, 1.0 = same as driving)
+  ptFactor: 1.00,     // PT comfort factor (1.0 = same burden as driving, lower = PT feels easier)
 }
 
-// Walking deduction from PT times (seconds), varies by population density.
-// Urban areas have nearby PT stops (short walk), rural areas don't.
-// Must match config.py PT_WALK_DEDUCTION_S.
-const PT_WALK_DEDUCTION = {
-  "> 100'000": 180,           // 3 min — dense urban
-  "50'000 bis 100'000": 240,  // 4 min
-  "10'000 bis 49'999": 360,   // 6 min — small city
-  "2'000 bis 9'999": 480,     // 8 min — large village
-  "1'000 bis 1'999": 600,     // 10 min — village
-  "100 bis 999": 720,         // 12 min — small village
-}
-const PT_WALK_DEFAULT = 600    // 10 min fallback
-
-function ptWalkDeduction(popCategory) {
-  return PT_WALK_DEDUCTION[popCategory] || PT_WALK_DEFAULT
-}
+// Valid colorBy metrics (for URL backward-compat validation)
+const VALID_METRICS = [
+  'avg_car_access', 'avg_pt_access', 'optimum_access',
+  'car_pt_delta_min', 'car_pt_delta_pct', 'av_upside', 'chf_per_m2',
+]
 
 /**
- * Recompute all metrics from raw travel times, prices —
- * accounting for which cities/custom locations are enabled, max travel time
- * constraints per ref, and the scoring weights.
- *
- * Each ref has an optional max travel time. Municipalities that exceed ANY
- * ref's max-time constraint are excluded from scoring and normalization.
- * Aggregation: bottleneck (worst ref) — accessibility = ability to reach ALL
- * targets. Adding a ref shrinks the high-accessibility region (intersection).
+ * Recompute all metrics from raw travel times and prices.
+ * All metrics are AVERAGES over SELECTED (enabled) reference locations only.
+ * No walk deduction — PT times used as-is from the TravelTime API.
+ * Comfort factors applied only where explicitly needed (AV upside).
  */
-function recomputeScores(geojson, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy) {
+function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, modelParams, colorBy) {
   if (!geojson) return null
   const { avFactor, ptFactor } = modelParams
 
@@ -46,9 +31,9 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   }
 
   // Combine all reference IDs (city IDs + custom location IDs) with their max time constraint
-  const allRefs = [] // { id, maxMinutes }
+  const allRefs = []
   enabledCities.forEach((id) => {
-    allRefs.push({ id, maxMinutes: refMaxTimes[id] ?? null }) // null = no limit
+    allRefs.push({ id, maxMinutes: refMaxTimes[id] ?? null })
   })
   if (customLocations) {
     customLocations.forEach((loc) => {
@@ -59,17 +44,7 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
   }
   const allRefIds = allRefs.map((r) => r.id)
 
-  // First pass: collect raw values for normalization
-  const rawStatusQuo = []       // status-quo accessibility (lower = better today)
-  const rawPostAV = []          // post-AV accessibility (lower = better with AV)
-  const rawDelta = []           // delta = status_quo - post_AV (higher = more gain, minutes)
-  const rawRelGain = []         // relative gain = (sq - av) / sq * 100 (% improvement)
-  const excluded = []           // true if municipality violates any max-time constraint
-
-  // Temporary arrays for peer-group benchmarking
-  const sqPricePairs = []       // { index, sq, price } for municipalities with both values
-
-  geojson.features.forEach((f, i) => {
+  const features = geojson.features.map((f) => {
     const p = f.properties
     const driveTimes = parseTimes(p.drive_times)
     const ptTimes = parseTimes(p.pt_times)
@@ -81,21 +56,16 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
     //   everything else → min(car, PT) = best available
     let isExcluded = false
     for (const ref of allRefs) {
-      if (ref.maxMinutes == null) continue // no limit set
+      if (ref.maxMinutes == null) continue
       const driveS = driveTimes[ref.id]
-      const rawPtS = ptTimes[ref.id]
-      const walkDed = ptWalkDeduction(p.pop_category)
-      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
+      const ptS = ptTimes[ref.id]
 
       let checkTime = Infinity
       if (colorBy === 'avg_car_access') {
-        // Car only
         checkTime = driveS != null ? driveS / 60 : Infinity
       } else if (colorBy === 'avg_pt_access') {
-        // PT only
         checkTime = ptS != null ? ptS / 60 : Infinity
       } else {
-        // Best of car or PT (default for all other views)
         const candidates = []
         if (driveS != null) candidates.push(driveS / 60)
         if (ptS != null) candidates.push(ptS / 60)
@@ -107,292 +77,93 @@ function recomputeScores(geojson, weights, enabledCities, customLocations, refMa
         break
       }
     }
-    excluded.push(isExcluded)
 
-    // If excluded, still compute values (for detail panel) but they won't
-    // participate in normalization
-    // --- Bottleneck aggregation across refs ---
-    // Use MAX (worst ref) so accessibility = ability to reach ALL targets.
-    // Adding a ref can only shrink the high-accessibility region (intersection),
-    // not grow it (union). This matches the intuition: "I need to commute to
-    // both Zürich AND Basel, so I need to be close to both."
-    const sqTimes = []
-    const avTimes = []
-    const walkDed = ptWalkDeduction(p.pop_category)
-
-    for (const ref of allRefs) {
-      const driveS = driveTimes[ref.id]
-      const rawPtS = ptTimes[ref.id]
-      // Deduct walking to first PT stop (noise from centroid placement)
-      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDed) : null
-
-      // Status quo: best of manual drive or PT for this ref
-      const candidates = []
-      if (driveS != null) candidates.push(driveS / 60)
-      if (ptS != null) candidates.push((ptS / 60) * ptFactor)
-      if (candidates.length > 0) {
-        sqTimes.push(Math.min(...candidates))
-      }
-
-      // Post-AV: best of AV driving or PT
-      const avCandidates = []
-      if (driveS != null) avCandidates.push((driveS / 60) * avFactor)
-      if (ptS != null) avCandidates.push((ptS / 60) * ptFactor)
-      if (avCandidates.length > 0) {
-        avTimes.push(Math.min(...avCandidates))
-      }
-    }
-
-    // Bottleneck: worst (max) time across all refs
-    const sq = sqTimes.length > 0 ? Math.max(...sqTimes) : null
-    rawStatusQuo.push(sq)
-
-    const av = avTimes.length > 0 ? Math.max(...avTimes) : null
-    rawPostAV.push(av)
-
-    // Delta: how much AV improves the bottleneck (absolute minutes)
-    if (sq != null && av != null) {
-      rawDelta.push(sq - av)
-    } else {
-      rawDelta.push(null)
-    }
-
-    // Relative gain: what % of current commute pain does AV eliminate?
-    // This doesn't bias towards remote areas like absolute delta does.
-    if (sq != null && av != null && sq > 0) {
-      rawRelGain.push(((sq - av) / sq) * 100)
-    } else {
-      rawRelGain.push(null)
-    }
-
-    // Collect pairs for peer-group benchmarking
-    const price = p.chf_per_m2
-    if (price != null && sq != null && price > 0) {
-      sqPricePairs.push({ index: i, sq, price })
-    }
-  })
-
-  // --- Inherent attractiveness via peer-group price percentile ---
-  // For each municipality: find all places with similar status-quo accessibility
-  // (within ±15% of commute time), then ask "what % of those peers are cheaper?"
-  //
-  // High percentile = most peers with similar commute are cheaper = this place is
-  // expensive for its accessibility level → inherently desirable (St. Moritz, Gstaad).
-  // People pay a premium NOT for the commute but for nature, prestige, culture.
-  //
-  // Attractiveness = percentile (expensive among peers = inherently desirable).
-  const rawAttractiveness = new Array(geojson.features.length).fill(null)
-  const pricePercentile = new Array(geojson.features.length).fill(null)
-
-  if (sqPricePairs.length > 10) {
-    // Sort by sq for efficient windowing
-    const sorted = [...sqPricePairs].sort((a, b) => a.sq - b.sq)
-
-    for (const entry of sqPricePairs) {
-      // Find peers: places with similar status-quo accessibility.
-      // Adaptive bandwidth: start at ±15% (min ±5 min), widen if too few peers.
-      // This ensures remote areas (few peers) still get a meaningful percentile.
-      let peerPrices = []
-      let pct = 0.15
-      while (pct <= 0.50) {
-        const margin = Math.max(5, entry.sq * pct)
-        const lo = entry.sq - margin
-        const hi = entry.sq + margin
-        peerPrices = []
-        for (const peer of sorted) {
-          if (peer.sq < lo) continue
-          if (peer.sq > hi) break
-          peerPrices.push(peer.price)
-        }
-        if (peerPrices.length >= 10) break  // enough peers
-        pct += 0.10  // widen
-      }
-
-      if (peerPrices.length >= 5) {
-        const cheaper = peerPrices.filter((p) => p < entry.price).length
-        const pctile = (cheaper / peerPrices.length) * 100
-        pricePercentile[entry.index] = Math.round(pctile)
-        rawAttractiveness[entry.index] = pctile
-      }
-    }
-  }
-
-  // Normalize helper — only uses non-excluded municipalities for min/max range
-  // When all values are equal (range=0), returns 50 for all (matches backend).
-  function normalize(values) {
-    const valid = values.filter((v, i) => v !== null && !excluded[i])
-    if (valid.length === 0) return values.map(() => null)
-    const lo = Math.min(...valid)
-    const hi = Math.max(...valid)
-    if (hi === lo) {
-      return values.map((v, i) => v !== null && !excluded[i] ? 50 : null)
-    }
-    const range = hi - lo
-    return values.map((v, i) =>
-      v !== null && !excluded[i] ? Math.round(((v - lo) / range) * 1000) / 10 : null
-    )
-  }
-
-  // Normalize for inverted metrics (lower raw = better = higher score)
-  function normalizeInverted(values) {
-    const valid = values.filter((v, i) => v !== null && !excluded[i])
-    if (valid.length === 0) return values.map(() => null)
-    const lo = Math.min(...valid)
-    const hi = Math.max(...valid)
-    if (hi === lo) {
-      return values.map((v, i) => v !== null && !excluded[i] ? 50 : null)
-    }
-    const range = hi - lo
-    return values.map((v, i) =>
-      v !== null && !excluded[i] ? Math.round(((hi - v) / range) * 1000) / 10 : null
-    )
-  }
-
-  const normDelta = normalize(rawDelta)             // higher abs delta = higher score
-  const normRelGain = normalize(rawRelGain)          // higher % gain = higher score
-  const normAttract = normalize(rawAttractiveness)   // higher attract = higher score
-  // Normalize SQ and post-AV on the SAME scale so they're visually comparable.
-  // Both are raw minutes (lower = better). Using a shared min/max ensures that
-  // if AV improves accessibility everywhere, post-AV scores are uniformly higher.
-  const allAccessValues = rawStatusQuo.concat(rawPostAV)
-  const validAccess = allAccessValues.filter((v, i) => {
-    const origIdx = i >= rawStatusQuo.length ? i - rawStatusQuo.length : i
-    return v !== null && !excluded[origIdx]
-  })
-  const accessLo = validAccess.length > 0 ? Math.min(...validAccess) : 0
-  const accessHi = validAccess.length > 0 ? Math.max(...validAccess) : 1
-  const accessRange = accessHi - accessLo || 1
-
-  function normalizeInvertedShared(values) {
-    return values.map((v, i) =>
-      v !== null && !excluded[i] ? Math.round(((accessHi - v) / accessRange) * 1000) / 10 : null
-    )
-  }
-
-  const normSQ = normalizeInvertedShared(rawStatusQuo)       // shared scale
-  const normPostAV = normalizeInvertedShared(rawPostAV)      // shared scale
-
-  // Second pass: build enriched features
-  const features = geojson.features.map((f, i) => {
-    const p = f.properties
-    const driveTimes = parseTimes(p.drive_times)
-    const ptTimes = parseTimes(p.pt_times)
-
-    const scoreRelGain = normRelGain[i]  // relative gain — used in compound
-    const scoreAbsDelta = normDelta[i]   // absolute delta — separate visualization
-    const scoreAttract = normAttract[i]
-
-    // Two compound scores: one with relative gain (%), one with absolute (min)
-    // Require price data (compound depends on inherent attractiveness which needs price).
-    const hasPrice = p.chf_per_m2 != null
-
-    let scoreRel = null
-    let scoreAbs = null
-    if (hasPrice) {
-      const relComps = []
-      if (scoreRelGain !== null) relComps.push({ v: scoreRelGain, w: weights.accessibility_gain })
-      if (scoreAttract !== null) relComps.push({ v: scoreAttract, w: weights.inherent_attractiveness })
-      if (relComps.length > 0) {
-        const tw = relComps.reduce((s, c) => s + c.w, 0)
-        if (tw > 0) scoreRel = Math.round((relComps.reduce((s, c) => s + c.v * c.w, 0) / tw) * 10) / 10
-      }
-
-      const absComps = []
-      if (scoreAbsDelta !== null) absComps.push({ v: scoreAbsDelta, w: weights.accessibility_gain })
-      if (scoreAttract !== null) absComps.push({ v: scoreAttract, w: weights.inherent_attractiveness })
-      if (absComps.length > 0) {
-        const tw = absComps.reduce((s, c) => s + c.w, 0)
-        if (tw > 0) scoreAbs = Math.round((absComps.reduce((s, c) => s + c.v * c.w, 0) / tw) * 10) / 10
-      }
-    }
-
-    // Per-city gains for detail panel (all cities, not just enabled)
-    const gainPerCity = {}
-    const walkDedDetail = ptWalkDeduction(p.pop_category)
-    for (const [refId, driveS] of Object.entries(driveTimes)) {
-      const rawPtS = ptTimes[refId]
-      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDedDetail) : null
-      if (driveS != null && ptS != null) {
-        const humanDrive = driveS / 60
-        const ptComfort = (ptS / 60) * ptFactor
-        const bestToday = Math.min(humanDrive, ptComfort)
-        const bestPostAV = Math.min((driveS / 60) * avFactor, ptComfort)
-        gainPerCity[refId] = Math.round((bestToday - bestPostAV) * 10) / 10
-      }
-    }
-
-    // Average raw car and PT access across enabled refs (no comfort weighting)
-    // Plausibility filter: skip city pairs where PT/car ratio > 3.5 (bad SBB routing,
-    // e.g. API returned overnight connection) or car/PT > 3.5 (car-free settlement inflation)
-    const walkDedRaw = ptWalkDeduction(p.pop_category)
+    // --- Compute metrics over selected refs (averages) ---
     let carSum = 0, carCount = 0
-    let ptRawSum = 0, ptRawCount = 0
+    let ptSum = 0, ptCount = 0
+    let optimumSum = 0, optimumCount = 0
+    // For AV upside: need both modes available per city
+    let ptComfortSum = 0, avDriveSum = 0, manualDriveSum = 0, bothCount = 0
+
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
-      const rawPtS = ptTimes[ref.id]
-      const ptS = rawPtS != null ? Math.max(0, rawPtS - walkDedRaw) : null
-      // Check plausibility when both modes available
+      const ptS = ptTimes[ref.id]
+
+      // Plausibility filter: skip city pairs where PT/car ratio > 3.5
+      // (bad SBB routing, e.g. overnight connection) or car/PT > 3.5
       const ratio = (ptS != null && driveS != null && driveS > 0) ? ptS / driveS : null
       const ptImplausible = ratio != null && ratio > 3.5
       const carImplausible = ratio != null && ratio < (1 / 3.5)
-      if (driveS != null && !carImplausible) { carSum += driveS / 60; carCount++ }
-      if (ptS != null && !ptImplausible) {
-        ptRawSum += ptS / 60
-        ptRawCount++
+
+      const carMin = driveS != null && !carImplausible ? driveS / 60 : null
+      const ptMin = ptS != null && !ptImplausible ? ptS / 60 : null
+
+      if (carMin != null) { carSum += carMin; carCount++ }
+      if (ptMin != null) { ptSum += ptMin; ptCount++ }
+
+      // Optimum: min(car, pt) per city — use whichever mode is available
+      if (carMin != null && ptMin != null) {
+        optimumSum += Math.min(carMin, ptMin)
+        optimumCount++
+      } else if (carMin != null) {
+        optimumSum += carMin
+        optimumCount++
+      } else if (ptMin != null) {
+        optimumSum += ptMin
+        optimumCount++
+      }
+
+      // AV upside: need both modes for this city
+      if (carMin != null && ptMin != null) {
+        ptComfortSum += ptMin * ptFactor
+        avDriveSum += carMin * avFactor
+        manualDriveSum += carMin
+        bothCount++
       }
     }
-    const avgCarAccess = carCount > 0 ? carSum / carCount : null
-    const avgPtAccess = ptRawCount > 0 ? ptRawSum / ptRawCount : null
-    const carPtDeltaMin = avgCarAccess != null && avgPtAccess != null
-      ? avgCarAccess - avgPtAccess : null  // positive = car slower = PT advantage
-    const avgMid = avgCarAccess != null && avgPtAccess != null
-      ? (avgCarAccess + avgPtAccess) / 2 : null
+
+    const avgCar = carCount > 0 ? carSum / carCount : null
+    const avgPt = ptCount > 0 ? ptSum / ptCount : null
+    const optimumAccess = optimumCount > 0 ? optimumSum / optimumCount : null
+
+    // Delta: positive = car slower = PT advantage
+    const carPtDeltaMin = avgCar != null && avgPt != null ? avgCar - avgPt : null
+    const avgMid = avgCar != null && avgPt != null ? (avgCar + avgPt) / 2 : null
     const carPtDeltaPct = avgMid != null && avgMid > 0
-      ? ((avgCarAccess - avgPtAccess) / avgMid) * 100 : null
+      ? ((avgCar - avgPt) / avgMid) * 100 : null
 
-    // Min drive/pt for enabled refs only
-    const enabledDrive = allRefIds
-      .map((c) => driveTimes[c])
-      .filter((v) => v != null)
-    const enabledPt = allRefIds
-      .map((c) => ptTimes[c])
-      .filter((v) => v != null)
+    // AV upside: condition on averages across selected cities
+    // avg_av_drive < avg_pt_comfort < avg_manual_drive
+    // = places where PT is currently better than manual driving,
+    //   but AV would beat PT. These are the AV opportunity zones.
+    let avUpside = null
+    if (bothCount > 0) {
+      const avgPtComfort = ptComfortSum / bothCount
+      const avgAvDrive = avDriveSum / bothCount
+      const avgManualDrive = manualDriveSum / bothCount
 
-    const isExcl = excluded[i]
+      if (avgAvDrive < avgPtComfort && avgPtComfort < avgManualDrive) {
+        avUpside = avgPtComfort - avgAvDrive  // minutes of AV advantage over PT
+      }
+    }
+
+    // Min drive/pt for enabled refs (for detail panel)
+    const enabledDrive = allRefIds.map((c) => driveTimes[c]).filter((v) => v != null)
+    const enabledPt = allRefIds.map((c) => ptTimes[c]).filter((v) => v != null)
 
     return {
       ...f,
       properties: {
         ...p,
-        // Exclusion flag (municipality violates a max-time constraint)
-        excluded: isExcl,
-        // Raw values (in minutes)
-        status_quo_access: rawStatusQuo[i] != null ? Math.round(rawStatusQuo[i] * 10) / 10 : null,
-        post_av_access: rawPostAV[i] != null ? Math.round(rawPostAV[i] * 10) / 10 : null,
-        delta_accessibility: rawDelta[i] != null ? Math.round(rawDelta[i] * 10) / 10 : null,
-        relative_gain_pct: rawRelGain[i] != null ? Math.round(rawRelGain[i] * 10) / 10 : null,
-        inherent_attractiveness_raw: rawAttractiveness[i] != null ? Math.round(rawAttractiveness[i] * 10) / 10 : null,
-        price_percentile: pricePercentile[i],  // "X% of similar-commute places are cheaper"
-        // Normalized scores (0-100, higher = better) — null if excluded
-        score_accessibility: isExcl ? null : scoreRelGain,
-        score_rel_gain: isExcl ? null : scoreRelGain,
-        score_abs_delta: isExcl ? null : scoreAbsDelta,
-        score_attractiveness: isExcl ? null : scoreAttract,
-        score_status_quo: isExcl ? null : normSQ[i],
-        score_post_av: isExcl ? null : normPostAV[i],
-        score_delta: isExcl ? null : normDelta[i],
-        // Per-city detail
-        gain_per_city: gainPerCity,
-        min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
-        min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
-        // Raw travel time views (average across enabled refs, minutes)
-        avg_car_access: avgCarAccess != null ? Math.round(avgCarAccess * 10) / 10 : null,
-        avg_pt_access: avgPtAccess != null ? Math.round(avgPtAccess * 10) / 10 : null,
+        excluded: isExcluded,
+        avg_car_access: avgCar != null ? Math.round(avgCar * 10) / 10 : null,
+        avg_pt_access: avgPt != null ? Math.round(avgPt * 10) / 10 : null,
+        optimum_access: optimumAccess != null ? Math.round(optimumAccess * 10) / 10 : null,
         car_pt_delta_min: carPtDeltaMin != null ? Math.round(carPtDeltaMin * 10) / 10 : null,
         car_pt_delta_pct: carPtDeltaPct != null ? Math.round(carPtDeltaPct * 10) / 10 : null,
-        // Final combined scores — null if excluded
-        autonomy_score_rel: isExcl ? null : scoreRel,
-        autonomy_score_abs: isExcl ? null : scoreAbs,
+        av_upside: avUpside != null ? Math.round(avUpside * 10) / 10 : null,
+        min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
+        min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
       },
     }
   })
@@ -409,8 +180,6 @@ function getUrlState() {
     if (params.get('cities')) state.enabledCities = params.get('cities').split(',')
     if (params.get('avFactor')) state.avFactor = parseFloat(params.get('avFactor'))
     if (params.get('ptFactor')) state.ptFactor = parseFloat(params.get('ptFactor'))
-    if (params.get('wGain')) state.wGain = parseFloat(params.get('wGain'))
-    if (params.get('wAttract')) state.wAttract = parseFloat(params.get('wAttract'))
     return state
   } catch { return {} }
 }
@@ -418,12 +187,10 @@ function getUrlState() {
 function setUrlState(state) {
   try {
     const params = new URLSearchParams()
-    if (state.colorBy && state.colorBy !== 'autonomy_score_rel') params.set('colorBy', state.colorBy)
+    if (state.colorBy && state.colorBy !== 'avg_car_access') params.set('colorBy', state.colorBy)
     if (state.enabledCities) params.set('cities', state.enabledCities.join(','))
     if (state.avFactor != null && state.avFactor !== DEFAULT_MODEL_PARAMS.avFactor) params.set('avFactor', state.avFactor.toFixed(2))
     if (state.ptFactor != null && state.ptFactor !== DEFAULT_MODEL_PARAMS.ptFactor) params.set('ptFactor', state.ptFactor.toFixed(2))
-    if (state.wGain != null && state.wGain !== 0.5) params.set('wGain', state.wGain.toFixed(2))
-    if (state.wAttract != null && state.wAttract !== 0.5) params.set('wAttract', state.wAttract.toFixed(2))
     const str = params.toString()
     const newUrl = str ? `${window.location.pathname}?${str}` : window.location.pathname
     window.history.replaceState(null, '', newUrl)
@@ -438,12 +205,11 @@ export default function App() {
   const [loadError, setLoadError] = useState(null)
   const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
-  const [colorBy, setColorBy] = useState(urlState.colorBy || 'autonomy_score_rel')
-  const [filterCity, setFilterCity] = useState('best')
-  const [weights, setWeights] = useState({
-    accessibility_gain: urlState.wGain ?? 0.5,
-    inherent_attractiveness: urlState.wAttract ?? 0.5,
-  })
+
+  // Validate colorBy from URL (backward compat: old metrics redirect to default)
+  const initialColorBy = urlState.colorBy && VALID_METRICS.includes(urlState.colorBy)
+    ? urlState.colorBy : 'avg_car_access'
+  const [colorBy, setColorBy] = useState(initialColorBy)
 
   // All available cities from metadata, and which are enabled
   const [allCities, setAllCities] = useState({})
@@ -455,7 +221,7 @@ export default function App() {
   // Per-reference max travel time in minutes (refId → minutes, null = no limit)
   const [refMaxTimes, setRefMaxTimes] = useState({})
 
-  // Model parameters (comfort factors etc.)
+  // Model parameters (comfort factors)
   const [modelParams, setModelParams] = useState({
     avFactor: urlState.avFactor ?? DEFAULT_MODEL_PARAMS.avFactor,
     ptFactor: urlState.ptFactor ?? DEFAULT_MODEL_PARAMS.ptFactor,
@@ -469,12 +235,10 @@ export default function App() {
         enabledCities,
         avFactor: modelParams.avFactor,
         ptFactor: modelParams.ptFactor,
-        wGain: weights.accessibility_gain,
-        wAttract: weights.inherent_attractiveness,
       })
     }, 300)
     return () => clearTimeout(t)
-  }, [colorBy, enabledCities, modelParams, weights])
+  }, [colorBy, enabledCities, modelParams])
 
   useEffect(() => {
     fetch(DATA_URL)
@@ -502,27 +266,19 @@ export default function App() {
   }, [])
 
   // Geoapify API key for frontend routing (custom locations)
-  // Loaded from env at build time or hardcoded for the deployed version
   const geoapifyKey = import.meta.env.VITE_GEOAPIFY_API_KEY || ''
 
   // Add a custom reference location
   const addCustomLocation = useCallback((location) => {
-    // location: { id, name, lat, lon, enabled }
     setCustomLocations((prev) => [...prev, { ...location, enabled: true, loading: true }])
 
-    // Fetch real driving times from Geoapify Routing API for each settlement
-    // We batch this: compute route from custom location to each settlement
     const fetchRoutingTimes = async () => {
       if (!rawData) return
-
-      // Strategy: Use Geoapify Route Matrix API to get times efficiently.
-      // Send batches of 100 settlements as targets with the custom location as source.
-      // Falls back to haversine if no API key or on error.
       const features = rawData.features
-      const results = {} // featureIndex → { drive_s, pt_s }
+      const results = {}
 
       if (geoapifyKey) {
-        const BATCH_SIZE = 100 // 1 source x 100 targets = 100 credits per batch
+        const BATCH_SIZE = 100
         const batches = []
         for (let i = 0; i < features.length; i += BATCH_SIZE) {
           batches.push(features.slice(i, i + BATCH_SIZE).map((f, idx) => ({ f, origIdx: i + idx })))
@@ -565,7 +321,7 @@ export default function App() {
             const s2t = data.sources_to_targets || []
 
             if (s2t.length > 0) {
-              const row = s2t[0] // single source
+              const row = s2t[0]
               row.forEach((cell, tgtIdx) => {
                 const origIdx = batch[tgtIdx].origIdx
                 const driveTime = cell.time != null ? Math.round(cell.time) : null
@@ -576,7 +332,6 @@ export default function App() {
             console.warn(`[Custom location] Fetch error batch ${batchIdx + 1}:`, err.message)
           }
 
-          // Small delay between batches
           if (batchIdx < batches.length - 1) {
             await new Promise((r) => setTimeout(r, 200))
           }
@@ -585,7 +340,6 @@ export default function App() {
         console.log(`[Custom location] Got Geoapify times for ${Object.keys(results).length}/${features.length} settlements`)
       }
 
-      // Apply results: use Geoapify times where available, haversine fallback otherwise
       setRawData((prevData) => {
         if (!prevData) return prevData
         const newFeatures = prevData.features.map((f, i) => {
@@ -595,10 +349,8 @@ export default function App() {
 
           let driveSec
           if (results[i] && results[i].drive_s != null) {
-            // Use real Geoapify driving time (with traffic)
             driveSec = results[i].drive_s
           } else {
-            // Fallback: haversine estimate at 50 km/h (conservative for Swiss roads)
             const coords = f.geometry.coordinates
             const R = 6371
             const dLat = ((location.lat - coords[1]) * Math.PI) / 180
@@ -609,11 +361,9 @@ export default function App() {
                 Math.cos((location.lat * Math.PI) / 180) *
                 Math.sin(dLon / 2) ** 2
             const dist = R * 2 * Math.asin(Math.sqrt(a))
-            // Use 50 km/h (was 70) — more conservative for Swiss mountain/rural roads
             driveSec = Math.round((dist / 50) * 3600)
           }
 
-          // PT estimate: scale from drive time (no API for PT routing from custom loc)
           const ptRatio = driveSec < 1800 ? 1.3 : driveSec < 4800 ? 1.5 : 1.8
           const ptSec = Math.round(driveSec * ptRatio)
 
@@ -628,7 +378,6 @@ export default function App() {
         return { ...prevData, features: newFeatures }
       })
 
-      // Mark custom location as done loading
       setCustomLocations((prev) =>
         prev.map((l) => (l.id === location.id ? { ...l, loading: false } : l))
       )
@@ -653,20 +402,18 @@ export default function App() {
 
   // Reset everything to defaults
   const resetToDefaults = useCallback(() => {
-    setColorBy('autonomy_score_rel')
-    setWeights({ accessibility_gain: 0.5, inherent_attractiveness: 0.5 })
+    setColorBy('avg_car_access')
     setModelParams(DEFAULT_MODEL_PARAMS)
     setEnabledCities(Object.keys(allCities))
     setRefMaxTimes({})
     setCustomLocations([])
     setSelected(null)
-    // Clear URL params
     window.history.replaceState(null, '', window.location.pathname)
   }, [allCities])
 
   const data = useMemo(
-    () => recomputeScores(rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy),
-    [rawData, weights, enabledCities, customLocations, refMaxTimes, modelParams, colorBy]
+    () => recomputeScores(rawData, enabledCities, customLocations, refMaxTimes, modelParams, colorBy),
+    [rawData, enabledCities, customLocations, refMaxTimes, modelParams, colorBy]
   )
 
   // Compute percentile-based color bounds for dynamic map scales
@@ -697,10 +444,12 @@ export default function App() {
     }
 
     return {
-      car_pt_delta_min: bounds('car_pt_delta_min'),
-      car_pt_delta_pct: bounds('car_pt_delta_pct'),
       avg_car_access: bounds('avg_car_access'),
       avg_pt_access: bounds('avg_pt_access'),
+      optimum_access: bounds('optimum_access'),
+      car_pt_delta_min: bounds('car_pt_delta_min'),
+      car_pt_delta_pct: bounds('car_pt_delta_pct'),
+      av_upside: bounds('av_upside'),
     }
   }, [data])
 
@@ -742,9 +491,11 @@ export default function App() {
     const p = hovered.feature.properties
     const val = p[colorBy]
     if (val == null) return 'No data'
-    // For raw minute values, show as minutes
-    if (['status_quo_access', 'post_av_access', 'delta_accessibility', 'avg_car_access', 'avg_pt_access'].includes(colorBy)) {
+    if (['avg_car_access', 'avg_pt_access', 'optimum_access'].includes(colorBy)) {
       return `${val.toFixed(1)} min`
+    }
+    if (colorBy === 'av_upside') {
+      return `${val.toFixed(1)} min saved`
     }
     if (colorBy === 'car_pt_delta_min') {
       return `${val > 0 ? '+' : ''}${val.toFixed(1)} min`
@@ -753,7 +504,7 @@ export default function App() {
       return `${val > 0 ? '+' : ''}${val.toFixed(1)}%`
     }
     if (colorBy === 'chf_per_m2') {
-      return `${val.toLocaleString()} CHF/m²`
+      return `${val.toLocaleString()} CHF/m\u00b2`
     }
     return `${val.toFixed(1)}`
   }, [hovered, colorBy])
@@ -769,7 +520,7 @@ export default function App() {
         {loadError && !loading && (
           <div className="loading-overlay" style={{ background: 'rgba(20,20,30,0.95)' }}>
             <div style={{ textAlign: 'center', color: '#fff', maxWidth: 400, padding: 24 }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>\u26a0\ufe0f</div>
               <h2 style={{ marginBottom: 8 }}>Failed to load data</h2>
               <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 16 }}>{loadError}</p>
               <button
@@ -789,8 +540,6 @@ export default function App() {
           data={data}
           colorBy={colorBy}
           colorBounds={colorBounds}
-          filterCity={filterCity}
-          weights={weights}
           onSelect={handleSelect}
           onHover={handleHover}
           selected={resolvedSelected}
@@ -822,10 +571,6 @@ export default function App() {
         selected={resolvedSelected}
         colorBy={colorBy}
         setColorBy={setColorBy}
-        filterCity={filterCity}
-        setFilterCity={setFilterCity}
-        weights={weights}
-        setWeights={setWeights}
         allCities={allCities}
         enabledCities={enabledCities}
         toggleCity={toggleCity}

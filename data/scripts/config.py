@@ -59,35 +59,10 @@ GOOGLE_ROUTES_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
 ESTV_TAX_URL = "https://swisstaxcalculator.estv.admin.ch/delegate/ost-integration/v1/lg-proxy/operation/c3b67379_ESTV/API_exportManySimpleRates"
 ESTV_TAX_YEAR = 2025
 
-# Scoring weights (defaults, adjustable in frontend)
-# Two-component model:
-#   accessibility_gain: how much AV improves this place's connectivity
-#   inherent_attractiveness: how desirable this place is independent of transport
-#     (= price normalized by current status-quo accessibility)
-SCORING_WEIGHTS = {
-    "accessibility_gain": 0.50,
-    "inherent_attractiveness": 0.50,
-}
-
 # Comfort factors — must match DEFAULT_MODEL_PARAMS in frontend/src/App.jsx
 COMFORT = {
     "av_factor": 0.70,          # AV makes drive time 70% as burdensome
-    "oev_sitting_factor": 0.70, # Sitting on train is 70% as burdensome
-}
-
-# Walking deduction from PT times (seconds), by population category.
-# TravelTime API includes walking to/from PT stops, but the origin walking
-# segment is noise (depends on centroid placement) and disproportionately
-# inflates PT times because walking is slow. Must match frontend/src/App.jsx.
-# Urban areas have nearby PT stops (short walk), rural areas don't.
-PT_WALK_DEDUCTION_S = {
-    "> 100'000": 180,           # 3 min — dense urban, PT stop everywhere
-    "50'000 bis 100'000": 240,  # 4 min
-    "10'000 bis 49'999": 360,   # 6 min — small city/town
-    "2'000 bis 9'999": 480,     # 8 min — large village
-    "1'000 bis 1'999": 600,     # 10 min — village
-    "100 bis 999": 720,         # 12 min — small village, bus stop may be far
-    "default": 600,             # 10 min fallback
+    "oev_sitting_factor": 1.00, # PT comfort factor (1.0 = same burden as driving)
 }
 
 # Arrival times for commuter scenario — multiple departures for robustness.
