@@ -6,6 +6,9 @@ The original 02e script queried "arrive BY 08:00" (isArrivalTime=1),
 which for remote settlements returns overnight connections (depart 11 PM,
 arrive 7:50 AM → 9 hours) instead of the real morning commute (~2-3h).
 
+This affects ~50% of Geneva pairs, ~46% of Lugano pairs, ~32% of St. Gallen,
+and ~24% of Lausanne pairs — a massive data quality issue.
+
 This script:
   1. Identifies pairs with suspected overnight connections
   2. Re-queries the SBB API using DEPARTURE-based queries (isArrivalTime=0)
@@ -14,9 +17,9 @@ This script:
   4. Keeps the shorter of the old and new values
 
 Detection criteria for overnight connections:
-  - PT/car ratio > 2.5 (PT is 2.5x car = something is off)
-  - OR PT > 6 hours absolute (any domestic Swiss trip shouldn't need 6h)
-  - OR PT/car ratio > 3.5 (clearly implausible, even without abs threshold)
+  - PT excess over car > 3 hours (10800s) AND PT/car ratio > 2.0
+    → catches overnight waits where PT includes hours of idle time
+  - OR car is null AND PT > 8 hours (car-free settlement, likely overnight)
 
 Supports checkpoint/resume, VPN/Tor rotation (same as 02e).
 
@@ -71,9 +74,9 @@ MAX_CONSECUTIVE_429 = 5
 DAILY_LIMIT_PAUSE = 3600
 
 # Overnight detection thresholds
-RATIO_THRESHOLD = 2.5      # PT/car > this = suspect
-ABS_THRESHOLD = 21600       # 6 hours in seconds
-RATIO_HARD_THRESHOLD = 3.5  # always flag regardless of absolute
+EXCESS_THRESHOLD = 10800    # 3 hours excess over car time (in seconds)
+RATIO_THRESHOLD = 2.0       # PT/car > this AND excess > threshold = suspect
+CARFREE_ABS_THRESHOLD = 28800  # 8 hours absolute for car-free settlements
 
 
 def parse_duration(duration_str):
@@ -279,12 +282,15 @@ def identify_suspect_pairs(pt_data, drive_data):
     """
     Identify settlement-city pairs with suspected overnight connections.
 
-    Criteria (based on data analysis):
-      - PT/car ratio > 3.0 (clearly implausible — these are the real overnight cases)
-      - Car is null AND PT > 8h (car-free settlements with likely overnight PT)
+    Criteria:
+      - PT excess over car > 3h AND PT/car ratio > 2.0
+        (arrival-based queries returned overnight connections where PT includes
+        hours of idle waiting at a station or overnight train)
+      - Car is null AND PT > 8h (car-free settlement, likely overnight)
 
-    NOT flagged: PT > 6h with ratio < 3.0.  These are legitimate long trips
-    (e.g., remote Graubünden → Geneva = 7h by PT is real, ratio ~2.0).
+    Re-querying with departure-based approach will confirm correct time.
+    False positives are safe — if the current time is already correct,
+    the departure query won't produce a shorter time and we keep the old value.
     """
     cities = list(CITY_STATION_NAMES.keys())
     suspects = []
@@ -302,10 +308,11 @@ def identify_suspect_pairs(pt_data, drive_data):
 
             if dr_s and dr_s > 0:
                 ratio = pt_s / dr_s
-                if ratio > 3.0:
+                excess = pt_s - dr_s
+                if excess > EXCESS_THRESHOLD and ratio > RATIO_THRESHOLD:
                     is_suspect = True
-                    reason = f"ratio={ratio:.1f},pt={pt_s/60:.0f}m"
-            elif dr_s is None and pt_s > 28800:
+                    reason = f"ratio={ratio:.1f},excess={excess/60:.0f}m,pt={pt_s/60:.0f}m"
+            elif dr_s is None and pt_s > CARFREE_ABS_THRESHOLD:
                 # Car-free settlement with PT > 8h — likely overnight
                 is_suspect = True
                 reason = f"no_car,pt={pt_s/60:.0f}m"
