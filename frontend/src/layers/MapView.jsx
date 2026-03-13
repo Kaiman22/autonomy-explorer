@@ -44,6 +44,14 @@ const DELTA_MIN_COLORS = [
   [60, '#b71c1c'],
 ]
 
+// AV value unlock: capitalized CHF from AV time savings (pale yellow → deep amber)
+const AV_VALUE_COLORS = [
+  [10000, '#fff9c4'],
+  [30000, '#fdd835'],
+  [60000, '#ff8f00'],
+  [100000, '#e65100'],
+]
+
 // AV upside: higher = more minutes saved by switching to AV (pale → deep green)
 const AV_UPSIDE_COLORS = [
   [0, '#e8f5e9'],
@@ -94,6 +102,12 @@ const METRIC_CONFIG = {
     gradient: buildGradientCSS(AV_UPSIDE_COLORS),
     lowLabel: '0m',
     highLabel: '20m+',
+  },
+  av_value_unlock: {
+    colors: AV_VALUE_COLORS,
+    gradient: buildGradientCSS(AV_VALUE_COLORS),
+    lowLabel: '10k',
+    highLabel: '100k+',
   },
   chf_per_m2: {
     colors: PRICE_COLORS,
@@ -151,6 +165,19 @@ function getResolvedMetricConfig(property, colorBounds) {
     const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
     return { colors: deduped, gradient: buildGradientCSS(deduped),
       lowLabel: `${deduped[0][0]}m`, highLabel: `${deduped[deduped.length - 1][0]}m` }
+  }
+
+  // AV value unlock: quantile stops (CHF, all positive)
+  if (property === 'av_value_unlock' && b) {
+    const stops = [
+      [Math.round(b.p10), '#fff9c4'],
+      [Math.round(b.p25), '#fdd835'],
+      [Math.round(b.p75), '#ff8f00'],
+      [Math.round(b.p90), '#e65100'],
+    ]
+    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
+    return { colors: deduped, gradient: buildGradientCSS(deduped),
+      lowLabel: `${Math.round(deduped[0][0] / 1000)}k`, highLabel: `${Math.round(deduped[deduped.length - 1][0] / 1000)}k` }
   }
 
   return staticConfig || null
@@ -218,6 +245,7 @@ const LEGEND_LABELS = {
   optimum_access: 'Optimum Accessibility (best mode)',
   car_pt_delta_min: 'Car vs PT Travel Time (minutes)',
   av_upside: 'AV Upside Potential',
+  av_value_unlock: 'AV Value Unlock (CHF)',
   chf_per_m2: 'Property Price (CHF/m\u00b2)',
 }
 

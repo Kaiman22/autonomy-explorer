@@ -8,12 +8,14 @@ const DATA_URL = './data/municipalities_scored.geojson'
 const DEFAULT_MODEL_PARAMS = {
   avFactor: 0.65,     // AV comfort factor (0.5 = very comfortable, 1.0 = same as driving)
   ptFactor: 0.90,     // PT comfort factor (1.0 = same burden as driving, lower = PT feels easier)
+  vtt: 30,            // Value of travel time (CHF/hour) — Swiss commuter literature ~CHF 23–37
+  capRate: 0.04,      // Capitalization rate (perpetuity discount) — typical Swiss RE ~3–5%
 }
 
 // Valid colorBy metrics (for URL backward-compat validation)
 const VALID_METRICS = [
   'avg_car_access', 'avg_pt_access', 'optimum_access',
-  'car_pt_delta_min', 'av_upside', 'chf_per_m2',
+  'car_pt_delta_min', 'av_upside', 'av_value_unlock', 'chf_per_m2',
 ]
 
 /**
@@ -24,7 +26,7 @@ const VALID_METRICS = [
  */
 function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, modelParams, colorBy) {
   if (!geojson) return null
-  const { avFactor, ptFactor } = modelParams
+  const { avFactor, ptFactor, vtt = 30, capRate = 0.04 } = modelParams
 
   function parseTimes(raw) {
     return typeof raw === 'string' ? JSON.parse(raw) : raw || {}
@@ -144,6 +146,12 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
       }
     }
 
+    // AV Value Unlock: capitalize AV upside minutes into CHF
+    // Formula: upside_min × 2 trips × 220 workdays × (VTT_per_hour / 60) / cap_rate
+    const avValueUnlock = avUpside != null
+      ? Math.round(avUpside * 2 * 220 * (vtt / 60) / capRate)
+      : null
+
     // Min drive/pt for enabled refs (for detail panel)
     const enabledDrive = allRefIds.map((c) => driveTimes[c]).filter((v) => v != null)
     const enabledPt = allRefIds.map((c) => ptTimes[c]).filter((v) => v != null)
@@ -158,6 +166,7 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
         optimum_access: optimumAccess != null ? Math.round(optimumAccess * 10) / 10 : null,
         car_pt_delta_min: carPtDeltaMin != null ? Math.round(carPtDeltaMin * 10) / 10 : null,
         av_upside: avUpside != null ? Math.round(avUpside * 10) / 10 : null,
+        av_value_unlock: avValueUnlock,
         min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
         min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
       },
@@ -450,6 +459,7 @@ export default function App() {
       optimum_access: bounds('optimum_access'),
       car_pt_delta_min: bounds('car_pt_delta_min'),
       av_upside: bounds('av_upside'),
+      av_value_unlock: bounds('av_value_unlock'),
     }
   }, [data])
 
@@ -496,6 +506,9 @@ export default function App() {
     }
     if (colorBy === 'av_upside') {
       return `${val.toFixed(1)} min saved`
+    }
+    if (colorBy === 'av_value_unlock') {
+      return `CHF ${Math.round(val).toLocaleString()}`
     }
     if (colorBy === 'car_pt_delta_min') {
       return `${val > 0 ? '+' : ''}${val.toFixed(1)} min`

@@ -43,6 +43,11 @@ const METRICS = {
     desc: 'Places where PT currently beats manual driving, but AV would beat PT. Shows minutes saved by AV vs PT \u2014 the untapped potential of autonomous vehicles. Places without AV upside are filtered out.',
     unit: 'min',
   },
+  av_value_unlock: {
+    label: 'AV Value Unlock',
+    desc: 'Latent property value unlocked by autonomous vehicles. Converts AV time savings into CHF via value-of-time and capitalization rate: annual minutes saved × VTT, discounted as a perpetuity.',
+    unit: 'CHF',
+  },
   chf_per_m2: {
     label: 'Property Price (CHF/m\u00b2)',
     desc: 'Estimated property price per square meter',
@@ -156,6 +161,8 @@ function RankedList({ items, onSelect, colorBy, startRank = 1 }) {
             <span className="top-list-score">
               {colorBy === 'chf_per_m2'
                 ? val?.toLocaleString()
+                : colorBy === 'av_value_unlock'
+                ? val != null ? `${Math.round(val / 1000)}k` : '\u2014'
                 : colorBy === 'car_pt_delta_min' || colorBy === 'av_upside'
                 ? val != null ? `${val > 0 ? '+' : ''}${val.toFixed(1)}` : '\u2014'
                 : val?.toFixed(1)}
@@ -415,6 +422,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
     if (colorBy === 'chf_per_m2') activeDisplay = `${activeVal.toLocaleString()} CHF/m\u00b2`
     else if (colorBy === 'car_pt_delta_min') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)} min`
     else if (colorBy === 'av_upside') activeDisplay = `${activeVal.toFixed(1)} min saved`
+    else if (colorBy === 'av_value_unlock') activeDisplay = `CHF ${Math.round(activeVal).toLocaleString()}`
     else if (activeMetric?.unit === 'min') activeDisplay = `${activeVal.toFixed(1)} min`
     else activeDisplay = activeVal.toFixed(1)
   }
@@ -505,6 +513,12 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
             {p.av_upside != null ? `${p.av_upside.toFixed(1)} min` : '\u2014'}
           </div>
           <div className="detail-stat-label">AV Upside</div>
+        </div>
+        <div className="detail-stat">
+          <div className="detail-stat-value">
+            {p.av_value_unlock != null ? `CHF ${p.av_value_unlock.toLocaleString()}` : '\u2014'}
+          </div>
+          <div className="detail-stat-label">AV Value</div>
         </div>
       </div>
 
@@ -695,6 +709,7 @@ export default function SidePanel({
             <optgroup label="Mode Comparison">
               <option value="car_pt_delta_min">Car − PT Delta (min)</option>
               <option value="av_upside">AV Upside Potential</option>
+              <option value="av_value_unlock">AV Value Unlock (CHF)</option>
             </optgroup>
             <optgroup label="Pricing">
               <option value="chf_per_m2">Property Price (CHF/m²)</option>
@@ -783,6 +798,56 @@ export default function SidePanel({
                   : Math.round(60 * modelParams.avFactor) < 55
                   ? 'AVs help somewhat \u2014 not having to focus on driving is nice, but it still feels like commuting.'
                   : 'AVs don\'t change much for you \u2014 sitting in a car is sitting in a car, whether you drive or not.'}
+              </div>
+            </div>
+
+            <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid var(--border)' }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>
+                Economic Assumptions (AV Value Unlock)
+              </div>
+
+              <div className="control-group">
+                <label style={{ lineHeight: 1.3 }}>Value of travel time</label>
+                <div style={{ fontSize: 10, color: 'var(--text-secondary)', marginBottom: 4, lineHeight: 1.3 }}>
+                  What is one hour of commute time worth to you? Swiss literature: CHF 23{'\u2013'}37/h.
+                </div>
+                <div className="slider-row">
+                  <input
+                    type="range"
+                    min="10"
+                    max="60"
+                    step="5"
+                    value={modelParams.vtt}
+                    onChange={(e) =>
+                      setModelParams((p) => ({ ...p, vtt: parseInt(e.target.value) }))
+                    }
+                  />
+                  <span className="slider-value" style={{ minWidth: 54 }}>
+                    CHF {modelParams.vtt}/h
+                  </span>
+                </div>
+              </div>
+
+              <div className="control-group">
+                <label style={{ lineHeight: 1.3 }}>Capitalization rate</label>
+                <div style={{ fontSize: 10, color: 'var(--text-secondary)', marginBottom: 4, lineHeight: 1.3 }}>
+                  Discount rate for perpetuity. Lower = higher capitalized value. Swiss RE: 3{'\u2013'}5%.
+                </div>
+                <div className="slider-row">
+                  <input
+                    type="range"
+                    min="2"
+                    max="8"
+                    step="0.5"
+                    value={modelParams.capRate * 100}
+                    onChange={(e) =>
+                      setModelParams((p) => ({ ...p, capRate: parseFloat(e.target.value) / 100 }))
+                    }
+                  />
+                  <span className="slider-value" style={{ minWidth: 44 }}>
+                    {(modelParams.capRate * 100).toFixed(1)}%
+                  </span>
+                </div>
               </div>
             </div>
           </div>
