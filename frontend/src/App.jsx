@@ -437,6 +437,11 @@ export default function App() {
       vals.sort((a, b) => a - b)
       return {
         p2: pctl(vals, 2),
+        p10: pctl(vals, 10),
+        p25: pctl(vals, 25),
+        p50: pctl(vals, 50),
+        p75: pctl(vals, 75),
+        p90: pctl(vals, 90),
         p98: pctl(vals, 98),
         min: vals[0],
         max: vals[vals.length - 1],

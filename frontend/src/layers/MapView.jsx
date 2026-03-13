@@ -119,60 +119,67 @@ const METRIC_CONFIG = {
   },
 }
 
-// Build resolved metric config with data-driven percentile color bounds.
+// Build resolved metric config with quantile-based color stops.
+// Each color band covers ~equal number of data points for maximum contrast.
 // Falls back to static config when no bounds are available.
 function getResolvedMetricConfig(property, colorBounds) {
   const b = colorBounds?.[property]
   const staticConfig = METRIC_CONFIG[property]
 
-  // Access time metrics: dynamic p2→p98 range
+  // Access time metrics: quantile stops at p10, p25, p50, p75, p90
   if (['avg_car_access', 'avg_pt_access', 'optimum_access'].includes(property) && b) {
-    const lo = Math.round(b.p2)
-    const hi = Math.round(b.p98)
-    const r = hi - lo || 1
     const stops = [
-      [lo, '#1b5e20'], [lo + r * 0.25, '#4caf50'], [lo + r * 0.5, '#ffc107'],
-      [lo + r * 0.75, '#ef6c00'], [hi, '#e94560'],
+      [Math.round(b.p10), '#1b5e20'],
+      [Math.round(b.p25), '#4caf50'],
+      [Math.round(b.p50), '#ffc107'],
+      [Math.round(b.p75), '#ef6c00'],
+      [Math.round(b.p90), '#e94560'],
     ]
-    return { colors: stops, gradient: buildGradientCSS(stops),
-      lowLabel: `${lo}m`, highLabel: `${hi}m` }
+    // Deduplicate stops with identical values (can happen with sparse data)
+    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
+    return { colors: deduped, gradient: buildGradientCSS(deduped),
+      lowLabel: `${deduped[0][0]}m`, highLabel: `${deduped[deduped.length - 1][0]}m` }
   }
 
-  // Diverging delta minutes: asymmetric range anchored at 0
+  // Diverging delta: quantile stops on each side of zero
   if (property === 'car_pt_delta_min' && b) {
-    const lo = Math.round(b.p2)
-    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
+    // Negative side (car faster): p10 → p25, zero, positive side: p75 → p90
     const stops = [
-      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
-      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
+      [Math.round(b.p10), '#1565c0'],
+      [Math.round(b.p25), '#42a5f5'],
+      [0, '#f5f5f5'],
+      [Math.round(b.p75), '#ef5350'],
+      [Math.round(b.p90), '#b71c1c'],
     ]
-    return { colors: stops, gradient: buildGradientCSS(stops),
+    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
+    return { colors: deduped, gradient: buildGradientCSS(deduped),
       lowLabel: '\u2190 Car faster', highLabel: 'PT faster \u2192', centerLabel: 'Equal' }
   }
 
-  // Diverging delta %: asymmetric range anchored at 0
   if (property === 'car_pt_delta_pct' && b) {
-    const lo = Math.round(b.p2)
-    const hiPos = Math.round(Math.max(b.max, Math.abs(lo) * 0.1, 5))
     const stops = [
-      [lo, '#1565c0'], [lo / 2, '#42a5f5'], [0, '#f5f5f5'],
-      [hiPos / 2, '#ef5350'], [hiPos, '#b71c1c'],
+      [Math.round(b.p10), '#1565c0'],
+      [Math.round(b.p25), '#42a5f5'],
+      [0, '#f5f5f5'],
+      [Math.round(b.p75), '#ef5350'],
+      [Math.round(b.p90), '#b71c1c'],
     ]
-    return { colors: stops, gradient: buildGradientCSS(stops),
+    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
+    return { colors: deduped, gradient: buildGradientCSS(deduped),
       lowLabel: '\u2190 Car faster', highLabel: 'PT faster \u2192', centerLabel: 'Equal' }
   }
 
-  // AV upside: dynamic range (all values positive)
+  // AV upside: quantile stops (all values positive)
   if (property === 'av_upside' && b) {
-    const lo = Math.max(0, Math.round(b.p2))
-    const hi = Math.round(b.p98)
-    const r = hi - lo || 1
     const stops = [
-      [lo, '#e8f5e9'], [lo + r * 0.33, '#66bb6a'],
-      [lo + r * 0.67, '#2e7d32'], [hi, '#1b5e20'],
+      [Math.round(b.p10), '#e8f5e9'],
+      [Math.round(b.p25), '#66bb6a'],
+      [Math.round(b.p75), '#2e7d32'],
+      [Math.round(b.p90), '#1b5e20'],
     ]
-    return { colors: stops, gradient: buildGradientCSS(stops),
-      lowLabel: `${lo}m`, highLabel: `${hi}m` }
+    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
+    return { colors: deduped, gradient: buildGradientCSS(deduped),
+      lowLabel: `${deduped[0][0]}m`, highLabel: `${deduped[deduped.length - 1][0]}m` }
   }
 
   return staticConfig || null
