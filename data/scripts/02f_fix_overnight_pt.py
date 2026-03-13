@@ -36,7 +36,9 @@ import re
 import socket
 import subprocess
 import sys
+import threading
 import time as time_mod
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
@@ -69,9 +71,12 @@ CITY_STATION_NAMES = {
 }
 
 CHECKPOINT_PATH = PROCESSED_DIR / "sbb_fix_checkpoint.json"
-REQUEST_INTERVAL = 3.0
-MAX_CONSECUTIVE_429 = 5
-DAILY_LIMIT_PAUSE = 3600
+INITIAL_INTERVAL = 2.0  # start at 2s between requests
+MIN_INTERVAL = 1.5      # fastest we'll go after sustained success
+MAX_INTERVAL = 10.0     # slowest after rate limit
+MAX_CONCURRENT = 1      # single-threaded (SBB API rate limits aggressively)
+MAX_CONSECUTIVE_429 = 3
+DAILY_LIMIT_PAUSE = 120 # 2 min pause on sustained rate limit
 
 # Overnight detection thresholds
 EXCESS_THRESHOLD = 10800    # 3 hours excess over car time (in seconds)
@@ -105,6 +110,7 @@ def parse_datetime(dt_str):
 # --- VPN/Tor rotation (same as 02e) ---
 
 _consecutive_429s = 0
+_rate_lock = threading.Lock()
 _used_ips = set()
 _ratelimited_ips = set()
 _vpn_provider = "none"
@@ -217,21 +223,27 @@ def fetch_departure_connection(from_coords, to_station, date, time_str, timeout=
 
     for attempt in range(max_retries + 1):
         try:
+            adaptive_rate_wait()
             resp = http_client.get(f"{SBB_API_BASE}/connections", params=params, timeout=timeout)
 
             if resp.status_code == 429 or resp.status_code >= 500:
-                _consecutive_429s += 1
-                if _consecutive_429s >= MAX_CONSECUTIVE_429:
+                rate_limit_hit()
+                with _rate_lock:
+                    _consecutive_429s += 1
+                    consec = _consecutive_429s
+                if consec >= MAX_CONSECUTIVE_429:
                     _handle_daily_limit()
                     continue
                 if attempt < max_retries:
-                    wait = 30 * (2 ** attempt)
+                    wait = 15 * (2 ** attempt)
                     time_mod.sleep(wait)
                     continue
                 return None, None
 
             resp.raise_for_status()
-            _consecutive_429s = 0
+            rate_limit_ok()
+            with _rate_lock:
+                _consecutive_429s = 0
             data = resp.json()
             connections = data.get("connections", [])
             if not connections:
@@ -323,19 +335,36 @@ def identify_suspect_pairs(pt_data, drive_data):
     return suspects
 
 
-def create_rate_limiter():
-    import threading
-    lock = threading.Lock()
-    last_request = [0.0]
+_rate_state = {
+    'lock': threading.Lock(),
+    'last_request': 0.0,
+    'interval': INITIAL_INTERVAL,
+    'success_streak': 0,
+}
 
-    def wait():
-        with lock:
-            now = time_mod.time()
-            elapsed = now - last_request[0]
-            if elapsed < REQUEST_INTERVAL:
-                time_mod.sleep(REQUEST_INTERVAL - elapsed)
-            last_request[0] = time_mod.time()
-    return wait
+def adaptive_rate_wait():
+    """Adaptive rate limiter: slows down on 429, speeds up after sustained success."""
+    with _rate_state['lock']:
+        now = time_mod.time()
+        elapsed = now - _rate_state['last_request']
+        if elapsed < _rate_state['interval']:
+            time_mod.sleep(_rate_state['interval'] - elapsed)
+        _rate_state['last_request'] = time_mod.time()
+
+def rate_limit_hit():
+    """Called when we get a 429 — doubles the interval."""
+    with _rate_state['lock']:
+        _rate_state['interval'] = min(_rate_state['interval'] * 2, MAX_INTERVAL)
+        _rate_state['success_streak'] = 0
+        print(f"    Rate limit hit, interval → {_rate_state['interval']:.1f}s", flush=True)
+
+def rate_limit_ok():
+    """Called on successful request — gradually reduces interval."""
+    with _rate_state['lock']:
+        _rate_state['success_streak'] += 1
+        if _rate_state['success_streak'] >= 20 and _rate_state['interval'] > MIN_INTERVAL:
+            _rate_state['interval'] = max(_rate_state['interval'] * 0.9, MIN_INTERVAL)
+            _rate_state['success_streak'] = 0
 
 
 def main():
@@ -384,9 +413,10 @@ def main():
 
         # Estimate
         est_calls = len(suspects) * len(DEPARTURE_TIMES)
-        est_hours = est_calls * REQUEST_INTERVAL / 3600
-        print(f"\nEstimate: {est_calls} API calls, ~{est_hours:.1f}h at {REQUEST_INTERVAL}s/req")
-        print(f"IPs needed: ~{est_calls / 1500:.0f}")
+        # Global rate limit: one request per GLOBAL_INTERVAL
+        est_sec = est_calls * GLOBAL_INTERVAL + est_calls * 1.5  # interval + avg API response time
+        est_min = est_sec / 60
+        print(f"\nEstimate: {est_calls} API calls, ~{GLOBAL_INTERVAL}s interval, ~{est_min:.0f}min")
         return
 
     # Load checkpoint
@@ -411,51 +441,74 @@ def main():
     if not todo:
         print("Nothing to re-fetch!")
     else:
-        rate_limiter = create_rate_limiter()
         start_time = time_mod.time()
         fixed = 0
         kept = 0
         failed = 0
+        counter_lock = threading.Lock()
+        checkpoint_lock = threading.Lock()
+        processed = [0]  # mutable counter
 
-        for i, (uuid, city, old_pt, dr_s, reason) in enumerate(todo):
+        def process_pair(item):
+            """Process one (uuid, city) pair — called from thread pool."""
+            idx, (uuid, city, old_pt, dr_s, reason) = item
             coords = coord_map.get(uuid)
             if not coords:
-                continue
+                return None
 
             station = CITY_STATION_NAMES[city]
             best_new = None
 
             for date, time_str in DEPARTURE_TIMES:
-                rate_limiter()
                 duration, dep_hour = fetch_departure_connection(coords, station, date, time_str)
                 if duration is not None:
                     if best_new is None or duration < best_new:
                         best_new = duration
 
-            key = f"{uuid}|{city}"
-            if best_new is not None and best_new < old_pt:
-                checkpoint[key] = best_new
-                fixed += 1
-                improvement = (old_pt - best_new) / 60
-                print(f"  [{i+1}/{len(todo)}] FIXED {name_map.get(uuid, '?')[:30]:30s} → {city:12s}: "
-                      f"{old_pt/60:.0f}m → {best_new/60:.0f}m (saved {improvement:.0f}m)")
-            elif best_new is not None:
-                checkpoint[key] = old_pt  # keep old (new wasn't better)
-                kept += 1
-            else:
-                checkpoint[key] = old_pt  # API failed, keep old
-                failed += 1
+            return (uuid, city, old_pt, best_new, idx)
 
-            # Checkpoint every 50 pairs
-            if (i + 1) % 50 == 0:
-                with open(CHECKPOINT_PATH, "w") as f:
-                    json.dump(checkpoint, f)
-                elapsed = time_mod.time() - start_time
-                rate = (i + 1) / elapsed * 60
-                eta_h = (len(todo) - i - 1) / rate / 60 if rate > 0 else 0
-                print(f"  Checkpoint: {i+1}/{len(todo)}, {fixed} fixed, "
-                      f"{rate:.1f}/min, ETA {eta_h:.1f}h")
-                sys.stdout.flush()
+        concurrency = MAX_CONCURRENT if _vpn_provider == "none" else 1
+        print(f"Using {concurrency} concurrent workers")
+
+        with ThreadPoolExecutor(max_workers=concurrency) as pool:
+            futures = {pool.submit(process_pair, (i, t)): i
+                       for i, t in enumerate(todo)}
+
+            for future in as_completed(futures):
+                result = future.result()
+                if result is None:
+                    continue
+
+                uuid, city, old_pt, best_new, idx = result
+                key = f"{uuid}|{city}"
+
+                with counter_lock:
+                    processed[0] += 1
+                    p = processed[0]
+
+                    if best_new is not None and best_new < old_pt:
+                        checkpoint[key] = best_new
+                        fixed += 1
+                        improvement = (old_pt - best_new) / 60
+                        print(f"  [{p}/{len(todo)}] FIXED {name_map.get(uuid, '?')[:30]:30s} \u2192 {city:12s}: "
+                              f"{old_pt/60:.0f}m \u2192 {best_new/60:.0f}m (saved {improvement:.0f}m)")
+                    elif best_new is not None:
+                        checkpoint[key] = old_pt
+                        kept += 1
+                    else:
+                        checkpoint[key] = old_pt
+                        failed += 1
+
+                    # Checkpoint every 50 pairs
+                    if p % 50 == 0:
+                        with open(CHECKPOINT_PATH, "w") as f:
+                            json.dump(checkpoint, f)
+                        elapsed = time_mod.time() - start_time
+                        rate = p / elapsed * 60
+                        eta_min = (len(todo) - p) / rate if rate > 0 else 0
+                        print(f"  Checkpoint: {p}/{len(todo)}, {fixed} fixed, "
+                              f"{rate:.1f}/min, ETA {eta_min:.0f}min")
+                        sys.stdout.flush()
 
         # Final checkpoint
         with open(CHECKPOINT_PATH, "w") as f:
