@@ -61,8 +61,8 @@ ESTV_TAX_YEAR = 2025
 
 # Comfort factors — must match DEFAULT_MODEL_PARAMS in frontend/src/App.jsx
 COMFORT = {
-    "av_factor": 0.70,          # AV makes drive time 70% as burdensome
-    "oev_sitting_factor": 1.00, # PT comfort factor (1.0 = same burden as driving)
+    "av_factor": 0.65,          # AV makes drive time 65% as burdensome
+    "oev_sitting_factor": 0.90, # PT comfort factor (0.9 = PT slightly more comfortable than driving)
 }
 
 # Arrival times for commuter scenario — multiple departures for robustness.

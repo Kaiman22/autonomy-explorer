@@ -6,8 +6,8 @@ const DATA_URL = './data/municipalities_scored.geojson'
 
 // Default model parameters (can be adjusted via UI sliders)
 const DEFAULT_MODEL_PARAMS = {
-  avFactor: 0.70,     // AV comfort factor (0.5 = very comfortable, 1.0 = same as driving)
-  ptFactor: 1.00,     // PT comfort factor (1.0 = same burden as driving, lower = PT feels easier)
+  avFactor: 0.65,     // AV comfort factor (0.5 = very comfortable, 1.0 = same as driving)
+  ptFactor: 0.90,     // PT comfort factor (1.0 = same burden as driving, lower = PT feels easier)
 }
 
 // Valid colorBy metrics (for URL backward-compat validation)
