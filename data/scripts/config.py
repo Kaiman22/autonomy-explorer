@@ -47,6 +47,14 @@ GEOAPIFY_ROUTING_URL = "https://api.geoapify.com/v1/routing"
 GEOAPIFY_BATCH_SOURCES = 100  # max sources per matrix call (Geoapify limit)
 GEOAPIFY_DAILY_CREDITS = 3000  # free tier daily limit
 
+# Google Maps Routes API (with real-time / historical traffic)
+# Sign up at https://console.cloud.google.com/ → Enable "Routes API"
+# Create an API key → export GOOGLE_MAPS_API_KEY=your_key
+# Pricing (post-March 2025): Pro tier (TRAFFIC_AWARE) = $10/1,000 requests,
+#   5,000 free/month.  Essentials (no traffic) = $5/1,000, 10,000 free/month.
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
+GOOGLE_ROUTES_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
+
 # ESTV Tax API
 ESTV_TAX_URL = "https://swisstaxcalculator.estv.admin.ch/delegate/ost-integration/v1/lg-proxy/operation/c3b67379_ESTV/API_exportManySimpleRates"
 ESTV_TAX_YEAR = 2025
