@@ -124,9 +124,9 @@ function SearchBox({ data, onSelect }) {
                 setFocused(false)
               }}
             >
-              <span className="search-result-name">{f.properties.name}</span>
+              <span className="search-result-name">{f.properties.settlement_name || f.properties.name}</span>
               <span className="search-result-meta">
-                {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.settlement_name} ·</>}
+                {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.name} ·</>}
                 {f.properties.canton_code}
               </span>
             </div>
@@ -151,7 +151,7 @@ function RankedList({ items, onSelect, colorBy, startRank = 1 }) {
             onClick={() => onSelect(f)}
           >
             <span className="top-list-rank">{startRank + i}</span>
-            <span className="top-list-name">{f.properties.name}</span>
+            <span className="top-list-name">{f.properties.settlement_name || f.properties.name}</span>
             <span className="top-list-canton">{f.properties.canton_code}</span>
             <span className="top-list-score">
               {colorBy === 'chf_per_m2'
@@ -307,7 +307,7 @@ function MunicipalityPicker({ data, addCustomLocation, customLocations }) {
     const key = f.properties.municipality_id || f.properties.id
     addCustomLocation({
       id: `custom_muni_${key}`,
-      name: f.properties.name,
+      name: f.properties.settlement_name || f.properties.name,
       lat: f.geometry.coordinates[1],
       lon: f.geometry.coordinates[0],
       enabled: true,
@@ -336,8 +336,11 @@ function MunicipalityPicker({ data, addCustomLocation, customLocations }) {
               className="search-result-item"
               onMouseDown={() => handleSelect(f)}
             >
-              <span className="search-result-name">{f.properties.name}</span>
-              <span className="search-result-meta">{f.properties.canton_code}</span>
+              <span className="search-result-name">{f.properties.settlement_name || f.properties.name}</span>
+              <span className="search-result-meta">
+                {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.name} ·</>}
+                {f.properties.canton_code}
+              </span>
             </div>
           ))}
         </div>
@@ -448,9 +451,9 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         }}
       >
         <div>
-          <div className="detail-name">{p.name}</div>
+          <div className="detail-name">{p.settlement_name || p.name}</div>
           <div className="detail-canton">
-            {p.settlement_name && p.settlement_name !== p.name && <>{p.settlement_name} ·</>}{p.canton} ({p.canton_code})
+            {p.settlement_name && p.settlement_name !== p.name && <>{p.name} ·</>}{p.canton} ({p.canton_code})
           </div>
         </div>
         <button
