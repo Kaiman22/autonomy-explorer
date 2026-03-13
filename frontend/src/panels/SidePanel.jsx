@@ -34,12 +34,12 @@ const METRICS = {
     sortAscending: true,
   },
   car_pt_delta_min: {
-    label: 'Car \u2212 PT Delta (min)',
+    label: 'Car − PT Delta (min)',
     desc: 'Positive = car is slower (PT advantage). Negative = PT is slower (car advantage)',
     unit: 'min',
   },
   car_pt_delta_pct: {
-    label: 'Car \u2212 PT Delta (%)',
+    label: 'Car − PT Delta (%)',
     desc: 'Relative car/PT difference. Positive = PT advantage, negative = car advantage',
     unit: '%',
   },
@@ -533,7 +533,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
             <th>City</th>
             <th title="Car: actual drive time / AV comfort-equivalent (drive \u00d7 avFactor)">Car</th>
             <th title="PT: actual time / comfort-weighted (PT \u00d7 ptFactor)">PT</th>
-            <th title="Delta: (Car \u2212 PT) actual / (Car AV equiv \u2212 PT comfort-weighted)">Delta</th>
+            <th title="Delta: (Car − PT) actual / (Car AV equiv − PT comfort-weighted)">Delta</th>
           </tr>
         </thead>
         <tbody>
@@ -698,8 +698,8 @@ export default function SidePanel({
               <option value="optimum_access">Optimum Accessibility (best mode)</option>
             </optgroup>
             <optgroup label="Mode Comparison">
-              <option value="car_pt_delta_min">Car \u2212 PT Delta (min)</option>
-              <option value="car_pt_delta_pct">Car \u2212 PT Delta (%)</option>
+              <option value="car_pt_delta_min">Car − PT Delta (min)</option>
+              <option value="car_pt_delta_pct">Car − PT Delta (%)</option>
               <option value="av_upside">AV Upside Potential</option>
             </optgroup>
             <optgroup label="Pricing">
