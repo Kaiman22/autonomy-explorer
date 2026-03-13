@@ -480,7 +480,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
           <div className="detail-stat-value">
             {p.chf_per_m2 != null ? `${p.chf_per_m2.toLocaleString()} CHF/m\u00b2` : '\u2014'}
           </div>
-          <div className="detail-stat-label">Price / m\u00b2</div>
+          <div className="detail-stat-label">Price / m²</div>
         </div>
         <div className="detail-stat">
           <div className="detail-stat-value">
@@ -697,7 +697,7 @@ export default function SidePanel({
               <option value="av_upside">AV Upside Potential</option>
             </optgroup>
             <optgroup label="Pricing">
-              <option value="chf_per_m2">Property Price (CHF/m\u00b2)</option>
+              <option value="chf_per_m2">Property Price (CHF/m²)</option>
             </optgroup>
           </select>
         </div>

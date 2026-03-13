@@ -517,7 +517,7 @@ export default function App() {
         {loadError && !loading && (
           <div className="loading-overlay" style={{ background: 'rgba(20,20,30,0.95)' }}>
             <div style={{ textAlign: 'center', color: '#fff', maxWidth: 400, padding: 24 }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>\u26a0\ufe0f</div>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
               <h2 style={{ marginBottom: 8 }}>Failed to load data</h2>
               <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 16 }}>{loadError}</p>
               <button
