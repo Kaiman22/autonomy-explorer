@@ -44,15 +44,6 @@ const DELTA_MIN_COLORS = [
   [60, '#b71c1c'],
 ]
 
-// Diverging: car/PT delta in % (blue = car faster → white = equal → red = PT faster)
-const DELTA_PCT_COLORS = [
-  [-100, '#1565c0'],
-  [-50, '#42a5f5'],
-  [0, '#f5f5f5'],
-  [50, '#ef5350'],
-  [100, '#b71c1c'],
-]
-
 // AV upside: higher = more minutes saved by switching to AV (pale → deep green)
 const AV_UPSIDE_COLORS = [
   [0, '#e8f5e9'],
@@ -98,13 +89,6 @@ const METRIC_CONFIG = {
     highLabel: 'PT faster \u2192',
     centerLabel: 'Equal',
   },
-  car_pt_delta_pct: {
-    colors: DELTA_PCT_COLORS,
-    gradient: buildGradientCSS(DELTA_PCT_COLORS),
-    lowLabel: '\u2190 Car faster',
-    highLabel: 'PT faster \u2192',
-    centerLabel: 'Equal',
-  },
   av_upside: {
     colors: AV_UPSIDE_COLORS,
     gradient: buildGradientCSS(AV_UPSIDE_COLORS),
@@ -144,19 +128,6 @@ function getResolvedMetricConfig(property, colorBounds) {
   // Diverging delta: quantile stops on each side of zero
   if (property === 'car_pt_delta_min' && b) {
     // Negative side (car faster): p10 → p25, zero, positive side: p75 → p90
-    const stops = [
-      [Math.round(b.p10), '#1565c0'],
-      [Math.round(b.p25), '#42a5f5'],
-      [0, '#f5f5f5'],
-      [Math.round(b.p75), '#ef5350'],
-      [Math.round(b.p90), '#b71c1c'],
-    ]
-    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
-    return { colors: deduped, gradient: buildGradientCSS(deduped),
-      lowLabel: '\u2190 Car faster', highLabel: 'PT faster \u2192', centerLabel: 'Equal' }
-  }
-
-  if (property === 'car_pt_delta_pct' && b) {
     const stops = [
       [Math.round(b.p10), '#1565c0'],
       [Math.round(b.p25), '#42a5f5'],
@@ -246,7 +217,6 @@ const LEGEND_LABELS = {
   avg_pt_access: 'Average PT Travel Time',
   optimum_access: 'Optimum Accessibility (best mode)',
   car_pt_delta_min: 'Car vs PT Travel Time (minutes)',
-  car_pt_delta_pct: 'Car vs PT Travel Time (%)',
   av_upside: 'AV Upside Potential',
   chf_per_m2: 'Property Price (CHF/m\u00b2)',
 }

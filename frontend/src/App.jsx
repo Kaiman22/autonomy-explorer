@@ -13,7 +13,7 @@ const DEFAULT_MODEL_PARAMS = {
 // Valid colorBy metrics (for URL backward-compat validation)
 const VALID_METRICS = [
   'avg_car_access', 'avg_pt_access', 'optimum_access',
-  'car_pt_delta_min', 'car_pt_delta_pct', 'av_upside', 'chf_per_m2',
+  'car_pt_delta_min', 'av_upside', 'chf_per_m2',
 ]
 
 /**
@@ -128,9 +128,6 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
 
     // Delta: positive = car slower = PT advantage
     const carPtDeltaMin = avgCar != null && avgPt != null ? avgCar - avgPt : null
-    const avgMid = avgCar != null && avgPt != null ? (avgCar + avgPt) / 2 : null
-    const carPtDeltaPct = avgMid != null && avgMid > 0
-      ? ((avgCar - avgPt) / avgMid) * 100 : null
 
     // AV upside: condition on averages across selected cities
     // avg_av_drive < avg_pt_comfort < avg_manual_drive
@@ -160,7 +157,6 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
         avg_pt_access: avgPt != null ? Math.round(avgPt * 10) / 10 : null,
         optimum_access: optimumAccess != null ? Math.round(optimumAccess * 10) / 10 : null,
         car_pt_delta_min: carPtDeltaMin != null ? Math.round(carPtDeltaMin * 10) / 10 : null,
-        car_pt_delta_pct: carPtDeltaPct != null ? Math.round(carPtDeltaPct * 10) / 10 : null,
         av_upside: avUpside != null ? Math.round(avUpside * 10) / 10 : null,
         min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
         min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
@@ -453,7 +449,6 @@ export default function App() {
       avg_pt_access: bounds('avg_pt_access'),
       optimum_access: bounds('optimum_access'),
       car_pt_delta_min: bounds('car_pt_delta_min'),
-      car_pt_delta_pct: bounds('car_pt_delta_pct'),
       av_upside: bounds('av_upside'),
     }
   }, [data])
@@ -504,9 +499,6 @@ export default function App() {
     }
     if (colorBy === 'car_pt_delta_min') {
       return `${val > 0 ? '+' : ''}${val.toFixed(1)} min`
-    }
-    if (colorBy === 'car_pt_delta_pct') {
-      return `${val > 0 ? '+' : ''}${val.toFixed(1)}%`
     }
     if (colorBy === 'chf_per_m2') {
       return `${val.toLocaleString()} CHF/m\u00b2`

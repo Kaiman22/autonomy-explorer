@@ -181,11 +181,8 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         # Delta
         if avg_car is not None and avg_pt is not None:
             delta_min = avg_car - avg_pt
-            avg_mid = (avg_car + avg_pt) / 2
-            delta_pct = (delta_min / avg_mid) * 100 if avg_mid > 0 else None
         else:
             delta_min = None
-            delta_pct = None
 
         # AV upside: avg_av_drive < avg_pt_comfort < avg_manual_drive
         av_upside = None
@@ -228,7 +225,6 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             "avg_pt_access": round(avg_pt, 1) if avg_pt is not None else None,
             "optimum_access": round(optimum_access, 1) if optimum_access is not None else None,
             "car_pt_delta_min": round(delta_min, 1) if delta_min is not None else None,
-            "car_pt_delta_pct": round(delta_pct, 1) if delta_pct is not None else None,
             "av_upside": round(av_upside, 1) if av_upside is not None else None,
         })
 

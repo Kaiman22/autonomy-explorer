@@ -38,11 +38,6 @@ const METRICS = {
     desc: 'Positive = car is slower (PT advantage). Negative = PT is slower (car advantage)',
     unit: 'min',
   },
-  car_pt_delta_pct: {
-    label: 'Car − PT Delta (%)',
-    desc: 'Relative car/PT difference. Positive = PT advantage, negative = car advantage',
-    unit: '%',
-  },
   av_upside: {
     label: 'AV Upside',
     desc: 'Places where PT currently beats manual driving, but AV would beat PT. Shows minutes saved by AV vs PT \u2014 the untapped potential of autonomous vehicles. Places without AV upside are filtered out.',
@@ -131,7 +126,7 @@ function SearchBox({ data, onSelect }) {
             >
               <span className="search-result-name">{f.properties.name}</span>
               <span className="search-result-meta">
-                {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.settlement_name} \u00b7 </>}
+                {f.properties.settlement_name && f.properties.settlement_name !== f.properties.name && <>{f.properties.settlement_name} ·</>}
                 {f.properties.canton_code}
               </span>
             </div>
@@ -163,8 +158,6 @@ function RankedList({ items, onSelect, colorBy, startRank = 1 }) {
                 ? val?.toLocaleString()
                 : colorBy === 'car_pt_delta_min' || colorBy === 'av_upside'
                 ? val != null ? `${val > 0 ? '+' : ''}${val.toFixed(1)}` : '\u2014'
-                : colorBy === 'car_pt_delta_pct'
-                ? val != null ? `${val > 0 ? '+' : ''}${val.toFixed(1)}%` : '\u2014'
                 : val?.toFixed(1)}
             </span>
           </div>
@@ -390,7 +383,7 @@ function CustomLocationsList({ customLocations, toggleCustomLocation, removeCust
               className="remove-location-btn"
               title="Remove"
             >
-              \u00d7
+              ×
             </button>
           </div>
         )
@@ -418,7 +411,6 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
   if (activeVal != null) {
     if (colorBy === 'chf_per_m2') activeDisplay = `${activeVal.toLocaleString()} CHF/m\u00b2`
     else if (colorBy === 'car_pt_delta_min') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)} min`
-    else if (colorBy === 'car_pt_delta_pct') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)}%`
     else if (colorBy === 'av_upside') activeDisplay = `${activeVal.toFixed(1)} min saved`
     else if (activeMetric?.unit === 'min') activeDisplay = `${activeVal.toFixed(1)} min`
     else activeDisplay = activeVal.toFixed(1)
@@ -458,7 +450,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <div>
           <div className="detail-name">{p.name}</div>
           <div className="detail-canton">
-            {p.settlement_name && p.settlement_name !== p.name && <>{p.settlement_name} \u00b7 </>}{p.canton} ({p.canton_code})
+            {p.settlement_name && p.settlement_name !== p.name && <>{p.settlement_name} ·</>}{p.canton} ({p.canton_code})
           </div>
         </div>
         <button
@@ -471,7 +463,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
             fontSize: 18,
           }}
         >
-          \u00d7
+          ×
         </button>
       </div>
 
@@ -525,7 +517,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
       </h3>
       <div style={{ fontSize: 10, color: 'var(--text-secondary)', marginBottom: 6 }}>
         Each cell: actual / <span style={{ color: 'var(--accent)' }}>comfort-adjusted</span>.
-        AV comfort \u00d7{avFactor.toFixed(2)}, PT comfort \u00d7{ptFactor.toFixed(2)}.
+        AV comfort ×{avFactor.toFixed(2)}, PT comfort ×{ptFactor.toFixed(2)}.
       </div>
       <table className="detail-city-table">
         <thead>
@@ -659,7 +651,7 @@ export default function SidePanel({
               {activeCities}/{totalRefs}
             </span>
           </h3>
-          <span className={`arrow ${showCities ? 'open' : ''}`}>\u25b6</span>
+          <span className={`arrow ${showCities ? 'open' : ''}`}>▶</span>
         </div>
         {showCities && (
           <>
@@ -699,7 +691,6 @@ export default function SidePanel({
             </optgroup>
             <optgroup label="Mode Comparison">
               <option value="car_pt_delta_min">Car − PT Delta (min)</option>
-              <option value="car_pt_delta_pct">Car − PT Delta (%)</option>
               <option value="av_upside">AV Upside Potential</option>
             </optgroup>
             <optgroup label="Pricing">
@@ -722,7 +713,7 @@ export default function SidePanel({
           onClick={() => setShowAdvanced(!showAdvanced)}
         >
           <h3 style={{ margin: 0 }}>Travel Preferences</h3>
-          <span className={`arrow ${showAdvanced ? 'open' : ''}`}>\u25b6</span>
+          <span className={`arrow ${showAdvanced ? 'open' : ''}`}>▶</span>
         </div>
 
         {showAdvanced && (
@@ -821,16 +812,16 @@ export default function SidePanel({
                 by {METRICS[colorBy]?.label || colorBy}
               </span>
             </h3>
-            <span className={`arrow ${showTop ? 'open' : ''}`}>\u25b6</span>
+            <span className={`arrow ${showTop ? 'open' : ''}`}>▶</span>
           </div>
           {showTop && (
             <>
               <div style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, marginTop: 8, marginBottom: 4 }}>
-                \u25b2 Top 10
+                ▲ Top 10
               </div>
               <TopList data={data} onSelect={onSelectFeature} colorBy={colorBy} />
               <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 16, marginBottom: 4, borderTop: '1px solid var(--border)', paddingTop: 8 }}>
-                \u25bc Bottom 10
+                ▼ Bottom 10
               </div>
               <BottomList data={data} onSelect={onSelectFeature} colorBy={colorBy} />
             </>
