@@ -9,8 +9,10 @@ Extends 02e by extracting the full section-level breakdown:
   - transfers:  number of transfers (from API)
   - total_s:    overall door-to-door travel time
 
-Uses a single arrival window (arrive by 07:30 on a weekday) for the
-breakdown. Total travel times from 02e (averaged over 3 windows)
+Uses a single departure window (depart at 07:00 on a weekday) for the
+breakdown. Uses departure-based queries (isArrivalTime=0) to avoid
+the overnight connection bug that affects arrival-based queries for
+distant origins. Total travel times from 02e (averaged over 3 windows)
 remain the source of truth for the main model; this script adds
 the component breakdown as supplementary data.
 
@@ -42,9 +44,11 @@ from config import CITIES, PROCESSED_DIR
 
 SBB_API_BASE = "https://transport.opendata.ch/v1"
 
-# Single arrival time: Monday morning, arrive by 07:30
-ARRIVAL_DATE = "2026-03-16"
-ARRIVAL_TIME = "07:30"
+# Single departure time: Monday morning, depart at 07:00
+# Using departure (isArrivalTime=0) avoids overnight connections that
+# plague arrival-based queries for distant origins.
+DEPARTURE_DATE = "2026-03-16"
+DEPARTURE_TIME = "07:00"
 
 # SBB API station names for target cities
 CITY_STATION_NAMES = {
@@ -251,10 +255,10 @@ def fetch_connection_breakdown(from_coords, to_station, timeout=30):
     params = {
         "from": f"{from_coords[0]},{from_coords[1]}",
         "to": to_station,
-        "date": ARRIVAL_DATE,
-        "time": ARRIVAL_TIME,
-        "isArrivalTime": 1,
-        "limit": 1,
+        "date": DEPARTURE_DATE,
+        "time": DEPARTURE_TIME,
+        "isArrivalTime": 0,  # DEPARTURE-based — avoids overnight connections
+        "limit": 4,  # get a few options to pick the best non-overnight one
     }
     max_retries = 5
     http_client = _get_tor_session() if _vpn_provider == "tor" else requests
@@ -288,7 +292,29 @@ def fetch_connection_breakdown(from_coords, to_station, timeout=30):
             if not connections:
                 return None
 
-            return extract_breakdown(connections[0])
+            # Pick the shortest non-overnight connection
+            best = None
+            best_total = None
+            for conn in connections:
+                bd = extract_breakdown(conn)
+                if bd is None or bd["total_s"] is None:
+                    continue
+                # Skip overnight: duration includes a full day
+                dur_str = conn.get("duration", "")
+                dur_m = re.match(r"(\d+)d", dur_str)
+                if dur_m and int(dur_m.group(1)) > 0:
+                    continue
+                # Skip connections departing before 05:00
+                dep_str = conn.get("from", {}).get("departure", "")
+                if dep_str and "T" in dep_str:
+                    hour_part = dep_str.split("T")[1][:2]
+                    if hour_part.isdigit() and int(hour_part) < 5:
+                        continue
+                if best_total is None or bd["total_s"] < best_total:
+                    best = bd
+                    best_total = bd["total_s"]
+
+            return best
 
         except requests.exceptions.Timeout:
             if attempt < max_retries:
@@ -372,7 +398,7 @@ def main():
 
     print(f"Settlements: {len(settlements)}")
     print(f"Cities: {len(city_ids)}")
-    print(f"Arrival: {ARRIVAL_DATE} {ARRIVAL_TIME}")
+    print(f"Departure: {DEPARTURE_DATE} {DEPARTURE_TIME}")
     print(f"API calls: ~{total_calls:,}")
     est_hours = total_calls * REQUEST_INTERVAL / 3600
     print(f"Estimated time: ~{est_hours:.1f}h")
