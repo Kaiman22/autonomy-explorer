@@ -82,6 +82,37 @@ docker run -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backen
 
 **Decision**: Scrape Homegate.ch or ImmoScout24.ch for CHF/m² per municipality. Use Raiffeisen as backup (hedonic model, total CHF for standard property – divide by 100m² for STWE).
 
+### Actual Implementation & Gap-Filling
+
+**Sources used**: Neho.ch (hedonic model, primary) + Homegate.ch (listing-based median, fallback). Merged in `04_merge_prices.py`.
+
+| Source | Coverage | Method |
+|---|---|---|
+| **Neho.ch** (`03b_fetch_prices_neho.py`) | 1,368/2,128 (64%) | Playwright browser automation, Cloudflare bypass, CSS selectors |
+| **Homegate.ch** (`03c_fetch_prices_homegate.py`) | 1,219/2,128 (57%) | Playwright + stealth plugin, median from ≥2 valid listings |
+| **After merge** | 1,605/2,128 (75%) | Neho primary, Homegate fallback |
+
+**523 municipalities still missing** after merge — all small rural towns where neither source has data:
+- Homegate 404s (municipality not listed): 273
+- No active buy listings: 137
+- Listings exist but fail validation (< 2 valid): 113
+
+**Gap-filling: IDW spatial interpolation** (applied 2026-03-15)
+
+Swiss real estate prices are highly spatially autocorrelated — neighboring towns have similar prices. Analysis of the 523 missing municipalities showed:
+- 90% are within 5 km of a municipality with known prices
+- 99% within 10 km
+- Median distance to nearest known-price neighbor: 2.3 km
+
+Method: Inverse Distance Weighting (IDW) with K=5 nearest neighbors, power=2. For each missing municipality, the price is estimated as the distance-weighted average of the 5 closest municipalities with known prices. These entries are marked `type: "interpolated"` in `prices.json`.
+
+| Stage | Coverage | Notes |
+|---|---|---|
+| After Neho + Homegate merge | 1,605/2,128 (75%) | Real market data |
+| After IDW interpolation | 2,072/2,128 (97%) | 467 estimated from neighbors |
+| Remaining 56 | No settlement points | Not visible on map — no fill needed |
+| **Visible on map** | **2,054/2,054 (100%)** | All settlements with price data |
+
 ---
 
 ## R4: Swiss Tax Rates (Steuerfüsse)
