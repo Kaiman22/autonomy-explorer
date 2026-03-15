@@ -78,10 +78,33 @@ def load_data():
         with open(tax_path) as f:
             taxes = json.load(f)
 
-    return municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes
+    # PT breakdown (walk/wait/IVT from 02g) — partial coverage OK
+    pt_breakdown = {}
+    bd_path = PROCESSED_DIR / "settlement_pt_breakdown.json"
+    if bd_path.exists():
+        with open(bd_path) as f:
+            pt_breakdown = json.load(f)
+
+    return municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes, pt_breakdown
 
 
-def compute_scores(municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes):
+def build_pt_breakdown(uuid, pt_breakdown):
+    """Build compact PT breakdown dict for a settlement (or None if no data)."""
+    bd = pt_breakdown.get(uuid)
+    if not bd:
+        return None
+    result = {}
+    for city_id, v in bd.items():
+        if v is not None:
+            result[city_id] = {
+                "w": v["walk_s"],   # walk seconds
+                "t": v["wait_s"],   # wait/transfer seconds
+                "i": v["ivt_s"],    # in-vehicle seconds
+            }
+    return result if result else None
+
+
+def compute_scores(municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes, pt_breakdown):
     """Compute travel time metrics for each settlement point."""
     muni_driving = travel_times.get("driving", {})
     muni_pt = travel_times.get("public_transport", {})
@@ -170,7 +193,15 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
 
             # AV upside: need both modes
             if car_min is not None and pt_min is not None:
-                pt_comfort_vals.append(pt_min * pt_factor)
+                # Use PT breakdown if available: ptFactor applies only to IVT
+                bd_city = pt_breakdown.get(sf["uuid"], {}).get(city_id) if pt_breakdown else None
+                if bd_city:
+                    walk_min = bd_city["walk_s"] / 60.0
+                    wait_min = bd_city["wait_s"] / 60.0
+                    ivt_min = bd_city["ivt_s"] / 60.0
+                    pt_comfort_vals.append(ivt_min * pt_factor + walk_min + wait_min)
+                else:
+                    pt_comfort_vals.append(pt_min * pt_factor)
                 av_drive_vals.append(car_min * av_factor)
                 manual_drive_vals.append(car_min)
 
@@ -212,6 +243,8 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             # Raw travel times (seconds) — frontend recomputes all metrics from these
             "drive_times": {c: d.get(c) for c in CITIES},
             "pt_times": {c: pt.get(c) for c in CITIES},
+            # PT breakdown (walk/wait/IVT seconds) — from 02g, partial coverage
+            "pt_breakdown": build_pt_breakdown(sf["uuid"], pt_breakdown),
             # Min times (seconds)
             "min_drive_s": min(drive_times_list) if drive_times_list else None,
             "min_pt_s": min(pt_times_list) if pt_times_list else None,
@@ -290,17 +323,18 @@ def export_geojson(scored):
 
 
 def main():
-    municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes = load_data()
+    municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes, pt_breakdown = load_data()
     print(f"Municipalities: {len(municipalities)}")
     print(f"Settlement points: {len(settlements)}")
     print(f"Settlement driving times: {len(settlement_drive)}")
     print(f"Settlement PT times: {len(settlement_pt)}")
+    print(f"PT breakdown: {len(pt_breakdown)} settlements")
     print(f"Municipality driving (fallback): {len(travel_times.get('driving', {}))}")
     print(f"Municipality PT (fallback): {len(travel_times.get('public_transport', {}))}")
     print(f"Prices: {len(prices)}")
     print(f"Taxes: {len(taxes)}")
 
-    scored = compute_scores(municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes)
+    scored = compute_scores(municipalities, settlements, settlement_mapping, settlement_drive, settlement_pt, travel_times, prices, taxes, pt_breakdown)
     export_geojson(scored)
 
 

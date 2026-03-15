@@ -23,6 +23,8 @@ const VALID_METRICS = [
  * All metrics are AVERAGES over SELECTED (enabled) reference locations only.
  * No walk deduction — PT times used as-is from the TravelTime API.
  * Comfort factors applied only where explicitly needed (AV upside).
+ * PT comfort factor applies only to in-vehicle time (IVT) when breakdown
+ * data is available; walk/wait time kept at face value.
  */
 function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, modelParams, colorBy) {
   if (!geojson) return null
@@ -50,6 +52,7 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
     const p = f.properties
     const driveTimes = parseTimes(p.drive_times)
     const ptTimes = parseTimes(p.pt_times)
+    const ptBreakdown = typeof p.pt_breakdown === 'string' ? JSON.parse(p.pt_breakdown) : p.pt_breakdown || null
 
     // --- Check max-time constraints ---
     // Which travel mode to check depends on the active visualization:
@@ -117,7 +120,18 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
 
       // AV upside: need both modes for this city
       if (carMin != null && ptMin != null) {
-        ptComfortSum += ptMin * ptFactor
+        // PT comfort: apply ptFactor only to in-vehicle time (IVT),
+        // keep walk/wait at face value (no comfort discount for those)
+        const bd = ptBreakdown?.[ref.id]
+        if (bd) {
+          const walkMin = bd.w / 60
+          const waitMin = bd.t / 60
+          const ivtMin = bd.i / 60
+          ptComfortSum += ivtMin * ptFactor + walkMin + waitMin
+        } else {
+          // Fallback: apply ptFactor to entire PT time (no breakdown available)
+          ptComfortSum += ptMin * ptFactor
+        }
         avDriveSum += carMin * avFactor
         manualDriveSum += carMin
         bothCount++
