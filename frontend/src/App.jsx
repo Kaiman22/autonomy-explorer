@@ -18,6 +18,118 @@ const VALID_METRICS = [
   'car_pt_delta_min', 'av_upside', 'av_value_unlock', 'chf_per_m2',
 ]
 
+// --- Hub-based PT routing for custom reference locations ---
+// Instead of crude car-ratio estimates, we make 10 SBB API calls (custom→hub)
+// and combine with existing settlement→hub PT data for realistic estimates.
+const HUB_CITIES = {
+  zurich:     { station: 'Zürich HB',    transferMin: 7.5 },
+  bern:       { station: 'Bern',          transferMin: 7.5 },
+  basel:      { station: 'Basel SBB',     transferMin: 7.5 },
+  luzern:     { station: 'Luzern',        transferMin: 10 },
+  geneve:     { station: 'Genève',        transferMin: 12.5 },
+  lausanne:   { station: 'Lausanne',      transferMin: 10 },
+  stgallen:   { station: 'St. Gallen',    transferMin: 10 },
+  lugano:     { station: 'Lugano',        transferMin: 12.5 },
+  winterthur: { station: 'Winterthur',    transferMin: 10 },
+  biel:       { station: 'Biel/Bienne',   transferMin: 12.5 },
+}
+const HUB_SHORT_DISTANCE_KM = 15   // Below this, hub routing overestimates — use car-ratio
+const SBB_QUERY_DATE = '2026-03-16' // Monday for realistic commuter schedule
+const SBB_QUERY_TIME = '07:00'
+
+/** Parse SBB duration string like "00d03:24:00" → seconds */
+function parseSbbDuration(str) {
+  if (!str) return null
+  const m = str.match(/(\d+)d(\d+):(\d+):(\d+)/)
+  if (!m) return null
+  return parseInt(m[1], 10) * 86400 + parseInt(m[2], 10) * 3600 +
+         parseInt(m[3], 10) * 60 + parseInt(m[4], 10)
+}
+
+/** Haversine distance in km between two WGS84 points */
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const R = 6371
+  const dLat = ((lat2 - lat1) * Math.PI) / 180
+  const dLon = ((lon2 - lon1) * Math.PI) / 180
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) ** 2
+  return R * 2 * Math.asin(Math.sqrt(a))
+}
+
+/**
+ * Fetch PT times from a location to all 10 hub cities via SBB API.
+ * Makes 10 parallel requests. Filters overnight connections.
+ * Returns { hubId: seconds } for successful hubs.
+ */
+async function fetchSbbHubTimes(lat, lon) {
+  const hubTimes = {}
+  const promises = Object.entries(HUB_CITIES).map(async ([hubId, hub]) => {
+    try {
+      const url = `https://transport.opendata.ch/v1/connections?from=${lat},${lon}` +
+        `&to=${encodeURIComponent(hub.station)}&date=${SBB_QUERY_DATE}` +
+        `&time=${SBB_QUERY_TIME}&isArrivalTime=0&limit=4`
+      const resp = await fetch(url)
+      if (!resp.ok) {
+        console.warn(`[SBB] ${hubId}: HTTP ${resp.status}`)
+        return
+      }
+      const data = await resp.json()
+      const connections = data.connections || []
+
+      // Find best non-overnight connection
+      let bestSec = null
+      for (const conn of connections) {
+        const dur = parseSbbDuration(conn.duration)
+        if (dur == null) continue
+        if (dur > 12 * 3600) continue  // skip overnight (>12h)
+        // Skip departures before 05:00
+        const depTime = conn.from?.departure
+        if (depTime) {
+          const depHour = new Date(depTime).getHours()
+          if (depHour < 5) continue
+        }
+        if (bestSec == null || dur < bestSec) {
+          bestSec = dur
+        }
+      }
+
+      if (bestSec != null) {
+        hubTimes[hubId] = bestSec
+      }
+    } catch (err) {
+      console.warn(`[SBB] ${hubId}: fetch error`, err.message)
+    }
+  })
+
+  await Promise.all(promises)
+  return hubTimes
+}
+
+/**
+ * Compute hub-routed PT time for a settlement.
+ * Formula: min over all hubs { settlement→hub + custom→hub + transfer_time }
+ * @param {Object} settlementPtTimes - settlement's existing PT times to cities (seconds)
+ * @param {Object} customToHubTimes - custom location's SBB times to hubs (seconds)
+ * @returns {number|null} estimated PT seconds, or null if insufficient data
+ */
+function computeHubRoutedPtTime(settlementPtTimes, customToHubTimes) {
+  let bestSec = null
+  for (const [hubId, hub] of Object.entries(HUB_CITIES)) {
+    const customToHub = customToHubTimes[hubId]
+    const settlementToHub = settlementPtTimes[hubId]
+    if (customToHub == null || settlementToHub == null) continue
+
+    const totalSec = settlementToHub + customToHub + hub.transferMin * 60
+    if (bestSec == null || totalSec < bestSec) {
+      bestSec = totalSec
+    }
+  }
+  return bestSec
+}
+
 /**
  * Recompute all metrics from raw travel times and prices.
  * All metrics are AVERAGES over SELECTED (enabled) reference locations only.
@@ -294,8 +406,13 @@ export default function App() {
     const fetchRoutingTimes = async () => {
       if (!rawData) return
       const features = rawData.features
-      const results = {}
+      const driveResults = {}
 
+      // Fire SBB hub routing immediately (runs in parallel with Geoapify)
+      // SBB takes ~1-3s (10 parallel requests) vs Geoapify's ~30-60s
+      const sbbPromise = fetchSbbHubTimes(location.lat, location.lon)
+
+      // Geoapify driving times (sequential batches)
       if (geoapifyKey) {
         const BATCH_SIZE = 100
         const batches = []
@@ -344,7 +461,7 @@ export default function App() {
               row.forEach((cell, tgtIdx) => {
                 const origIdx = batch[tgtIdx].origIdx
                 const driveTime = cell.time != null ? Math.round(cell.time) : null
-                results[origIdx] = { drive_s: driveTime }
+                driveResults[origIdx] = { drive_s: driveTime }
               })
             }
           } catch (err) {
@@ -356,8 +473,14 @@ export default function App() {
           }
         }
 
-        console.log(`[Custom location] Got Geoapify times for ${Object.keys(results).length}/${features.length} settlements`)
+        console.log(`[Custom location] Got Geoapify times for ${Object.keys(driveResults).length}/${features.length} settlements`)
       }
+
+      // Wait for SBB hub routing (should be done by now)
+      const hubTimes = await sbbPromise
+      const hubCount = Object.keys(hubTimes).length
+      console.log(`[SBB] Got hub times for ${hubCount}/10 hubs`, hubTimes)
+      const useHubRouting = hubCount >= 3
 
       setRawData((prevData) => {
         if (!prevData) return prevData
@@ -366,25 +489,38 @@ export default function App() {
           const driveTimes = typeof p.drive_times === 'string' ? JSON.parse(p.drive_times) : { ...p.drive_times }
           const ptTimes = typeof p.pt_times === 'string' ? JSON.parse(p.pt_times) : { ...p.pt_times }
 
+          const coords = f.geometry.coordinates
+
+          // Drive time: Geoapify result or haversine fallback
           let driveSec
-          if (results[i] && results[i].drive_s != null) {
-            driveSec = results[i].drive_s
+          if (driveResults[i] && driveResults[i].drive_s != null) {
+            driveSec = driveResults[i].drive_s
           } else {
-            const coords = f.geometry.coordinates
-            const R = 6371
-            const dLat = ((location.lat - coords[1]) * Math.PI) / 180
-            const dLon = ((location.lon - coords[0]) * Math.PI) / 180
-            const a =
-              Math.sin(dLat / 2) ** 2 +
-              Math.cos((coords[1] * Math.PI) / 180) *
-                Math.cos((location.lat * Math.PI) / 180) *
-                Math.sin(dLon / 2) ** 2
-            const dist = R * 2 * Math.asin(Math.sqrt(a))
-            driveSec = Math.round((dist / 50) * 3600)
+            driveSec = Math.round((haversineKm(location.lat, location.lon, coords[1], coords[0]) / 50) * 3600)
           }
 
+          // PT time: hub routing with car-ratio fallback
+          const distKm = haversineKm(location.lat, location.lon, coords[1], coords[0])
+
+          // Car-ratio estimate (always computed as fallback/safety bound)
           const ptRatio = driveSec < 1800 ? 1.3 : driveSec < 4800 ? 1.5 : 1.8
-          const ptSec = Math.round(driveSec * ptRatio)
+          const carRatioPt = Math.round(driveSec * ptRatio)
+
+          let ptSec
+          if (!useHubRouting || distKm < HUB_SHORT_DISTANCE_KM) {
+            // Short distance (<15km) or SBB failed: use car-ratio
+            ptSec = carRatioPt
+          } else {
+            // Hub routing: settlement→hub (existing data) + custom→hub (SBB) + transfer
+            const hubRoutedSec = computeHubRoutedPtTime(ptTimes, hubTimes)
+            if (hubRoutedSec != null) {
+              // Take minimum of hub-routed and car-ratio as safety bound
+              // (hub routing is upper bound; car-ratio catches direct regional connections)
+              ptSec = Math.min(hubRoutedSec, carRatioPt)
+            } else {
+              ptSec = carRatioPt
+            }
+          }
 
           driveTimes[location.id] = driveSec
           ptTimes[location.id] = ptSec
