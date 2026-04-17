@@ -147,7 +147,7 @@ function SearchBox({ data, onSelect }) {
   )
 }
 
-function RankedList({ items, onSelect, colorBy, startRank = 1 }) {
+function RankedList({ items, onSelect, colorBy, startRank = 1, onHighlight }) {
   if (items.length === 0) return null
 
   return (
@@ -159,6 +159,8 @@ function RankedList({ items, onSelect, colorBy, startRank = 1 }) {
             key={f.properties.id}
             className="top-list-item"
             onClick={() => onSelect(f)}
+            onMouseEnter={onHighlight ? () => onHighlight(f.properties.id) : undefined}
+            onMouseLeave={onHighlight ? () => onHighlight(null) : undefined}
           >
             <span className="top-list-rank">{startRank + i}</span>
             <span className="top-list-name">{f.properties.settlement_name || f.properties.name}</span>
@@ -210,16 +212,16 @@ function useRankedData(data, colorBy) {
   }, [data, colorBy])
 }
 
-function TopList({ data, onSelect, colorBy }) {
+function TopList({ data, onSelect, colorBy, onHighlight }) {
   const { top } = useRankedData(data, colorBy)
-  return <RankedList items={top} onSelect={onSelect} colorBy={colorBy} startRank={1} />
+  return <RankedList items={top} onSelect={onSelect} colorBy={colorBy} startRank={1} onHighlight={onHighlight} />
 }
 
-function BottomList({ data, onSelect, colorBy }) {
+function BottomList({ data, onSelect, colorBy, onHighlight }) {
   const { sorted, bottom } = useRankedData(data, colorBy)
   if (bottom.length === 0) return null
   const startRank = sorted.length - 9
-  return <RankedList items={bottom} onSelect={onSelect} colorBy={colorBy} startRank={startRank} />
+  return <RankedList items={bottom} onSelect={onSelect} colorBy={colorBy} startRank={startRank} onHighlight={onHighlight} />
 }
 
 const MAX_TIME_OPTIONS = [
@@ -617,6 +619,7 @@ export default function SidePanel({
   setModelParams,
   onClose,
   onSelectFeature,
+  setHighlightedListId,
   resetToDefaults,
 }) {
   const [showAdvanced, setShowAdvanced] = useState(false)
@@ -894,11 +897,11 @@ export default function SidePanel({
               <div style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, marginTop: 8, marginBottom: 4 }}>
                 ▲ Top 10
               </div>
-              <TopList data={data} onSelect={onSelectFeature} colorBy={colorBy} />
+              <TopList data={data} onSelect={onSelectFeature} colorBy={colorBy} onHighlight={setHighlightedListId} />
               <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 16, marginBottom: 4, borderTop: '1px solid var(--border)', paddingTop: 8 }}>
                 ▼ Bottom 10
               </div>
-              <BottomList data={data} onSelect={onSelectFeature} colorBy={colorBy} />
+              <BottomList data={data} onSelect={onSelectFeature} colorBy={colorBy} onHighlight={setHighlightedListId} />
             </>
           )}
         </div>

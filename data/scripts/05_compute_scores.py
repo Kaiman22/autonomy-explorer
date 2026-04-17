@@ -158,10 +158,8 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         car_times_min = []
         pt_times_min = []
         optimum_times = []
-        # For AV upside
-        pt_comfort_vals = []
-        av_drive_vals = []
-        manual_drive_vals = []
+        # For AV upside: per-ref advantages, then averaged
+        ref_upsides = []
 
         for city_id in CITIES:
             ds = d.get(city_id)
@@ -191,19 +189,22 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             elif pt_min is not None:
                 optimum_times.append(pt_min)
 
-            # AV upside: need both modes
+            # AV upside: compute per-ref, then average across refs.
+            # Avoids averaging modes first, which mixes car-winning and
+            # PT-winning refs and overstates the upside.
             if car_min is not None and pt_min is not None:
-                # Use PT breakdown if available: ptFactor applies only to IVT
                 bd_city = pt_breakdown.get(sf["uuid"], {}).get(city_id) if pt_breakdown else None
                 if bd_city:
                     walk_min = bd_city["walk_s"] / 60.0
                     wait_min = bd_city["wait_s"] / 60.0
                     ivt_min = bd_city["ivt_s"] / 60.0
-                    pt_comfort_vals.append(ivt_min * pt_factor + walk_min + wait_min)
+                    pt_comfort = ivt_min * pt_factor + walk_min + wait_min
                 else:
-                    pt_comfort_vals.append(pt_min * pt_factor)
-                av_drive_vals.append(car_min * av_factor)
-                manual_drive_vals.append(car_min)
+                    pt_comfort = pt_min * pt_factor
+                av_drive = car_min * av_factor
+                best_current = min(pt_comfort, car_min)
+                ref_upside = best_current - av_drive if av_drive < best_current else 0.0
+                ref_upsides.append(ref_upside)
 
         avg_car = sum(car_times_min) / len(car_times_min) if car_times_min else None
         avg_pt = sum(pt_times_min) / len(pt_times_min) if pt_times_min else None
@@ -215,17 +216,12 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         else:
             delta_min = None
 
-        # AV upside: minutes saved by AV vs the current best option (PT comfort or manual drive)
-        # AV beats manual drive everywhere (av_factor < 1), so we report how much it beats
-        # the current best mode — whether that's PT or car today.
+        # AV upside: average of per-ref AV advantages (non-negative by construction)
         av_upside = None
-        if pt_comfort_vals:
-            avg_pt_comfort = sum(pt_comfort_vals) / len(pt_comfort_vals)
-            avg_av_drive = sum(av_drive_vals) / len(av_drive_vals)
-            avg_manual_drive = sum(manual_drive_vals) / len(manual_drive_vals)
-            best_current = min(avg_pt_comfort, avg_manual_drive)
-            if avg_av_drive < best_current:
-                av_upside = best_current - avg_av_drive
+        if ref_upsides:
+            avg_upside = sum(ref_upsides) / len(ref_upsides)
+            if avg_upside > 0:
+                av_upside = avg_upside
 
         drive_times_list = [d.get(c) for c in CITIES if d.get(c) is not None]
         pt_times_list = [pt.get(c) for c in CITIES if pt.get(c) is not None]

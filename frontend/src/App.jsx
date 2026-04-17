@@ -199,8 +199,8 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
     let carSum = 0, carCount = 0
     let ptSum = 0, ptCount = 0
     let optimumSum = 0, optimumCount = 0
-    // For AV upside: need both modes available per city
-    let ptComfortSum = 0, avDriveSum = 0, manualDriveSum = 0, bothCount = 0
+    // For AV upside: compute per-ref upside, then average
+    let upsideSum = 0, upsideCount = 0
 
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
@@ -230,23 +230,21 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
         optimumCount++
       }
 
-      // AV upside: need both modes for this city
+      // AV upside: compute per-ref so mode-mix across refs is handled correctly.
+      // For each ref we compute AV vs that ref's current best mode, cap at 0
+      // (AV gives no benefit where the current mode is already faster), then
+      // average across refs. This avoids averaging modes first, which would
+      // mix car-winning and PT-winning refs and overstate the upside.
       if (carMin != null && ptMin != null) {
-        // PT comfort: apply ptFactor only to in-vehicle time (IVT),
-        // keep walk/wait at face value (no comfort discount for those)
         const bd = ptBreakdown?.[ref.id]
-        if (bd) {
-          const walkMin = bd.w / 60
-          const waitMin = bd.t / 60
-          const ivtMin = bd.i / 60
-          ptComfortSum += ivtMin * ptFactor + walkMin + waitMin
-        } else {
-          // Fallback: apply ptFactor to entire PT time (no breakdown available)
-          ptComfortSum += ptMin * ptFactor
-        }
-        avDriveSum += carMin * avFactor
-        manualDriveSum += carMin
-        bothCount++
+        const ptComfort = bd
+          ? (bd.i / 60) * ptFactor + (bd.w / 60) + (bd.t / 60)
+          : ptMin * ptFactor
+        const avDrive = carMin * avFactor
+        const bestCurrent = Math.min(ptComfort, carMin)
+        const refUpside = avDrive < bestCurrent ? bestCurrent - avDrive : 0
+        upsideSum += refUpside
+        upsideCount++
       }
     }
 
@@ -257,20 +255,12 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
     // Delta: positive = car slower = PT advantage
     const carPtDeltaMin = avgCar != null && avgPt != null ? avgCar - avgPt : null
 
-    // AV upside: minutes saved by AV vs the current best option
-    // (PT comfort or manual drive, whichever is faster today).
-    // AV beats manual drive everywhere (av_factor < 1), so the upside is
-    // always vs. the current best mode — not conditioned on PT winning.
+    // AV upside: average of per-ref AV advantages (minutes saved vs current best mode).
+    // Non-negative by construction; null if no ref has both modes available.
     let avUpside = null
-    if (bothCount > 0) {
-      const avgPtComfort = ptComfortSum / bothCount
-      const avgAvDrive = avDriveSum / bothCount
-      const avgManualDrive = manualDriveSum / bothCount
-      const bestCurrent = Math.min(avgPtComfort, avgManualDrive)
-
-      if (avgAvDrive < bestCurrent) {
-        avUpside = bestCurrent - avgAvDrive  // minutes AV beats the current best
-      }
+    if (upsideCount > 0) {
+      const avg = upsideSum / upsideCount
+      if (avg > 0) avUpside = avg
     }
 
     // AV Value Unlock: capitalize AV upside minutes into CHF
@@ -346,6 +336,7 @@ export default function App() {
   const [loadError, setLoadError] = useState(null)
   const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
+  const [highlightedListId, setHighlightedListId] = useState(null)
 
   // Validate colorBy from URL (backward compat: old metrics redirect to default)
   const initialColorBy = urlState.colorBy && VALID_METRICS.includes(urlState.colorBy)
@@ -717,6 +708,7 @@ export default function App() {
           onSelect={handleSelect}
           onHover={handleHover}
           selected={resolvedSelected}
+          highlightedId={highlightedListId}
         />
         {hovered && (
           <div
@@ -758,6 +750,7 @@ export default function App() {
         setModelParams={setModelParams}
         onClose={() => setSelected(null)}
         onSelectFeature={handleSelectFromSearch}
+        setHighlightedListId={setHighlightedListId}
         resetToDefaults={resetToDefaults}
       />
     </div>

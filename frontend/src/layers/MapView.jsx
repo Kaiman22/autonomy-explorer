@@ -287,6 +287,7 @@ export default function MapView({
   onSelect,
   onHover,
   selected,
+  highlightedId,
 }) {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
@@ -335,6 +336,7 @@ export default function MapView({
     if (map.getLayer('municipalities-heat')) map.removeLayer('municipalities-heat')
     if (map.getLayer('municipalities-circles')) map.removeLayer('municipalities-circles')
     if (map.getLayer('municipalities-selected')) map.removeLayer('municipalities-selected')
+    if (map.getLayer('municipalities-highlight')) map.removeLayer('municipalities-highlight')
     if (map.getSource('municipalities')) map.removeSource('municipalities')
 
     map.addSource('municipalities', { type: 'geojson', data: geojsonData })
@@ -410,6 +412,28 @@ export default function MapView({
         'circle-color': 'transparent',
         'circle-stroke-width': 3,
         'circle-stroke-color': '#ffffff',
+      },
+    })
+
+    // Highlight layer for hover-from-list: larger radius + bright yellow ring
+    // so users can quickly locate the hovered ranked-list entry on the map.
+    map.addLayer({
+      id: 'municipalities-highlight',
+      type: 'circle',
+      source: 'municipalities',
+      filter: ['==', ['get', 'id'], ''],
+      paint: {
+        'circle-radius': [
+          'interpolate', ['linear'], ['zoom'],
+          6, 7,
+          8, 11,
+          10, 16,
+          12, 22,
+        ],
+        'circle-color': 'transparent',
+        'circle-stroke-width': 3,
+        'circle-stroke-color': '#ffeb3b',
+        'circle-stroke-opacity': 0.95,
       },
     })
 
@@ -553,6 +577,13 @@ export default function MapView({
       map.setFilter('municipalities-selected', ['==', ['get', 'id'], ''])
     }
   }, [selected])
+
+  // Update ranked-list hover highlight (yellow ring on the map)
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !map.getLayer('municipalities-highlight')) return
+    map.setFilter('municipalities-highlight', ['==', ['get', 'id'], highlightedId || ''])
+  }, [highlightedId])
 
   // Switch basemap
   const switchBasemap = useCallback(
