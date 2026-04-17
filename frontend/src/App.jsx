@@ -15,7 +15,7 @@ const DEFAULT_MODEL_PARAMS = {
 // Valid colorBy metrics (for URL backward-compat validation)
 const VALID_METRICS = [
   'avg_car_access', 'avg_pt_access', 'optimum_access',
-  'car_pt_delta_min', 'av_upside', 'av_value_unlock', 'chf_per_m2',
+  'car_pt_delta_min', 'av_upside', 'av_value_unlock', 'av_deal_score', 'chf_per_m2',
 ]
 
 // --- Hub-based PT routing for custom reference locations ---
@@ -279,6 +279,14 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
       ? Math.round(avUpside * 2 * 220 * (vtt / 60) / capRate)
       : null
 
+    // AV Deal Score: compound metric combining AV value unlock and property price.
+    // Formula: av_value_unlock / chf_per_m2 → "m² of property equivalent"
+    // How many square meters of property does AV's capitalized time savings pay for?
+    // High score = low price + high AV potential (best deal). Unit: m².
+    const avDealScore = (avValueUnlock != null && p.chf_per_m2 != null && p.chf_per_m2 > 0)
+      ? Math.round(avValueUnlock / p.chf_per_m2 * 10) / 10
+      : null
+
     // Min drive/pt for enabled refs (for detail panel)
     const enabledDrive = allRefIds.map((c) => driveTimes[c]).filter((v) => v != null)
     const enabledPt = allRefIds.map((c) => ptTimes[c]).filter((v) => v != null)
@@ -294,6 +302,7 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
         car_pt_delta_min: carPtDeltaMin != null ? Math.round(carPtDeltaMin * 10) / 10 : null,
         av_upside: avUpside != null ? Math.round(avUpside * 10) / 10 : null,
         av_value_unlock: avValueUnlock,
+        av_deal_score: avDealScore,
         min_drive_s: enabledDrive.length ? Math.min(...enabledDrive) : p.min_drive_s,
         min_pt_s: enabledPt.length ? Math.min(...enabledPt) : p.min_pt_s,
       },
@@ -611,6 +620,7 @@ export default function App() {
       car_pt_delta_min: bounds('car_pt_delta_min'),
       av_upside: bounds('av_upside'),
       av_value_unlock: bounds('av_value_unlock'),
+      av_deal_score: bounds('av_deal_score'),
     }
   }, [data])
 
@@ -660,6 +670,9 @@ export default function App() {
     }
     if (colorBy === 'av_value_unlock') {
       return `CHF ${Math.round(val).toLocaleString()}`
+    }
+    if (colorBy === 'av_deal_score') {
+      return `${val.toFixed(1)} m\u00b2 equivalent`
     }
     if (colorBy === 'car_pt_delta_min') {
       return `${val > 0 ? '+' : ''}${val.toFixed(1)} min`

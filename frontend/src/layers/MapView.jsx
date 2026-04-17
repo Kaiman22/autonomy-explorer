@@ -60,6 +60,16 @@ const AV_UPSIDE_COLORS = [
   [20, '#1b5e20'],
 ]
 
+// AV deal score: compound bang-for-buck (m² equivalent). Cool teal → magenta
+// so it visually stands apart from AV Value Unlock (amber) and AV Upside (green)
+const AV_DEAL_COLORS = [
+  [0, '#263238'],
+  [20, '#00838f'],
+  [50, '#26a69a'],
+  [100, '#ce93d8'],
+  [200, '#e91e63'],
+]
+
 // Build CSS gradient for legend with proportional stop positions
 function buildGradientCSS(stops) {
   const lo = stops[0][0]
@@ -108,6 +118,12 @@ const METRIC_CONFIG = {
     gradient: buildGradientCSS(AV_VALUE_COLORS),
     lowLabel: '10k',
     highLabel: '100k+',
+  },
+  av_deal_score: {
+    colors: AV_DEAL_COLORS,
+    gradient: buildGradientCSS(AV_DEAL_COLORS),
+    lowLabel: '0 m\u00b2',
+    highLabel: '200+ m\u00b2',
   },
   chf_per_m2: {
     colors: PRICE_COLORS,
@@ -180,6 +196,20 @@ function getResolvedMetricConfig(property, colorBounds) {
       lowLabel: `${Math.round(deduped[0][0] / 1000)}k`, highLabel: `${Math.round(deduped[deduped.length - 1][0] / 1000)}k` }
   }
 
+  // AV deal score: compound bang-for-buck (m² equivalent, all positive)
+  if (property === 'av_deal_score' && b) {
+    const stops = [
+      [Math.round(b.p10), '#263238'],
+      [Math.round(b.p25), '#00838f'],
+      [Math.round(b.p50), '#26a69a'],
+      [Math.round(b.p75), '#ce93d8'],
+      [Math.round(b.p90), '#e91e63'],
+    ]
+    const deduped = stops.filter((s, i) => i === 0 || s[0] > stops[i - 1][0])
+    return { colors: deduped, gradient: buildGradientCSS(deduped),
+      lowLabel: `${deduped[0][0]} m\u00b2`, highLabel: `${deduped[deduped.length - 1][0]}+ m\u00b2` }
+  }
+
   return staticConfig || null
 }
 
@@ -246,6 +276,7 @@ const LEGEND_LABELS = {
   car_pt_delta_min: 'Car vs PT Travel Time (minutes)',
   av_upside: 'AV Upside Potential',
   av_value_unlock: 'AV Value Unlock (CHF)',
+  av_deal_score: 'AV Deal Score (m\u00b2 equivalent)',
   chf_per_m2: 'Property Price (CHF/m\u00b2)',
 }
 

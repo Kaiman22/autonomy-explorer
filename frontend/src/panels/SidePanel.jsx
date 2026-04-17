@@ -40,13 +40,18 @@ const METRICS = {
   },
   av_upside: {
     label: 'AV Upside',
-    desc: 'Places where PT currently beats manual driving, but AV would beat PT. Shows minutes saved by AV vs PT \u2014 the untapped potential of autonomous vehicles. Places without AV upside are filtered out.',
+    desc: 'Minutes saved by AV vs the current best option (PT comfort or manual drive). Measures how much faster AV makes the commute compared to today\'s best available mode.',
     unit: 'min',
   },
   av_value_unlock: {
     label: 'AV Value Unlock',
     desc: 'Latent property value unlocked by autonomous vehicles. Converts AV time savings into CHF via value-of-time and capitalization rate: annual minutes saved × VTT, discounted as a perpetuity.',
     unit: 'CHF',
+  },
+  av_deal_score: {
+    label: 'AV Deal Score (m\u00b2)',
+    desc: 'Compound "bang for buck" metric: AV Value Unlock divided by price per m\u00b2. Expresses the AV upside as equivalent square meters of property it pays for. High = low price + high AV potential (best deal). Low = high price + low AV potential (worst deal).',
+    unit: 'm\u00b2',
   },
   chf_per_m2: {
     label: 'Property Price (CHF/m\u00b2)',
@@ -423,6 +428,7 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
     else if (colorBy === 'car_pt_delta_min') activeDisplay = `${activeVal > 0 ? '+' : ''}${activeVal.toFixed(1)} min`
     else if (colorBy === 'av_upside') activeDisplay = `${activeVal.toFixed(1)} min saved`
     else if (colorBy === 'av_value_unlock') activeDisplay = `CHF ${Math.round(activeVal).toLocaleString()}`
+    else if (colorBy === 'av_deal_score') activeDisplay = `${activeVal.toFixed(1)} m\u00b2 equivalent`
     else if (activeMetric?.unit === 'min') activeDisplay = `${activeVal.toFixed(1)} min`
     else activeDisplay = activeVal.toFixed(1)
   }
@@ -713,6 +719,7 @@ export default function SidePanel({
             </optgroup>
             <optgroup label="Pricing">
               <option value="chf_per_m2">Property Price (CHF/m²)</option>
+              <option value="av_deal_score">AV Deal Score (m² bang-for-buck)</option>
             </optgroup>
           </select>
         </div>
