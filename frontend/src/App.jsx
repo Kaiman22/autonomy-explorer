@@ -257,18 +257,19 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
     // Delta: positive = car slower = PT advantage
     const carPtDeltaMin = avgCar != null && avgPt != null ? avgCar - avgPt : null
 
-    // AV upside: condition on averages across selected cities
-    // avg_av_drive < avg_pt_comfort < avg_manual_drive
-    // = places where PT is currently better than manual driving,
-    //   but AV would beat PT. These are the AV opportunity zones.
+    // AV upside: minutes saved by AV vs the current best option
+    // (PT comfort or manual drive, whichever is faster today).
+    // AV beats manual drive everywhere (av_factor < 1), so the upside is
+    // always vs. the current best mode — not conditioned on PT winning.
     let avUpside = null
     if (bothCount > 0) {
       const avgPtComfort = ptComfortSum / bothCount
       const avgAvDrive = avDriveSum / bothCount
       const avgManualDrive = manualDriveSum / bothCount
+      const bestCurrent = Math.min(avgPtComfort, avgManualDrive)
 
-      if (avgAvDrive < avgPtComfort && avgPtComfort < avgManualDrive) {
-        avUpside = avgPtComfort - avgAvDrive  // minutes of AV advantage over PT
+      if (avgAvDrive < bestCurrent) {
+        avUpside = bestCurrent - avgAvDrive  // minutes AV beats the current best
       }
     }
 

@@ -12,7 +12,7 @@ Metrics (all recomputed dynamically in frontend based on user settings):
   - avg_pt_access: mean PT time to all cities (minutes, no walk deduction)
   - optimum_access: mean of min(car, pt) per city (minutes)
   - car_pt_delta_min / pct: car vs PT difference
-  - av_upside: minutes saved by AV vs PT where PT currently beats driving
+  - av_upside: minutes saved by AV vs the current best option (PT comfort or manual drive)
 
 Outputs: frontend/public/data/municipalities_scored.geojson
 """
@@ -215,14 +215,17 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
         else:
             delta_min = None
 
-        # AV upside: avg_av_drive < avg_pt_comfort < avg_manual_drive
+        # AV upside: minutes saved by AV vs the current best option (PT comfort or manual drive)
+        # AV beats manual drive everywhere (av_factor < 1), so we report how much it beats
+        # the current best mode — whether that's PT or car today.
         av_upside = None
         if pt_comfort_vals:
             avg_pt_comfort = sum(pt_comfort_vals) / len(pt_comfort_vals)
             avg_av_drive = sum(av_drive_vals) / len(av_drive_vals)
             avg_manual_drive = sum(manual_drive_vals) / len(manual_drive_vals)
-            if avg_av_drive < avg_pt_comfort < avg_manual_drive:
-                av_upside = avg_pt_comfort - avg_av_drive
+            best_current = min(avg_pt_comfort, avg_manual_drive)
+            if avg_av_drive < best_current:
+                av_upside = best_current - avg_av_drive
 
         drive_times_list = [d.get(c) for c in CITIES if d.get(c) is not None]
         pt_times_list = [pt.get(c) for c in CITIES if pt.get(c) is not None]
