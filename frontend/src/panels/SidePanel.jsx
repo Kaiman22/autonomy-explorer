@@ -734,13 +734,13 @@ export default function SidePanel({
         )}
       </div>
 
-      {/* Travel Preferences (comfort factors) */}
+      {/* Advanced Settings (comfort factors) */}
       <div className="panel-section">
         <div
           className="collapsible-header"
           onClick={() => setShowAdvanced(!showAdvanced)}
         >
-          <h3 style={{ margin: 0 }}>Travel Preferences</h3>
+          <h3 style={{ margin: 0 }}>Advanced Settings</h3>
           <span className={`arrow ${showAdvanced ? 'open' : ''}`}>▶</span>
         </div>
 
