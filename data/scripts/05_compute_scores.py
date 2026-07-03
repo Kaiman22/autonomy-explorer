@@ -247,8 +247,9 @@ def compute_scores(municipalities, settlements, settlement_mapping, settlement_d
             # Min times (seconds)
             "min_drive_s": min(drive_times_list) if drive_times_list else None,
             "min_pt_s": min(pt_times_list) if pt_times_list else None,
-            # Price (from municipality)
+            # Price (from municipality) + provenance (neho / homegate / interpolated)
             "chf_per_m2": price_data.get("chf_per_m2") if price_data else None,
+            "price_source": price_data.get("type") if price_data else None,
             # Tax (from municipality)
             "tax_multiplier": tax_data.get("multiplier") if tax_data else None,
             # Precomputed metrics (default: all 10 cities, default comfort factors)

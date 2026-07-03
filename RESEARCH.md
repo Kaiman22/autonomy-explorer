@@ -249,6 +249,44 @@ Method: Inverse Distance Weighting (IDW) with K=5 nearest neighbors, power=2. Fo
 
 ---
 
+## Metric Review (2026-04)
+
+A quantitative audit of the AV metrics exposed two structural flaws:
+
+**1. Raw AV upside ≈ remoteness.** Since AV comfort factor < 1, AV always beats
+manual driving by `(1 − avFactor) × drive_time` — so raw upside grows linearly with
+distance. Measured correlation between `av_upside` and `avg_car_access`: **r = 0.89**.
+
+**2. Deal score rewarded the wrong places.** `value_unlock / price` topped out at
+Campocologno/Brusio/Poschiavo (GR) — 4+ hours from every job center. Huge *raw*
+time savings, but nobody commutes from there, so those savings never capitalize
+into property value. As an investment signal the ranking was inverted.
+
+**Fix: commute-viability weighting.** Grounded in bid-rent theory: transport
+improvements capitalize into land prices only where the destination remains within
+an acceptable daily commute. Implemented as:
+
+- `viability(t_av)` = 1 up to a tolerance (default 45 min AV time, user-adjustable),
+  fading linearly to 0 over the following 45 min.
+- **AV Value Unlock** = capitalized value of the *single best viable commute gain*
+  across selected refs (`max_ref(upside_ref × viability_ref)`), matching the
+  2-trips × 220-workdays commuter model (one person commutes to one destination,
+  not to the average of 10 cities).
+- **AV Upside** (map layer) stays raw and unconditioned — it answers "how many
+  minutes does AV beat today's best mode," full stop.
+
+Result: deal-score top-10 shifted from Poschiavo valley to the plausible AV
+commuter fringe (Jura, Oberaargau, Leventina near Ticino centers) — cheap
+municipalities that flip into viable commute range of exactly one major center.
+
+**Data caveats surfaced in UI:** 467 municipalities (~21% of settlements) carry
+IDW-interpolated prices, now tagged `price_source: interpolated` in the GeoJSON and
+marked "est." in the detail panel. Homegate-sourced medians require only ≥2 listings
+and can be noisy in small municipalities. 7,591 PT pairs carry heuristic overnight
+corrections (mean abs. error ~13%).
+
+---
+
 ## Architecture Decisions
 
 | Decision | Choice | Rationale |

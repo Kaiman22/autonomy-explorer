@@ -45,12 +45,12 @@ const METRICS = {
   },
   av_value_unlock: {
     label: 'AV Value Unlock',
-    desc: 'Latent property value unlocked by autonomous vehicles. Converts AV time savings into CHF via value-of-time and capitalization rate: annual minutes saved × VTT, discounted as a perpetuity.',
+    desc: 'Latent property value unlocked by autonomous vehicles, based on the single best reference destination that remains a viable daily AV commute (within your commute tolerance, fading out over the following 45 min). Annual minutes saved × value of travel time, discounted as a perpetuity. Remote places with huge raw savings but no commutable destination score 0 — those savings never capitalize into property value.',
     unit: 'CHF',
   },
   av_deal_score: {
     label: 'AV Deal Score (m\u00b2)',
-    desc: 'Compound "bang for buck" metric: AV Value Unlock divided by price per m\u00b2. Expresses the AV upside as equivalent square meters of property it pays for. High = low price + high AV potential (best deal). Low = high price + low AV potential (worst deal).',
+    desc: 'Compound "bang for buck" metric: AV Value Unlock divided by price per m\u00b2. Expresses the viable AV commute gain as equivalent square meters of property it pays for. High = cheap property within newly viable AV commute range of a major center (best deal).',
     unit: 'm\u00b2',
   },
   chf_per_m2: {
@@ -495,6 +495,14 @@ function MunicipalityDetail({ feature, onClose, allCities, enabledCities, custom
         <div className="detail-stat">
           <div className="detail-stat-value">
             {p.chf_per_m2 != null ? `${p.chf_per_m2.toLocaleString()} CHF/m\u00b2` : '\u2014'}
+            {p.chf_per_m2 != null && p.price_source === 'interpolated' && (
+              <span
+                style={{ fontSize: 10, opacity: 0.6, marginLeft: 4 }}
+                title="No market listings here \u2014 estimated from the 5 nearest municipalities with known prices"
+              >
+                est.
+              </span>
+            )}
           </div>
           <div className="detail-stat-label">Price / m²</div>
         </div>
@@ -834,6 +842,29 @@ export default function SidePanel({
                   />
                   <span className="slider-value" style={{ minWidth: 54 }}>
                     CHF {modelParams.vtt}/h
+                  </span>
+                </div>
+              </div>
+
+              <div className="control-group">
+                <label style={{ lineHeight: 1.3 }}>Max comfortable AV commute</label>
+                <div style={{ fontSize: 10, color: 'var(--text-secondary)', marginBottom: 4, lineHeight: 1.3 }}>
+                  Time savings only capitalize into property value while the destination
+                  stays within a viable daily commute (fades out over the following 45 min).
+                </div>
+                <div className="slider-row">
+                  <input
+                    type="range"
+                    min="30"
+                    max="90"
+                    step="5"
+                    value={modelParams.avTolerance ?? 45}
+                    onChange={(e) =>
+                      setModelParams((p) => ({ ...p, avTolerance: parseInt(e.target.value) }))
+                    }
+                  />
+                  <span className="slider-value" style={{ minWidth: 54 }}>
+                    {modelParams.avTolerance ?? 45} min
                   </span>
                 </div>
               </div>

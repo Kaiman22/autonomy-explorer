@@ -10,6 +10,9 @@ const DEFAULT_MODEL_PARAMS = {
   ptFactor: 0.90,     // PT comfort factor (1.0 = same burden as driving, lower = PT feels easier)
   vtt: 30,            // Value of travel time (CHF/hour) — Swiss commuter literature ~CHF 23–37
   capRate: 0.04,      // Capitalization rate (perpetuity discount) — typical Swiss RE ~3–5%
+  avTolerance: 45,    // Max comfortable AV commute (min). Time savings only capitalize into
+                      // property value if the destination stays within a viable daily commute;
+                      // viability fades linearly to 0 over the following 45 min.
 }
 
 // Valid colorBy metrics (for URL backward-compat validation)
@@ -140,7 +143,16 @@ function computeHubRoutedPtTime(settlementPtTimes, customToHubTimes) {
  */
 function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, modelParams, colorBy) {
   if (!geojson) return null
-  const { avFactor, ptFactor, vtt = 30, capRate = 0.04 } = modelParams
+  const { avFactor, ptFactor, vtt = 30, capRate = 0.04, avTolerance = 45 } = modelParams
+
+  // Commute viability: time savings only capitalize into property value while the
+  // AV commute stays within daily-commute range. Full weight up to avTolerance,
+  // linear fade to 0 over the following 45 minutes.
+  const viability = (tAvMin) => {
+    if (tAvMin <= avTolerance) return 1
+    if (tAvMin >= avTolerance + 45) return 0
+    return (avTolerance + 45 - tAvMin) / 45
+  }
 
   function parseTimes(raw) {
     return typeof raw === 'string' ? JSON.parse(raw) : raw || {}
@@ -201,6 +213,8 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
     let optimumSum = 0, optimumCount = 0
     // For AV upside: compute per-ref upside, then average
     let upsideSum = 0, upsideCount = 0
+    // For AV value unlock: best single viable commute gain across refs
+    let bestViableGain = 0
 
     for (const ref of allRefs) {
       const driveS = driveTimes[ref.id]
@@ -245,6 +259,13 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
         const refUpside = avDrive < bestCurrent ? bestCurrent - avDrive : 0
         upsideSum += refUpside
         upsideCount++
+
+        // Viable gain: a commuter commutes to ONE destination, so the value
+        // unlock is driven by the single best ref that remains a viable
+        // daily AV commute. Weighting by viability(avDrive) prevents remote
+        // places (huge raw savings, but no one commutes 3h) from dominating.
+        const viableGain = refUpside * viability(avDrive)
+        if (viableGain > bestViableGain) bestViableGain = viableGain
       }
     }
 
@@ -263,10 +284,13 @@ function recomputeScores(geojson, enabledCities, customLocations, refMaxTimes, m
       if (avg > 0) avUpside = avg
     }
 
-    // AV Value Unlock: capitalize AV upside minutes into CHF
-    // Formula: upside_min × 2 trips × 220 workdays × (VTT_per_hour / 60) / cap_rate
-    const avValueUnlock = avUpside != null
-      ? Math.round(avUpside * 2 * 220 * (vtt / 60) / capRate)
+    // AV Value Unlock: capitalize the best single VIABLE commute gain into CHF.
+    // Uses bestViableGain (not avUpside): the 2-trips × 220-workdays model
+    // describes a commuter travelling to one destination, and time savings only
+    // capitalize where that destination remains within commute tolerance.
+    // Formula: gain_min × 2 trips × 220 workdays × (VTT_per_hour / 60) / cap_rate
+    const avValueUnlock = bestViableGain > 0
+      ? Math.round(bestViableGain * 2 * 220 * (vtt / 60) / capRate)
       : null
 
     // AV Deal Score: compound metric combining AV value unlock and property price.
@@ -355,6 +379,7 @@ export default function App() {
 
   // Model parameters (comfort factors)
   const [modelParams, setModelParams] = useState({
+    ...DEFAULT_MODEL_PARAMS,
     avFactor: urlState.avFactor ?? DEFAULT_MODEL_PARAMS.avFactor,
     ptFactor: urlState.ptFactor ?? DEFAULT_MODEL_PARAMS.ptFactor,
   })
