@@ -1,4 +1,4 @@
-# Autonomy Real Estate Explorer – Research Findings
+# Sleeper Towns (formerly Autonomy Real Estate Explorer) – Research Findings
 
 > Phase 1 research completed 2026-02-18. All data sources validated.
 

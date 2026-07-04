@@ -44,13 +44,13 @@ const METRICS = {
     unit: 'min',
   },
   av_value_unlock: {
-    label: 'AV Value Unlock',
+    label: 'Wake-Up Value (CHF)',
     desc: 'Latent property value unlocked by autonomous vehicles, based on the single best reference destination that remains a viable daily AV commute (within your commute tolerance, fading out over the following 45 min). Annual minutes saved × value of travel time, discounted as a perpetuity. Remote places with huge raw savings but no commutable destination score 0 — those savings never capitalize into property value.',
     unit: 'CHF',
   },
   av_deal_score: {
-    label: 'AV Deal Score (m\u00b2)',
-    desc: 'Compound "bang for buck" metric: AV Value Unlock divided by price per m\u00b2. Expresses the viable AV commute gain as equivalent square meters of property it pays for. High = cheap property within newly viable AV commute range of a major center (best deal).',
+    label: 'Sleeper Score (m\u00b2)',
+    desc: 'The flagship "bang for buck" metric: Wake-Up Value divided by price per m\u00b2. Expresses the viable AV commute gain as equivalent square meters of property it pays for. High = a sleeper town \u2014 cheap property that flips into viable AV commute range of a major center.',
     unit: 'm\u00b2',
   },
   chf_per_m2: {
@@ -646,8 +646,8 @@ export default function SidePanel({
       <div className="side-panel-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <h1>Autonomy Explorer</h1>
-            <p>Swiss real estate upside from autonomous driving</p>
+            <h1>Sleeper Towns</h1>
+            <p>Where self-driving cars wake up Swiss property values</p>
           </div>
           {resetToDefaults && (
             <button
@@ -726,11 +726,11 @@ export default function SidePanel({
             <optgroup label="Mode Comparison">
               <option value="car_pt_delta_min">Car − PT Delta (min)</option>
               <option value="av_upside">AV Upside Potential</option>
-              <option value="av_value_unlock">AV Value Unlock (CHF)</option>
+              <option value="av_value_unlock">Wake-Up Value (CHF)</option>
             </optgroup>
             <optgroup label="Pricing">
               <option value="chf_per_m2">Property Price (CHF/m²)</option>
-              <option value="av_deal_score">AV Deal Score (m² bang-for-buck)</option>
+              <option value="av_deal_score">Sleeper Score (m² bang-for-buck)</option>
             </optgroup>
           </select>
         </div>

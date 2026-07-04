@@ -275,8 +275,8 @@ const LEGEND_LABELS = {
   optimum_access: 'Optimum Accessibility (best mode)',
   car_pt_delta_min: 'Car vs PT Travel Time (minutes)',
   av_upside: 'AV Upside Potential',
-  av_value_unlock: 'AV Value Unlock (CHF)',
-  av_deal_score: 'AV Deal Score (m\u00b2 equivalent)',
+  av_value_unlock: 'Wake-Up Value (CHF)',
+  av_deal_score: 'Sleeper Score (m\u00b2 equivalent)',
   chf_per_m2: 'Property Price (CHF/m\u00b2)',
 }
 
